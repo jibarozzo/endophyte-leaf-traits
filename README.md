@@ -1,3 +1,3 @@
-# endophyte-leaf-traits
-R code for data wrangling and analyses of project
-bAR 12/10/2022
+# Leaf traits and endophytes interactions with herbivores and pathogen in tropical woody species.
+R code for bioinformatic and statistical analyses.
+BAR 06/29/2023
