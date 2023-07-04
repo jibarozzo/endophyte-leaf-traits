@@ -88,12 +88,11 @@ conflict_prefer_all("phyloseq")
 
 ```{r}
 rm(list = ls()) 
-#setwd("G:/My Drive/VBL_users/Grad_Students/Bolivar/Dissertation/Leaf_Traits_Panama/Data/Sample_Sequencing/Post_Sequencing/Sequence_analyses")
+#setwd("H:/.shortcut-targets-by-id/0B9v0CdUUCqU5VVR4a3BvNHM1Z28/VBL_users/Grad_Students/Bolivar/Dissertation/Leaf_Traits_Panama/Data/Sequence_analyses")
 
-setwd("H:/.shortcut-targets-by-id/0B9v0CdUUCqU5VVR4a3BvNHM1Z28/VBL_users/Grad_Students/Bolivar/Dissertation/Leaf_Traits_Panama/Data/Sequence_analyses")
-
-#setwd("C:/Users/boloq/Desktop/Sequence_analysesLAPTOp")
+setwd("C:/Users/boloq/Box/Tulane/Bioinformatics/Aim3_Sequence_analyses")
 #Note that H drive has shortcuts to Google Drive, hence the long file path.
+save.path <- "C:/Users/boloq/Box/Tulane/Bioinformatics/Aim3_Sequence_analyses"
 ```
 
 # Data frames
@@ -104,83 +103,121 @@ Data frames needed for diversity, abundance, and richness analyses. Clean sample
 set.seed(123)
 # Cleaned (decontaminated) sample sequences ####
 #csamp
-csamp <- read.csv("all_cleaned_at_10_percent.csv")
-csamp[,2:157] <- lapply(csamp[,2:157], as.integer)
-csamp <- csamp %>%
-  rename(OTU_ID = X) %>%
-  column_to_rownames(var = "OTU_ID") %>%
-  na.omit() %>%
-  na.fail() %>%
-  as.matrix()
+# csamp <- read.csv("all_cleaned_at_10_percent.csv")
+# csamp[,2:157] <- lapply(csamp[,2:157], as.integer)
+# csamp <- csamp %>%
+#   rename(OTU_ID = X) %>%
+#   column_to_rownames(var = "OTU_ID") %>%
+#   na.omit() %>%
+#   na.fail() %>%
+#   as.matrix()
+
+# Saving
+# saveRDS(csamp, file.path(save.path, "R_objects", "clean_sequences.rds"))
+
+# Reading
+csamp <- readRDS(file.path(save.path, "R_objects", "clean_sequences.rds"))
 ```
 
-```{r, TBAS, tidy = FALSE}
+```{r, TBAS, tidy = TRUE}
 # T-BAS taxonomic assignment ####
 #tbas
-tbas <- read.csv("unite_report2BSDHQZP.csv")
-tbas <- tbas %>%
-  dplyr::filter(phylum == "Ascomycota") %>%
-  select(-match,-e.value, -percent, -coverage, -bitscore) %>% #eliminating some columns that I am not really using
-  na.omit()%>%
-  rename( OTU_ID = query) %>%
-  column_to_rownames(var = "OTU_ID") %>%
-  na.omit() %>%
-  na.fail() %>%
-  as.matrix()
+# tbas <- read.csv("unite_report2BSDHQZP.csv")
+# tbas <- tbas %>%
+#   dplyr::filter(phylum == "Ascomycota") %>%
+#   select(-match,-e.value, -percent, -coverage, -bitscore) %>% #eliminating some columns that I am not really using
+#   na.omit()%>%
+#   rename( OTU_ID = query) %>%
+#   column_to_rownames(var = "OTU_ID") %>%
+#   na.omit() %>%
+#   na.fail() %>%
+#   as.matrix()
+
+# Saving
+saveRDS(tbas, file.path(save.path, "R_objects", "tbas_filtered.rds"))
+
+# Reading
+tbas <- readRDS(file.path(save.path, "R_objects", "tbas_filtered.rds"))
 ```
 
 ```{r, Leaf trait variables data, tidy = TRUE}
-#data
-traitpath <- "H:/.shortcut-targets-by-id/0B9v0CdUUCqU5VVR4a3BvNHM1Z28/VBL_users/Grad_Students/Bolivar/Dissertation/Leaf_Traits_Panama/Data/Sequence_analyses"
-data <- read.csv(file.path(traitpath, "Aim3_Bolivar_Summer_2019_Leaf_Traits_datasheet.csv"))
-data2 <- data %>% #data set created on May 23, 2023 for analysis with raw data.
-  separate(Unique_ID, c("Trial_Code", "ELoad", "Species2", "Replicate")) %>%
-  unite("Sample_name", Species2:Replicate, sep = "") %>%
-  relocate(Sample_name, Trial_Code, E_load, .after = Species) %>%
-  select(!c(5, 15:17, 20)) %>%
-  rename( Anthocyanins = Anthocyanins..aci., 
-          Thickness = Thickness..micro.m.,  
-          Toughness =Toughness..lbf., 
-          LMA = LMA_dw, 
-          Abun_3 = Abundance_Proportion_day3, 
-          Abun_7 = Abundance_Proportion_day7)
+# data
 
-#ndata
-ndata <- data %>% #This data set can also be used to conduct analysis with "raw" data . It is summarized by leaf. 
-  group_by(Species, Unique_ID, Trial_type, E_load, Leaf_ID) %>%
-  summarise(Anthocyanins..aci. = mean(Anthocyanins..aci., na.rm = TRUE), 
-            Thickness..micro.m. = mean(Thickness..micro.m., na.rm = TRUE),
-            Toughness..lbf. = mean(Toughness..lbf., na.rm = TRUE),
-            LMA_dw = mean(LMA_dw, na.rm = TRUE),
-            Abundance_Proportion_day3 = mean(Abundance_Proportion_day3, na.rm = TRUE),
-            Abundance_Proportion_day7 = mean(Abundance_Proportion_day7, na.rm = TRUE)) %>%
-   separate(Unique_ID, c("Trial_Code", "ELoad", "Species2", "Replicate")) %>%
-  unite("Sample_name", Species2:Replicate, sep = "") %>%
-  relocate(Species, Trial_Code,.after = Sample_name) %>%
-  rename( Anthocyanins = Anthocyanins..aci., 
-          Thickness = Thickness..micro.m.,  
-          Toughness =Toughness..lbf., 
-          LMA = LMA_dw, 
-          Abun_3 = Abundance_Proportion_day3, 
-          Abun_7 = Abundance_Proportion_day7) %>%
-  select(!ELoad) %>%
-  ungroup() %>%
-   mutate_if(is.character, as.factor) %>%
-  na.omit() %>% 
-  na.fail()
+data <- read.csv("Aim3_Bolivar_Summer_2019_Leaf_Traits_datasheet.csv")
+
+# data2
+# Data set created on May 23, 2023 for analysis with raw data.
+# data2 <- data %>% 
+#   separate(Unique_ID, c("Trial_Code", "ELoad", "Species2", "Replicate")) %>%
+#   unite("Sample_name", Species2:Replicate, sep = "") %>%
+#   relocate(Sample_name, Trial_Code, E_load, .after = Species) %>%
+#   select(!c(5, 15:17, 20)) %>%
+#   rename( Anthocyanins = Anthocyanins..aci., 
+#           Thickness = Thickness..micro.m.,  
+#           Toughness =Toughness..lbf., 
+#           LMA = LMA_dw, 
+#           Abun_3 = Abundance_Proportion_day3, 
+#           Abun_7 = Abundance_Proportion_day7)
+
+# Saving
+# saveRDS(data2, file.path(save.path, "R_objects", "leaf_data_raw_analyses.rds"))
+
+# Reading
+data2 <- readRDS(file.path(save.path, "R_objects", "leaf_data_raw_analyses.rds"))
+
+# ndata (new_data)
+# This data set can also be used to conduct analysis with "raw" data . It is summarized by leaf.
+
+# ndata <- data %>%  
+#   group_by(Species, Unique_ID, Trial_type, E_load, Leaf_ID) %>%
+#   summarise(Anthocyanins..aci. = mean(Anthocyanins..aci., na.rm = TRUE), 
+#             Thickness..micro.m. = mean(Thickness..micro.m., na.rm = TRUE),
+#             Toughness..lbf. = mean(Toughness..lbf., na.rm = TRUE),
+#             LMA_dw = mean(LMA_dw, na.rm = TRUE),
+#             Abundance_Proportion_day3 = mean(Abundance_Proportion_day3, na.rm = TRUE),
+#             Abundance_Proportion_day7 = mean(Abundance_Proportion_day7, na.rm = TRUE)) %>%
+#    separate(Unique_ID, c("Trial_Code", "ELoad", "Species2", "Replicate")) %>%
+#   unite("Sample_name", Species2:Replicate, sep = "") %>%
+#   relocate(Species, Trial_Code,.after = Sample_name) %>%
+#   rename( Anthocyanins = Anthocyanins..aci., 
+#           Thickness = Thickness..micro.m.,  
+#           Toughness =Toughness..lbf., 
+#           LMA = LMA_dw, 
+#           Abun_3 = Abundance_Proportion_day3, 
+#           Abun_7 = Abundance_Proportion_day7) %>%
+#   select(!ELoad) %>%
+#   ungroup() %>%
+#    mutate_if(is.character, as.factor) %>%
+#   na.omit() %>% 
+#   na.fail()
+
+# Saving
+# saveRDS(ndata, file.path(save.path, "R_objects", "new_leaf_data.rds"))
+
+# Reading
+ndata <- readRDS(file.path(save.path, "R_objects", "new_leaf_data.rds"))
 
 # Splitting and relocating Unique_ID column 
 # Extract names to match to phyloseq objects separate(Species2, c("Species3", "Numbers"), sep = "(?<=[A-Za-z])(?=[0-9])")
 
-#ndata2
-ndata2 <- ndata %>% 
-  select(!c(Abun_3, Abun_7)) %>%
-  mutate_if(is.character, as.factor) %>%
-  group_by(Sample_name, Species, Trial_type, Trial_Code, E_load) %>%
-  summarise(Anthocyanins = mean(Anthocyanins, na.rm = TRUE),
-            Thickness = mean(Thickness, na.rm = TRUE),
-            Toughness = mean(Toughness, na.rm =TRUE),
-            LMA = mean(LMA, na.rm = TRUE)) 
+# ndata2 (new_data2)
+# Data frame is summarized by plant (n = 156)
+
+# ndata2 <- ndata %>% 
+#   select(!c(Abun_3, Abun_7)) %>%
+#   mutate_if(is.character, as.factor) %>%
+#   group_by(Sample_name, Species, Trial_type, Trial_Code, E_load) %>%
+#   summarise(Anthocyanins = mean(Anthocyanins, na.rm = TRUE),
+#             Thickness = mean(Thickness, na.rm = TRUE),
+#             Toughness = mean(Toughness, na.rm =TRUE),
+#             LMA = mean(LMA, na.rm = TRUE)) 
+
+# Saving
+# saveRDS(ndata2, file.path(save.path, "R_objects", "new_leaf_data2.rds"))
+
+# Reading
+ndata2 <- readRDS(file.path(save.path, "R_objects", "new_leaf_data2.rds"))
+
 # Glimpse
 glimpse(data)
 glimpse(csamp)
@@ -190,7 +227,7 @@ glimpse(ndata2)
 
 ```
 
-### Ant and Pathogen Assay data
+### Ant and Pathogen assay data
 
 For this data set I have calculated the area or percent area loss of leaf by the ants. I need to calculate the rate of loss. **How fast did the ants cut off leaf matter?**
 This data set also need cleaning and calculation of other variables. **How fast did the pathogen spread?**
@@ -199,32 +236,40 @@ The code below cleans the `ants` data set by removing all the variables with inc
 
 ```{r, Ant assay data, tidy = TRUE}
 
-ants <- read.csv("Aim3_Bolivar_Summer_2019_Ant_Assay_datasheet.csv")
+# ants <- read.csv("Aim3_Bolivar_Summer_2019_Ant_Assay_datasheet.csv")
+# 
+# ants <- ants %>%
+#   separate(Unique.ID, c("Trial_Code", "ELoad", "Species2", "Replicate")) %>%
+#   unite("Sample_name", Species2:Replicate, sep = "") %>%
+#   relocate(Species, Trial_Code,.after = Sample_name)%>%
+#   slice(-c(11,12)) %>%
+#   dplyr::filter(Trial_success!="0") %>%
+#   select(!c(Leaf_ID, 
+#             Colony_ID, 
+#             Picture_ID, 
+#             Colony_location_Pipeline.Gamboa, 
+#             Attempt, 
+#             Date_analyzed, 
+#             X_coordinates, 
+#             Y_coordinates, 
+#             Elevation_meters, 
+#             ELoad, 
+#             Analyzer, 
+#            
+#             Time_start_trial, 
+#             Time_first_contact, 
+#             Time_first_cut, 
+#             Time_end_elapsed_trial )) %>%
+#   mutate(Ant_percent_leafloss = -100*{(Leaf_area_final-Leaf_area_initial)/Leaf_area_initial}) %>%
+#   mutate_if(is.character, as.factor)
 
-ants <- ants %>%
-  separate(Unique.ID, c("Trial_Code", "ELoad", "Species2", "Replicate")) %>%
-  unite("Sample_name", Species2:Replicate, sep = "") %>%
-  relocate(Species, Trial_Code,.after = Sample_name)%>%
-  slice(-c(11,12)) %>%
-  dplyr::filter(Trial_success!="0") %>%
-  select(!c(Leaf_ID, 
-            Colony_ID, 
-            Picture_ID, 
-            Colony_location_Pipeline.Gamboa, 
-            Attempt, 
-            Date_analyzed, 
-            X_coordinates, 
-            Y_coordinates, 
-            Elevation_meters, 
-            ELoad, 
-            Analyzer, 
-           
-            Time_start_trial, 
-            Time_first_contact, 
-            Time_first_cut, 
-            Time_end_elapsed_trial )) %>%
-  mutate(Ant_percent_leafloss = -100*{(Leaf_area_final-Leaf_area_initial)/Leaf_area_initial}) %>%
-  mutate_if(is.character, as.factor)
+# Saving
+# saveRDS(ants, file.path(save.path, "R_objects", "ants_data.rds"))
+
+# Reading
+ants <- readRDS(file.path(save.path, "R_objects", "ants_data.rds"))
+
+
 # Just the area loss
 ants2 <- ants %>%
   select(c(1,3,4,9,10))
@@ -244,22 +289,30 @@ I removed rows for trials T1-T2 of THEO samples and T5 of APEIME samples (rows 4
 
 ```{r, Pathogen Assay Data, tidy = TRUE}
 
-patho <- read.csv("Aim3_Bolivar_Summer_2019_Patho_Assay_datasheet.csv")
-patho <- patho %>%
-  separate(Unique.ID, c("Trial_Code", "ELoad", "Species2", "Replicate")) %>%
-  unite("Sample_name", Species2:Replicate, sep = "") %>%
-  relocate(Species, Trial_Code,.after = Sample_name) %>%
-  slice(-c(41:48, 97:100)) %>%
-  select(!c(ELoad,
-            Leaf_ID,
-            Trial_start_time,
-            Date, 
-            ImageJ_link, 
-            X, 
-            Notes)) %>%
-  rename(Treatment = Treatment_Ctrl_Pathogen) %>%
-  mutate(Pathogen_percent_damage = (Damage_area/Leaf_area)) %>%
-  mutate_if(is.character, as.factor)
+# patho <- read.csv("Aim3_Bolivar_Summer_2019_Patho_Assay_datasheet.csv")
+# 
+# patho <- patho %>%
+#   separate(Unique.ID, c("Trial_Code", "ELoad", "Species2", "Replicate")) %>%
+#   unite("Sample_name", Species2:Replicate, sep = "") %>%
+#   relocate(Species, Trial_Code,.after = Sample_name) %>%
+#   slice(-c(41:48, 97:100)) %>%
+#   select(!c(ELoad,
+#             Leaf_ID,
+#             Trial_start_time,
+#             Date, 
+#             ImageJ_link, 
+#             X, 
+#             Notes)) %>%
+#   rename(Treatment = Treatment_Ctrl_Pathogen) %>%
+#   mutate(Pathogen_percent_damage = (Damage_area/Leaf_area)) %>%
+#   mutate_if(is.character, as.factor)
+
+# Saving
+# saveRDS(patho, file.path(save.path, "R_objects", "pathogen_data.rds"))
+
+# Reading
+patho <- readRDS(file.path(save.path, "R_objects", "pathogen_data.rds"))
+
 
 #Just the area damaged
 patho2 <- patho %>%
@@ -277,50 +330,72 @@ kable(head(patho2))
 
 # Taxonomical assignment of OTU's
 
-The taxonomic assignment is done with the `phyloseq` package. For reference <https://joey711.github.io/phyloseq/>.
+The taxonomic assignment was completed with T-BAS. The 'unite_report" returned is what I used for creating the `phyloseq` objects. Here I bind the taxonomy, OTUs and sample metadata together. All is done with the `phyloseq` package. For reference <https://joey711.github.io/phyloseq/>.
 
 ## Phyloseq objects and dataframes
 ```{r, Objects and dataframes, tidy = TRUE}
 ### Phyloseq objects ####
 
 # OTU Table: 1774 OTU with 156 Samples
-OTU <- otu_table(csamp, taxa_are_rows = TRUE)
-OTU
+# OTU <- otu_table(csamp, taxa_are_rows = TRUE)
+# OTU
+
+# Saving
+# saveRDS(OTU, file.path(save.path, "R_objects", "otu_table.rds"))
+
 
 # Taxonomic Table: 1707 OTU by 7 taxonomic ranks
-TAX <- tax_table(tbas)
+# TAX <- tax_table(tbas)
 
-# SAMP #####
-SAMP <- ndata2 %>%
-  column_to_rownames(var = "Sample_name")
-SAMP <- sample_data(SAMP)
+# Saving
+# saveRDS(TAX, file.path(save.path, "R_objects", "taxonomy_table.rds"))
 
-# Pq
-pq <- phyloseq(OTU, TAX, SAMP)
+# SAMP (sample metadata)
+
+# SAMP <- ndata2 %>%
+#   column_to_rownames(var = "Sample_name")
+# SAMP <- sample_data(SAMP)
+
+# Saving
+# saveRDS(SAMP, file.path(save.path, "R_objects", "samp_data.rds"))
+
+
+# # Merging phyloseq objects ####
+pq1 <- phyloseq(OTU, TAX, SAMP)
+
+# Saving
+# saveRDS(pq1, file.path(save.path, "R_objects", "phyloseq_main.rds"))
+
+# Reading
+pq1 <- readRDS(file.path(save.path, "R_objects", "phyloseq_main.rds"))
 
 # Random tree ####
 #random_tree <- rtree(ntaxa(pq), rooted=TRUE, tip.label=taxa_names(pq))
 
 #write.nexus(random_tree, file = "random_tree.nex") #Creating nexus file to latter manipulate with FigTree software.
-
-# Merging phyloseq objects ####
-pq1 <- phyloseq(OTU, TAX, SAMP)
-
 ```
 
 ## Pre-processing: Ascomycota
 
-Code modified from Mareli Sánchez Juliá.
-```{r, Mareli code, tidy = TRUE}
-# Are there any taxa with no (0) reads?
+**Code modified from Mareli Sánchez Juliá.**
+
+Are there any taxa with no (0) reads?
 #
-pq2 <- prune_taxa(taxa_sums(pq1) > 0, pq1)
-ntaxa(pq2) #There are 488 taxa with 0 reads.
+```{r, Mareli code, tidy = TRUE}
+#
+# pq2 <- prune_taxa(taxa_sums(pq1) > 0, pq1)
+# ntaxa(pq2) #There are 488 taxa with 0 reads.
+
+# Saving
+# saveRDS(pq2, file.path(save.path, "R_objects", "phyloseq_pq2.rds"))
+
+# Reading
+pq2 <- readRDS(file.path(save.path, "R_objects", "phyloseq_pq2.rds"))
 
 # Subset of pq1 -- only E+ samples and OTUs.
 #Important -- don't remove OTUs with 0 reads here, because we want to know which ones have no reads in E+ but DO have reads in E-.
 pq2E <- subset_samples(pq2, E_load == "E+")
-ntaxa(pq2) #1219 taxa and 78 samples
+ntaxa(pq2E) #1219 taxa and 78 samples
 
 # Eliminate E- only OTUs. Keep OTUs with more than 0 reads in subset.
 pq2_EminusRemoved <- prune_taxa(taxa_sums(pq2E) > 0, pq2E)
@@ -359,7 +434,10 @@ newpq <- merge_phyloseq(pq2ET, tax_table(pq2), sample_data(pq2), rtree(ntaxa(pq2
 # Outputs of this script -- OTU table without E minus only OTUs and phyloseq object with E- OTUs removed. No removal of singletons yet.
 
 # End of Mareli's Code #
+```
 
+## Singleton removal
+```{r, Singleton removal, tidy=TRUE}
 # Filtering Taxa: Removal of singletons ####
  # Removal of  singletons
 newpq1 <- filter_taxa(newpq, function (x) {sum(x > 0) > 1}, prune=TRUE)
@@ -372,6 +450,14 @@ newpq1 <- filter_taxa(newpq, function (x) {sum(x > 0) > 1}, prune=TRUE)
 # rabun <- subset(otu_table(newpqRA), rownames(otu_table(newpqRA)) %in% notShared)
 # write.csv(rabun, "Aim3_OTU_Relative_Abundance_singletons_trimmed.csv")
 #GPfr = filter_taxa(GPr, function(x) mean(x) > 1e-5, TRUE)
+
+
+# Richness data frame ####
+rich <- estimate_richness(newpq1, split = TRUE, measures = c("Observed","Shannon"))
+rich
+rich <- rich %>%
+  rownames_to_column() %>%
+  rename(Sample_name = rowname)
 
 # Phyloseq object to data frames ####
 
@@ -393,44 +479,69 @@ newpqDF <- newpqDF %>%  # Code from the Taxonomical assginment section dopes the
 
 # OTUs 959 and 156 samples (total abundances)
 
-eOTU <- read.csv("Aim3_OTU_phyloseq_trimmed.csv") 
-# Can upload as data frame. Use for distance matrices.
+# eOTU <- read.csv("Aim3_OTU_phyloseq_trimmed.csv") 
+# # Can upload as data frame. Use for distance matrices.
+# 
+# eOTU2 <- eOTU %>%
+#   rename(OTU_ID = X) %>%
+#   column_to_rownames(var = "OTU_ID") %>%
+#   t() %>%
+#   as.data.frame() %>%
+#   rownames_to_column() %>%
+#   rename(Sample_name = rowname)
 
-eOTU2 <- eOTU %>%
-  rename(OTU_ID = X) %>%
-  column_to_rownames(var = "OTU_ID") %>%
-  t() %>%
-  as.data.frame() %>%
-  rownames_to_column() %>%
-  rename(Sample_name = rowname)
+# Saving
+#saveRDS(eOTU2, file.path(save.path, "R_objects", "eOTU2.rds"))
+
+# Reading
+eOTU2 <- readRDS(file.path(save.path, "R_objects", "eOTU2.rds"))
+
 
 # Just 569 OTUs and 156 samples (total abundances)
-cOTU <- newpqDF %>%
-  select(-kingdom, -phylum, -class, -order, -family, -genus, -species) %>%
-  column_to_rownames(var = "OTU") %>%
-  as.matrix() %>%
-  t() %>%
-  as.data.frame() %>%
-  rownames_to_column() %>%
-  rename(Sample_name = rowname)
+# cOTU <- newpqDF %>%
+#   select(-kingdom, -phylum, -class, -order, -family, -genus, -species) %>%
+#   column_to_rownames(var = "OTU") %>%
+#   as.matrix() %>%
+#   t() %>%
+#   as.data.frame() %>%
+#   rownames_to_column() %>%
+#   rename(Sample_name = rowname)
+
+# Saving
+# saveRDS(cOTU, file.path(save.path, "R_objects", "clean_OTU.rds"))
+
+# Reading
+cOTU <- readRDS(file.path(save.path, "R_objects", "clean_OTU.rds"))
 
 # Relative Abundance matrix (trimmed to 569 OTUs)
-rabun <- read.csv("Aim3_OTU_Relative_Abundance_singletons_trimmed.csv")
-rabun <- rabun %>%
-  rename(OTU_ID = X) %>%
-  column_to_rownames(var = "OTU_ID") %>%
-  na.omit() %>%
-  na.fail() %>%
-  as.matrix()
+# rabun <- read.csv("Aim3_OTU_Relative_Abundance_singletons_trimmed.csv")
+# rabun <- rabun %>%
+#   rename(OTU_ID = X) %>%
+#   column_to_rownames(var = "OTU_ID") %>%
+#   na.omit() %>%
+#   na.fail() %>%
+#   as.matrix()
+
+# Saving
+# saveRDS(rabun, file.path(save.path, "R_objects", "rabun_tidy.rds"))
+
+# Reading
+rabun <- readRDS(file.path(save.path, "R_objects", "rabun_tidy.rds"))
 
 # Relative Abundance matrix (singletons untrimmed Ascomycota 959 OTUs)
-rawra <- read.csv("Aim3_OTU_Relative_Abundance_singletons_untrimmed.csv")
-rawra <- rawra %>%
-  rename(OTU_ID = X) %>%
-  column_to_rownames(var = "OTU_ID") %>%
-  na.omit() %>%
-  na.fail() %>%
-  as.matrix()
+# rawra <- read.csv("Aim3_OTU_Relative_Abundance_singletons_untrimmed.csv")
+# rawra <- rawra %>%
+#   rename(OTU_ID = X) %>%
+#   column_to_rownames(var = "OTU_ID") %>%
+#   na.omit() %>%
+#   na.fail() %>%
+#   as.matrix()
+
+# Saving
+# saveRDS(rawra, file.path(save.path, "R_objects", "rawra_tidy.rds"))
+
+# Reading
+rawra <- readRDS(file.path(save.path, "R_objects", "rawra_tidy.rds"))
 
 ```
 
@@ -486,7 +597,7 @@ network_traits
 ```{r, tidy = TRUE}
 #Variance Inflation Factor on simple LM with Toughness and Thickness
 
-vif(lm(Abun_7 ~ Anthocyanins + Thickness + Toughness + LMA, data = ndata))
+vif(lm( ~ Anthocyanins + Thickness + Toughness + LMA, data = ndata))
 
 #
 ```
@@ -531,235 +642,6 @@ A rule of thumb for interpreting the variance inflation factor:
 #chart.Correlation(cor.matrix3, histogram = TRUE, pch=19)
 
 ```
-
-
-## Principal Component Analysis (PCA) of leaf functional traits
-
-```{r, PCA, tidy = FALSE}
-# PCA using covariates to explain species richness/abundance ####
-data.pca <- ndata[c(7,8,9,10)]
-data.pca <- data.pca %>%
-  rename(ACI = Anthocyanins, LT = Thickness, LPS = Toughness) #Renaming columns for plotting purposes.
-
-###Run this to create pca with prcomp function
-pca<-prcomp(data.pca, scale=TRUE)
-pca$rotation=-pca$rotation
-pca$x=-pca$x
-
-#Checking the PCA
-plot(pca,type = "lines")
-biplot(pca) # Base type PCA
-
-# PCA using autoplot() and prcomp()and modifying with ggplot syntax ####
-auto <- autoplot((pca), data = data.frame(ndata), # For some reason this functions require data to be data= data.frame()
-         alpha=0, #Setting alpha to zero render the automatic circle point null.Manipulate shapes with geom_point(). 
-         loadings = TRUE,loadings.colour = "black",
-         loadings.label=TRUE, loadings.label.colour="black",
-         loadings.label.size= 4, size = 7, loadings.label.vjust = 0, 
-         loadings.label.hjust = -0.3) + 
-  geom_point(aes(fill = Species, color = Species, shape = E_load), alpha = 0.8, size = 3) +
-  geom_hline(yintercept = 0, colour = "gray45") +
-  geom_vline(xintercept = 0, colour = "gray45") +
-  scale_color_manual(values = met.brewer(name = "Cross", n = 8, type="discrete")) +
-  stat_ellipse(aes(color=Species), geom = "path", size = 1.3, position = "identity", type = "t", linetype = 1, level = 0.95, segments = 51, na.rm = FALSE, show.legend = NA, inherit.aes = TRUE) +
-  theme_bw(base_size = 12) +
-  labs(caption = expression("ACI = anthocyanins, LPS = leaf punch strength, LMA = leaf mass per area, LT = leaf thickness. All leaf replicates per species ("~ italic("n") ~ "= 467)."))
-
-
-auto$layers <- c(auto$layers, auto$layers[[2]], auto$layers[[3]]) # This adds/copies layers 2-3 and overlays them. It makes the arrows be on top of the points. There must be a better ways of doing this.
-
-#Checking if all is good.
-auto <- auto +
-  theme(plot.caption = element_text(size = 6, hjust = 1, vjust = 1))
-auto
-#ggsave(filename="./Plots/Aim3_PCA_06052023.png", plot = auto, dpi=600, units=c("mm"), width = 180, height = 180, bg = "white")
-
-##ggplot PCA aided by ChatGPT following prompt "How can I plot the following by extracting the PCA scores and avoiding using the autoplot() function? "
-##
-# Plotting PCA scores
-# scores <- as.data.frame(pca$x)
-# scores$Species <- ndata$Species
-# scores$E_load <- ndata$E_load
-# 
-# ggplot(scores, aes(PC1, PC2, fill = Species, color = Species, shape = E_load)) +
-#   geom_point(alpha = 0.8, size = 3) +
-#   geom_hline(yintercept = 0, colour = "gray45") +
-#   geom_vline(xintercept = 0, colour = "gray45") +
-#   scale_color_manual(values = met.brewer(name = "Cross", n = 8, type = "discrete")) +
-#   stat_ellipse(aes(color = Species), geom = "path", size = 1.3, position = "identity", type = "t", linetype = 1, level = 0.95, segments = 51, na.rm = FALSE, show.legend = NA, inherit.aes = TRUE) +
-#   labs(
-#     x = "PC1",
-#     y = "PC2",
-#     caption = expression("ACI = anthocyanins, LPS = leaf punch strength, LMA = leaf mass per area, LT = leaf thickness. All leaf replicates per species (" ~ italic("n") ~ " = 467).")
-#   ) +
-#   theme_bw(base_size = 12)
-# 
-# # Plotting biplot
-# loadings <- as.data.frame(pca$rotation)
-# loadings$Variable <- rownames(pca$rotation)
-# ggplot(loadings, aes(PC1, PC2, label = Variable)) +
-#   geom_hline(yintercept = 0, colour = "gray45") +
-#   geom_vline(xintercept = 0, colour = "gray45") +
-#   geom_text(color = "black", size = 4, vjust = 0, hjust = -0.3) +
-#   labs(x = "PC1", y = "PC2") +
-#   theme_bw(base_size = 12)
-```
-
-
-# Phyloseq: 
-## Statistical analyses and data visualization with Phyloseq
-
-The `phyloseq` package allows me to perform most of the necessary analyses with just a couple of phyloseq objects (e.g. data frames, relative abundance calculations, etc.). Previous data frames created are still needed for further analyses (e.g. dbRDA and PSLR). There are some difficulties with manipulating the data with `phyloseq`. When merging objects the categorical facotrs are coerced to numeric, hence losing that information. See [here](https://github.com/joey711/phyloseq/issues/465) and comments in code chunks.
-
-## Phyloseq: plots and graphs
-```{r, Phyloseq plots and graphs, tidy = TRUE}
-# # Abundance plots
-# # Plots use data without singletons and trimmed for greenhouse endophytes.
-# EndoAbun <- speedyseq::plot_bar(newpq1, "Species", "Abundance", "class") +
-#   scale_fill_manual(values = met.brewer(name="Redon", n=11, type="continuous")) +
-#   labs(title = "Ascomycota endophyte abundance(cleaned)" ) +
-#   facet_wrap(~E_load)
-# EndoAbun
-# #ggsave(filename="Aim3_AbunBarPlot_06272022.jpeg", plot = EndoAbun, dpi=600, units=c("mm"), width=200, height=200)
-# #
-# # Agglomerate taxa and merging data to make plot ####
-# # Similar to Relative abundance calculate in code above
-# 
-# #View(sample_data(newpq1))
-# 
-# #make a new phyloseq object that groups all taxa by class
-# ps3 <- tax_glom(newpq1, "class") 
-# #make it relative
-# ps0 <- transform_sample_counts(ps3, function(x) x / sum(x))
-# #merge samples so that they are all grouped/binned by species
-# ps1 <- merge_samples(ps0, "Species")
-# # repair factors
-# sample_data(ps1)$Species <- levels(sample_data(ps0)$Species)[get_variable(ps1, "Species")]
-# 
-# #make relative again.
-# ps4 <- transform_sample_counts(ps1, function(x) x / sum(x))
-# 
-# rel_abundplot <- plot_bar(ps4, "Species", "Abundance") + geom_bar(aes(fill=class), stat="identity", position="stack")+
-#   labs(x = "Species", y = "Relative abundance (%)", fill="Class") +
-#    scale_fill_manual(values = met.brewer(name = "Signac", type="discrete"))
-# rel_abundplot
-# 
-# 
-# ######
-# 
-# speedyseq::plot_bar(newpq1, "Species", "Abundance", "order") +
-#   facet_grid(~E_load)
-# 
-# speedyseq::plot_bar(newpq1, "class", "Abundance", "class") +
-# facet_grid(Species~.)
-# 
-# #plot_tree(taxglom, color = "Species", shape = "class", size = "abundance")
-# 
-# # Cladogram ####
-# #plot_tree(newpq1, color="Species", label.tips="taxa_names", ladderize="left", plot.margin=0.3)
-# 
-# # Heatmap ####
-# 
-# #plot_heatmap(newpqRA, sample.label = "Species", taxa.label="class")
-```
-
-## Phyloseq: Richness
-Plots with `phyloseq` package. 
-```{r, tidy = TRUE}
-# Richness ####
-# Theme set
-theme_set(theme_bw())
-pal = "Set1"
-scale_colour_discrete <-  function(palname=pal, ...){
-  scale_colour_brewer(palette=palname, ...)
-}
-scale_fill_discrete <-  function(palname=pal, ...){
-  scale_fill_brewer(palette=palname, ...)
-}
-
-# Richness data frame ####
-rich <- estimate_richness(newpq1, split = TRUE, measures = c("Observed","Shannon"))
-
-rich <- rich %>%
-  rownames_to_column() %>%
-  rename(Sample_name = rowname)
-
-# General plot with singletons
-
-p <- plot_richness(newpq1, "Species", color = "Species",measures = c("Observed", "Shannon"), scales="free") +
-  scale_color_manual(aes(color = "Species"),values = met.brewer(name="Redon", n=11, type="discrete")) +
-  geom_point(size=2, alpha=0.7, position = "jitter") +
-  geom_boxplot(alpha=0.7)+ 
-  labs(title = "Ascomycota endophyte observed richness and Shannon Diversity" ) +
-  theme(legend.position="none", axis.text.x=element_text(angle=45,hjust=1,vjust=1,size=12))
-p$layers <- p$layers[-1]
-p
-#ggsave(filename = "Aim3_AlphaDiversity_06272022.jpeg", plot = p, dpi=600, units=c("mm"), width=200, height=200)
-
-
-# Repair variables that were damaged during merge (coerced to numeric)
-# See: https://github.com/joey711/phyloseq/issues/465
-#Species
-#replicates <- sample_data(mergedpq)$Species %>% 
- # sort()%>%
- # table()%>%
- # as.data.frame # you can use as_tibble(), but then you must use replicates$n in next line
-#otu_table(mergedpq) <- otu_table(mergedpq)/replicates$Freq
-
-#newmetdat <- sample_data(newpq) %>%
-#  as_tibble() %>%
-#  distinct(Species, .keep_all = TRUE) %>% 
- # arrange(Species) %>%
- # as.data.frame()
-#rownames(newmetdat) <- rownames(otu_table(mergedpq))
-#sample_data(mergedpq) <- newmetdat
-```
-
-
-## Phyloseq: Ordination and Distance matrices
-Plots with `phyloseq` package.
-```{r, tidy = TRUE}
-# Just OTUs without singletons
-r <- ordinate(newpq1, "NMDS", "bray")
-
-# NDMS by Trial_Code
-p1 <- plot_ordination(newpq1, r, type = "samples", color = "Trial_Code", title = "Community Composition by Trial Code") +
-  stat_ellipse(geom = "polygon", aes(fill = Trial_Code), alpha = 0.25, level = 0.95) +
- labs(caption = "Trials for ant and pathogen data sets go from T1-T5. Repeated surveys for ant data set are > T6") +
-  facet_wrap(~Species)
-p1 #Making these plots with Mareli. The main purpose is to understand community similarity accros trials and time points. -June 2023
-
-#ggsave(filename ="./Plots/Aim3_NMDS_06022023_TrialCode.jpeg" , plot = p1, dpi=600, units=c("mm"), width=200, height=200)
-
-# NMDS by Trial_type
-p2 <- plot_ordination(newpq1, r, type = "samples", color = "Trial_type", title = "Community Composition by Trial type") +
-  stat_ellipse(geom = "polygon", aes(fill = Trial_type), alpha = 0.25, level = 0.95) +
- labs(caption = "Commmunity composition for ant and pathogen data sets. For the most part, plants used for trials were inoculated at the same time per species and trialed and preserved within 5-6 days of final day of inoculation") +
-  facet_wrap(~Species)
-p2
-
-#ggsave(filename ="./Plots/Aim3_NMDS_06022023_TrialType.jpeg" , plot = p2, dpi=600, units=c("mm"), width=200, height=200)
-
-# # Samples 
-# p2 <- plot_ordination(newpq1, r, type="samples", color="Species")
-# p2 + geom_point(size = 3) +
-#   ggtitle("Tree Species")
-#   #facet_wrap(~E_load)
-# #geom_polygon(aes(fill=Species), alpha = 0.5) +
-# p2
-# 
-# # biplot
-# p3 = plot_ordination(newpq, r, type="biplot", color="class", shape="class", title="biplot")
-# p3
-# 
-# # Split
-# p4 = plot_ordination(newpq, r, type="split", color="class", title="split", label="Species") 
-# p4
-```
-
-After meddling with this for a little bit, I do not like how this plots my data. I find it confusing to edit and know what it is plotting exactly. I will plot these ordinations by suing the data frames cleaned and trimmed with phyloseq. -BAR 06/19/2022
-Get back to this when linear models are finished and dbRDA models too.
-
 
 # Master data set: richness, diversity and abundances post-phyloseq
 
@@ -885,6 +767,232 @@ masterpat2 <- df_list_ant2 %>%
   #mutate(logit_damage = logit(Pathogen_percent_damage))
 #masterpat2$log_damage <- log(masterpat2$Pathogen_percent_damage)
 ```
+
+
+# Principal Component Analysis (PCA) of leaf functional traits
+
+```{r, PCA, tidy = FALSE}
+# PCA using covariates to explain species richness/abundance ####
+data.pca <- ndata[c(7,8,9,10)]
+data.pca <- data.pca %>%
+  rename(ACI = Anthocyanins, LT = Thickness, LPS = Toughness) #Renaming columns for plotting purposes.
+
+###Run this to create pca with prcomp function
+pca<-prcomp(data.pca, scale=TRUE)
+pca$rotation=-pca$rotation
+pca$x=-pca$x
+
+#Checking the PCA
+plot(pca,type = "lines")
+biplot(pca) # Base type PCA
+
+# PCA using autoplot() and prcomp()and modifying with ggplot syntax ####
+auto <- autoplot((pca), data = data.frame(ndata), # For some reason this functions require data to be data= data.frame()
+         alpha=0, #Setting alpha to zero render the automatic circle point null.Manipulate shapes with geom_point(). 
+         loadings = TRUE,loadings.colour = "black",
+         loadings.label=TRUE, loadings.label.colour="black",
+         loadings.label.size= 4, size = 7, loadings.label.vjust = 0, 
+         loadings.label.hjust = -0.3) + 
+  geom_point(aes(fill = Species, color = Species, shape = E_load), alpha = 0.8, size = 3) +
+  geom_hline(yintercept = 0, colour = "gray45") +
+  geom_vline(xintercept = 0, colour = "gray45") +
+  scale_color_manual(values = met.brewer(name = "Cross", n = 8, type="discrete")) +
+  stat_ellipse(aes(color=Species), geom = "path", size = 1.3, position = "identity", type = "t", linetype = 1, level = 0.95, segments = 51, na.rm = FALSE, show.legend = NA, inherit.aes = TRUE) +
+  theme_bw(base_size = 12) +
+  labs(caption = expression("ACI = anthocyanins, LPS = leaf punch strength, LMA = leaf mass per area, LT = leaf thickness. All leaf replicates per species ("~ italic("n") ~ "= 467)."))
+
+
+auto$layers <- c(auto$layers, auto$layers[[2]], auto$layers[[3]]) # This adds/copies layers 2-3 and overlays them. It makes the arrows be on top of the points. There must be a better ways of doing this.
+
+#Checking if all is good.
+auto <- auto +
+  theme(plot.caption = element_text(size = 6, hjust = 1, vjust = 1))
+auto
+#ggsave(filename="./Plots/Aim3_PCA_06052023.png", plot = auto, dpi=600, units=c("mm"), width = 180, height = 180, bg = "white")
+```
+
+```{r, PCA chatGPT, tidy=TRUE}
+#Not great!
+
+# ggplot PCA aided by ChatGPT following prompt "How can I plot the following by extracting the PCA scores and avoiding using the autoplot() function? "
+##
+# Plotting PCA scores
+# scores <- as.data.frame(pca$x)
+# scores$Species <- ndata$Species
+# scores$E_load <- ndata$E_load
+# 
+# ggplot(scores, aes(PC1, PC2, fill = Species, color = Species, shape = E_load)) +
+#   geom_point(alpha = 0.8, size = 3) +
+#   geom_hline(yintercept = 0, colour = "gray45") +
+#   geom_vline(xintercept = 0, colour = "gray45") +
+#   scale_color_manual(values = met.brewer(name = "Cross", n = 8, type = "discrete")) +
+#   stat_ellipse(aes(color = Species), geom = "path", size = 1.3, position = "identity", type = "t", linetype = 1, level = 0.95, segments = 51, na.rm = FALSE, show.legend = NA, inherit.aes = TRUE) +
+#   labs(
+#     x = "PC1",
+#     y = "PC2",
+#     caption = expression("ACI = anthocyanins, LPS = leaf punch strength, LMA = leaf mass per area, LT = leaf thickness. All leaf replicates per species (" ~ italic("n") ~ " = 467).")
+#   ) +
+#   theme_bw(base_size = 12)
+# 
+# # Plotting biplot
+# loadings <- as.data.frame(pca$rotation)
+# loadings$Variable <- rownames(pca$rotation)
+# ggplot(loadings, aes(PC1, PC2, label = Variable)) +
+#   geom_hline(yintercept = 0, colour = "gray45") +
+#   geom_vline(xintercept = 0, colour = "gray45") +
+#   geom_text(color = "black", size = 4, vjust = 0, hjust = -0.3) +
+#   labs(x = "PC1", y = "PC2") +
+#   theme_bw(base_size = 12)
+```
+
+
+# Phyloseq: 
+## Statistical analyses and data visualization with Phyloseq
+
+The `phyloseq` package allows me to perform most of the necessary analyses with just a couple of phyloseq objects (e.g. data frames, relative abundance calculations, etc.). Previous data frames created are still needed for further analyses (e.g. dbRDA and PSLR). There are some difficulties with manipulating the data with `phyloseq`. When merging objects the categorical facotrs are coerced to numeric, hence losing that information. See [here](https://github.com/joey711/phyloseq/issues/465) and comments in code chunks.
+
+## Phyloseq: plots and graphs
+```{r, Phyloseq plots and graphs, tidy = TRUE}
+# # Abundance plots
+# # Plots use data without singletons and trimmed for greenhouse endophytes.
+# EndoAbun <- speedyseq::plot_bar(newpq1, "Species", "Abundance", "class") +
+#   scale_fill_manual(values = met.brewer(name="Redon", n=11, type="continuous")) +
+#   labs(title = "Ascomycota endophyte abundance(cleaned)" ) +
+#   facet_wrap(~E_load)
+# EndoAbun
+# #ggsave(filename="Aim3_AbunBarPlot_06272022.jpeg", plot = EndoAbun, dpi=600, units=c("mm"), width=200, height=200)
+# #
+# # Agglomerate taxa and merging data to make plot ####
+# # Similar to Relative abundance calculate in code above
+# 
+# #View(sample_data(newpq1))
+# 
+# #make a new phyloseq object that groups all taxa by class
+# ps3 <- tax_glom(newpq1, "class") 
+# #make it relative
+# ps0 <- transform_sample_counts(ps3, function(x) x / sum(x))
+# #merge samples so that they are all grouped/binned by species
+# ps1 <- merge_samples(ps0, "Species")
+# # repair factors
+# sample_data(ps1)$Species <- levels(sample_data(ps0)$Species)[get_variable(ps1, "Species")]
+# 
+# #make relative again.
+# ps4 <- transform_sample_counts(ps1, function(x) x / sum(x))
+# 
+# rel_abundplot <- plot_bar(ps4, "Species", "Abundance") + geom_bar(aes(fill=class), stat="identity", position="stack")+
+#   labs(x = "Species", y = "Relative abundance (%)", fill="Class") +
+#    scale_fill_manual(values = met.brewer(name = "Signac", type="discrete"))
+# rel_abundplot
+# 
+# 
+# ######
+# 
+# speedyseq::plot_bar(newpq1, "Species", "Abundance", "order") +
+#   facet_grid(~E_load)
+# 
+# speedyseq::plot_bar(newpq1, "class", "Abundance", "class") +
+# facet_grid(Species~.)
+# 
+# #plot_tree(taxglom, color = "Species", shape = "class", size = "abundance")
+# 
+# # Cladogram ####
+# #plot_tree(newpq1, color="Species", label.tips="taxa_names", ladderize="left", plot.margin=0.3)
+# 
+# # Heatmap ####
+# 
+# #plot_heatmap(newpqRA, sample.label = "Species", taxa.label="class")
+```
+
+## Phyloseq: Richness
+Plots with `phyloseq` package. 
+```{r, tidy = TRUE}
+# Richness ####
+# Theme set
+theme_set(theme_bw())
+pal = "Set1"
+scale_colour_discrete <-  function(palname=pal, ...){
+  scale_colour_brewer(palette=palname, ...)
+}
+scale_fill_discrete <-  function(palname=pal, ...){
+  scale_fill_brewer(palette=palname, ...)
+}
+
+# General plot with singletons
+
+p <- plot_richness(newpq1, "Species", color = "Species",measures = c("Observed", "Shannon"), scales="free") +
+  scale_color_manual(aes(color = "Species"),values = met.brewer(name="Redon", n=11, type="discrete")) +
+  geom_point(size=2, alpha=0.7, position = "jitter") +
+  geom_boxplot(alpha=0.7)+ 
+  labs(title = "Ascomycota endophyte observed richness and Shannon Diversity" ) +
+  theme(legend.position="none", axis.text.x=element_text(angle=45,hjust=1,vjust=1,size=12))
+p$layers <- p$layers[-1]
+p
+#ggsave(filename = "Aim3_AlphaDiversity_06272022.jpeg", plot = p, dpi=600, units=c("mm"), width=200, height=200)
+
+
+# Repair variables that were damaged during merge (coerced to numeric)
+# See: https://github.com/joey711/phyloseq/issues/465
+#Species
+#replicates <- sample_data(mergedpq)$Species %>% 
+ # sort()%>%
+ # table()%>%
+ # as.data.frame # you can use as_tibble(), but then you must use replicates$n in next line
+#otu_table(mergedpq) <- otu_table(mergedpq)/replicates$Freq
+
+#newmetdat <- sample_data(newpq) %>%
+#  as_tibble() %>%
+#  distinct(Species, .keep_all = TRUE) %>% 
+ # arrange(Species) %>%
+ # as.data.frame()
+#rownames(newmetdat) <- rownames(otu_table(mergedpq))
+#sample_data(mergedpq) <- newmetdat
+```
+
+
+## Phyloseq: Ordination and Distance matrices
+The main purpose is to understand community similarity across trials and time points.This answers the general questions" 1) Did trials differ from each other? 2) Did time play a part in the community composition differences we see) -June/July 2023
+```{r, tidy = TRUE}
+# Just OTUs, without singletons
+r <- ordinate(newpq1, "NMDS", "bray")
+
+# NMDS by Trial_Code (Trial_Code = trial replicate)
+p1 <- plot_ordination(newpq1, r, type = "samples", color = "Trial_Code", title = "Community Composition by Trial Code") +
+  stat_ellipse(geom = "polygon", aes(fill = Trial_Code), alpha = 0.25, level = 0.95) +
+ labs(caption = "Trials for ant and pathogen data sets go from T1-T5. Repeated surveys for ant data set are > T6") +
+  facet_wrap(~Species)
+p1 
+
+#ggsave(filename ="./Plots/Aim3_NMDS_06022023_TrialCode.jpeg" , plot = p1, dpi=600, units=c("mm"), width=200, height=200)
+
+# NMDS by Trial_type (an trial or pathogen trial)
+p2 <- plot_ordination(newpq1, r, type = "samples", color = "Trial_type", title = "Community Composition by Trial type") +
+  stat_ellipse(geom = "polygon", aes(fill = Trial_type), alpha = 0.25, level = 0.95) +
+ labs(caption = "Commmunity composition for ant and pathogen data sets. For the most part, plants used for trials were inoculated at the same time per species and trialed and preserved within 5-6 days of final day of inoculation") +
+  facet_wrap(~Species)
+p2
+
+#ggsave(filename ="./Plots/Aim3_NMDS_06022023_TrialType.jpeg" , plot = p2, dpi=600, units=c("mm"), width=200, height=200)
+
+# # Samples 
+p3 <- plot_ordination(newpq1, r, type="samples", color="Species")
+p3 + geom_point(size = 3) +
+  ggtitle("Tree Species")
+  #facet_wrap(~E_load)
+#geom_polygon(aes(fill=Species), alpha = 0.5) +
+p3
+
+# # biplot
+# p3 = plot_ordination(newpq, r, type="biplot", color="class", shape="class", title="biplot")
+# p3
+# 
+# # Split
+# p4 = plot_ordination(newpq, r, type="split", color="class", title="split", label="Species") 
+# p4
+```
+
+After meddling with this for a little bit, I do not like how this plots my data. I find it confusing to edit and know what it is plotting exactly. I will plot these ordinations by using the data frames cleaned and trimmed with phyloseq. -BAR 06/19/2022
+*The  main ordination plot is the one produces in the dbRDA section. These ordination are good for supplementary material information* -BAR 7/04/2023
+
 
 
 # Leaf traits and relative abundance and total reads of OTUs
