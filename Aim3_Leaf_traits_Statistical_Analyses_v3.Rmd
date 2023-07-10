@@ -134,7 +134,7 @@ csamp <- readRDS(file.path(save.path, "R_objects", "clean_sequences.rds"))
 #   as.matrix()
 
 # Saving
-saveRDS(tbas, file.path(save.path, "R_objects", "tbas_filtered.rds"))
+#saveRDS(tbas, file.path(save.path, "R_objects", "tbas_filtered.rds"))
 
 # Reading
 tbas <- readRDS(file.path(save.path, "R_objects", "tbas_filtered.rds"))
@@ -343,7 +343,6 @@ The taxonomic assignment was completed with T-BAS. The 'unite_report" returned i
 # Saving
 # saveRDS(OTU, file.path(save.path, "R_objects", "otu_table.rds"))
 
-
 # Taxonomic Table: 1707 OTU by 7 taxonomic ranks
 # TAX <- tax_table(tbas)
 
@@ -361,7 +360,7 @@ The taxonomic assignment was completed with T-BAS. The 'unite_report" returned i
 
 
 # # Merging phyloseq objects ####
-pq1 <- phyloseq(OTU, TAX, SAMP)
+# pq1 <- phyloseq(OTU, TAX, SAMP)
 
 # Saving
 # saveRDS(pq1, file.path(save.path, "R_objects", "phyloseq_main.rds"))
@@ -698,6 +697,7 @@ For `master` I remove empty rows just as I did in above section. Because I use `
 
 ## masterant
 ```{r, Ant Master Data, tidy = TRUE}
+# Per plant
 masterant <- master %>%
   subset(Trial_type == "Ant") %>%
   drop_na(Trial_Code) %>%
@@ -707,6 +707,8 @@ masterant <- master %>%
 # Glimpse
 glimpse(masterant)
 
+
+# Per Leaf
 df_list_ant2 <- list(ndata, cOTU, ants2, patho2, rich)
 
 masterant2 <- df_list_ant2 %>%
@@ -734,7 +736,7 @@ For `masterant` I remove THEO T1 & T2 and APE28-29 just as I did in above sectio
 
 ## masterpat
 ```{r, Pathogen Master data, tidy = TRUE}
-#
+# Observations per plant level
 masterpat <- master %>%
   subset(Trial_type == "Pathogen") %>%
   select(!c(11,12)) %>%
@@ -743,6 +745,7 @@ masterpat <- master %>%
 # Glimpse
 glimpse(masterpat)
 
+# Observations per leaf level
 # masterpat2
 
 masterpat2 <- df_list_ant2 %>%
@@ -771,6 +774,7 @@ masterpat2 <- df_list_ant2 %>%
 
 # Principal Component Analysis (PCA) of leaf functional traits
 
+## Full PCA
 ```{r, PCA, tidy = FALSE}
 # PCA using covariates to explain species richness/abundance ####
 data.pca <- ndata[c(7,8,9,10)]
@@ -799,7 +803,8 @@ auto <- autoplot((pca), data = data.frame(ndata), # For some reason this functio
   scale_color_manual(values = met.brewer(name = "Cross", n = 8, type="discrete")) +
   stat_ellipse(aes(color=Species), geom = "path", size = 1.3, position = "identity", type = "t", linetype = 1, level = 0.95, segments = 51, na.rm = FALSE, show.legend = NA, inherit.aes = TRUE) +
   theme_bw(base_size = 12) +
-  labs(caption = expression("ACI = anthocyanins, LPS = leaf punch strength, LMA = leaf mass per area, LT = leaf thickness. All leaf replicates per species ("~ italic("n") ~ "= 467)."))
+  labs(title = "Full PCA", caption = expression("ACI = anthocyanins, LPS = leaf punch strength, LMA = leaf mass per area, LT = leaf thickness. All leaf replicates per species ("~ italic("n") ~ "= 467).")) + 
+  theme(plot.title = element_text(color="red", size = 14, face="bold.italic"))
 
 
 auto$layers <- c(auto$layers, auto$layers[[2]], auto$layers[[3]]) # This adds/copies layers 2-3 and overlays them. It makes the arrows be on top of the points. There must be a better ways of doing this.
@@ -844,6 +849,144 @@ auto
 #   labs(x = "PC1", y = "PC2") +
 #   theme_bw(base_size = 12)
 ```
+
+## Ant PCA
+```{r}
+# PCA using covariates to explain species richness/abundance ####
+ant_pcadata <- masterant2[c(7,8,9,10)]
+ant_pcadata <- ant_pcadata %>%
+  rename(ACI = Anthocyanins, LT = Thickness, LPS = Toughness) #Renaming columns for plotting purposes.
+
+
+###Run this to create pca with prcomp function
+ant.pca <-prcomp(ant_pcadata, scale=TRUE)
+ant.pca$rotation=-ant.pca$rotation
+ant.pca$x=-ant.pca$x
+
+auto_ant <- autoplot((ant.pca), data = data.frame(masterant2), # For some reason this functions require data to be data= data.frame()
+         alpha=0, #Setting alpha to zero render the automatic circle point null.Manipulate shapes with geom_point(). 
+         loadings = TRUE,loadings.colour = "black",
+         loadings.label=TRUE, loadings.label.colour="black",
+         loadings.label.size= 4, size = 7, loadings.label.vjust = 0, 
+         loadings.label.hjust = -0.3) + 
+  geom_point(aes(fill = Species, color = Species, shape = E_load), alpha = 0.8, size = 3) +
+  geom_hline(yintercept = 0, colour = "gray45") +
+  geom_vline(xintercept = 0, colour = "gray45") +
+  scale_color_manual(values = met.brewer(name = "Cross", n = 8, type="discrete")) +
+  stat_ellipse(aes(color=Species), geom = "path", size = 1.3, position = "identity", type = "t", linetype = 1, level = 0.95, segments = 51, na.rm = FALSE, show.legend = NA, inherit.aes = TRUE) +
+  theme_bw(base_size = 12) +
+  labs(title = "Ant only PCA") +
+  theme(plot.title = element_text(color="red", size = 14, face="bold.italic"))
+# caption = expression("ACI = anthocyanins, LPS = leaf punch strength, LMA = leaf mass per area, LT = leaf thickness. All leaf replicates per species ("~ italic("n") ~ "= 210).")
+
+
+auto_ant$layers <- c(auto_ant$layers, auto_ant$layers[[2]], auto_ant$layers[[3]]) # This adds/copies layers 2-3 and overlays them. It makes the arrows be on top of the points. There must be a better ways of doing this.
+
+#Checking if all is good.
+auto_ant <- auto_ant +
+  theme(plot.caption = element_text(size = 6, hjust = 1, vjust = 1))
+auto_ant
+
+#ggsave(filename="./Plots/Aim3_Ant_PCA_07102023.png", plot = auto_ant, dpi=600, units=c("mm"), width = 180, height = 180, bg = "white")
+```
+
+
+# PCA: Simple linear models with PC1 and PC2
+
+### Ants
+```{r, Lm PCA data, tidy=TRUE}
+# PCA loadings (rotations) data frame
+ant.pci<-data.frame(ant.pca$x) #Species = ndata$Species not included.
+
+# joined data frame for PC llinear regressions
+
+ant_pcalm <- masterant2[c(1,2, 5, 12, 17)]
+
+ant_pcalm <- cbind(ant_pcalm, ant.pci) #Both data sets have 467 observations
+```
+The functions `prcomp` and `princomp` are both possible to use for this analysis. The `prcomp` stores the "scores" as `x`, while `princomp` stores them as `scores`. Useful to know when extracting the data from it for linear regressions. The function `princomp` uses Eigen decomposition of the covariance and correlations between samples. The `prcomp` uses the singular value decomposition between variables.
+
+```{r, Ant PC1-2, tidy=TRUE}
+lmpc1 <- lm(Ant_percent_leafloss ~ PC1, data = ant_pcalm)
+summary(lmpc1)
+
+# PC1
+       
+ant_pc1 <- ggplot(ant_pcalm, aes(PC1, Ant_percent_leafloss)) +
+  geom_jitter(aes(color = Species, shape = E_load), size = 3, alpha = 0.7) +
+  geom_smooth(method = lm, se = T , level = 0.95, na.rm = F, color = "black", size = 0.5) +
+  stat_regline_equation(aes(label = paste(..eq.label.., ..adj.rr.label.., sep = "~~~~"))) +
+  #stat_regline_equation(label.y.npc = "top", label.x.npc = "center", aes(label = ..eq.label..), color= "black", size = 2.2) +
+  scale_color_manual(values = met.brewer(name = "Cross", n = 8, type="discrete")) +
+  theme_minimal(base_size = 16) +
+  labs(title = "Herbivory by leaf cutter ants vs. PC1", y = "Herbivory (%)", caption = "") +
+  theme(plot.title = element_text(color="red", size = 14, face="bold.italic")) +
+  guides(color = "none")  +      #To turn off color legend
+  guides(fill = "none") + #To turn off fill legend
+  guides(shape = "none")
+  
+ant_pc1
+
+#ggsave(filename="./Plots/Aim3_AntPC1_07102023.png", plot = ant_pc1, dpi=600, units=c("mm"), width = 180, height = 180, bg = "white")
+
+
+# PC2
+lmpc2 <- lm(Ant_percent_leafloss ~ PC2, data = ant_pcalm)
+summary(lmpc2)
+
+# Formatting formula for p value
+format.p <- function(p, precision = 0.001) {
+  digits <- -log(precision, base = 10)
+  p <- formatC(p, format = 'f', digits = digits)
+  if (p < .001) {
+    p = paste0('< ', precision)}
+  if (p >= .001) {
+    p = paste0('= ', p)    }
+  sub("0", "", p)
+}
+
+p <- cor.test(ant_pcalm$Ant_percent_leafloss, ant_pcalm$PC2)$p.value
+
+p=format.p(p) # This is just to make the p-value nicer. 
+
+
+ant_pc2 <- ggplot(ant_pcalm, aes(PC2, Ant_percent_leafloss)) +
+  geom_jitter(aes(color = Species, shape = E_load), size = 3, alpha = 0.7) +
+  geom_smooth(method = lm, se = T , level = 0.95, na.rm = F, color = "black", size = 0.5) +
+  stat_regline_equation(aes(label = paste(..eq.label.., ..adj.rr.label.., sep = "~~~~"))) +
+  #stat_regline_equation(label.y.npc = "top", label.x.npc = "center", aes(label = ..eq.label..), color= "black", size = 2.2) +
+  scale_color_manual(values = met.brewer(name = "Cross", n = 8, type="discrete")) +
+  theme_minimal(base_size = 16) +
+  labs(title = "Herbivory by leaf cutter ants vs. PC2", y = "Herbivory (%)", caption = "") +
+  theme(plot.title = element_text(color="red", size = 14, face="bold.italic")) +
+ annotate(geom="text",label=sprintf("italic('p')~'%s'",p),parse=TRUE,x=-1,y=65
+          ) +
+    guides(color = "none")  +      #To turn off color legend
+  guides(fill = "none") + #To turn off fill legend
+  guides(shape = "none")
+  
+  
+ant_pc2
+
+#ggsave(filename="./Plots/Aim3_AntPC2_07102023.png", plot = ant_pc2, dpi=600, units=c("mm"), width = 180, height = 180, bg = "white")
+```
+
+
+
+Saving as grid plot
+```{r}
+antpca_arranged <- ggarrange(auto_ant, ant_pc1, ant_pc2, nrow = 2, ncol=2, common.legend = TRUE, legend="right")
+
+antpca_arranged
+# Adding caption
+ant_caption <- expression("*All individual leaves per individual per tree species included ("~ italic("n") ~ "= 210).")
+ant_pca_with_caption <- annotate_figure(antpca_arranged, bottom = text_grob(ant_caption), fig.lab.pos = "bottom.right", fig.lab.size = 6)
+
+ant_pca_with_caption
+
+#ggsave(filename = "./Plots/Aim3_AntPCS_07102023.png", plot = ant_pca_with_caption, dpi=300, units=c("mm"), width = 200, height = 180, bg = "white")
+```
+
 
 
 # Phyloseq: 
