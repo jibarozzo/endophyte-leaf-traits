@@ -1029,14 +1029,6 @@ ant_pca_with_caption
 ```
 
 
-=======
-  labs(title = "Herbivory by leaf cutter ants vs. PC2", y = "Herbivory (%)", caption = "") +
-  theme(plot.title = element_text(color="red", size = 14, face="bold.italic"))
-  
-ant_pc2
-```
-
->>>>>>> 6f4fc8932ee2e440eaec76e4a6a7a37034880845
 
 # Phyloseq: 
 ## Statistical analyses and data visualization with Phyloseq
