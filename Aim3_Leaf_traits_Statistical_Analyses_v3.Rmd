@@ -90,9 +90,8 @@ conflict_prefer_all("phyloseq")
 rm(list = ls()) 
 #setwd("H:/.shortcut-targets-by-id/0B9v0CdUUCqU5VVR4a3BvNHM1Z28/VBL_users/Grad_Students/Bolivar/Dissertation/Leaf_Traits_Panama/Data/Sequence_analyses")
 
-setwd("C:/Users/boloq/Box/Tulane/Bioinformatics/Aim3_Sequence_analyses")
-#Note that H drive has shortcuts to Google Drive, hence the long file path.
-save.path <- "C:/Users/boloq/Box/Tulane/Bioinformatics/Aim3_Sequence_analyses"
+setwd("C:/Users/boloq/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses")
+save.path <- "C:/Users/boloq/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses"
 ```
 
 # Data frames
@@ -596,7 +595,7 @@ network_traits
 ```{r, tidy = TRUE}
 #Variance Inflation Factor on simple LM with Toughness and Thickness
 
-vif(lm( ~ Anthocyanins + Thickness + Toughness + LMA, data = ndata))
+vif(lm(Abun_7 ~ Anthocyanins + Thickness + Toughness + LMA, data = ndata))
 
 #
 ```
@@ -763,8 +762,6 @@ masterpat2 <- df_list_ant2 %>%
   subset(Trial_type == "Pathogen") %>%
   select(!c(12:13))
 
-  na.omit() %>%
-  mutate(logit_damage = logit(Pathogen_percent_damage))
 
 #mutate(Pathogen_percent_damage = pmin(pmax(Pathogen_percent_damage, 0), 1)) %>%  # Rescale values between 0 and 1
   #mutate(logit_damage = logit(Pathogen_percent_damage))
@@ -875,15 +872,11 @@ auto_ant <- autoplot((ant.pca), data = data.frame(masterant2), # For some reason
   scale_color_manual(values = met.brewer(name = "Cross", n = 8, type="discrete")) +
   stat_ellipse(aes(color=Species), geom = "path", size = 1.3, position = "identity", type = "t", linetype = 1, level = 0.95, segments = 51, na.rm = FALSE, show.legend = NA, inherit.aes = TRUE) +
   theme_bw(base_size = 12) +
-<<<<<<< HEAD
   labs(title = "Ant only PCA") +
   theme(plot.title = element_text(color="red", size = 14, face="bold.italic"))
 # caption = expression("ACI = anthocyanins, LPS = leaf punch strength, LMA = leaf mass per area, LT = leaf thickness. All leaf replicates per species ("~ italic("n") ~ "= 210).")
-=======
-  labs(title = "Ant only PCA", caption = expression("ACI = anthocyanins, LPS = leaf punch strength, LMA = leaf mass per area, LT = leaf thickness. All leaf replicates per species ("~ italic("n") ~ "= 210).")) +
-  theme(plot.title = element_text(color="red", size = 14, face="bold.italic"))
   
->>>>>>> 6f4fc8932ee2e440eaec76e4a6a7a37034880845
+  
 
 
 auto_ant$layers <- c(auto_ant$layers, auto_ant$layers[[2]], auto_ant$layers[[3]]) # This adds/copies layers 2-3 and overlays them. It makes the arrows be on top of the points. There must be a better ways of doing this.
@@ -895,113 +888,128 @@ auto_ant
 
 #ggsave(filename="./Plots/Aim3_Ant_PCA_07102023.png", plot = auto_ant, dpi=600, units=c("mm"), width = 180, height = 180, bg = "white")
 ```
-
-<<<<<<< HEAD
-
-=======
-Saving as grid plot
+## Pathogen PCA
 ```{r}
-antpca_arranged <- ggarrange(ant.pca, ant_pc1, ant_pc2, nrow = 2, ncol=2, common.legend = TRUE, legend="right")
+# PCA using covariates to explain species richness/abundance ####
+pat_pcadata <- masterpat2[c(8,9,10,11)]
+pat_pcadata <- pat_pcadata %>%
+  rename(ACI = Anthocyanins, LT = Thickness, LPS = Toughness) #Renaming columns for plotting purposes.
 
-antpca_arranged
-# Adding caption
-ant_caption <- "*All individuals per tree species included (n = 210)"
-ant_arranged_with_caption <- annotate_figure(ant_arranged, bottom = text_grob(ant_caption), fig.lab.pos = "bottom.right", fig.lab.size = 6)
 
-ant_arranged_with_captio
+###Run this to create pca with prcomp function
+pat.pca <-prcomp(pat_pcadata, scale=TRUE)
+pat.pca$rotation=-pat.pca$rotation
+pat.pca$x=-pat.pca$x
 
+auto_pat <- autoplot((pat.pca), data = data.frame(masterpat2), # For some reason this functions require data to be data= data.frame()
+         alpha=0, #Setting alpha to zero render the automatic circle point null.Manipulate shapes with geom_point(). 
+         loadings = TRUE,loadings.colour = "black",
+         loadings.label=TRUE, loadings.label.colour="black",
+         loadings.label.size= 4, size = 7, loadings.label.vjust = 0, 
+         loadings.label.hjust = -0.3) + 
+  geom_point(aes(fill = Species, color = Species, shape = E_load), alpha = 0.8, size = 3) +
+  geom_hline(yintercept = 0, colour = "gray45") +
+  geom_vline(xintercept = 0, colour = "gray45") +
+  scale_color_manual(values = met.brewer(name = "Cross", n = 8, type="discrete")) +
+  stat_ellipse(aes(color=Species), geom = "path", size = 1.3, position = "identity", type = "t", linetype = 1, level = 0.95, segments = 51, na.rm = FALSE, show.legend = NA, inherit.aes = TRUE) +
+  theme_bw(base_size = 12) +
+  labs(title = "Pathogen only PCA") +
+  theme(plot.title = element_text(color="red", size = 14, face="bold.italic"))
+# caption = expression("ACI = anthocyanins, LPS = leaf punch strength, LMA = leaf mass per area, LT = leaf thickness. All leaf replicates per species ("~ italic("n") ~ "= 210).")
+  
+  
+
+
+auto_pat$layers <- c(auto_pat$layers, auto_pat$layers[[2]], auto_pat$layers[[3]]) # This adds/copies layers 2-3 and overlays them. It makes the arrows be on top of the points. There must be a better ways of doing this.
+
+#Checking if all is good.
+auto_pat <- auto_pat +
+  theme(plot.caption = element_text(size = 6, hjust = 1, vjust = 1))
+auto_pat
+
+#ggsave(filename="./Plots/Aim3_Pathogen_PCA_08162023.png", plot = auto_pat, dpi=600, units=c("mm"), width = 180, height = 180, bg = "white")
 ```
->>>>>>> 6f4fc8932ee2e440eaec76e4a6a7a37034880845
+
 # PCA: Simple linear models with PC1 and PC2
 
 ### Ants
 ```{r, Lm PCA data, tidy=TRUE}
 # PCA loadings (rotations) data frame
 ant.pci<-data.frame(ant.pca$x) #Species = ndata$Species not included.
-<<<<<<< HEAD
-=======
-glimpse(pci)
->>>>>>> 6f4fc8932ee2e440eaec76e4a6a7a37034880845
+glimpse(ant.pci)
 
 # joined data frame for PC llinear regressions
 
-ant_pcalm <- masterant2[c(1,2, 5, 12, 17)]
+ant_pcalm <- masterant2[c(1,2,5,12, 17)]
 
 ant_pcalm <- cbind(ant_pcalm, ant.pci) #Both data sets have 467 observations
 ```
 The functions `prcomp` and `princomp` are both possible to use for this analysis. The `prcomp` stores the "scores" as `x`, while `princomp` stores them as `scores`. Useful to know when extracting the data from it for linear regressions. The function `princomp` uses Eigen decomposition of the covariance and correlations between samples. The `prcomp` uses the singular value decomposition between variables.
 
+#### Ants ~ PC1 & PC2
 ```{r, Ant PC1-2, tidy=TRUE}
+# Formatting formula for p value
+format.p <- function(p, precision = 0.001) {
+  digits <- -log(precision, base = 10)
+  p <- formatC(p, format = 'f', digits = digits)
+  if (p < 0.001) {
+    p = paste0('< ', precision)}
+  if (p >= 0.001) {
+    p = paste0('= ', p)    }
+  sub("0", "", p)
+}
+
 lmpc1 <- lm(Ant_percent_leafloss ~ PC1, data = ant_pcalm)
 summary(lmpc1)
 
 # PC1
+# Formatted p-value
+p1 <- cor.test(ant_pcalm$Ant_percent_leafloss, ant_pcalm$PC1)$p.value
+
+p1 = format.p(p1) # This is just to make the p-value nicer. 
+
+## Plot PC1
        
 ant_pc1 <- ggplot(ant_pcalm, aes(PC1, Ant_percent_leafloss)) +
-<<<<<<< HEAD
   geom_jitter(aes(color = Species, shape = E_load), size = 3, alpha = 0.7) +
-=======
   geom_jitter(aes(color = Species), size = 3, alpha = 0.7) +
->>>>>>> 6f4fc8932ee2e440eaec76e4a6a7a37034880845
   geom_smooth(method = lm, se = T , level = 0.95, na.rm = F, color = "black", size = 0.5) +
   stat_regline_equation(aes(label = paste(..eq.label.., ..adj.rr.label.., sep = "~~~~"))) +
   #stat_regline_equation(label.y.npc = "top", label.x.npc = "center", aes(label = ..eq.label..), color= "black", size = 2.2) +
   scale_color_manual(values = met.brewer(name = "Cross", n = 8, type="discrete")) +
-<<<<<<< HEAD
-  theme_minimal(base_size = 16) +
+  theme_minimal(base_size = 12) +
   labs(title = "Herbivory by leaf cutter ants vs. PC1", y = "Herbivory (%)", caption = "") +
-  theme(plot.title = element_text(color="red", size = 14, face="bold.italic")) +
+  theme(plot.title = element_text(color="red", size = 14, face="bold.italic")) + 
+    annotate(geom="text",label=sprintf("italic('p')~'%s'", p1),parse=TRUE,x=-2.5,y=65) +
   guides(color = "none")  +      #To turn off color legend
   guides(fill = "none") + #To turn off fill legend
   guides(shape = "none")
-=======
-  labs(title = "Herbivory by leaf cutter ants vs. PC1", y = "Herbivory (%)", caption = "") +
-  theme(plot.title = element_text(color="red", size = 14, face="bold.italic"))
->>>>>>> 6f4fc8932ee2e440eaec76e4a6a7a37034880845
-  
+
 ant_pc1
 
 #ggsave(filename="./Plots/Aim3_AntPC1_07102023.png", plot = ant_pc1, dpi=600, units=c("mm"), width = 180, height = 180, bg = "white")
 
 
 # PC2
+# Formatted p-values
+p2 <- cor.test(ant_pcalm$Ant_percent_leafloss, ant_pcalm$PC2)$p.value
+
+p2 =format.p(p) # This is just to make the p-value nicer. 
+
+## Plot PC2
 lmpc2 <- lm(Ant_percent_leafloss ~ PC2, data = ant_pcalm)
 summary(lmpc2)
 
-<<<<<<< HEAD
-# Formatting formula for p value
-format.p <- function(p, precision = 0.001) {
-  digits <- -log(precision, base = 10)
-  p <- formatC(p, format = 'f', digits = digits)
-  if (p < .001) {
-    p = paste0('< ', precision)}
-  if (p >= .001) {
-    p = paste0('= ', p)    }
-  sub("0", "", p)
-}
-
-p <- cor.test(ant_pcalm$Ant_percent_leafloss, ant_pcalm$PC2)$p.value
-
-p=format.p(p) # This is just to make the p-value nicer. 
-
-
 ant_pc2 <- ggplot(ant_pcalm, aes(PC2, Ant_percent_leafloss)) +
   geom_jitter(aes(color = Species, shape = E_load), size = 3, alpha = 0.7) +
-=======
-
-ant_pc2 <- ggplot(ant_pcalm, aes(PC2, Ant_percent_leafloss)) +
-  geom_jitter(aes(color = Species), size = 3, alpha = 0.7) +
->>>>>>> 6f4fc8932ee2e440eaec76e4a6a7a37034880845
   geom_smooth(method = lm, se = T , level = 0.95, na.rm = F, color = "black", size = 0.5) +
   stat_regline_equation(aes(label = paste(..eq.label.., ..adj.rr.label.., sep = "~~~~"))) +
   #stat_regline_equation(label.y.npc = "top", label.x.npc = "center", aes(label = ..eq.label..), color= "black", size = 2.2) +
   scale_color_manual(values = met.brewer(name = "Cross", n = 8, type="discrete")) +
-<<<<<<< HEAD
-  theme_minimal(base_size = 16) +
+  theme_minimal(base_size = 12) +
   labs(title = "Herbivory by leaf cutter ants vs. PC2", y = "Herbivory (%)", caption = "") +
   theme(plot.title = element_text(color="red", size = 14, face="bold.italic")) +
- annotate(geom="text",label=sprintf("italic('p')~'%s'",p),parse=TRUE,x=-1,y=65
-          ) +
+ annotate(geom="text",label=sprintf("italic('p')~'%s'", p2),parse=TRUE,x=-1,y=65) +
     guides(color = "none")  +      #To turn off color legend
   guides(fill = "none") + #To turn off fill legend
   guides(shape = "none")
@@ -1012,9 +1020,7 @@ ant_pc2
 #ggsave(filename="./Plots/Aim3_AntPC2_07102023.png", plot = ant_pc2, dpi=600, units=c("mm"), width = 180, height = 180, bg = "white")
 ```
 
-
-
-Saving as grid plot
+#### Grid plot
 ```{r}
 antpca_arranged <- ggarrange(auto_ant, ant_pc1, ant_pc2, nrow = 2, ncol=2, common.legend = TRUE, legend="right")
 
