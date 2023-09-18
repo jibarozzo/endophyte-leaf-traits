@@ -11,7 +11,8 @@ output:
     highlight: espresso
     theme: journal
     code_folding: hide
-
+editor_options: 
+  chunk_output_type: console
 ---
 ```{r setup}
 knitr::opts_chunk$set(out.width ='70%', fig_align = 'center', echo = TRUE, collapse = TRUE)
@@ -1293,7 +1294,9 @@ After meddling with this for a little bit, I do not like how this plots my data.
 mycomparisons <- list(c("APEIME", "DYPTE", "CORDAL", "THEOCA","LACPA", "HEISCO", "CHRYCA")) 
               #map_signif_level=TRUE)
 # mycomparisons <- list(c(master$Species))
+
 ecomparisons <- list(c(master$E_load))
+
 #Total reads
 ggplot(data = master, aes(x = E_load, y = Total_reads), group_by(Species)) +
   geom_boxplot(aes(fill = E_load), outlier.shape = NA)+
@@ -1306,8 +1309,7 @@ ggplot(data = master, aes(x = E_load, y = Total_reads), group_by(Species)) +
   ylim(0,75000) +
   facet_wrap(~Species)
  
-# Antocyanins by endophyte load and species with data (data) ####
-# RA boxplots
+# Relative abundance boxplots
 
 RA <- ggplot(data= master, aes(x = Species, y = Relative_Abundance)) +
   geom_boxplot(aes(fill = E_load), outlier.shape = NA) +
@@ -1329,7 +1331,7 @@ RA <- ggplot(data= master, aes(x = Species, y = Relative_Abundance)) +
   labs(caption = "*Outliers and singletons removed.") +
   scale_x_discrete(labels= mycomparisons) +
   #annotate("text", x = 2.5, y = .65, label = "") +
-  stat_compare_means(comparisons = mycomparisons ) +
+  stat_compare_means(comparisons = mycomparisons) +
   stat_compare_means(comparisons = ecomparisons) +
   stat_compare_means(method = "kruskal.test", label = "p.signif") 
   #ylim(0, 0.13) +
@@ -1339,30 +1341,39 @@ RA
 
 
 # RA per E_load
+# 
+newname <- c("A. membranacea", "C. cainito", "C. alliodora", "Dypterix .sp", "H. concinna", "L. panamensis", "T. cacao")
+
+names(newname) <- c("APEIME", "CHRYCA", "CORDAL", "DYPTE", "HEISCO", "LACPA", "THEOCA")
+
 RAE <- ggplot(data= master, aes(x = E_load, y = Relative_Abundance)) +
-  geom_violin(aes(fill = E_load), outlier.shape = NA) +
-  geom_crossbar(stat="summary", fun = mean, fun.max = mean, fun.min = mean,  fatten = 2, width = 0.5) +
-  geom_point(color="black", alpha = 0.2,size =2, position = position_jitter(w=0.05)) +
+  geom_violin(aes(fill = E_load)) +
+    geom_boxplot(width=0.1, color="grey20", alpha=0.2) +
+# geom_crossbar(stat="summary", fun = mean, fun.max = mean, fun.min = mean,  fatten = 2, width = 0.5) +
+# geom_point(color="black", alpha = 0.4,size = 2, position = position_jitter(w=0.05)) +
   scale_fill_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
   scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
-  theme_bw(base_size = 16)+
+  theme_bw(base_size = 14)+
   
   theme(panel.grid.major = element_line(colour = "grey")) +
   theme(panel.grid.minor = element_line(colour = "grey")) +
   theme(strip.background = element_rect(fill = "white")) +
-  theme(strip.text.x = element_text(colour = "black", face = "bold")) +
+  theme(strip.text.x = element_text(colour = "grey15", face = "italic")) +
   theme(legend.title = element_text(face = "bold")) +
   theme(panel.border = element_rect(linetype = "blank", fill = NA)) +
   labs(x="", y="Relative Abundance of OTUs (Ascomycota)", face = "bold")+
   theme(legend.position="right", legend.title = element_blank(),
-        legend.text = element_text(size = 24),
+        legend.text = element_text(size = 16),
         axis.text.x=element_blank()) +
   labs(caption = "*Outliers and singletons removed.") +
-  geom_signif(comparisons = list(c("E-", "E+")), 
-              map_signif_level=TRUE)
+  stat_compare_means(comparisons = list(c("E-", "E+")), 
+                     method = "t.test",
+                     label = "p.signif", label.y = 0.3, bracket.size = 0.65) +
+  facet_wrap(~Species, labeller = as_labeller(newname))
+  
 
 RAE
-#ggsave(filename="Aim3_RA_Eload_07062022.png", plot = RAE, dpi=600, units=c("mm"), width = 300, height = 300)
+ggsave(filename="./Plots/Aim3_RA_Eload_SEPT182023.png", plot = RAE, dpi=600, units=c("mm"), width = 180, height = 180)
 
 
 # Leaf thickness by endophyte load and species
