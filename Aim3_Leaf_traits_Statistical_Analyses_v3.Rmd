@@ -359,7 +359,7 @@ The taxonomic assignment was completed with T-BAS. The 'unite_report" returned i
 # saveRDS(SAMP, file.path(save.path, "R_objects", "samp_data.rds"))
 
 
-# # Merging phyloseq objects ####
+# Merging phyloseq objects ####
 # pq1 <- phyloseq(OTU, TAX, SAMP)
 
 # Saving
@@ -479,7 +479,7 @@ newpqDF <- newpqDF %>%  # Code from the Taxonomical assginment section dopes the
 # OTUs 959 and 156 samples (total abundances)
 
 # eOTU <- read.csv("Aim3_OTU_phyloseq_trimmed.csv") 
-# # Can upload as data frame. Use for distance matrices.
+# Can upload as data frame. Use for distance matrices.
 # 
 # eOTU2 <- eOTU %>%
 #   rename(OTU_ID = X) %>%
@@ -794,25 +794,29 @@ auto <- autoplot((pca), data = data.frame(ndata), # For some reason this functio
          alpha=0, #Setting alpha to zero render the automatic circle point null.Manipulate shapes with geom_point(). 
          loadings = TRUE,loadings.colour = "black",
          loadings.label=TRUE, loadings.label.colour="black",
-         loadings.label.size= 4, size = 7, loadings.label.vjust = 0, 
-         loadings.label.hjust = -0.3) + 
-  geom_point(aes(fill = Species, color = Species, shape = E_load), alpha = 0.8, size = 3) +
+         loadings.label.size= 4, size = 7, loadings.label.vjust = 1, 
+         loadings.label.hjust = 1) + 
+  geom_point(aes(fill = Species, color = Species, shape = E_load), alpha = 0.6, size = 2.2) +
   geom_hline(yintercept = 0, colour = "gray45") +
   geom_vline(xintercept = 0, colour = "gray45") +
-  scale_color_manual(values = met.brewer(name = "Cross", n = 8, type="discrete")) +
-  stat_ellipse(aes(color=Species), geom = "path", size = 1.3, position = "identity", type = "t", linetype = 1, level = 0.95, segments = 51, na.rm = FALSE, show.legend = NA, inherit.aes = TRUE) +
+  scale_color_manual(labels=c("A. membranacea", "C. cainito", "C. alliodora", "Dypterix .sp", "H. concinna", "L. panamensis", "T. cacao"),values = met.brewer(name = "Cross", n = 8, type="discrete")) +
+  stat_ellipse(aes(color=Species), geom = "path", size = 1, position = "identity", type = "t", linetype = 1, level = 0.95, segments = 51, na.rm = FALSE, show.legend = NA, inherit.aes = TRUE) +
+  scale_fill_discrete(labels = c("A. membranacea", "C. cainito", "C. alliodora", "Dypterix .sp", "H. concinna", "L. panamensis", "T. cacao")) +
   theme_bw(base_size = 12) +
-  labs(title = "Full PCA", caption = expression("ACI = anthocyanins, LPS = leaf punch strength, LMA = leaf mass per area, LT = leaf thickness. All leaf replicates per species ("~ italic("n") ~ "= 467).")) + 
-  theme(plot.title = element_text(color="red", size = 14, face="bold.italic"))
+  labs(title = "a") + 
+  theme(plot.title = element_text(color="black", size = 14, face="bold")) +
+  theme(legend.text = element_text(color="black", face="italic"))
 
+#caption = expression("ACI = anthocyanins, LPS = leaf punch strength, LMA = leaf mass per area, LT = leaf thickness. All leaf replicates per species ("~ italic("n") ~ "= 467).") #This goes in the labs() arguments
 
 auto$layers <- c(auto$layers, auto$layers[[2]], auto$layers[[3]]) # This adds/copies layers 2-3 and overlays them. It makes the arrows be on top of the points. There must be a better ways of doing this.
 
 #Checking if all is good.
 auto <- auto +
   theme(plot.caption = element_text(size = 6, hjust = 1, vjust = 1))
-auto
-#ggsave(filename="./Plots/Aim3_PCA_06052023.png", plot = auto, dpi=600, units=c("mm"), width = 180, height = 180, bg = "white")
+auto 
+
+#ggsave(filename="./Plots/Aim3_PCA_SEPT252023.png", plot = auto, dpi=600, units=c("mm"), width = 180, height = 180, bg = "white")
 ```
 
 ```{r, PCA chatGPT, tidy=TRUE}
@@ -838,7 +842,7 @@ auto
 #   ) +
 #   theme_bw(base_size = 12)
 # 
-# # Plotting biplot
+# Plotting biplot
 # loadings <- as.data.frame(pca$rotation)
 # loadings$Variable <- rownames(pca$rotation)
 # ggplot(loadings, aes(PC1, PC2, label = Variable)) +
@@ -862,20 +866,24 @@ ant.pca <-prcomp(ant_pcadata, scale=TRUE)
 ant.pca$rotation=-ant.pca$rotation
 ant.pca$x=-ant.pca$x
 
+# Plot
 auto_ant <- autoplot((ant.pca), data = data.frame(masterant2), # For some reason this functions require data to be data= data.frame()
          alpha=0, #Setting alpha to zero render the automatic circle point null.Manipulate shapes with geom_point(). 
          loadings = TRUE,loadings.colour = "black",
          loadings.label=TRUE, loadings.label.colour="black",
          loadings.label.size= 4, size = 7, loadings.label.vjust = 0, 
-         loadings.label.hjust = -0.3) + 
-  geom_point(aes(fill = Species, color = Species, shape = E_load), alpha = 0.8, size = 3) +
+         loadings.label.hjust = 1.2) + 
+  geom_point(aes(fill = Species, color = Species, shape = E_load), alpha = 0.6, size = 2.2) +
   geom_hline(yintercept = 0, colour = "gray45") +
   geom_vline(xintercept = 0, colour = "gray45") +
   scale_color_manual(values = met.brewer(name = "Cross", n = 8, type="discrete")) +
-  stat_ellipse(aes(color=Species), geom = "path", size = 1.3, position = "identity", type = "t", linetype = 1, level = 0.95, segments = 51, na.rm = FALSE, show.legend = NA, inherit.aes = TRUE) +
+  stat_ellipse(aes(color=Species), geom = "path", size = 1, position = "identity", type = "t", linetype = 1, level = 0.95, segments = 51, na.rm = FALSE, show.legend = NA, inherit.aes = TRUE) +
   theme_bw(base_size = 12) +
-  labs(title = "Ant only PCA") +
-  theme(plot.title = element_text(color="red", size = 14, face="bold.italic"))
+  labs(title = "b") +
+  theme(plot.title = element_text(color="black", size = 14, face="bold")) +
+  guides(color = "none")  +      #To turn off color legend
+  guides(fill = "none") + #To turn off fill legend
+  guides(shape = "none")
 # caption = expression("ACI = anthocyanins, LPS = leaf punch strength, LMA = leaf mass per area, LT = leaf thickness. All leaf replicates per species ("~ italic("n") ~ "= 210).")
   
   
@@ -890,6 +898,7 @@ auto_ant
 
 #ggsave(filename="./Plots/Aim3_Ant_PCA_07102023.png", plot = auto_ant, dpi=600, units=c("mm"), width = 180, height = 180, bg = "white")
 ```
+
 ## Pathogen PCA
 ```{r}
 # PCA using covariates to explain species richness/abundance ####
@@ -903,24 +912,26 @@ pat.pca <-prcomp(pat_pcadata, scale=TRUE)
 pat.pca$rotation=-pat.pca$rotation
 pat.pca$x=-pat.pca$x
 
+# Plot
 auto_pat <- autoplot((pat.pca), data = data.frame(masterpat2), # For some reason this functions require data to be data= data.frame()
          alpha=0, #Setting alpha to zero render the automatic circle point null.Manipulate shapes with geom_point(). 
          loadings = TRUE,loadings.colour = "black",
          loadings.label=TRUE, loadings.label.colour="black",
          loadings.label.size= 4, size = 7, loadings.label.vjust = 0, 
-         loadings.label.hjust = -0.3) + 
-  geom_point(aes(fill = Species, color = Species, shape = E_load), alpha = 0.8, size = 3) +
+         loadings.label.hjust = 1.2) + 
+  geom_point(aes(fill = Species, color = Species, shape = E_load), alpha = 0.6, size = 2.2) +
   geom_hline(yintercept = 0, colour = "gray45") +
   geom_vline(xintercept = 0, colour = "gray45") +
   scale_color_manual(values = met.brewer(name = "Cross", n = 8, type="discrete")) +
-  stat_ellipse(aes(color=Species), geom = "path", size = 1.3, position = "identity", type = "t", linetype = 1, level = 0.95, segments = 51, na.rm = FALSE, show.legend = NA, inherit.aes = TRUE) +
+  stat_ellipse(aes(color=Species), geom = "path", size = 1, position = "identity", type = "t", linetype = 1, level = 0.95, segments = 51, na.rm = FALSE, show.legend = NA, inherit.aes = TRUE) +
   theme_bw(base_size = 12) +
-  labs(title = "Pathogen only PCA") +
-  theme(plot.title = element_text(color="red", size = 14, face="bold.italic"))
+  labs(title = "c") +
+  theme(plot.title = element_text(color="black", size = 14, face="bold")) + 
+  guides(color = "none")  +      #To turn off color legend
+  guides(fill = "none") + #To turn off fill legend
+  guides(shape = "none")
 # caption = expression("ACI = anthocyanins, LPS = leaf punch strength, LMA = leaf mass per area, LT = leaf thickness. All leaf replicates per species ("~ italic("n") ~ "= 210).")
   
-  
-
 
 auto_pat$layers <- c(auto_pat$layers, auto_pat$layers[[2]], auto_pat$layers[[3]]) # This adds/copies layers 2-3 and overlays them. It makes the arrows be on top of the points. There must be a better ways of doing this.
 
@@ -932,9 +943,29 @@ auto_pat
 #ggsave(filename="./Plots/Aim3_Pathogen_PCA_08162023.png", plot = auto_pat, dpi=600, units=c("mm"), width = 180, height = 180, bg = "white")
 ```
 
+## Fig. 3? Grid PCA plot
+
+```{r}
+grid_pca <- ggarrange(auto, auto_ant, auto_pat, nrow = 1, ncol=3, common.legend = TRUE, legend="bottom")
+
+grid_pca
+# Adding caption
+# ant_caption <- expression("*All individual leaves per individual per tree species included ("~ italic("n") ~ "= 210).")
+# ant_pca_with_caption <- annotate_figure(antpca_arranged, bottom = text_grob(ant_caption), fig.lab.pos = "bottom.right", fig.lab.size = 6)
+# 
+# ant_pca_with_caption
+
+#ggsave(filename = "./Plots/Aim3_GridPCA_SEPT182023.png", plot = grid_pca, dpi=300, units=c("mm"), width = 200, height = 120, bg = "white")
+```
+
+
+
+
 # PCA: Simple linear models with PC1 and PC2
 
 ### Ants
+
+Here I take the loading (PCs) from the **Ant Full PCA** and join them to the ant herbivory (leafloss) data. Thus being able to perform linear regressions from this new dataset (ant_paca + masterant2).
 ```{r, Lm PCA data, tidy=TRUE}
 # PCA loadings (rotations) data frame
 ant.pci<-data.frame(ant.pca$x) #Species = ndata$Species not included.
@@ -973,23 +1004,23 @@ p1 = format.p(p1) # This is just to make the p-value nicer.
 ## Plot PC1
        
 ant_pc1 <- ggplot(ant_pcalm, aes(PC1, Ant_percent_leafloss)) +
-  geom_jitter(aes(color = Species, shape = E_load), size = 3, alpha = 0.7) +
-  geom_jitter(aes(color = Species), size = 3, alpha = 0.7) +
-  geom_smooth(method = lm, se = T , level = 0.95, na.rm = F, color = "black", size = 0.5) +
+  geom_jitter(aes(color = Species, shape = E_load), size = 2.2, alpha = 0.6) +
+  geom_smooth(method = lm, se = T , level = 0.95, na.rm = F, color = "black", size = 0.75) +
   stat_regline_equation(aes(label = paste(..eq.label.., ..adj.rr.label.., sep = "~~~~"))) +
   #stat_regline_equation(label.y.npc = "top", label.x.npc = "center", aes(label = ..eq.label..), color= "black", size = 2.2) +
-  scale_color_manual(values = met.brewer(name = "Cross", n = 8, type="discrete")) +
+  scale_color_manual(labels=c("A. membranacea", "C. cainito", "C. alliodora", "Dypterix .sp", "H. concinna", "L. panamensis", "T. cacao"),values = met.brewer(name = "Cross", n = 8, type="discrete")) +
   theme_minimal(base_size = 12) +
-  labs(title = "Herbivory by leaf cutter ants vs. PC1", y = "Herbivory (%)", caption = "") +
-  theme(plot.title = element_text(color="red", size = 14, face="bold.italic")) + 
+  labs(title = "a", y = "Herbivory (%)", caption = "") +
+  theme(plot.title = element_text(color="black", size = 14, face="bold")) + 
     annotate(geom="text",label=sprintf("italic('p')~'%s'", p1),parse=TRUE,x=-2.5,y=65) +
-  guides(color = "none")  +      #To turn off color legend
-  guides(fill = "none") + #To turn off fill legend
-  guides(shape = "none")
+  theme(legend.text = element_text(color="black", face="italic"))
+  #guides(color = "none")  +      #To turn off color legend
+  #guides(fill = "none") + #To turn off fill legend
+  #guides(shape = "none")
 
 ant_pc1
 
-#ggsave(filename="./Plots/Aim3_AntPC1_07102023.png", plot = ant_pc1, dpi=600, units=c("mm"), width = 180, height = 180, bg = "white")
+#ggsave(filename="./Plots/Aim3_AntPC1_JUL102023.png", plot = ant_pc1, dpi=600, units=c("mm"), width = 180, height = 180, bg = "white")
 
 
 # PC2
@@ -1003,14 +1034,14 @@ lmpc2 <- lm(Ant_percent_leafloss ~ PC2, data = ant_pcalm)
 summary(lmpc2)
 
 ant_pc2 <- ggplot(ant_pcalm, aes(PC2, Ant_percent_leafloss)) +
-  geom_jitter(aes(color = Species, shape = E_load), size = 3, alpha = 0.7) +
-  geom_smooth(method = lm, se = T , level = 0.95, na.rm = F, color = "black", size = 0.5) +
+  geom_jitter(aes(color = Species, shape = E_load), size = 2.2, alpha = 0.6) +
+  geom_smooth(method = lm, se = T , level = 0.95, na.rm = F, color = "black", size = 0.75) +
   stat_regline_equation(aes(label = paste(..eq.label.., ..adj.rr.label.., sep = "~~~~"))) +
   #stat_regline_equation(label.y.npc = "top", label.x.npc = "center", aes(label = ..eq.label..), color= "black", size = 2.2) +
   scale_color_manual(values = met.brewer(name = "Cross", n = 8, type="discrete")) +
   theme_minimal(base_size = 12) +
-  labs(title = "Herbivory by leaf cutter ants vs. PC2", y = "Herbivory (%)", caption = "") +
-  theme(plot.title = element_text(color="red", size = 14, face="bold.italic")) +
+  labs(title = "b", y = "Herbivory (%)", caption = "") +
+  theme(plot.title = element_text(color="black", size = 14, face="bold")) +
  annotate(geom="text",label=sprintf("italic('p')~'%s'", p2),parse=TRUE,x=-1,y=65) +
     guides(color = "none")  +      #To turn off color legend
   guides(fill = "none") + #To turn off fill legend
@@ -1019,24 +1050,12 @@ ant_pc2 <- ggplot(ant_pcalm, aes(PC2, Ant_percent_leafloss)) +
   
 ant_pc2
 
-#ggsave(filename="./Plots/Aim3_AntPC2_07102023.png", plot = ant_pc2, dpi=600, units=c("mm"), width = 180, height = 180, bg = "white")
-```
-
-#### Ant Grid plot
-```{r}
-antpca_arranged <- ggarrange(auto_ant, ant_pc1, ant_pc2, nrow = 2, ncol=2, common.legend = TRUE, legend="right")
-
-antpca_arranged
-# Adding caption
-ant_caption <- expression("*All individual leaves per individual per tree species included ("~ italic("n") ~ "= 210).")
-ant_pca_with_caption <- annotate_figure(antpca_arranged, bottom = text_grob(ant_caption), fig.lab.pos = "bottom.right", fig.lab.size = 6)
-
-ant_pca_with_caption
-
-#ggsave(filename = "./Plots/Aim3_AntPCS_07102023.png", plot = ant_pca_with_caption, dpi=300, units=c("mm"), width = 300, height = 180, bg = "white")
+#ggsave(filename="./Plots/Aim3_AntPC2_JUL102023.png", plot = ant_pc2, dpi=600, units=c("mm"), width = 180, height = 180, bg = "white")
 ```
 
 ### Pathogen
+
+Here I take the loading (PCs) from the **Pathogen Full PCA** and join them to the fungal pathogenicity (leaf damage) data. Thus being able to perform linear regressions from this new dataset (pat_pac + masterpat2).
 ```{r, Lm PCA data, tidy=TRUE}
 # PCA loadings (rotations) data frame
 pat.pci<-data.frame(pat.pca$x) #Species = ndata$Species not included.
@@ -1075,15 +1094,14 @@ p1 = format.p(p1) # This is just to make the p-value nicer.
 ## Plot PC1
        
 pat_pc1 <- ggplot(pat_pcalm, aes(PC1, Pathogen_percent_damage)) +
-  geom_jitter(aes(color = Species, shape = E_load), size = 3, alpha = 0.7) +
-  geom_jitter(aes(color = Species), size = 3, alpha = 0.7) +
-  geom_smooth(method = lm, se = T , level = 0.95, na.rm = F, color = "black", size = 0.5) +
+  geom_jitter(aes(color = Species, shape = E_load), size = 2.2, alpha = 0.6) +
+  geom_smooth(method = lm, se = T , level = 0.95, na.rm = F, color = "black", size = 0.75) +
   stat_regline_equation(aes(label = paste(..eq.label.., ..adj.rr.label.., sep = "~~~~"))) +
   #stat_regline_equation(label.y.npc = "top", label.x.npc = "center", aes(label = ..eq.label..), color= "black", size = 2.2) +
   scale_color_manual(values = met.brewer(name = "Cross", n = 8, type="discrete")) +
   theme_minimal(base_size = 12) +
-  labs(title = "Pathogen damage vs. PC1", y = "Pathogen damage (%)", caption = "") +
-  theme(plot.title = element_text(color="red", size = 14, face="bold.italic"))+ 
+  labs(title = "c", y = "Pathogen damage (%)", caption = "") +
+  theme(plot.title = element_text(color="black", size = 14, face="bold"))+ 
     annotate(geom="text",label=sprintf("italic('p')~'%s'", p1),parse=TRUE,x=-2.5,y=0.75) +
   guides(color = "none")  +      #To turn off color legend
   guides(fill = "none") + #To turn off fill legend
@@ -1091,7 +1109,7 @@ pat_pc1 <- ggplot(pat_pcalm, aes(PC1, Pathogen_percent_damage)) +
 
 pat_pc1
 
-#ggsave(filename="./Plots/Aim3_PatPC1_08282023.png", plot = pat_pc1, dpi=600, units=c("mm"), width = 180, height = 180, bg = "white")
+#ggsave(filename="./Plots/Aim3_PatPC1_AUG282023.png", plot = pat_pc1, dpi=600, units=c("mm"), width = 180, height = 180, bg = "white")
 
 
 # PC2
@@ -1105,14 +1123,14 @@ plmpc2 <- lm(Pathogen_percent_damage ~ PC2, data = pat_pcalm)
 summary(plmpc2)
 
 pat_pc2 <- ggplot(pat_pcalm, aes(PC2, Pathogen_percent_damage)) +
-  geom_jitter(aes(color = Species, shape = E_load), size = 3, alpha = 0.7) +
-  geom_smooth(method = lm, se = T , level = 0.95, na.rm = F, color = "black", size = 0.5) +
+  geom_jitter(aes(color = Species, shape = E_load), size = 2.2, alpha = 0.6) +
+  geom_smooth(method = lm, se = T , level = 0.95, na.rm = F, color = "black", size = 0.75) +
   stat_regline_equation(aes(label = paste(..eq.label.., ..adj.rr.label.., sep = "~~~~"))) +
   #stat_regline_equation(label.y.npc = "top", label.x.npc = "center", aes(label = ..eq.label..), color= "black", size = 2.2) +
   scale_color_manual(values = met.brewer(name = "Cross", n = 8, type="discrete")) +
   theme_minimal(base_size = 12) +
-  labs(title = "Pathogen damage vs. PC2", y = "Pathogen damage (%)", caption = "") +
-  theme(plot.title = element_text(color="red", size = 14, face="bold.italic")) +
+  labs(title = "d", y = "Pathogen damage (%)", caption = "") +
+  theme(plot.title = element_text(color="black", size = 14, face="bold")) +
  annotate(geom="text",label=sprintf("italic('p')~'%s'", p2),parse=TRUE,x=-1,y=0.75) +
     guides(color = "none")  +      #To turn off color legend
   guides(fill = "none") + #To turn off fill legend
@@ -1121,54 +1139,70 @@ pat_pc2 <- ggplot(pat_pcalm, aes(PC2, Pathogen_percent_damage)) +
   
 pat_pc2
 
-#ggsave(filename="./Plots/Aim3_PatPC2_08282023.png", plot = pat_pc2, dpi=600, units=c("mm"), width = 180, height = 180, bg = "white")
+#ggsave(filename="./Plots/Aim3_PatPC2_AUG282023.png", plot = pat_pc2, dpi=600, units=c("mm"), width = 180, height = 180, bg = "white")
 ```
 
-#### Pathogen Grid plot
+
+## Fig 4? Ant and Pathogen PC-LMs Grid plot
 ```{r}
-patpca_arranged <- ggarrange(auto_pat, pat_pc1, pat_pc2, nrow = 2, ncol=2, common.legend = TRUE, legend="right")
+antpat_arranged <- ggarrange(ant_pc1, ant_pc2, pat_pc1, pat_pc2, nrow = 2, ncol=2, common.legend = TRUE, legend="bottom")
 
-patpca_arranged
+antpat_arranged
 # Adding caption
-pat_caption <- expression("*All individual leaves per individual per tree species included ("~ italic("n") ~ "= 400).")
-pat_pca_with_caption <- annotate_figure(patpca_arranged, bottom = text_grob(pat_caption), fig.lab.pos = "bottom.right", fig.lab.size = 6)
+# ant_caption <- expression("*All individual leaves per individual per tree species included ("~ italic("n") ~ "= 210).")
+# ant_pca_with_caption <- annotate_figure(antpca_arranged, bottom = text_grob(ant_caption), fig.lab.pos = "bottom.right", fig.lab.size = 6)
 
-pat_pca_with_caption
+#ant_pca_with_caption
 
-#ggsave(filename = "./Plots/Aim3_PatPCS_08282023.png", plot = pat_pca_with_caption, dpi=300, units=c("mm"), width = 300, height = 180, bg = "white")
+#ggsave(filename = "./Plots/Aim3_AntPCS_SEPT252023.png", plot = antpat_arranged, dpi=600, units=c("mm"), width = 200, height = 180, bg = "white")
 ```
+
+
+<!-- #### Pathogen Grid plot -->
+<!-- ```{r} -->
+<!-- patpca_arranged <- ggarrange(auto_pat, pat_pc1, pat_pc2, nrow = 2, ncol=2, common.legend = TRUE, legend="right") -->
+
+<!-- patpca_arranged -->
+<!-- # Adding caption -->
+<!-- pat_caption <- expression("*All individual leaves per individual per tree species included ("~ italic("n") ~ "= 400).") -->
+<!-- pat_pca_with_caption <- annotate_figure(patpca_arranged, bottom = text_grob(pat_caption), fig.lab.pos = "bottom.right", fig.lab.size = 6) -->
+
+<!-- pat_pca_with_caption -->
+
+<!-- #ggsave(filename = "./Plots/Aim3_PatPCS_08282023.png", plot = pat_pca_with_caption, dpi=300, units=c("mm"), width = 300, height = 180, bg = "white") -->
+<!-- ``` -->
 
 # Phyloseq: 
 ## Statistical analyses and data visualization with Phyloseq
 
-The `phyloseq` package allows me to perform most of the necessary analyses with just a couple of phyloseq objects (e.g. data frames, relative abundance calculations, etc.). Previous data frames created are still needed for further analyses (e.g. dbRDA and PSLR). There are some difficulties with manipulating the data with `phyloseq`. When merging objects the categorical facotrs are coerced to numeric, hence losing that information. See [here](https://github.com/joey711/phyloseq/issues/465) and comments in code chunks.
+The phyloseq package allows me to perform most of the necessary analyses with just a couple of phyloseq objects (e.g. data frames, relative abundance calculations, etc.). Previous data frames created are still needed for further analyses (e.g. dbRDA and PSLR). There are some difficulties with manipulating the data with `phyloseq`. When merging objects the categorical facotrs are coerced to numeric, hence losing that information. See [here](https://github.com/joey711/phyloseq/issues/465) and comments in code chunks.
 
 ## Phyloseq: plots and graphs
 ```{r, Phyloseq plots and graphs, tidy = TRUE}
-# # Abundance plots
-# # Plots use data without singletons and trimmed for greenhouse endophytes.
+# Abundance plots
+# Plots use data without singletons and trimmed for greenhouse endophytes.
 # EndoAbun <- speedyseq::plot_bar(newpq1, "Species", "Abundance", "class") +
 #   scale_fill_manual(values = met.brewer(name="Redon", n=11, type="continuous")) +
 #   labs(title = "Ascomycota endophyte abundance(cleaned)" ) +
 #   facet_wrap(~E_load)
 # EndoAbun
-# #ggsave(filename="Aim3_AbunBarPlot_06272022.jpeg", plot = EndoAbun, dpi=600, units=c("mm"), width=200, height=200)
-# #
-# # Agglomerate taxa and merging data to make plot ####
-# # Similar to Relative abundance calculate in code above
+#ggsave(filename="Aim3_AbunBarPlot_06272022.jpeg", plot = EndoAbun, dpi=600, units=c("mm"), width=200, height=200)
+#
+# Agglomerate taxa and merging data to make plot ####
+# Similar to Relative abundance calculate in code above
 # 
-# #View(sample_data(newpq1))
+#View(sample_data(newpq1))
 # 
-# #make a new phyloseq object that groups all taxa by class
+#make a new phyloseq object that groups all taxa by class
 # ps3 <- tax_glom(newpq1, "class") 
-# #make it relative
+#make it relative
 # ps0 <- transform_sample_counts(ps3, function(x) x / sum(x))
-# #merge samples so that they are all grouped/binned by species
+#merge samples so that they are all grouped/binned by species
 # ps1 <- merge_samples(ps0, "Species")
-# # repair factors
+# repair factors
 # sample_data(ps1)$Species <- levels(sample_data(ps0)$Species)[get_variable(ps1, "Species")]
 # 
-# #make relative again.
+#make relative again.
 # ps4 <- transform_sample_counts(ps1, function(x) x / sum(x))
 # 
 # rel_abundplot <- plot_bar(ps4, "Species", "Abundance") + geom_bar(aes(fill=class), stat="identity", position="stack")+
@@ -1177,7 +1211,7 @@ The `phyloseq` package allows me to perform most of the necessary analyses with 
 # rel_abundplot
 # 
 # 
-# ######
+######
 # 
 # speedyseq::plot_bar(newpq1, "Species", "Abundance", "order") +
 #   facet_grid(~E_load)
@@ -1185,18 +1219,20 @@ The `phyloseq` package allows me to perform most of the necessary analyses with 
 # speedyseq::plot_bar(newpq1, "class", "Abundance", "class") +
 # facet_grid(Species~.)
 # 
-# #plot_tree(taxglom, color = "Species", shape = "class", size = "abundance")
+#plot_tree(taxglom, color = "Species", shape = "class", size = "abundance")
 # 
-# # Cladogram ####
-# #plot_tree(newpq1, color="Species", label.tips="taxa_names", ladderize="left", plot.margin=0.3)
+# Cladogram ####
+#plot_tree(newpq1, color="Species", label.tips="taxa_names", ladderize="left", plot.margin=0.3)
 # 
-# # Heatmap ####
+# Heatmap ####
 # 
-# #plot_heatmap(newpqRA, sample.label = "Species", taxa.label="class")
-```
+#plot_heatmap(newpqRA, sample.label = "Species", taxa.label="class")
+
 
 ## Phyloseq: Richness
 Plots with `phyloseq` package. 
+```
+
 ```{r, tidy = TRUE}
 # Richness ####
 # Theme set
@@ -1265,7 +1301,7 @@ p2
 
 #ggsave(filename ="./Plots/Aim3_NMDS_06022023_TrialType.jpeg" , plot = p2, dpi=600, units=c("mm"), width=200, height=200)
 
-# # Samples 
+# Samples 
 p3 <- plot_ordination(newpq1, r, type="samples", color="Species")
 p3 + geom_point(size = 3) +
   ggtitle("Tree Species")
@@ -1273,11 +1309,11 @@ p3 + geom_point(size = 3) +
 #geom_polygon(aes(fill=Species), alpha = 0.5) +
 p3
 
-# # biplot
+# biplot
 # p3 = plot_ordination(newpq, r, type="biplot", color="class", shape="class", title="biplot")
 # p3
 # 
-# # Split
+# Split
 # p4 = plot_ordination(newpq, r, type="split", color="class", title="split", label="Species") 
 # p4
 ```
@@ -1348,7 +1384,7 @@ names(newname) <- c("APEIME", "CHRYCA", "CORDAL", "DYPTE", "HEISCO", "LACPA", "T
 
 RAE <- ggplot(data= master, aes(x = E_load, y = Relative_Abundance)) +
   geom_violin(aes(fill = E_load)) +
-    geom_boxplot(width=0.1, color="grey20", alpha=0.2) +
+    geom_boxplot(width=0.1, color="grey40", alpha=0.2, outlier.shape = -1) +
 # geom_crossbar(stat="summary", fun = mean, fun.max = mean, fun.min = mean,  fatten = 2, width = 0.5) +
 # geom_point(color="black", alpha = 0.4,size = 2, position = position_jitter(w=0.05)) +
   scale_fill_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
@@ -1373,7 +1409,7 @@ RAE <- ggplot(data= master, aes(x = E_load, y = Relative_Abundance)) +
   
 
 RAE
-ggsave(filename="./Plots/Aim3_RA_Eload_SEPT182023.png", plot = RAE, dpi=600, units=c("mm"), width = 180, height = 180)
+#ggsave(filename="./Plots/Aim3_RA_Eload_SEPT182023.png", plot = RAE, dpi=600, units=c("mm"), width = 180, height = 180)
 
 
 # Leaf thickness by endophyte load and species
@@ -1689,10 +1725,10 @@ plot(otu.anosim)
 Results not included. Analysis is not complete -11/21/2022
 
 ```{r, include = FALSE}
-# # Manipulating the data for PLSR
+# Manipulating the data for PLSR
 # master22 <- master2 %>% 
 #    rowwise() %>%
-# #mutate(ReAbun = list(x/sum(across(starts_with("OTU")),
+#mutate(ReAbun = list(x/sum(across(starts_with("OTU")),
 #  # na.rm = T))
 # 
 # estimate_richness(newpq, measures = c("Observed", "Shannon"))
@@ -2088,7 +2124,7 @@ AIC(M3REM) #584.711 #1902.209 as of 5/23/23 # 746.3538 as of 06/04/2023
 # plot(masterant2$LMA, jitter(resid(M3REM, type = "normalized")), xlab = "LMA", ylab = "Norm/standarized Residuals")
 # abline(h = 0, col = "blue")
 # 
-# #
+#
 # par(mfrow = c(1,2))
 # plot(fitted(aglm_ident), resid(aglm_ident, type="normalized"), cex.axis=.5,
 # cex=.4, xlab="fitted values", ylab="standardized resid", cex.lab=.8)
@@ -3499,10 +3535,10 @@ plot_model(lm1, type = "diag")
 # Model 1 
 lm2 <- lm(Total_leaf_area_cut ~ LD1 + LD2, data = LDEtraits)
 summary(lm2)
-# # Residuals
+# Residuals
 # lm2_resid <- resid(lm2, type = "response")
 # lm2_fitted <- fitted(lm2)
-# #Histograms
+#Histograms
 # hist(lm2_resid)
 # hist(lm2_fitted)
 
@@ -3573,10 +3609,10 @@ plot_model(pm1, type = "diag")
 # Model 1 
 pm2 <- lm(Pathogen_Damage_area ~ LD1 + LD2 + Shannon, data = LDEPtraits)
 summary(pm2)
-# # Residuals
+# Residuals
 # lm2_resid <- resid(lm2, type = "response")
 # lm2_fitted <- fitted(lm2)
-# #Histograms
+#Histograms
 # hist(lm2_resid)
 # hist(lm2_fitted)
 
@@ -3790,7 +3826,7 @@ AIC(aglm_comb) #Lowest AIC yet! 94.85672
 summary(aglm_comb)
 Anova(aglm_comb, type = "III")
 # plot_model(aglm_comb, type = "diag")
-# #anova(M1,type="marginal") #What is a type III ANOVA?
+#anova(M1,type="marginal") #What is a type III ANOVA?
 
 
 #Model Validation
@@ -4798,7 +4834,7 @@ The plants least damaged by pathogen have 92 OTUs significantly correlated with 
 <!-- # write.csv(cor_beta,  row.names = TRUE, "betapart/cor_beta.csv") -->
 
 <!-- # Chrysanthenum -->
-<!-- # ## Sorting rows -->
+<!-- ## Sorting rows -->
 <!-- chry_otu_sort <- sort(rownames(chry_otu)) -->
 <!-- chry_otu <- chry_otu[chry_otu_sort,] -->
 
@@ -4849,7 +4885,7 @@ The plants least damaged by pathogen have 92 OTUs significantly correlated with 
 <!-- # write.csv(theo_beta,  row.names = TRUE, "betapart/theo_beta.csv") -->
 
 <!-- # Dypterix -->
-<!-- # ## Sorting rows -->
+<!-- ## Sorting rows -->
 <!-- dyp_otu_sort <- sort(rownames(dyp_otu)) -->
 <!-- dyp_otu <- dyp_otu[dyp_otu_sort,] -->
 
