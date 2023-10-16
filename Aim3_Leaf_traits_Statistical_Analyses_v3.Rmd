@@ -79,12 +79,7 @@ library("sjPlot")
 library("glmmTMB")
 library("indicspecies")
 
-<<<<<<< HEAD
-# Phylogenetic analyses 
-#source("https://raw.githubusercontent.com/joey711/phyloseq/master/inst/scripts/installer.R",local = TRUE)
-=======
 # Phylogenetic analyses #source("https://raw.githubusercontent.com/joey711/phyloseq/master/inst/scripts/installer.R",local = TRUE)
->>>>>>> a39298f3af6931bd5d2dfe72231ce7296add48f8
 library("mgcv")
 library("phyloseq")
 library("ape")
@@ -114,12 +109,7 @@ rm(list = ls())
 #Working Directory and Path for Linux
 setwd("/home/baponte/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses/")
 
-<<<<<<< HEAD
 save.path <- ("/home/baponte/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses/")
-=======
-save.path("/home/baponte/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses/")
->>>>>>> a39298f3af6931bd5d2dfe72231ce7296add48f8
-
 ```
 
 # Data frames
