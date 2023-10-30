@@ -1,0 +1,10 @@
+"","OTU","kingdom","phylum","class","order","family","genus","species","s.APEIME","s.CHRYCA","s.CORDAL","s.DYPTE","s.HEISCO","s.LACPA","s.THEOCA","index","stat","p.value","p.value.bh"
+"1","OTU_5","Fungi","Ascomycota","Dothideomycetes","Capnodiales","Mycosphaerellaceae","Pseudocercospora","Pseudocercospora_sp",0,0,0,0,0,0,1,7,0.759028392293476,0.006,0.206
+"2","OTU_7","Fungi","Ascomycota","Sordariomycetes","Hypocreales","Nectriaceae","Fusarium","Fusarium_sp",0,0,0,0,1,0,0,5,0.826092274518756,0.004,0.206
+"3","OTU_3","Fungi","Ascomycota","Eurotiomycetes","Eurotiales","Trichocomaceae","Talaromyces","Talaromyces_sp",0,0,0,0,0,0,1,7,0.734231816053208,0.038,0.824
+"4","OTU_12","Fungi","Ascomycota","Dothideomycetes","Capnodiales","Dissoconiaceae","Uwebraunia","Uwebraunia_dekkeri",0,0,0,1,0,0,0,4,0.588465736692602,0.004,0.206
+"5","OTU_18","Fungi","Ascomycota","Dothideomycetes","Capnodiales","Dissoconiaceae","Ramichloridium","Ramichloridium_apiculatum",0,0,0,1,0,0,0,4,0.550023467307889,0.004,0.206
+"6","OTU_20","Fungi","Ascomycota","Dothideomycetes","Capnodiales","Cladosporiaceae","Cladosporium","Cladosporium_sp",0,0,0,0,0,0,1,7,0.873518980309637,0.008,0.235428571428571
+"7","OTU_32","Fungi","Ascomycota","Dothideomycetes","Botryosphaeriales","Phyllostictaceae","Phyllosticta","Phyllosticta_capitalensis",0,0,0,1,0,0,0,4,0.790269400306039,0.015,0.38625
+"8","OTU_40","Fungi","Ascomycota","Sordariomycetes","Xylariales","Sporocadaceae","Pestalotiopsis","Pestalotiopsis_sp",0,0,0,1,0,0,0,4,0.556144052759694,0.004,0.206
+"9","OTU_183","Fungi","Ascomycota","Dothideomycetes","Capnodiales","Mycosphaerellaceae","Mycosphaerella","Mycosphaerella_sp",0,0,0,0,0,0,1,7,0.968441464738171,0.006,0.206
