@@ -45,10 +45,14 @@ The first file, cleans and shapes the OTU files produced from the bioinformatic 
 The taxonomic assignment was completed with T-BAS.
 The second file explores correlations and distributions of covariates for this project.
 
+# Completed
+-   Pathogen GLMs with `logit_pathogenicity` DONE 30/OCT/2023
+
 # To-do list
 
 -   GLMs and main effects in tree-style plot.
--   Pathogen GLMs with `logit_pathogenicity`
+-   Pathogen simple linear model plots
+
 
 # R packages used
 
@@ -519,7 +523,7 @@ paged_table(head(newpqDF))
 #These are the data frames resulting from the phyloseq data wrangling.
 
 #The 569 OTUs and 156 samples (total abundances)
-newpqDF <- read.csv("Aim3_OTUs_assigned_nonsingletons.csv")
+newpqDF <- read.csv("clean_data/otu_data/Aim3_OTUs_assigned_nonsingletons.csv")
 newpqDF <- newpqDF %>%  # Code from the Taxonomical assginment section dopes the same. This is just calling it directly from the /csv to avoid running all the code. 
   select(!c(1))
 
@@ -618,6 +622,7 @@ c1
 # cor ####
 #using cor() from 'stats'
 cor.matrix <- as.data.frame(cor(ndata[c(7:10)]))
+
 #Use 0.25 cut-off.
 #Least correlated covariates are Toughness and Thickness: -0.124 
 
@@ -2011,7 +2016,7 @@ ant_paired
 ## Ant Linear Mixed Models: `logit_herbivory ~ raw functional leaf traits`
 
 Now that we have answered how the leaf functional traits influence influence the effects of herbivory and pathogenicity in plants.
-In June 2023, we have eliminated "Shannon Diversity" as a fixed effects.
+In June 2023, we have eliminated "Shannon Diversity" as a fixed effect.
 We will evaluate the effects of community diversity and composition in other analyses.
 
 ```{r, Ant Linear Mixed Models wit masterant2 data set, tidy = TRUE}
@@ -2054,13 +2059,6 @@ hist(M1_fitted)
 plot(M1)
 plot_model(M1, type = "diag")
 
-# Using "masterant2" improves normality of residuals and overall model. 5/23/2023
-# Species has a high VIF. This should change when I use species as a random effect.
-
-#The residuals spread increases slightly as the fitted values increase. Indicating heterogeneity.
-#
-##  Note that some nests have residuals that are above or below the zero line, indicating the need for a random effect. Possibly Species and E_Load
-
 # Three ways to get type 3 anova. The first one requires that there are no atomic vector. The ;linear regression has to be coded in one line, not creating shorthand formula. The rest are pretty self evident. For drop1(model,.~., test = "F) we obtain the same as Anova() from the "car" package. Without the .~. we obtain terms or interactions that are not significant. 
 
 #anova(M1,type="marginal") #What is a type III ANOVA?
@@ -2081,6 +2079,9 @@ plot_model(M1AIC, type = "diag")
 #Careful, Species will be used as a random effect.
 ```
 
+Using "masterant2" improves normality of residuals and overall model. 5/23/2023
+
+Species has a high VIF. This should change when I use species as a random effect.The residuals spread increases slightly as the fitted values increase. Indicating heterogeneity. Note that some nests have residuals that are above or below the zero line, indicating the need for a random effect. Possibly Species and E_Load
 
 As of 06/04/2023: The final model as a results of `stepAIC()` is: `logit_herbivory ~ LMA + Species + Thickness + E_load`
 
@@ -2091,6 +2092,7 @@ As of 06/04/2023: The final model as a results of `stepAIC()` is: `logit_herbivo
 Models for predicting herbivory loss using FEF community diversity.
 Use of raw functional leaf trait values.
 
+-   I opted to remove Anthocyanins and Toughness due to high colinearity with LMA (see Correlations section).
 ### ML: fixed terms
 
 ```{r, Ant masterant2 ML model selection, tidy = TRUE}
@@ -2099,10 +2101,10 @@ Use of raw functional leaf trait values.
 
 # ANTS: Species as random effect, NO interactions
 # M3 ####
-M3 <- lme(logit_herbivory ~ Thickness + Toughness + LMA + Anthocyanins + E_load, random = ~1 | Species, method = "ML", data = masterant2, na.action = na.exclude)
+M3 <- lme(logit_herbivory ~ Thickness + LMA + E_load, random = ~1 | Species, method = "ML", data = masterant2, na.action = na.exclude)
 summary(M3) #Adding the random effect INCREASES AIC score.
 AIC(M3) #599.7568 # 1928.168 as of 5/23/23
-# 759.54 as of 06/04/2023
+# 756.4149 as of 30/OCT/2023
 
 # Residuals histograms and plots ####
 M3_resid <- resid(M3, type = "response")
@@ -2152,9 +2154,9 @@ plot_model(M4, type = "diag")
 ```{r, Ant RAW ML interactions, tidy = TRUE}
 # M5: modelling interactions_ No E_load.x, Total_reads and Observed richness #### 
 # Using the fixed terms from M1 model.
-M5 <- lme(logit_herbivory ~ Anthocyanins * Toughness* Thickness  * LMA  * E_load, random = ~1|Species, method = "ML", data = masterant2, na.action = na.exclude) #Observed richness is confounded by Shannon diversity, probably. The same happens with Toughness and Thickness. 
+M5 <- lme(logit_herbivory ~ Thickness  * LMA  * E_load, random = ~1|Species, method = "ML", data = masterant2, na.action = na.exclude) #Observed richness is confounded by Shannon diversity, probably. The same happens with Toughness and Thickness. 
 summary(M5)
-AIC(M5) #601.8333 Decreases slightly # 1912.486 as of 5/23/23 # 770.3784 as of 06/04/2023 IT INCREASEs
+AIC(M5) #601.8333 Decreases slightly # 1912.486 as of 5/23/23 # 757.2809  as of 30/OCT/2023 IT INCREASEs
 
 M5.step <- stepAIC(update(M5, .~.) , direction = "both", k= 2)
 M5.step$anova
@@ -2186,7 +2188,7 @@ M1REM <- lme(logit_herbivory ~ Anthocyanins + Toughness + Thickness  + LMA + E_l
 
 plot(M1REM)
 summary(M1REM)
-AIC(M1REM) # 492.533 BETTER! # 1895, as of 5/23/23 BETTER still! # 755.8854 as of 06/04/2023 NOT BETTER
+AIC(M1REM) # 492.533 BETTER! # 1895, as of 5/23/23 BETTER still! # 755.8854 as of 30/OCT/2023 BETTER
 
 M1.gls <- gls(logit_herbivory ~ Anthocyanins + Toughness + Thickness  + LMA + E_load, method = "REML", data = masterant2, na.action = na.exclude)
 
@@ -2204,16 +2206,16 @@ Using `varIdent()` to model variance structure.
 
 ```{r, tidy=TRUE}
 # M2REM: Removed Toughness from M1REM
-M2REM <- lme(logit_herbivory ~  Anthocyanins + Thickness  + LMA + E_load, random = ~1 | Species, method = "REML", data = masterant2, na.action = na.exclude) #
+M2REM <- lme(logit_herbivory ~ Thickness  + LMA + E_load, random = ~1 | Species, method = "REML", data = masterant2, na.action = na.exclude) #
 
 #Validation
 plot(M2REM)
 summary(M2REM)
-AIC(M2REM) #594.0651 # 1934.192 as of 5/23/23 # 756.3651 as of 06/04/2023
+AIC(M2REM) #594.0651 # 1934.192 as of 5/23/23 # 752.4332 as of 30/OCT/2023
 ```
 -   The spread of residuals vs. fitted values improves so does AIC value. 
 
--   Model M2REM without E_load and LMA INCREASES AIC score of model.
+-   Model M2REM without Anthocyanins and Toughness has the lowest AIC score.
 
 
 Maybe there is some variance structure...
@@ -2224,11 +2226,11 @@ ctrl <- lmeControl(opt='optim')
 ctrl2 <- lmeControl(opt = "nlminb")
 
 #M3REM: Same fixed terms as M2REM
-M3REM <- lme(logit_herbivory ~  Anthocyanins + Thickness  + LMA + E_load, weights = varIdent(form = ~ 1|Species),  random = ~ 1 | Species, method = "REML", control = ctrl, data = masterant2, na.action = na.exclude)
+M3REM <- lme(logit_herbivory ~ Thickness  + LMA + E_load, weights = varIdent(form = ~ 1|Species),  random = ~ 1 | Species, method = "REML", control = ctrl, data = masterant2, na.action = na.exclude)
 
 plot(M3REM)
 summary(M3REM)
-AIC(M3REM) #584.711 #1902.209 as of 5/23/23 # 746.3538 as of 06/04/2023
+AIC(M3REM) #584.711 #1902.209 as of 5/23/23 # 741.7825 as of 30/OCT/2023
 
 # Manual Model validation
 # op <- par(mfrow = c(3, 2), mar = c(4, 4, 2, 2))
@@ -2255,7 +2257,7 @@ AIC(M3REM) #584.711 #1902.209 as of 5/23/23 # 746.3538 as of 06/04/2023
 ```
 
 The spread of residuals vs. fitted values improves for M2REM and so does AIC value.
-Model M3REM has the lowest AIC value and the spread of residuals vs fitted values is more constant/even throughout, regardless of optimizer used (AIC = 746.3538).
+Model M3REM has the lowest AIC value and the spread of residuals vs fitted values is more constant/even throughout, regardless of optimizer used (AIC = 741.7852).
 
 There are still signs of heteroskedasticity, but better.
 There is variance structure at the species levels.
@@ -2265,7 +2267,7 @@ Let's continue.
 
 ```{r}
 # M4REM: Same terms as M3REM, but nesting E-load in Species
-M4REM <- lme(logit_herbivory ~ Anthocyanins + Thickness  + LMA,  weights = varIdent(form = ~ 1|Species),  random = ~ 1 | Species/E_load, method = "REML", control = ctrl, data = masterant2, na.action = na.exclude)
+M4REM <- lme(logit_herbivory ~ Thickness  + LMA,  weights = varIdent(form = ~ 1|Species),  random = ~ 1 | Species/E_load, method = "REML", control = ctrl, data = masterant2, na.action = na.exclude)
 
 # Validation
 plot(M4REM)
@@ -2283,24 +2285,26 @@ Let's finally model with interactions.
 ```{r, tidy=TRUE}
 #M5_INTERACTIONS
 
-M5REM <- lme(logit_herbivory ~ Anthocyanins * Thickness  * LMA * E_load, weights = varIdent(form = ~ 1|Species),  random = ~ 1 | Species, method = "REML", control = ctrl, data = masterant2, na.action = na.exclude)
+M5REM <- lme(logit_herbivory ~ Thickness  * LMA * E_load, weights = varIdent(form = ~ 1|Species),  random = ~ 1 | Species, method = "REML", control = ctrl, data = masterant2, na.action = na.exclude)
 
 #Validation
 plot(M5REM)
 summary(M5REM)
-AIC(M5REM) # 527 AIC # 1571.156 as of 5/23/23 # 704.2486 as of 06/04/2023
+AIC(M5REM) # 527 AIC # 1571.156 as of 5/23/23 # 720.7501 as of 30/OCT/2023
 
 plot(M5REM)
 logit_est <- plot_model(M5REM, type = "diag")
 logit_est
-tab_model(M5REM)
+tab_model(M5REM, M3REM,
+          show.aic = TRUE, 
+          show.intercept = TRUE, 
+          show.df = TRUE)
 
-#ggsave(filename = "./plots/Aim3_Ant_estimates_GLM_06042023.jpg", plot = logit_est, dpi = 600, units = "mm", width = 150, height = 180)
+#ggsave(filename = "./plots/Aim3_Ant_estimates_GLM_30OCT2023.jpg", plot = logit_est, dpi = 600, units = "mm", width = 150, height = 180)
 ```
 
 Let's see if I can lower the AIC score more.
 
-Although this model (M5REM) has the lowest AIC score, it does have predictor variables that are colinear (LMA & Toughness), which confounds the interpretation of the results.
 
 
 #### Notes on Manual model selection 
@@ -2326,20 +2330,17 @@ Using [`sjPlot`](https://strengejacke.github.io/sjPlot/articles/plot_model_estim
 # Regression model table
 # M2.lme, M5, M6
 
-tab_model(M3REM, 
-         show.solutions = TRUE, 
+tab_model(M5REM,M3REM, 
           show.aic = TRUE, 
           show.intercept = TRUE, 
           show.df = TRUE, 
-          df.method = "kenward",
           title = "Linear mixed effects models for predicting leaf herbivory", 
           CSS = list(
             css.depvarhead = 'font-weight:bold;',
             css.centeralign = 'text-align: left;',
             css.firsttablecol = 'font-weight: bold;',
             css.summary = 'color: blue; font-weight: bold;',
-            p.style = "numeric_stars")
-    )
+            p.style = "numeric_stars"))
 
 #Reproducible example
 # mtcars$fact_cyl <- as.factor(mtcars$cyl)
@@ -2350,7 +2351,7 @@ tab_model(M3REM,
 # 
 # AIC(lm1, lm2, lm3)
 # 
-# tab_model(lm1,
+# tab_model(lm3,
 #           show.re.var = T,
 #           show.aicc = TRUE,
 #           show.intercept = TRUE,
@@ -2394,8 +2395,8 @@ wes_paleta2 <- wes_palette(name = "Darjeeling1", 2, type = "continuous")
 
 #Boxplot
 hbox <-  ggplot(data = masterant2, aes(x = Species, y = Ant_percent_leafloss), color = Species) +
-  geom_violin(aes(fill = E_load),outlier.shape = NA) +
-  geom_crossbar(stat="summary", fun = mean, fun.max = mean, fun.min = mean,  fatten = 2, width = 0.5) +
+  geom_boxplot(aes(fill = E_load),outlier.shape = NA) +
+  geom_crossbar(stat="summary", fun = mean, fun.max = mean, fun.min = mean,  fatten = 2, width = 0.7) +
   scale_fill_manual(values = wes_paleta2)+
   geom_jitter(color="grey20", size = 2, alpha= 0.5) +
   theme_minimal(base_size = 12) +
@@ -2414,7 +2415,7 @@ hbox
 # Herbivory and Toughness
   
 t <-ggplot(data = masterant2, aes(y= logit_herbivory, x = Toughness, color = E_load)) +
-   geom_jitter(aes(color = E_load, shape = Species), size = 2.2, alpha = 0.7) +
+   geom_jitter(aes(color = E_load, shape = Species), size = 1.5, alpha = 0.7) +
   scale_shape_manual(values=c(15:22)) +
   scale_color_manual(values = wes_paleta2)+
   geom_smooth(method=lm, se = F) +
@@ -2446,6 +2447,7 @@ t
 a <- ggplot(data = masterant2, aes(y= logit_herbivory, x= Anthocyanins, color = E_load))+
    geom_jitter(aes(color = E_load, shape = Species), size = 1.5, alpha = 0.7) +
   scale_shape_manual(values=c(15:22)) +
+  scale_color_manual(values = wes_paleta2)+
   geom_smooth(method=lm, se=F) +
   #stat_regline_equation(aes(label = paste(..eq.label.., ..adj.rr.label.., sep = "~~~~"))) +
   geom_smooth(method = lm, se = T , level = 0.95, na.rm = F, color = "black") +
@@ -2469,6 +2471,7 @@ a
 tt <- ggplot(data = masterant2, aes(y= logit_herbivory, x= Thickness, color = E_load))+
    geom_jitter(aes(color = E_load, shape = Species), size = 1.5, alpha = 0.7) +
   scale_shape_manual(values=c(15:22)) +
+  scale_color_manual(values = wes_paleta2) +
   geom_smooth(method=lm, se=F) +
   #stat_regline_equation(aes(label = paste(..eq.label.., ..adj.rr.label.., sep = "~~~~"))) +
   geom_smooth(method = lm, se = T , level = 0.95, na.rm = F, color = "black") +
@@ -2490,6 +2493,7 @@ tt
 lma <- ggplot(data = masterant2, aes(y= logit_herbivory, x= LMA, color = E_load))+
   geom_jitter(aes(color = E_load, shape = Species), size = 1.5, alpha = 0.7) +
   scale_shape_manual(values=c(15:22)) +
+  scale_color_manual(values = wes_paleta2)+
   geom_smooth(method=lm, se=F) +
   #stat_regline_equation(aes(label = paste(..eq.label.., ..adj.rr.label.., sep = "~~~~"))) +
   geom_smooth(method = lm, se = T , level = 0.95, na.rm = F, color = "black") +
@@ -2511,18 +2515,17 @@ lma
 # Extracting effect size of model to plot
  dv <- ggplot(data = masterant2, aes(y= logit_herbivory, x= Shannon, color = E_load))+
   geom_jitter(aes(color = E_load, shape = Species), size = 1.5, alpha = 0.7) +
-  scale_shape_manual(values=c(15:22)) +
+  scale_color_manual(values = wes_paleta2)+
   geom_smooth(method=lm, se=F) +
  # stat_regline_equation(aes(label = paste(..eq.label.., ..adj.rr.label.., sep = "~~~~"))) +
   geom_smooth(method = lm, se = T , level = 0.95, na.rm = F, color = "black") +
-  #scale_fill_manual(values= met.brewer("Cross", n = 8, type = "discrete")) +
-  #scale_color_manual(values= met.brewer("Cross", n = 8, type = "discrete")) +
+  scale_shape_manual(labels= c("A. membranacea", "C. cainito", "C. alliodora", "Dypterix .sp", "H. concinna", "L. panamensis", "T. cacao"),values=c(15:22)) +  #scale_color_manual(values= met.brewer("Cross", n = 8, type = "discrete")) +
   stat_regline_equation(label.y = 2.5, label.x = 1.5, aes(label = ..eq.label..),size = rel(3), color= "black") +
   stat_regline_equation(label.y = 2 , label.x = 1.5, aes(label = ..adj.rr.label..), size = rel(3),color = "black") +
   labs(x="Shannon diversity index", y="logit(Leaf herbivory) (%)") +
   theme_minimal(base_size = 10) +
  theme(legend.position="right",
-        legend.text = element_text(size = 12),
+        legend.text = element_text(face = "italic", size = 12),
         axis.text.x=element_text(size = 7),
         axis.text.y=element_text(size = 7))
   # guides(color = "none")  +      #To turn off color legend
@@ -2542,7 +2545,7 @@ ant_arranged_with_caption <- annotate_figure(ant_arranged, bottom = text_grob(an
 
 ant_arranged_with_caption
 
-#ggsave(filename = "./plots/Aim3_ant_regression_06042023.jpg", plot = ant_arranged_with_caption, dpi=600, units=c("mm"), width=180, height=140, bg = "white")
+#ggsave(filename = "./plots/Aim3_ant_regression_30OCT2023.jpg", plot = ant_arranged_with_caption, dpi=600, units=c("mm"), width=180, height=140, bg = "white")
 
 ```
 
@@ -2729,7 +2732,7 @@ plot(P0)
 P1 <- lm(logit_pathogenicity ~ Anthocyanins + Species + LMA + Toughness + Thickness + E_load + Shannon, data = masterpat2, na.action = na.exclude) #Model with all continuous explanatory variables.
 
 summary(P1)
-AIC(P1) # 1488
+AIC(P1) # 1255.082
 
 # Residuals
 P1_resid <- resid(P1, type = "response")
@@ -2760,7 +2763,7 @@ drop1(P1, .~., test="F", trace = TRUE)
 -   The result of `stepAIC` is `logit_pathogenicity ~ Anthocyanins + Species + LMA + Toughness + Thickness + E_load + Shannon`.
 
 
--   I opted to remove Anthocyanins and Toughness due to high colinearity.
+-   I opted to remove Anthocyanins and Toughness due to high colinearity with LMA (see Correlations section).
 
 ```{r, tidy=TRUE}
 # P2#### 
@@ -2779,15 +2782,16 @@ hist(P2_fitted)
 plot(P2)
 plot_model(P2, type = "diag")
 
-#Anthocyanins and leaf thickness seem to be the best predictors of leaf area loss due to herbivory
 
 # Stepwise selection of linear model (lm())
 P2AIC <- stepAIC(update(P2, .~.), direction = "both", k= 2)
 P2AIC$anova
-AIC(P2AIC) #1056.611
+AIC(P2AIC) #1249.769 as of 30/OCT/2023
 
 plot(P2AIC)
 ```
+The final model from this section (P2AIC):
+`logit_pathogenicity ~ Species + E_load + Thickness`
 
 ## Random effect models with fixed terms
 
@@ -2801,9 +2805,9 @@ plot(P2AIC)
 
 # PATHOGEN: Species as random effect, NO interactions
 # P3 ####
-P3 <- lme(logit_pathogenicity ~ E_load + Thickness + LMA + Shannon, random = ~1 | Species, method = "ML", data = masterpat2, na.action = na.exclude)
+P3 <- lme(logit_pathogenicity ~ E_load + Thickness + LMA , random = ~1 | Species, method = "ML", data = masterpat2, na.action = na.exclude)
 summary(P3) #Adding the random effect INCREASES AIC score.
-AIC(P3) #1273.606
+AIC(P3) #1271.734  as of 30/OCT/2023
 
 # Residuals histograms and plots ####
 P3_resid <- resid(P3, type = "response")
@@ -2818,10 +2822,10 @@ plot_model(P3, type = "diag") # The residuals spread increases slightly as the f
 
 # P4 ####
 # Nesting Species and E_load
-P4 <- lme(Pathogen_Damage_area ~ Thickness + LMA + Shannon, random = ~1 | Species/E_load, method = "ML", data = masterpat, na.action = na.exclude)
+P4 <- lme(logit_pathogenicity ~ Thickness + LMA, random = ~1 | Species/E_load, method = "ML", data = masterpat2, na.action = na.exclude)
 
 summary(P4) #Removing E_load term and nesting it INCREASES AIC score.
-AIC(P4) #1071.655
+AIC(P4) #1274.849 as of 30/OCT/2023
 
 # Residuals histograms and plots ####
 P4_resid <- resid(P4, type = "response")
@@ -2836,50 +2840,28 @@ plot_model(P4, type = "diag")
 # Nesting E_load in Species INCREASES the AIC score.
 ```
 
+There is not much improvement of P4 over P1-P2. The AIC score is higher than P1-P2. The residuals spread increases slightly as the fitted values increase. Indicating heterogeneity.
+
 ### REML: fixed terms
+
+No interactions yet, checking random effects.
+**Notice the use of `Treatment` as one of the fixed terms. This is a level that is not present in the Ant dataset. 
 
 ```{r, Restricted Maximum Likelihood (REML), tidy = TRUE}
 # REML
-
-#No interactions yet, checking random effects
-#
 #P1REM
-P1REM <- lme(Pathogen_Damage_area ~ Thickness + LMA + E_load + Shannon, random = ~1 | Species, method = "REML", data = masterpat, na.action = na.exclude)
+P1REM <- lme(logit_pathogenicity ~ Thickness + LMA + E_load + Treatment, random = ~1 | Species, method = "REML", data = masterpat2, na.action = na.exclude)
 summary(P1REM)
-AIC(P1REM) # 1046.999 BETTER!
-P1.gls <- gls(Pathogen_Damage_area ~ Thickness + LMA + E_load + Shannon, method = "REML", data = masterpat, na.action = na.exclude)
+AIC(P1REM) # 1083.539 as of 30/OCT/2023
+
+P1.gls <- gls(logit_pathogenicity ~ Thickness + LMA + E_load + Treatment, method = "REML", data = masterpat2, na.action = na.exclude)
 summary(P1.gls)
-AIC(P1.gls) #1054.015
+AIC(P1.gls) #1242.096 as of 30/OCT/2023
 
-#Random effect "Species" REDUCES the AIC score. It is important then! 
-
-# P2REM: No Total_reads, tHICKNESS, Toughness, LMA, and, Observed richness
-P2REM <- lme(Pathogen_Damage_area ~  LMA + E_load + Shannon, random = ~1 | Species, method = "REML", data = masterpat, na.action = na.exclude)
-summary(M2REM)
-AIC(P2REM) #1041.034
-
-# Model P2REM has lowest AIC score.
-
-# M3REM####
-#Maybe there is some variance structure...
-ctrl <- lmeControl(opt='optim')
-
-P3REM <- lme(Pathogen_Damage_area ~  LMA + Thickness + Shannon, weights = varIdent(form = ~ 1|Species),  random = ~ 1 | Species/E_load/Treatment, method = "REML", control = ctrl, data = masterpat, na.action = na.exclude)
-summary(P3REM)
-AIC(P3REM) #1030.331
-
-#P3REM has the lowest AIC yet!
-
-# Model P3REM with nested variance structure for Species/E_load/Treatment definitely DECREASES AIC value. 
-# 
-plot_model(P3REM, type = "diag")
-#The graphical evaluation does not look good. 
-# 
-# P4REM #### 
-P4REM <- lme(Pathogen_Damage_area ~  LMA + Thickness + Shannon + Treatment + E_load, random = ~1 | Species, method = "REML", data = masterpat, na.action = na.exclude)
-summary(P4REM)
-AIC(P4REM) #981.4897
 ```
+
+Model P1REM has lowest AIC score. Random effect "Species" REDUCES the AIC score. It is important 
+then! 
 
 ## Random effect models with interactions
 
@@ -2888,27 +2870,27 @@ AIC(P4REM) #981.4897
 ```{r, Maximum Likelihood}
 # P5: modelling interactions_ No E_load, Total_reads and Observed richness #### 
 # Using the fixed terms from M1 model.
-P5 <- lme(Pathogen_Damage_area ~ Thickness  * LMA * Shannon * E_load, random = ~1|Species, method = "ML", data = masterpat, na.action = na.exclude) #Observed richness is confounded by Shannon diversity, probably. The same happens with Toughness and Thickness. 
-summary(P5)
-AIC(P5) #1088.681 INCREASES
+P3ML <- lme(logit_pathogenicity ~ Thickness  * LMA * Treatment * E_load, random = ~1|Species, method = "ML", data = masterpat2, na.action = na.exclude) #Observed richness is confounded by Shannon diversity, probably. The same happens with Toughness and Thickness. 
+summary(P3ML)
+AIC(P3ML) #1088 INCREASES AIC score.
 
-P5.step <- stepAIC(update(P5, .~.) , direction = "both", k= 2)
-P5.step$anova
+P3.step <- stepAIC(update(P3ML, .~.) , direction = "both", k= 2)
+P3.step$anova
 
 # Residuals histograms and plots
-P5_resid <- resid(P5, type = "response")
-P5_fitted <- fitted(P5)
+P3_resid <- resid(P3ML, type = "response")
+P3_fitted <- fitted(P3ML)
 
-hist(P5_resid)
-hist(P5_fitted)
+hist(P3_resid)
+hist(P3_fitted)
 
-plot(P5)
-plot_model(P5, type = "diag")
+plot(P3ML)
+plot_model(P3ML, type = "diag")
 
 # Not the best models!
 ```
 
-### REML:
+### REML: interactions
 
 Using Restricted Maximum Likelihood (REML) to model.
 Maximum likelihood tends to be biased with high dimensional data.
@@ -2918,33 +2900,20 @@ Having Treatment and E_load as fixed effect reduces AIC score.
 
 ```{r, Pathogen RAW REML interactions, tidy = TRUE}
 #P5_INTERACTIONS_
-P5REM <- lme(Pathogen_Damage_area ~  LMA * Thickness * Shannon * Treatment * E_load, random = ~1 | Species, method = "REML", data = masterpat, na.action = na.exclude)
+P5REM <- lme(logit_pathogenicity ~  LMA * Thickness * E_load * Treatment, random = ~1 | Species, method = "REML", data = masterpat2, na.action = na.exclude)
 summary(M5REM)
-AIC(P5REM) #789.1233 DECREASE AIC
+AIC(P5REM) #1057.048 as of 30/OCT/2023
 plot(P5REM)
 plot_model(P5REM, type = "diag")
 
 #Let's see if I can lower the AIC score more.
 
 # P6 Interaction between terms - nested random effects  No E_load E_load, Total_reads, and Observed Richness
-P6REM <- lme(Pathogen_Damage_area ~  LMA * Thickness * Shannon * Treatment , random = ~ 1 | Species, method = "REML", data = masterpat, na.action = na.exclude)
+P6REM <- lme(logit_pathogenicity ~  LMA * Thickness * Treatment , random = ~ 1 | Species, method = "REML", data = masterpat2, na.action = na.exclude)
 summary(P6REM)
-AIC(P6REM) #904.3554
+AIC(P6REM) #1071.056 as of 30/OCT/2023
 plot_model(P6REM, type = "diag")
 #REMOVAL OF E_LOAD INCREASES AIC SCORE.
-
-# P7 
-P7REM <- lme(Pathogen_Damage_area ~  LMA * Thickness * Shannon *  E_load * Treatment, random = ~ 1 | Species, method = "REML", data = masterpat, na.action = na.exclude)
-AIC(P7REM) #842.9074
-
-#What if I coalesce Treatment and E_load? That way it becomes a binary factor fixed term. 
-
-masterpat$Treat_Eload <- paste(masterpat$E_load, masterpat$Treatment)
-
-P8REM <- lme(Pathogen_Damage_area ~  LMA * Thickness * Shannon *  Treat_Eload, random = ~ 1 | Species, method = "REML", data = masterpat, na.action = na.exclude)
-AIC(P8REM) #789.1233
-
-#Concatenating the columns does nothing. It has the same AIC score than P5REM.
 ```
 
 ### Conclusions of model selection with raw functional leaf traits
@@ -2953,6 +2922,27 @@ I think I need to transform the data: Pathogen damage.
 There is too much non-normality.
 The variance structure seems to not be nested.
 Hence, no need to nest Species/E_load.
+
+## REML: Variance Structure
+
+Maybe there is some variance structure...
+
+```{r, Restricted  Maximum Likelihood 2, tidy=TRUE}
+ctrl <- lmeControl(opt='optim')
+
+P3REM <- lme(logit_pathogenicity ~  LMA + Thickness, weights = varIdent(form = ~ 1|Species),  random = ~ 1 | Species/E_load/Treatment, method = "REML", control = ctrl, data = masterpat2, na.action = na.exclude)
+summary(P3REM)
+AIC(P3REM) #1011.239 as of 30/OCT/2023
+
+#P3REM has the lowest AIC yet!
+
+# Model P3REM with nested variance structure for Species/E_load/Treatment definitely DECREASES AIC value. 
+# 
+plot_model(P3REM, type = "diag")
+```
+
+Model P3REM has the lowest AIS score. It has variance structure (`varIdent()`) nested in Species/E_load/Treatment. It also uses an optimizer `lmeControl(opt='optim')`. It is the best model for the pathogen data set, at the moment. 
+
 
 ## Plots: Pathogen
 
@@ -2964,43 +2954,61 @@ par(mfrow = c(1, 1))
 wes_paleta2 <- wes_palette(name = "Darjeeling1", 2, type = "continuous")
 
 # Pathogen Boxplot
-pbox <-  ggplot(data = masterpat2, aes(x = E_load, y = Pathogen_percent_damage), color = Species) +
-  geom_violin(aes(fill = E_load)) +
-  geom_crossbar(stat="summary", fun = mean, fun.max = mean, fun.min = mean,  fatten = 2, width = 0.5) +
+pbox <-  ggplot(data = masterpat2, aes(x = Species, y = Pathogen_percent_damage), fill = Species) +
+  geom_boxplot(aes(fill = E_load),outlier.shape = NA) +
+  geom_crossbar(stat="summary", fun = mean, fun.max = mean, fun.min = mean,  fatten = 2, width = 0.7) +
   scale_fill_manual(values = wes_paleta2)+
-  geom_jitter(color="grey20", size = 2, alpha= 0.5) +
-  theme_minimal(base_size = 10) +
+  geom_jitter(color="grey20", size = 1.5, alpha= 0.5) +
+  theme_minimal(base_size = 12) +
   theme(legend.position="right", 
          legend.title = element_blank(),
          legend.text = element_text(size = 16),
-         axis.text.x = element_blank()) + 
-  theme(panel.grid.major = element_line(colour = "grey")) +
-  theme(panel.grid.minor = element_line(colour = "grey")) +
-  theme(strip.background = element_rect(fill = "white")) +
-  theme(strip.text.x = element_text(colour = "black", face = "bold")) +
-  theme(legend.title = element_text(face = "bold")) +
-  theme(panel.border = element_rect(linetype = "blank", fill = NA)) +
-  #(angle = 45, hjust = 1)) +
-  labs(x="", y="Pathogen damage (%)") +
-  annotate("text", x = 2.5, y = .65, label = "") +
-  facet_wrap(~Species)
+         axis.text.x = element_text(angle = 45, hjust = 1)) +
+  labs(x="", y="Pathogen Damage (%)", caption = "*All replicate leaves from tree species included  (n = 400)") +
+  annotate("text", x = 2.5, y = .65, label = "")
   # stat_compare_means(comparisons = mycomparisons ) +
   # stat_compare_means(method = "kruskal.test", label = "p.signif")
 pbox
+
+
+ # ggplot(data = masterpat2, aes(x = E_load, y = Pathogen_percent_damage), color = Species) +
+ #  geom_violin(aes(fill = E_load)) +
+ #  geom_crossbar(stat="summary", fun = mean, fun.max = mean, fun.min = mean,  fatten = 2, width = 0.7) +
+ #  scale_fill_manual(values = wes_paleta2)+
+ #  geom_jitter(color="grey20", size = 2, alpha= 0.5) +
+ #  theme_minimal(base_size = 10) +
+ #  theme(legend.position="right", 
+ #         legend.title = element_blank(),
+ #         legend.text = element_text(size = 16),
+ #         axis.text.x = element_blank()) + 
+ #  theme(panel.grid.major = element_line(colour = "grey")) +
+ #  theme(panel.grid.minor = element_line(colour = "grey")) +
+ #  theme(strip.background = element_rect(fill = "white")) +
+ #  theme(strip.text.x = element_text(colour = "black", face = "bold")) +
+ #  theme(legend.title = element_text(face = "bold")) +
+ #  theme(panel.border = element_rect(linetype = "blank", fill = NA)) +
+ #  #(angle = 45, hjust = 1)) +
+ #  labs(x="", y="Pathogen damage (%)") +
+ #  annotate("text", x = 2.5, y = .65, label = "") +
+ #  facet_wrap(~Species)
+  # stat_compare_means(comparisons = mycomparisons ) +
+  # stat_compare_means(method = "kruskal.test", label = "p.signif")
+
 
 # Pathogen
 # Regressions
 # Pathogen damage and Toughness
   
-pt <-ggplot(data = masterpat2, aes(y= Pathogen_percent_damage, x = Toughness, color = E_load)) +
+pt <- ggplot(data = masterpat2, aes(y= logit_pathogenicity, x = Toughness, color = E_load)) +
    geom_jitter(aes(color = E_load, shape = Species), size = 1.5, alpha = 0.7) +
   scale_shape_manual(values=c(15:22)) +
+  scale_color_manual(values = wes_paleta2)+
   geom_smooth(method=lm, se = F) +
   #stat_regline_equation(aes(label = paste(..eq.label.., ..adj.rr.label.., sep = "~~~~"))) +
   geom_smooth(method = lm, se = T , level = 0.95, na.rm = F, color = "black") +
-  stat_regline_equation(label.y = .75, label.x = 0.45, aes(label = ..eq.label..), sep = "~~~~", size = rel(3), color= "black") +
-  stat_regline_equation(label.y = .55 , label.x = 0.45, aes(label = ..adj.rr.label..), size = rel(3), color = "black") +
-  labs(x="Leaf Toughness (lbf)", y="logit(Pathogen damage) (%)") +
+  stat_regline_equation(label.y = 2.25, label.x = 0.45, aes(label = ..eq.label..), sep = "~~~~", size = rel(3), color= "black") +
+  stat_regline_equation(label.y = 1.2 , label.x = 0.45, aes(label = ..adj.rr.label..), size = rel(3), color = "black") +
+  labs(x="Leaf Toughness (lbf)", y="logit(Pathogen damage%) (%)") +
   theme_minimal(base_size = 10) +
   theme(legend.position="right", legend.title = element_blank(),
         legend.text = element_text(size = 8),
@@ -3014,15 +3022,16 @@ pt
 
 # Pathogen damage and Anthocyanins
 
-pa <- ggplot(data = masterpat2, aes(y= logit_damage, x= Anthocyanins, color = E_load))+
+pa <- ggplot(data = masterpat2, aes(y= logit_pathogenicity, x= Anthocyanins, color = E_load))+
    geom_jitter(aes(color = E_load, shape = Species), size = 1.5, alpha = 0.7) +
   scale_shape_manual(values=c(15:22)) +
+  scale_color_manual(wes_paleta2)+
   geom_smooth(method=lm, se=F) +
   #stat_regline_equation(aes(label = paste(..eq.label.., ..adj.rr.label.., sep = "~~~~"))) +
   geom_smooth(method = lm, se = T , level = 0.95, na.rm = F, color = "black") +
   stat_regline_equation(label.y = 2.5, label.x = 7, aes(label = ..eq.label..), size = rel(3), color= "black") +
   stat_regline_equation(label.y = 1.5 , label.x = 7, aes(label = ..adj.rr.label..), size = rel(3), color = "black") +
-  labs(x="Anthocyanins (ACI)", y="logit(Pathogen damage) (%)") +
+  labs(x="Anthocyanins (ACI)", y="logit(Pathogen damage %) (%)") +
   theme_minimal(base_size = 10) +
   theme(legend.position="right", legend.title = element_blank(),
         legend.text = element_text(size = 8),
@@ -3033,13 +3042,13 @@ pa <- ggplot(data = masterpat2, aes(y= logit_damage, x= Anthocyanins, color = E_
   guides(shape = "none") #To turn off shape legend
  
 pa
-#scale_shape_manual(values = c(1:7))
 
 # Herbivory and leaf thickness
 
 ptt <- ggplot(data = masterpat2, aes(y= logit_damage, x= Thickness, color = E_load))+
    geom_jitter(aes(color = E_load, shape = Species), size = 1.5, alpha = 0.7) +
   scale_shape_manual(values=c(15:22)) +
+  scale_color_manual(wes_paleta2) +
   geom_smooth(method=lm, se=F) +
   #stat_regline_equation(aes(label = paste(..eq.label.., ..adj.rr.label.., sep = "~~~~"))) +
   geom_smooth(method = lm, se = T , level = 0.95, na.rm = F, color = "black") +
@@ -3061,8 +3070,9 @@ ptt
 # Pathogen damage and LMA
 
 plma <- ggplot(data = masterpat2, aes(y= logit_damage, x= LMA, color = E_load))+
-  geom_jitter(aes(color = E_load, shape = Species), size = 1.5, alpha = 0.7) +
+  geom_point(aes(color = E_load, shape = Species), size = 1.5, alpha = 0.7) +
   scale_shape_manual(values=c(15:22)) +
+  scale_color_manual(wes_paleta2) +
   geom_smooth(method=lm, se=F) +
 #  stat_regline_equation(aes(label = paste(..eq.label.., ..adj.rr.label.., sep = "~~~~"))) +
   geom_smooth(method = lm, se = T , level = 0.95, na.rm = F, color = "black") +
@@ -3084,12 +3094,13 @@ plma
 # Extracting effect size of model to plot
  pdv <- ggplot(data = masterpat2, aes(y= logit_damage, x= Shannon, color = E_load))+
   geom_jitter(aes(color = E_load, shape = Species), size = 1.5, alpha = 0.7) +
-  scale_shape_manual(values=c(15:22)) +
   geom_smooth(method=lm, se=F) +
+  scale_color_manual(wes_paleta2) +
  # stat_regline_equation(aes(label = paste(..eq.label.., ..adj.rr.label.., sep = "~~~~"))) +
   geom_smooth(method = lm, se = T , level = 0.95, na.rm = F, color = "black") +
   #scale_fill_manual(values= met.brewer("Cross", n = 8, type = "discrete")) +
   #scale_color_manual(values= met.brewer("Cross", n = 8, type = "discrete")) +
+  scale_shape_manual(labels= c("A. membranacea", "C. cainito", "C. alliodora", "Dypterix .sp", "H. concinna", "L. panamensis", "T. cacao"),values=c(15:22)) 
   stat_regline_equation(label.y = 2.5, label.x = 0.7, aes(label = ..eq.label..), size = rel(3), color= "black") +
   stat_regline_equation(label.y = 1.5 , label.x = 0.7, aes(label = ..adj.rr.label..),size = rel(3), color = "black") +
   labs(x="Shannon diversity index", y="logit(Pathogen damage) (%)", col = "") +
