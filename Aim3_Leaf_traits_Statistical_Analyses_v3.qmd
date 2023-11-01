@@ -32,32 +32,29 @@ execute:
 editor: 
   markdown: 
     wrap: 72
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r setup}
 knitr::opts_chunk$set(out.width ='70%', fig_align = 'center', echo = TRUE, collapse = TRUE)
 ```
 
-This are the statistical analyses for Aim 3 Leaf Traits and Endophytes project with Sunshine Van Bael from Tulane University, and E.A.
-Arnold from the University of Arizona.
-The bioinformatic analyses and data files (e.g., .csv) produced are a product of files *Aim3_Sequence_Data_Cleaning.R* and *Aim_3_Prelim_analyses_9SEPT2020.Rmd*.
-The first file, cleans and shapes the OTU files produced from the bioinformatic analyses completed with VSEARCH.
-The taxonomic assignment was completed with T-BAS.
-The second file explores correlations and distributions of covariates for this project.
+This are the statistical analyses for Aim 3 Leaf Traits and Endophytes project with Sunshine Van Bael from Tulane University, and E.A. Arnold from the University of Arizona. The bioinformatic analyses and data files (e.g., .csv) produced are a product of files *Aim3_Sequence_Data_Cleaning.R* and *Aim_3_Prelim_analyses_9SEPT2020.Rmd*. The first file, cleans and shapes the OTU files produced from the bioinformatic analyses completed with VSEARCH. The taxonomic assignment was completed with T-BAS. The second file explores correlations and distributions of covariates for this project.
 
 # Completed
+
 -   Pathogen GLMs with `logit_pathogenicity` DONE 30/OCT/2023
+
+-   Pathogen simple linear model plots
 
 # To-do list
 
 -   GLMs and main effects in tree-style plot.
--   Pathogen simple linear model plots
-
 
 # R packages used
 
-Not all of these packages are used.
-They are here just in case need further along the analyses.
+Not all of these packages are used. They are here just in case need further along the analyses.
 
 ```{r, message = FALSE}
 # Data manipulation and visualizations ####
@@ -125,20 +122,18 @@ rm(list = ls())
 #setwd("H:/.shortcut-targets-by-id/0B9v0CdUUCqU5VVR4a3BvNHM1Z28/VBL_users/Grad_Students/Bolivar/Dissertation/Leaf_Traits_Panama/Data/Sequence_analyses")
 
 #Working Directory and Path for Windows
-setwd("C:/Users/boloq/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses")
-save.path <- "C:/Users/boloq/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses"
+# setwd("C:/Users/boloq/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses")
+# save.path <- "C:/Users/boloq/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses"
 
 #Working Directory and Path for Linux
-# setwd("/home/baponte/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses/")
-# 
-# save.path <- ("/home/baponte/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses/")
+setwd("/home/baponte/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses/")
+
+save.path <- ("/home/baponte/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses/")
 ```
 
 # Data frames
 
-Data frames needed for diversity, abundance, and richness analyses.
-Clean sample sequences data (no contaminants).
-T-BAS taxonomic assignment and leaf traits data set.
+Data frames needed for diversity, abundance, and richness analyses. Clean sample sequences data (no contaminants). T-BAS taxonomic assignment and leaf traits data set.
 
 ```{r, Clean sequences, tidy = TRUE}
 set.seed(123)
@@ -184,7 +179,7 @@ tbas <- readRDS(file.path(save.path, "R_objects", "tbas_filtered.rds"))
 ```{r, Leaf trait variables data, tidy = TRUE}
 # data
 
-data <- read.csv("Aim3_Bolivar_Summer_2019_Leaf_Traits_datasheet.csv")
+data <- read.csv("field_data/Aim3_Bolivar_Summer_2019_Leaf_Traits_datasheet.csv")
 
 # data2
 # Data set created on May 23, 2023 for analysis with raw data.
@@ -270,14 +265,9 @@ glimpse(ndata2)
 
 ### Ant and Pathogen assay data
 
-For this data set I have calculated the area or percent area loss of leaf by the ants.
-I need to calculate the rate of loss.
-**How fast did the ants cut off leaf matter?** This data set also need cleaning and calculation of other variables.
-**How fast did the pathogen spread?**
+For this data set I have calculated the area or percent area loss of leaf by the ants. I need to calculate the rate of loss. **How fast did the ants cut off leaf matter?** This data set also need cleaning and calculation of other variables. **How fast did the pathogen spread?**
 
-The code below cleans the `ants` data set by removing all the variables with incomplete data or not important for our current analyses.
-Additionally it eliminates unsuccessful trials (labeled by 0 in Trial_success) as well a trial \# 10 which is missing data for one of the treatments.
-It is important to remove the trial as a whole to be able to performed paired t-tests.
+The code below cleans the `ants` data set by removing all the variables with incomplete data or not important for our current analyses. Additionally it eliminates unsuccessful trials (labeled by 0 in Trial_success) as well a trial \# 10 which is missing data for one of the treatments. It is important to remove the trial as a whole to be able to performed paired t-tests.
 
 ```{r, Ant assay data, tidy = TRUE}
 
@@ -329,10 +319,7 @@ ants3 <- ants %>%
  kable(head(ants2))
 ```
 
-I removed rows for trials T1-T2 of THEO samples and T5 of APEIME samples (rows 41:48, 97:100, respectively).
-Removing these Trials because they have missing data and they are paired.
-Only removing the row with missing data would create an uneven paired data set.
-Making paired t-tests troublesome.
+I removed rows for trials T1-T2 of THEO samples and T5 of APEIME samples (rows 41:48, 97:100, respectively). Removing these Trials because they have missing data and they are paired. Only removing the row with missing data would create an uneven paired data set. Making paired t-tests troublesome.
 
 ```{r, Pathogen Assay Data, tidy = TRUE}
 
@@ -377,8 +364,7 @@ kable(head(patho2))
 
 # Taxonomical assignment of OTU's
 
-The taxonomic assignment was completed with T-BAS.
-The 'unite_report" returned is what I used for creating the `phyloseq` objects. Here I bind the taxonomy, OTUs and sample metadata together. All is done with the `phyloseq` package. For reference <https://joey711.github.io/phyloseq/>.
+The taxonomic assignment was completed with T-BAS. The 'unite_report" returned is what I used for creating the `phyloseq` objects. Here I bind the taxonomy, OTUs and sample metadata together. All is done with the `phyloseq` package. For reference <https://joey711.github.io/phyloseq/>.
 
 ## Phyloseq objects and dataframes
 
@@ -427,8 +413,7 @@ pq1 <- readRDS(file.path(save.path, "R_objects", "phyloseq_main.rds"))
 
 **Code modified from Mareli Sánchez Juliá.**
 
-Are there any taxa with no (0) reads?
-#
+Are there any taxa with no (0) reads? \#
 
 ```{r, Mareli code, tidy = TRUE}
 #
@@ -654,12 +639,7 @@ vif(lm(Abun_7 ~ Anthocyanins + Thickness + Toughness + LMA, data = ndata))
 #
 ```
 
-Variance inflation factors range from 1 upwards.
-The numerical value for VIF tells you (in decimal form) what percentage the variance (i.e. the standard error squared) is inflated for each coefficient.
-For example, a VIF of 1.9 tells you that the variance of a particular coefficient is 90% bigger than what you would expect if there was no multicollinearity --- if there was no correlation with other predictors.
-A rule of thumb for interpreting the variance inflation factor: -1 = not correlated.
--Between 1 and 5 = moderately correlated.
--Greater than 5 = highly correlated.
+Variance inflation factors range from 1 upwards. The numerical value for VIF tells you (in decimal form) what percentage the variance (i.e. the standard error squared) is inflated for each coefficient. For example, a VIF of 1.9 tells you that the variance of a particular coefficient is 90% bigger than what you would expect if there was no multicollinearity --- if there was no correlation with other predictors. A rule of thumb for interpreting the variance inflation factor: -1 = not correlated. -Between 1 and 5 = moderately correlated. -Greater than 5 = highly correlated.
 
 ```{r}
 # Reference code
@@ -698,8 +678,7 @@ A rule of thumb for interpreting the variance inflation factor: -1 = not correla
 
 # Master data set: richness, diversity and abundances post-phyloseq
 
-This data frame combines all the necessary richness, diverstiy and relative abundance estimates post-`phyloseq` manipulation with the data frames from the ant and pathogen assays.
-This is useful for testing hypothesis directly from one data set.
+This data frame combines all the necessary richness, diverstiy and relative abundance estimates post-`phyloseq` manipulation with the data frames from the ant and pathogen assays. This is useful for testing hypothesis directly from one data set.
 
 ```{r, Master data set, tidy = TRUE}
 #This contains all the OTU id's per sample type. Hence, 156 (# samples) observations per OTU_ID. The phyloseq object achieves the same purpose. This data set is easier to use with other functions or test not supported by phyloseq.
@@ -749,8 +728,7 @@ master <- df_list_ant %>%
 glimpse(master)
 ```
 
-For `master` I remove empty rows just as I did in above section.
-Because I use `left_join()` with `ndata2` it returns empty cells for ant assay data but complete leaf trait measurements.
+For `master` I remove empty rows just as I did in above section. Because I use `left_join()` with `ndata2` it returns empty cells for ant assay data but complete leaf trait measurements.
 
 ## masterant
 
@@ -790,10 +768,7 @@ masterant2 <- df_list_ant2 %>%
 glimpse(masterant2)
 ```
 
-For `masterant` I remove THEO T1 & T2 and APE28-29 just as I did in above section.
-I need to do this again because in creating the `master` data frame I join the data with `left_join()`.
-It results in rows with missing pathogen assay data and complete leaf trait data.
-There is no need for omiting NA's in `masterpat` because all the cells are complete.
+For `masterant` I remove THEO T1 & T2 and APE28-29 just as I did in above section. I need to do this again because in creating the `master` data frame I join the data with `left_join()`. It results in rows with missing pathogen assay data and complete leaf trait data. There is no need for omiting NA's in `masterpat` because all the cells are complete.
 
 ## masterpat
 
@@ -1026,8 +1001,7 @@ grid_pca
 
 ### Ants
 
-Here I take the loading (PCs) from the **Ant Full PCA** and join them to the ant herbivory (leafloss) data.
-Thus being able to perform linear regressions from this new dataset (ant_paca + masterant2).
+Here I take the loading (PCs) from the **Ant Full PCA** and join them to the ant herbivory (leafloss) data. Thus being able to perform linear regressions from this new dataset (ant_paca + masterant2).
 
 ```{r, Lm PCA data, tidy=TRUE}
 # PCA loadings (rotations) data frame
@@ -1041,11 +1015,7 @@ ant_pcalm <- masterant2[c(1,2,5,12, 17)]
 ant_pcalm <- cbind(ant_pcalm, ant.pci) #Both data sets have 467 observations
 ```
 
-The functions `prcomp` and `princomp` are both possible to use for this analysis.
-The `prcomp` stores the "scores" as `x`, while `princomp` stores them as `scores`.
-Useful to know when extracting the data from it for linear regressions.
-The function `princomp` uses Eigen decomposition of the covariance and correlations between samples.
-The `prcomp` uses the singular value decomposition between variables.
+The functions `prcomp` and `princomp` are both possible to use for this analysis. The `prcomp` stores the "scores" as `x`, while `princomp` stores them as `scores`. Useful to know when extracting the data from it for linear regressions. The function `princomp` uses Eigen decomposition of the covariance and correlations between samples. The `prcomp` uses the singular value decomposition between variables.
 
 #### Ants \~ PC1 & PC2
 
@@ -1124,8 +1094,7 @@ ant_pc2
 
 ### Pathogen
 
-Here I take the loading (PCs) from the **Pathogen Full PCA** and join them to the fungal pathogenicity (leaf damage) data.
-Thus being able to perform linear regressions from this new dataset (pat_pac + masterpat2).
+Here I take the loading (PCs) from the **Pathogen Full PCA** and join them to the fungal pathogenicity (leaf damage) data. Thus being able to perform linear regressions from this new dataset (pat_pac + masterpat2).
 
 ```{r, Lm PCA data, tidy=TRUE}
 # PCA loadings (rotations) data frame
@@ -1139,11 +1108,7 @@ pat_pcalm <- masterpat2[c(1,2,5,6,13)]
 pat_pcalm <- cbind(pat_pcalm, pat.pci) #Both data sets have 467 observations
 ```
 
-The functions `prcomp` and `princomp` are both possible to use for this analysis.
-The `prcomp` stores the "scores" as `x`, while `princomp` stores them as `scores`.
-Useful to know when extracting the data from it for linear regressions.
-The function `princomp` uses Eigen decomposition of the covariance and correlations between samples.
-The `prcomp` uses the singular value decomposition between variables.
+The functions `prcomp` and `princomp` are both possible to use for this analysis. The `prcomp` stores the "scores" as `x`, while `princomp` stores them as `scores`. Useful to know when extracting the data from it for linear regressions. The function `princomp` uses Eigen decomposition of the covariance and correlations between samples. The `prcomp` uses the singular value decomposition between variables.
 
 #### Pathogen \~ PC1 & PC2
 
@@ -1258,11 +1223,7 @@ antpat_arranged
 
 ## Statistical analyses and data visualization with Phyloseq
 
-The phyloseq package allows me to perform most of the necessary analyses with just a couple of phyloseq objects (e.g. data frames, relative abundance calculations, etc.).
-Previous data frames created are still needed for further analyses (e.g. dbRDA and PSLR).
-There are some difficulties with manipulating the data with `phyloseq`.
-When merging objects the categorical facotrs are coerced to numeric, hence losing that information.
-See [here](https://github.com/joey711/phyloseq/issues/465) and comments in code chunks.
+The phyloseq package allows me to perform most of the necessary analyses with just a couple of phyloseq objects (e.g. data frames, relative abundance calculations, etc.). Previous data frames created are still needed for further analyses (e.g. dbRDA and PSLR). There are some difficulties with manipulating the data with `phyloseq`. When merging objects the categorical facotrs are coerced to numeric, hence losing that information. See [here](https://github.com/joey711/phyloseq/issues/465) and comments in code chunks.
 
 ## Phyloseq: plots and graphs
 
@@ -1409,10 +1370,7 @@ p3
 # p4
 ```
 
-After meddling with this for a little bit, I do not like how this plots my data.
-I find it confusing to edit and know what it is plotting exactly.
-I will plot these ordinations by using the data frames cleaned and trimmed with phyloseq.
--BAR 06/19/2022 *The main ordination plot is the one produces in the dbRDA section. These ordination are good for supplementary material information* -BAR 7/04/2023
+After meddling with this for a little bit, I do not like how this plots my data. I find it confusing to edit and know what it is plotting exactly. I will plot these ordinations by using the data frames cleaned and trimmed with phyloseq. -BAR 06/19/2022 *The main ordination plot is the one produces in the dbRDA section. These ordination are good for supplementary material information* -BAR 7/04/2023
 
 # Leaf traits and relative abundance and total reads of OTUs
 
@@ -1612,17 +1570,11 @@ DVI
 
 ### dbRDA and partial dbrda
 
-Code written by Mareli Sánchez Juliá.
-Modified by Bolívar Aponte Rolón- March 2022 Partial dbRDA was eliminated.
-Due to my experimental set up, performing a partial dbRDA does not make much sense.
-This is useful when looking at change over time in a categorical manner (e.g. sampling every two weeks).
-My data set does not test for anything similar.
+Code written by Mareli Sánchez Juliá. Modified by Bolívar Aponte Rolón- March 2022 Partial dbRDA was eliminated. Due to my experimental set up, performing a partial dbRDA does not make much sense. This is useful when looking at change over time in a categorical manner (e.g. sampling every two weeks). My data set does not test for anything similar.
 
 An explanation of why we use dbRDA with oout type of data from Perter Tellez's 2022 paper: *"We used distance-based redundancy analyses (dbRDA) to visualize associations between leaf functional traits and endophyte communities. We excluded OTUs represented by a single sequence (singletons) and calculated a Bray-Curtis dissimilarity matrix based on endophyte relative abundance data".* *We tested for differences in endophyte community composition as a function of host species and genus, using a permutational multivariate analysis of variance (PERMANOVA, 999 permutations, (69)). We used a permutational analysis of multivariate dispersion (PERMDISP; (69)) to test for homogeneity of variance in endophyte communities. We used a PERMDISP as a companion to PERMANOVA to exclude the possibility that any significant differences were caused by differences in the variance of endophyte communities. The relative explanatory power of host species and leaf functional traits on endophyte communities was compared using a partial-dbRDA.*
 
-Results from dbRDA (`capscale`) have not been compared to PERMANOVA (`adonis2`) yet.
-- 11/21/22.
-Results should be the same or very similar.
+Results from dbRDA (`capscale`) have not been compared to PERMANOVA (`adonis2`) yet. - 11/21/22. Results should be the same or very similar.
 
 ### Making a distance matrix
 
@@ -1824,8 +1776,7 @@ plot(otu.anosim)
 
 # PLSR: Partial Least Squares Regression
 
-Results not included.
-Analysis is not complete -11/21/2022
+Results not included. Analysis is not complete -11/21/2022
 
 ```{r, include = FALSE}
 # Manipulating the data for PLSR
@@ -1843,33 +1794,17 @@ Analysis is not complete -11/21/2022
 
 ### Leaf-cutter ants analyses
 
-The idea here is to see which leaf functional trait and community diversity traits (relative abundance, richness and diversity) impact herbivory and pathogenicity.
-Only using LMA, thickness and toughness, as these covariates are orthagonal to each other in PCA analysis.
+The idea here is to see which leaf functional trait and community diversity traits (relative abundance, richness and diversity) impact herbivory and pathogenicity. Only using LMA, thickness and toughness, as these covariates are orthagonal to each other in PCA analysis.
 
 ### Descriptive statistics
 
-**Preliminary analyses as of 08/26/2019** These preliminary analyses were performed before the Ecological Analyses course.
-Not everything is useful.
-Certainly the GGPLOT MAGIC section is the exception.
-Those plots are an essential part of the story.
+**Preliminary analyses as of 08/26/2019** These preliminary analyses were performed before the Ecological Analyses course. Not everything is useful. Certainly the GGPLOT MAGIC section is the exception. Those plots are an essential part of the story.
 
-Evaluating non-normality of the data do not use `master` data set to assess the assumption of normality.
-It includes duplicate information for the explanatory variables.
-Meaning a sample and its data are paired multiples times with the OTU's that are present in it.
-Use either `data` or `ndata`.
+Evaluating non-normality of the data do not use `master` data set to assess the assumption of normality. It includes duplicate information for the explanatory variables. Meaning a sample and its data are paired multiples times with the OTU's that are present in it. Use either `data` or `ndata`.
 
-Proceeding with exploring normality assumptions with `data` and `masterant`.
-It retains the mean values for all leaf replicates.
+Proceeding with exploring normality assumptions with `data` and `masterant`. It retains the mean values for all leaf replicates.
 
-From this autocorrelation matrix I can see that the Observed richness, Shannon diversity and Total_reads have low autocorrelation the physical leaf functional traits.
-These three measures of community composition are somewhat correlated.
-Especially the Observed species richness and the Shannon diversity index (0.719735754) and Total_reads x Shannon(-0.3244523).
-For this reason I am going to stick to using Shannon diversity are a community traits for predicting leaf herbivory and pathogenicity.
-LMA is highly collinear with Anthocyanins and Toughness, while it has very low correlation with Ant_percent_leafloss.
-I will not include ANthocyanins in the linear models.
-Thickness and toughness are inversely correlated with each other.
-Toughness seems to have a low negative correlation with *Ant_percent_leafloss*, or *Total_leaf_area_cut*.
-I will not include it in the linear models.
+From this autocorrelation matrix I can see that the Observed richness, Shannon diversity and Total_reads have low autocorrelation the physical leaf functional traits. These three measures of community composition are somewhat correlated. Especially the Observed species richness and the Shannon diversity index (0.719735754) and Total_reads x Shannon(-0.3244523). For this reason I am going to stick to using Shannon diversity are a community traits for predicting leaf herbivory and pathogenicity. LMA is highly collinear with Anthocyanins and Toughness, while it has very low correlation with Ant_percent_leafloss. I will not include ANthocyanins in the linear models. Thickness and toughness are inversely correlated with each other. Toughness seems to have a low negative correlation with *Ant_percent_leafloss*, or *Total_leaf_area_cut*. I will not include it in the linear models.
 
 ```{r}
 # Data
@@ -1992,8 +1927,7 @@ corrplot::corrplot(corr, method = "color", type = "upper", order = "hclust",addC
 
 ### Paired T-tests: Ant Herbivory
 
-Paired is not the same as pairwise.
-Pairwise refers to the comparison each group compared with every other group.
+Paired is not the same as pairwise. Pairwise refers to the comparison each group compared with every other group.
 
 ```{r, Total leaf area cut, tidy = TRUE}
 t.test(formula = Total_leaf_area_cut ~ E_load,
@@ -2015,9 +1949,7 @@ ant_paired
 
 ## Ant Linear Mixed Models: `logit_herbivory ~ raw functional leaf traits`
 
-Now that we have answered how the leaf functional traits influence influence the effects of herbivory and pathogenicity in plants.
-In June 2023, we have eliminated "Shannon Diversity" as a fixed effect.
-We will evaluate the effects of community diversity and composition in other analyses.
+Now that we have answered how the leaf functional traits influence influence the effects of herbivory and pathogenicity in plants. In June 2023, we have eliminated "Shannon Diversity" as a fixed effect. We will evaluate the effects of community diversity and composition in other analyses.
 
 ```{r, Ant Linear Mixed Models wit masterant2 data set, tidy = TRUE}
 
@@ -2089,11 +2021,9 @@ As of 06/04/2023: The final model as a results of `stepAIC()` is: `logit_herbivo
 
 ### ANTS: Leaf traits and Herbivory
 
-Models for predicting herbivory loss using FEF community diversity.
-Use of raw functional leaf trait values.
+Models for predicting herbivory loss using FEF community diversity. Use of raw functional leaf trait values.
 
--   I opted to remove Anthocyanins and Toughness due to high colinearity with LMA (see Correlations section).
-### ML: fixed terms
+-   I opted to remove Anthocyanins and Toughness due to high colinearity with LMA (see Correlations section). \### ML: fixed terms
 
 ```{r, Ant masterant2 ML model selection, tidy = TRUE}
 #Using results from stepAIC() as the starting point.
@@ -2176,9 +2106,7 @@ plot_model(M5, type = "diag")
 
 ### REML: interactions
 
-Using Restricted Maximum Likelihood (REML) to model.
-Maximum likelihood tends to be biased with high dimensional data.
-No interactions yet, checking random effects.
+Using Restricted Maximum Likelihood (REML) to model. Maximum likelihood tends to be biased with high dimensional data. No interactions yet, checking random effects.
 
 ```{r, Ant masternat2 RAW REML model selection, tidy = TRUE}
 # REML
@@ -2197,12 +2125,11 @@ summary(M1.gls)
 AIC(M1.gls) #589.6144 # 1955.694 as of 5/23/23 # 797.37 as of 06/04/2023
 ```
 
--   Random effect "Species" REDUCES the AIC score.
-It is important to incorporate in the model!
+-   Random effect "Species" REDUCES the AIC score. It is important to incorporate in the model!
 
 ### REML: Variance Structure
 
-Using `varIdent()` to model variance structure. 
+Using `varIdent()` to model variance structure.
 
 ```{r, tidy=TRUE}
 # M2REM: Removed Toughness from M1REM
@@ -2213,10 +2140,10 @@ plot(M2REM)
 summary(M2REM)
 AIC(M2REM) #594.0651 # 1934.192 as of 5/23/23 # 752.4332 as of 30/OCT/2023
 ```
--   The spread of residuals vs. fitted values improves so does AIC value. 
+
+-   The spread of residuals vs. fitted values improves so does AIC value.
 
 -   Model M2REM without Anthocyanins and Toughness has the lowest AIC score.
-
 
 Maybe there is some variance structure...
 
@@ -2256,12 +2183,9 @@ AIC(M3REM) #584.711 #1902.209 as of 5/23/23 # 741.7825 as of 30/OCT/2023
 # abline(h = 0, col = "blue")
 ```
 
-The spread of residuals vs. fitted values improves for M2REM and so does AIC value.
-Model M3REM has the lowest AIC value and the spread of residuals vs fitted values is more constant/even throughout, regardless of optimizer used (AIC = 741.7852).
+The spread of residuals vs. fitted values improves for M2REM and so does AIC value. Model M3REM has the lowest AIC value and the spread of residuals vs fitted values is more constant/even throughout, regardless of optimizer used (AIC = 741.7852).
 
-There are still signs of heteroskedasticity, but better.
-There is variance structure at the species levels.
-Among the REML models M3REM is the best fit.
+There are still signs of heteroskedasticity, but better. There is variance structure at the species levels. Among the REML models M3REM is the best fit.
 
 Let's continue.
 
@@ -2305,22 +2229,15 @@ tab_model(M5REM, M3REM,
 
 Let's see if I can lower the AIC score more.
 
+#### Notes on Manual model selection
 
-
-#### Notes on Manual model selection 
-
- From the previous section I can see that model M4 and M5 have the lowest AIC scores. This is achieved by modeling interaction of the explanatory variables. Yet some interactions do not seem to be significant. What is the most parsimonious model I can achieve?
+From the previous section I can see that model M4 and M5 have the lowest AIC scores. This is achieved by modeling interaction of the explanatory variables. Yet some interactions do not seem to be significant. What is the most parsimonious model I can achieve?
 
 This doesn't make much sense to me. Sure E_load reduces the AIC score but of course it is going to have an impact or predict well herbivory loss. It is a treatment, not a continuous explanatory variable. It just does not fit the question well.
 
-
 ### Conclusions of model selection using REML model estimation
 
-The interaction between `logit_herbivory ~ Anthocyanins : Toughness : Thickness : LMA :E_load, random = ~1 | Species, weights = varIdent(form = ~ 1|Species)` is the best fit model with random effect (Species).
-We are trying to understand how FEF diversity influences herbivory on an per species/plant basis.
-The variance structure seems to not be nested.
-Hence, no need to nest Species/E_load.
-
+The interaction between `logit_herbivory ~ Anthocyanins : Toughness : Thickness : LMA :E_load, random = ~1 | Species, weights = varIdent(form = ~ 1|Species)` is the best fit model with random effect (Species). We are trying to understand how FEF diversity influences herbivory on an per species/plant basis. The variance structure seems to not be nested. Hence, no need to nest Species/E_load.
 
 ### Plotting Estimates (Fixed Effects) of Best Fit model
 
@@ -2423,7 +2340,7 @@ t <-ggplot(data = masterant2, aes(y= logit_herbivory, x = Toughness, color = E_l
   geom_smooth(method = lm, se = T , level = 0.95, na.rm = F, color = "black") +
   stat_regline_equation(label.y = 2.5, label.x = 0.45, aes(label = ..eq.label..), sep = "~~~~", size = rel(3), color= "black") +
   stat_regline_equation(label.y = 2 , label.x = 0.45, aes(label = ..adj.rr.label..), size = rel(3),color = "black") +
-  labs(x="Leaf Toughness (lbf)", y = "logit(Leaf herbivory) (%)") +
+  labs(x="Leaf Toughness (lbf)", y = "logit[Leaf herbivory (%)]") +
   theme_minimal(base_size = 10) +
   theme(legend.position="right", legend.title = element_blank(),
         legend.text = element_text(size = 8),
@@ -2453,7 +2370,7 @@ a <- ggplot(data = masterant2, aes(y= logit_herbivory, x= Anthocyanins, color = 
   geom_smooth(method = lm, se = T , level = 0.95, na.rm = F, color = "black") +
   stat_regline_equation(label.y = 2.5, label.x = 5, aes(label = ..eq.label..), size = rel(3), color= "black") +
   stat_regline_equation(label.y = 2 , label.x = 5, aes(label = ..adj.rr.label..), size = rel(3), color = "black") +
-  labs(x="Anthocyanins (ACI)", y="logit(Leaf herbivory) (%)") +
+  labs(x="Anthocyanins (ACI)", y="logit[Leaf herbivory (%)]") +
   theme_minimal(base_size = 10) +
   theme(legend.position="right", legend.title =element_blank(),
         legend.text = element_text(size = 8),
@@ -2477,7 +2394,7 @@ tt <- ggplot(data = masterant2, aes(y= logit_herbivory, x= Thickness, color = E_
   geom_smooth(method = lm, se = T , level = 0.95, na.rm = F, color = "black") +
   stat_regline_equation(label.y = 2.5, label.x = 200, aes(label = ..eq.label..), size = rel(3), color= "black") +
   stat_regline_equation(label.y = 2 , label.x = 200, aes(label = ..adj.rr.label..), size = rel(3), color = "black") +
-  labs(x="Leaf thickness (\u03BCm)", y = "logit(Leaf herbivory) (%)") +
+  labs(x="Leaf thickness (\u03BCm)", y = "logit[Leaf herbivory (%)]") +
  theme_minimal(base_size = 10) +
   theme(legend.position="right", legend.title = element_blank(),
         legend.text = element_text(size = 8),
@@ -2499,7 +2416,7 @@ lma <- ggplot(data = masterant2, aes(y= logit_herbivory, x= LMA, color = E_load)
   geom_smooth(method = lm, se = T , level = 0.95, na.rm = F, color = "black") +
   stat_regline_equation(label.y = 2.5, label.x = 0.001, aes(label = ..eq.label..), size = rel(3), color= "black") +
   stat_regline_equation(label.y = 2 , label.x = 0.001, aes(label = ..adj.rr.label..), size = rel(3), color = "black") +
-  labs(x="Leaf mass per area (LMA)", y = "logit(Leaf herbivory) (%)") +
+  labs(x="Leaf mass per area (LMA)", y = "logit[Leaf herbivory (%)]") +
   theme_minimal(base_size = 10) +
   theme(legend.position="right", legend.title = element_blank(),
         legend.text = element_text(size = 8),
@@ -2522,15 +2439,13 @@ lma
   scale_shape_manual(labels= c("A. membranacea", "C. cainito", "C. alliodora", "Dypterix .sp", "H. concinna", "L. panamensis", "T. cacao"),values=c(15:22)) +  #scale_color_manual(values= met.brewer("Cross", n = 8, type = "discrete")) +
   stat_regline_equation(label.y = 2.5, label.x = 1.5, aes(label = ..eq.label..),size = rel(3), color= "black") +
   stat_regline_equation(label.y = 2 , label.x = 1.5, aes(label = ..adj.rr.label..), size = rel(3),color = "black") +
-  labs(x="Shannon diversity index", y="logit(Leaf herbivory) (%)") +
+  labs(x="Shannon diversity index", y="logit[Leaf herbivory (%)]") +
   theme_minimal(base_size = 10) +
  theme(legend.position="right",
         legend.text = element_text(face = "italic", size = 12),
         axis.text.x=element_text(size = 7),
         axis.text.y=element_text(size = 7))
-  # guides(color = "none")  +      #To turn off color legend
-  # guides(fill = "none") + #To turn off fill legend
-  # guides(shape = "none") #To turn off shape legend
+
  
  dv
 
@@ -2762,7 +2677,6 @@ drop1(P1, .~., test="F", trace = TRUE)
 
 -   The result of `stepAIC` is `logit_pathogenicity ~ Anthocyanins + Species + LMA + Toughness + Thickness + E_load + Shannon`.
 
-
 -   I opted to remove Anthocyanins and Toughness due to high colinearity with LMA (see Correlations section).
 
 ```{r, tidy=TRUE}
@@ -2790,8 +2704,8 @@ AIC(P2AIC) #1249.769 as of 30/OCT/2023
 
 plot(P2AIC)
 ```
-The final model from this section (P2AIC):
-`logit_pathogenicity ~ Species + E_load + Thickness`
+
+The final model from this section (P2AIC): `logit_pathogenicity ~ Species + E_load + Thickness`
 
 ## Random effect models with fixed terms
 
@@ -2844,8 +2758,7 @@ There is not much improvement of P4 over P1-P2. The AIC score is higher than P1-
 
 ### REML: fixed terms
 
-No interactions yet, checking random effects.
-**Notice the use of `Treatment` as one of the fixed terms. This is a level that is not present in the Ant dataset. 
+No interactions yet, checking random effects. \*\*Notice the use of `Treatment` as one of the fixed terms. This is a level that is not present in the Ant dataset.
 
 ```{r, Restricted Maximum Likelihood (REML), tidy = TRUE}
 # REML
@@ -2860,8 +2773,7 @@ AIC(P1.gls) #1242.096 as of 30/OCT/2023
 
 ```
 
-Model P1REM has lowest AIC score. Random effect "Species" REDUCES the AIC score. It is important 
-then! 
+Model P1REM has lowest AIC score. Random effect "Species" REDUCES the AIC score. It is important then!
 
 ## Random effect models with interactions
 
@@ -2892,11 +2804,9 @@ plot_model(P3ML, type = "diag")
 
 ### REML: interactions
 
-Using Restricted Maximum Likelihood (REML) to model.
-Maximum likelihood tends to be biased with high dimensional data.
+Using Restricted Maximum Likelihood (REML) to model. Maximum likelihood tends to be biased with high dimensional data.
 
-Let's model with interactions and remove variance structure.
-Having Treatment and E_load as fixed effect reduces AIC score.
+Let's model with interactions and remove variance structure. Having Treatment and E_load as fixed effect reduces AIC score.
 
 ```{r, Pathogen RAW REML interactions, tidy = TRUE}
 #P5_INTERACTIONS_
@@ -2918,10 +2828,7 @@ plot_model(P6REM, type = "diag")
 
 ### Conclusions of model selection with raw functional leaf traits
 
-I think I need to transform the data: Pathogen damage.
-There is too much non-normality.
-The variance structure seems to not be nested.
-Hence, no need to nest Species/E_load.
+I think I need to transform the data: Pathogen damage. There is too much non-normality. The variance structure seems to not be nested. Hence, no need to nest Species/E_load.
 
 ## REML: Variance Structure
 
@@ -2941,8 +2848,7 @@ AIC(P3REM) #1011.239 as of 30/OCT/2023
 plot_model(P3REM, type = "diag")
 ```
 
-Model P3REM has the lowest AIS score. It has variance structure (`varIdent()`) nested in Species/E_load/Treatment. It also uses an optimizer `lmeControl(opt='optim')`. It is the best model for the pathogen data set, at the moment. 
-
+Model P3REM has the lowest AIS score. It has variance structure (`varIdent()`) nested in Species/E_load/Treatment. It also uses an optimizer `lmeControl(opt='optim')`. It is the best model for the pathogen data set, at the moment.
 
 ## Plots: Pathogen
 
@@ -2998,9 +2904,9 @@ pbox
 # Pathogen
 # Regressions
 # Pathogen damage and Toughness
-  
+
 pt <- ggplot(data = masterpat2, aes(y= logit_pathogenicity, x = Toughness, color = E_load)) +
-   geom_jitter(aes(color = E_load, shape = Species), size = 1.5, alpha = 0.7) +
+   geom_jitter(aes(shape = Species), size = 1.5, alpha = 0.7) +
   scale_shape_manual(values=c(15:22)) +
   scale_color_manual(values = wes_paleta2)+
   geom_smooth(method=lm, se = F) +
@@ -3008,7 +2914,7 @@ pt <- ggplot(data = masterpat2, aes(y= logit_pathogenicity, x = Toughness, color
   geom_smooth(method = lm, se = T , level = 0.95, na.rm = F, color = "black") +
   stat_regline_equation(label.y = 2.25, label.x = 0.45, aes(label = ..eq.label..), sep = "~~~~", size = rel(3), color= "black") +
   stat_regline_equation(label.y = 1.2 , label.x = 0.45, aes(label = ..adj.rr.label..), size = rel(3), color = "black") +
-  labs(x="Leaf Toughness (lbf)", y="logit(Pathogen damage%) (%)") +
+  labs(x="Leaf Toughness (lbf)", y="logit[Pathogen damage (%)]") +
   theme_minimal(base_size = 10) +
   theme(legend.position="right", legend.title = element_blank(),
         legend.text = element_text(size = 8),
@@ -3022,16 +2928,16 @@ pt
 
 # Pathogen damage and Anthocyanins
 
-pa <- ggplot(data = masterpat2, aes(y= logit_pathogenicity, x= Anthocyanins, color = E_load))+
-   geom_jitter(aes(color = E_load, shape = Species), size = 1.5, alpha = 0.7) +
+ pa <- ggplot(data = masterpat2, aes(y= logit_pathogenicity, x= Anthocyanins, color = E_load)) +
+   geom_jitter(aes(shape = Species), size = 1.5, alpha = 0.7) +
   scale_shape_manual(values=c(15:22)) +
-  scale_color_manual(wes_paleta2)+
+  scale_color_manual(values = wes_paleta2)+
   geom_smooth(method=lm, se=F) +
   #stat_regline_equation(aes(label = paste(..eq.label.., ..adj.rr.label.., sep = "~~~~"))) +
   geom_smooth(method = lm, se = T , level = 0.95, na.rm = F, color = "black") +
   stat_regline_equation(label.y = 2.5, label.x = 7, aes(label = ..eq.label..), size = rel(3), color= "black") +
   stat_regline_equation(label.y = 1.5 , label.x = 7, aes(label = ..adj.rr.label..), size = rel(3), color = "black") +
-  labs(x="Anthocyanins (ACI)", y="logit(Pathogen damage %) (%)") +
+  labs(x="Anthocyanins (ACI)", y="logit[Pathogen damage (%)]") +
   theme_minimal(base_size = 10) +
   theme(legend.position="right", legend.title = element_blank(),
         legend.text = element_text(size = 8),
@@ -3045,16 +2951,16 @@ pa
 
 # Herbivory and leaf thickness
 
-ptt <- ggplot(data = masterpat2, aes(y= logit_damage, x= Thickness, color = E_load))+
-   geom_jitter(aes(color = E_load, shape = Species), size = 1.5, alpha = 0.7) +
+ptt <- ggplot(data = masterpat2, aes(y= logit_pathogenicity, x= Thickness, color = E_load))+
+   geom_jitter(aes(shape = Species), size = 1.5, alpha = 0.7) +
   scale_shape_manual(values=c(15:22)) +
-  scale_color_manual(wes_paleta2) +
+  scale_color_manual(values = wes_paleta2) +
   geom_smooth(method=lm, se=F) +
   #stat_regline_equation(aes(label = paste(..eq.label.., ..adj.rr.label.., sep = "~~~~"))) +
   geom_smooth(method = lm, se = T , level = 0.95, na.rm = F, color = "black") +
-  stat_regline_equation(label.y = 2.5, label.x = 125, aes(label = ..eq.label..), size = rel(3), color= "black") +
-  stat_regline_equation(label.y = 1.5 , label.x = 125, aes(label = ..adj.rr.label..), size = rel(3), color = "black") +
-  labs(x="Leaf thickness (\u03BCm)", y="logit(Pathogen damage) (%)") +
+  stat_regline_equation(label.y = 2.5, label.x = 200, aes(label = ..eq.label..), size = rel(3), color= "black") +
+  stat_regline_equation(label.y = 1.5 , label.x = 200, aes(label = ..adj.rr.label..), size = rel(3), color = "black") +
+  labs(x="Leaf thickness (\u03BCm)", y="logit[Pathogen damage (%)]") +
   theme_minimal(base_size = 10) +
   theme(legend.position="right", legend.title = element_blank(),
         legend.text = element_text(size = 8),
@@ -3069,16 +2975,16 @@ ptt
 
 # Pathogen damage and LMA
 
-plma <- ggplot(data = masterpat2, aes(y= logit_damage, x= LMA, color = E_load))+
-  geom_point(aes(color = E_load, shape = Species), size = 1.5, alpha = 0.7) +
+plma <- ggplot(data = masterpat2, aes(y= logit_pathogenicity, x= LMA, color = E_load))+
+  geom_point(aes(shape = Species), size = 1.5, alpha = 0.7) +
   scale_shape_manual(values=c(15:22)) +
-  scale_color_manual(wes_paleta2) +
+  scale_color_manual(values = wes_paleta2) +
   geom_smooth(method=lm, se=F) +
 #  stat_regline_equation(aes(label = paste(..eq.label.., ..adj.rr.label.., sep = "~~~~"))) +
   geom_smooth(method = lm, se = T , level = 0.95, na.rm = F, color = "black") +
   stat_regline_equation(label.y = 2.5, label.x = 0.00125, aes(label = ..eq.label..), size = rel(3),color= "black") +
   stat_regline_equation(label.y = 1.5 , label.x = 0.00125, aes(label = ..adj.rr.label..), size = rel(3), color = "black") +
-  labs(x="Leaf mass per area (LMA)", y="logit(Pathogen damage) (%)") +
+  labs(x="Leaf mass per area (LMA)", y="logit[Pathogen damage (%)]") +
   theme_minimal(base_size = 10) +
   theme(legend.position="right", legend.title = element_blank(),
         legend.text = element_text(size = 8),
@@ -3092,21 +2998,20 @@ plma
 
 # Pathogen damage and FEF Shannon Diversity
 # Extracting effect size of model to plot
- pdv <- ggplot(data = masterpat2, aes(y= logit_damage, x= Shannon, color = E_load))+
+pdv <- ggplot(data = masterpat2, aes(y= logit_pathogenicity, x= Shannon, color = E_load))+
   geom_jitter(aes(color = E_load, shape = Species), size = 1.5, alpha = 0.7) +
+  scale_color_manual(values = wes_paleta2)+
   geom_smooth(method=lm, se=F) +
-  scale_color_manual(wes_paleta2) +
  # stat_regline_equation(aes(label = paste(..eq.label.., ..adj.rr.label.., sep = "~~~~"))) +
   geom_smooth(method = lm, se = T , level = 0.95, na.rm = F, color = "black") +
-  #scale_fill_manual(values= met.brewer("Cross", n = 8, type = "discrete")) +
-  #scale_color_manual(values= met.brewer("Cross", n = 8, type = "discrete")) +
-  scale_shape_manual(labels= c("A. membranacea", "C. cainito", "C. alliodora", "Dypterix .sp", "H. concinna", "L. panamensis", "T. cacao"),values=c(15:22)) 
-  stat_regline_equation(label.y = 2.5, label.x = 0.7, aes(label = ..eq.label..), size = rel(3), color= "black") +
-  stat_regline_equation(label.y = 1.5 , label.x = 0.7, aes(label = ..adj.rr.label..),size = rel(3), color = "black") +
-  labs(x="Shannon diversity index", y="logit(Pathogen damage) (%)", col = "") +
+  scale_shape_manual(labels= c("A. membranacea", "C. cainito", "C. alliodora", "Dypterix .sp", "H. concinna", "L. panamensis", "T. cacao"),values=c(15:22)) +  #scale_color_manual(values= met.brewer("Cross", n = 8, type = "discrete")) +
+  stat_regline_equation(label.y = 2.5, label.x = 1.2, aes(label = ..eq.label..),size = rel(3), color= "black") +
+  stat_regline_equation(label.y = 1.5 , label.x = 1.2, aes(label = ..adj.rr.label..), size = rel(3),color = "black") +
+  labs(x="Shannon diversity index", y="logit[Pathogen Damage (%)]") +
   theme_minimal(base_size = 10) +
-  theme(legend.position="right",
-        legend.text = element_text(size = 12),
+ theme(legend.position="right",
+       legend.key.size = unit(0.5, "cm"),
+        legend.text = element_text(face = "italic", size = 12),
         axis.text.x=element_text(size = 7),
         axis.text.y=element_text(size = 7))
   # guides(color = "none")  +      #To turn off color legend
@@ -3133,7 +3038,7 @@ arranged_with_caption <- annotate_figure(arranged, bottom = text_grob(caption_te
 arranged_with_caption
 
 #Saving
-#ggsave(filename ="./plots/Aim3_Pathogen_regression_06042023.jpg", plot = arranged_with_caption, dpi= 600, units=c("mm"), width=180, height=140, bg = "white")
+#ggsave(filename ="./plots/Aim3_Pathogen_regression_01NOV2023.jpg", plot = arranged_with_caption, dpi= 600, units=c("mm"), width=180, height=140, bg = "white")
 
 ```
 
@@ -3195,10 +3100,7 @@ xtabs(~lda.training$Species + predict(lda_train)$class)
 
 ```
 
-Conclusion: The ant LDA training model accurately (100%) discriminates the test data set.
-Modelling interactions achieves 100% accuracy.
-This validates our model which can be important.
-Now we proceed with all the data points.
+Conclusion: The ant LDA training model accurately (100%) discriminates the test data set. Modelling interactions achieves 100% accuracy. This validates our model which can be important. Now we proceed with all the data points.
 
 ```{r, Pathogen LDA training, tidy = TRUE}
 # Pathogen
@@ -3248,10 +3150,7 @@ mean(predictions2$class == pglda.test$Species)
 xtabs(~pglda.training$Species + predict(pglda_train)$class)
 ```
 
-Conclusion: The pathogen training model accurately (100%) discriminates the test data set.
-The model does not include interaction to achieve 100% accuracy in linear discrimination.
-This validates our model which can be important.
-Now we proceed with all the data points.
+Conclusion: The pathogen training model accurately (100%) discriminates the test data set. The model does not include interaction to achieve 100% accuracy in linear discrimination. This validates our model which can be important. Now we proceed with all the data points.
 
 ### LDA: Full models with functional leaf traits and Shannon diversity
 
@@ -3338,11 +3237,7 @@ ldafull
 
 ```
 
-The full model is 90% accurate is discriminating species groups.
-This is probably due to only modelling fixed effects.
-No interaction terms are modeled.
-Previous LDA model (with no Shannon diversity included) had an accuracy of 88% and LD1 and LD2 differed by \~0.5%.
-Code was updated in February 28, 2023 to include Shannon diversity.
+The full model is 90% accurate is discriminating species groups. This is probably due to only modelling fixed effects. No interaction terms are modeled. Previous LDA model (with no Shannon diversity included) had an accuracy of 88% and LD1 and LD2 differed by \~0.5%. Code was updated in February 28, 2023 to include Shannon diversity.
 
 #### Pathogen
 
@@ -3509,14 +3404,11 @@ ldainter
 #ggsave(filename = "LDAinter.png", plot = ldainter, dpi=600, units=c("mm"), width=300, height=300)
 ```
 
-Modelling the interaction does achieve 100% accuracy but it is harder to interpret.
-The plot for model with interaction terms is harder to interpret.
-The arrow labels over lap and are not readable.
+Modelling the interaction does achieve 100% accuracy but it is harder to interpret. The plot for model with interaction terms is harder to interpret. The arrow labels over lap and are not readable.
 
 ### LDA: E+ models
 
-The objective here is to model what leaf traits are important for discriminating between groups with differing endophyte loads.
-Focusing on the endophyte load allows us to understand if E+ and E- are distinguishable.
+The objective here is to model what leaf traits are important for discriminating between groups with differing endophyte loads. Focusing on the endophyte load allows us to understand if E+ and E- are distinguishable.
 
 ```{r, Ant E_load models, tidy = TRUE}
 ### Data prep ###
@@ -3603,11 +3495,7 @@ ldee
 #ggsave(filename = "plots/Ant_LDA_Eplus02282023.png", plot = ldee, dpi=600, units=c("mm"), width=300, height=300)
 ```
 
-The November 2022 iteration of this plot had similar values for LD1 and LD2.
-What is different now (02282023) is how the traits are "driving" the discrimination of the groups.
-Leaf toughness, thickness and LMA are in the upper half of the plot, opposite to anthocyanins in LD2.
-Additionally, leaf toughness and thickness align opposite to each other in LD1.
-Shannon diversity does not seam to be important for distinguishing the groups.
+The November 2022 iteration of this plot had similar values for LD1 and LD2. What is different now (02282023) is how the traits are "driving" the discrimination of the groups. Leaf toughness, thickness and LMA are in the upper half of the plot, opposite to anthocyanins in LD2. Additionally, leaf toughness and thickness align opposite to each other in LD1. Shannon diversity does not seam to be important for distinguishing the groups.
 
 ```{r, Pathogen E_load models, tidy = TRUE}
 ### Data prep ###
@@ -3692,19 +3580,13 @@ ldeep
 
 ```
 
-Again, very similar to previous results.
-Looking closely at the plots from 11/2022 I see that some of the were calculated with Shannon diversity.
-This explain why the results are so similar or the same.
-BAR-02282023
+Again, very similar to previous results. Looking closely at the plots from 11/2022 I see that some of the were calculated with Shannon diversity. This explain why the results are so similar or the same. BAR-02282023
 
 # LDA: simple linear regression models
 
-We have reduced the number of leaf traits by computing an LDA for ant and pathogen trials.
-This reduced the number of covariates to two synthetic ones that explain the most variance in the model: LD1 and LD2.
-Now, we proceed to compute simple linear regressions with LD1 and LD2 as the fixed effects for the models, while adding biological trait measurements (i.e. Shannon diversity).
+We have reduced the number of leaf traits by computing an LDA for ant and pathogen trials. This reduced the number of covariates to two synthetic ones that explain the most variance in the model: LD1 and LD2. Now, we proceed to compute simple linear regressions with LD1 and LD2 as the fixed effects for the models, while adding biological trait measurements (i.e. Shannon diversity).
 
-The LD's from data frames `LDtraits` and `LDPGtraits` are computed with all the data points (i.e. E+ and E- samples) for each trial type.
-The LD's from data frames `LDEtraits` and `LDEPtraits` are computed with the E+ samples.
+The LD's from data frames `LDtraits` and `LDPGtraits` are computed with all the data points (i.e. E+ and E- samples) for each trial type. The LD's from data frames `LDEtraits` and `LDEPtraits` are computed with the E+ samples.
 
 ### Ant
 
@@ -3857,10 +3739,7 @@ pat_lda_shannon
 
 # LDA: Linear Mixed Models
 
-In the section above, we see that the diagnostics plots for simple linear regressions with the ant and pathogen data have a fair amount of heteroskedasticity.
-Meaning, there is an un-even or non-random distribution of the residuals.
-They resemble more a triangle or fan-like distribution.
-In this section, I attempt to optimize by changing the estimation methos and applying optimizers to the distribution of the residuals with generalized linear mixed models (e.g. `bobyqa`)or linear mixed effects models (e.g. `nlminb`) .
+In the section above, we see that the diagnostics plots for simple linear regressions with the ant and pathogen data have a fair amount of heteroskedasticity. Meaning, there is an un-even or non-random distribution of the residuals. They resemble more a triangle or fan-like distribution. In this section, I attempt to optimize by changing the estimation methos and applying optimizers to the distribution of the residuals with generalized linear mixed models (e.g. `bobyqa`)or linear mixed effects models (e.g. `nlminb`) .
 
 Initial models with `nlme` package use "Maximum Likelihood", then "REML" and `Species` or `E_load` as random effects.
 
@@ -3941,8 +3820,7 @@ tab_model(aglm, areml, show.re.var = T, show.aic = TRUE, show.intercept = TRUE, 
 
 ```
 
-Model estimation with REML increases AIC.
-Proceeding with ML model estimation.
+Model estimation with REML increases AIC. Proceeding with ML model estimation.
 
 ### Random effects-ants
 
@@ -3956,13 +3834,11 @@ anova(aglm, agls)
 
 ```
 
-Species as a random effect increases AIC value by two points.
-Not that much, and it is worth keeping because it's biological relevance to the questions.
+Species as a random effect increases AIC value by two points. Not that much, and it is worth keeping because it's biological relevance to the questions.
 
 ### ML-2-ants
 
-Continuation of previous ML section.
-Modelling variance structure with `varIdent`, `varExp` and `varComb`.
+Continuation of previous ML section. Modelling variance structure with `varIdent`, `varExp` and `varComb`.
 
 ```{r, Ant Modelling Variance Structure}
 #varIdent
@@ -4053,9 +3929,7 @@ abline(h = 0, col = "blue")
 
 ```
 
-The model above was not converging because I modeled with a fixed factor (Shannon) that was already reduced with the LDA.
-It makes it hard converge or there i no convergence at all because of the colinearity it causes (If I remember correctly).
--BAR 03/02/2023
+The model above was not converging because I modeled with a fixed factor (Shannon) that was already reduced with the LDA. It makes it hard converge or there i no convergence at all because of the colinearity it causes (If I remember correctly). -BAR 03/02/2023
 
 ```{r, Table comparing Ant linear models, tidy = TRUE}
 # Initial model with out variance structure, `varIdent` structure, and `varComb`
@@ -4087,19 +3961,11 @@ tab_model(aglm, aglm_ident, aglm_comb,
 
 #### Notes on model building with LDA axes
 
-Optimizers: `lmeControl` uses `nlminb` as the default optimizer.
-Unconstrained and box-constrained optimization using PORT routines.
-`varIdent` is used to model variance structure because I believe variance varies across tree species (categories).
+Optimizers: `lmeControl` uses `nlminb` as the default optimizer. Unconstrained and box-constrained optimization using PORT routines. `varIdent` is used to model variance structure because I believe variance varies across tree species (categories).
 
-Variance structure: I explored further, variance modelling with `varComb`.
-This resulted in the lowest AIC value of all the models.
-Potentially I can model these interactions with `glmer`.
-Now, I have to decide if I want to use "generalized" linear mixed effects models or "linear" mixed effects models.
-I am uncertain of how GLMM's handle variance structure more than just including the random effects.
+Variance structure: I explored further, variance modelling with `varComb`. This resulted in the lowest AIC value of all the models. Potentially I can model these interactions with `glmer`. Now, I have to decide if I want to use "generalized" linear mixed effects models or "linear" mixed effects models. I am uncertain of how GLMM's handle variance structure more than just including the random effects.
 
-I tried nesting E_load in Species as a random effect but it increases AIC value (\~100).
-It is not a big change.
-Potentially worth including.
+I tried nesting E_load in Species as a random effect but it increases AIC value (\~100). It is not a big change. Potentially worth including.
 
 Repeat process with pathogen data set.
 
@@ -4190,8 +4056,7 @@ tab_model(pglm, preml, show.re.var = T, show.aic = TRUE, show.intercept = TRUE, 
 
 ```
 
-Model estimation with REML increases slightly AIC.
-Proceeding with ML model estimation.
+Model estimation with REML increases slightly AIC. Proceeding with ML model estimation.
 
 ### Random effects-pathogen
 
@@ -4207,11 +4072,7 @@ anova(aglm, agls)
 
 ### ML-2-pathogen
 
-Continuation of previous ML section.
-Moelling variance structure with `varIdent`, `varExp` and `varComb`.
-The pathogen data set has various nested factors.
-We have Species with different endophyte load (-+) then each of those individuals had a leaf that served as a control and another that was exposed to the pathogen.
-Hence, modelling for this data set is slightly different than the Ant data set.
+Continuation of previous ML section. Moelling variance structure with `varIdent`, `varExp` and `varComb`. The pathogen data set has various nested factors. We have Species with different endophyte load (-+) then each of those individuals had a leaf that served as a control and another that was exposed to the pathogen. Hence, modelling for this data set is slightly different than the Ant data set.
 
 ```{r, Pathogen Modelling Variance Structure, tidy = TRUE}
 #varIdent
@@ -4355,13 +4216,9 @@ tab_model(aglm_comb, pglm_comb,
 
 # Indicator species analysis
 
-This analysis allows us to determine what endophytes are associated with particular groups (e.g. tree species).
-According to this vgnette from Cáceres ([2022](https://cran.r-project.org/web/packages/indicspecies/vignettes/IndicatorSpeciesAnalysis.html)) `multipatt` function can provides us with Indicators Value Index and correlation index.
-Both are similar, but the differences lies in the question they help answer.
-Indicator value index "[...]are used for assessing the predictive values of species as indicators of the conditions prevailing in site groups, e.g. for field determination of community types or ecological monitoring." While the correlation index can be used for "[...] determining the ecological preferences of species among a set of alternative site groups or site group combinations."
+This analysis allows us to determine what endophytes are associated with particular groups (e.g. tree species). According to this vgnette from Cáceres ([2022](https://cran.r-project.org/web/packages/indicspecies/vignettes/IndicatorSpeciesAnalysis.html)) `multipatt` function can provides us with Indicators Value Index and correlation index. Both are similar, but the differences lies in the question they help answer. Indicator value index "\[...\]are used for assessing the predictive values of species as indicators of the conditions prevailing in site groups, e.g. for field determination of community types or ecological monitoring." While the correlation index can be used for "\[...\] determining the ecological preferences of species among a set of alternative site groups or site group combinations."
 
-Given this, it will be best to compute a correlation index.
-This will allow to determine what endophytes are correlated with particular tree species or across treatment types (E-+).
+Given this, it will be best to compute a correlation index. This will allow to determine what endophytes are correlated with particular tree species or across treatment types (E-+).
 
 ```{r, Indicator species, tidy = TRUE}
 
@@ -4412,11 +4269,9 @@ indval.sign[p.value.bh <= 0.05,]
 colnames(indval.sign)[1]  <- "OTU" 
 ```
 
-P-value adjustments are computed with the "BH" method.
-Which "[...] control the false discovery rate, the expected proportion of false discoveries amongst the rejected hypotheses. The false discovery rate is a less stringent condition than the family-wise error rate, so these methods are more powerful than the others." Information for the R documentation page of `p.adjust()`.
+P-value adjustments are computed with the "BH" method. Which "\[...\] control the false discovery rate, the expected proportion of false discoveries amongst the rejected hypotheses. The false discovery rate is a less stringent condition than the family-wise error rate, so these methods are more powerful than the others." Information for the R documentation page of `p.adjust()`.
 
-Table with taxonomic information.
-These are OTUs that are significantly correlated with tree species across the whole data set *n* = 156 (individuals that where used for ant and pathogen assay).
+Table with taxonomic information. These are OTUs that are significantly correlated with tree species across the whole data set *n* = 156 (individuals that where used for ant and pathogen assay).
 
 ```{r, Table of sigficantly correlated species, tidy = TRUE}
 
@@ -4433,9 +4288,7 @@ paged_table(indispp_table)
 
 ## Indicator species on samples with the **highest and lowest diversity**
 
-Sorting samples with the highest diversity per species (top 10% per species).
-If it is not done this way we end up with the top 10% of the whole data set and that turns out to be *Theobroma cacao*.
-Similar for the bottom 10%.
+Sorting samples with the highest diversity per species (top 10% per species). If it is not done this way we end up with the top 10% of the whole data set and that turns out to be *Theobroma cacao*. Similar for the bottom 10%.
 
 ```{r, Ant data set top/bottom 3, tidy = TRUE}
 # n <- 0.1 * nrow(master)
@@ -4463,15 +4316,9 @@ anbot3 <- masterant %>%
 
 ```
 
-After trying to capture the samples with the top 10% diversity I realize that on a per species level that would mean 1 plant per species.
-There are 10 plant/samples per species and 7 tree species.
-I changed the approach.
-Now we are looking at the 3 most diverse samples per tree species.
-The same method will be applied to the lowest 10%.
+After trying to capture the samples with the top 10% diversity I realize that on a per species level that would mean 1 plant per species. There are 10 plant/samples per species and 7 tree species. I changed the approach. Now we are looking at the 3 most diverse samples per tree species. The same method will be applied to the lowest 10%.
 
-We see that 4/21 are E-:E+ are selected as the top 3 with the highest diversity.
-While, the lowest diversity plants are split 11/21 E-:E+.
-We are selecting the top 3 of the data frame for ant and pathogen assays respectively.
+We see that 4/21 are E-:E+ are selected as the top 3 with the highest diversity. While, the lowest diversity plants are split 11/21 E-:E+. We are selecting the top 3 of the data frame for ant and pathogen assays respectively.
 
 ```{r, Pathogen top/bottom 3, tidy = TRUE}
 #n <- ,0.1 * nrow(masterpat)
@@ -4499,8 +4346,7 @@ pabot3 <- pat_simple %>%
 #This data frame is meant to be used as a filter to select samples from community data frame (cotu).
 ```
 
-Of the plants used in the pathogen trial with the highest diversity 5/21 are E-:E+.
-While the lowest diversity plant are split 10/21 E-:E+
+Of the plants used in the pathogen trial with the highest diversity 5/21 are E-:E+. While the lowest diversity plant are split 10/21 E-:E+
 
 ### Filtering the community data frame with the top/bottom 3
 
@@ -4710,8 +4556,7 @@ lanbot <- masterant %>%
 
 ```
 
-Some species had about half the individuals experience less that 30% leaf damage.
-For the highest 70% damaged, 5/13 are E+ plants.
+Some species had about half the individuals experience less that 30% leaf damage. For the highest 70% damaged, 5/13 are E+ plants.
 
 ```{r, Pathogen upper/lower, tidy = TRUE}
 #n <- ,0.1 * nrow(masterpat)
@@ -4735,13 +4580,7 @@ lpabot <- masterpat %>%
 #This data frame is meant to be used as a filter to select samples from community data frame (cotu).
 ```
 
-The pathogen data set (`masterpat`) shows less than 40% leaf damage for almost all plants, controls and treatments ($114/128$).
-The focus here is comparing control and treatment leaf across E+ and E- treatments.
-The cut off here will be 30%.
-What is below?
-The E+ samples or the E-?
-It looks like 14 trees have more than 30% leaf damage and $5/14$ are E-.
-We expected the opposite: more damage on tree with less FEF abundance.
+The pathogen data set (`masterpat`) shows less than 40% leaf damage for almost all plants, controls and treatments ($114/128$). The focus here is comparing control and treatment leaf across E+ and E- treatments. The cut off here will be 30%. What is below? The E+ samples or the E-? It looks like 14 trees have more than 30% leaf damage and $5/14$ are E-. We expected the opposite: more damage on tree with less FEF abundance.
 
 ### Filtering the community data frame with the highest/lowest leaf area damaged.
 
@@ -4873,8 +4712,7 @@ lbotpat <- multipatt(lpabot, species10, func = "r.g", control = how(nperm = 999)
 summary(lbotpat, indvalcomp = TRUE)
 ```
 
-Zero OTUs significantly correlated with the leaves that were damaged \>30% by pathogen.
-On the other hand, 82 OTUs are significantly correlated with plants that experienced \<30% leaf damage.
+Zero OTUs significantly correlated with the leaves that were damaged \>30% by pathogen. On the other hand, 82 OTUs are significantly correlated with plants that experienced \<30% leaf damage.
 
 ```{r, Leaf damage Type I error and data table for pathogen, tidy = TRUE}
 #Highest leaf damage by pathogen
@@ -4934,8 +4772,7 @@ paged_table(lbotpatspp_table)
   
 ```
 
-The plants least damaged by pathogen have 92 OTUs significantly correlated with them (*p-value* \< 0.05).
-When adjusted for multiples comparison ("bh") the result is 20 OTUs.
+The plants least damaged by pathogen have 92 OTUs significantly correlated with them (*p-value* \< 0.05). When adjusted for multiples comparison ("bh") the result is 20 OTUs.
 
 ## Time analysis
 
