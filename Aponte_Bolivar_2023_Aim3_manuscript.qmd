@@ -1,65 +1,271 @@
 ---
 title: "Manuscript Draft"
 format: html
+editor: 
+  markdown: 
+    wrap: 72
 ---
+
 # Abstract
+
 # Introduction
+
 # Methods
 
-# Field
-Greenhouse growth and host plant inoculation
-Seven tropical tree species were grown in the greenhouse at the Gamboa Research Station, Smithsonian Tropical Research institute, Republic of Panama. The species, Theobroma cacao, Dypterix sp., Lacmellea panamensis, Apeiba membranacea, Heisteria concinna, Chrysophyllum caimito, and Cordia alliodora were chosen due to their variance in leaf traits (J.Wright unpublished data) and the availability of seeds in January- April 2019. Seeds of tree species were collected from the forest floor and grown in the greenhouse. Seedlings were kept in a chamber made out of PVC and clear plastic to prevent inoculation from spore fall inside the greenhouse. Seedlings reached a minimum of 4 true leaves before endophyte inoculation. Then 10 individual plants of each species were exposed to 10 nights of spore fall to achieve a high endophyte load (E+) and 10 homologous plants were kept inside the greenhouse plastic chamber to maintain a low endophyte load (E-) (Fig. 1). Plants exposed to forest spore fall were placed near the forest edge at dusk and returned to the greenhouse at dawn (Bittleston et al. 2011). 
-Leaf trait measurements
-Three mature leaves were haphazardly collected from each of the individual plants in each treatment (E+, E-) within 7-10 days after treatment. Anthocyanin and leaf thickness were measured while the leaf was still attached to the plant. We measured anthocyanin levels with ACM-200 (BRAND HERE) on three haphazardly selected locations (working from the petiole out to the leaf tip) on the leaf surface of three haphazardly selected leaves for a total of nine measurements per plant (Tellez, et al 2022). On compound leaves (i.e., Dypterix sp.) we measured at three different leaflets. Leaf thickness was measured with METER MODEL HERE following the same manner as the anthocyanin measurements. After anthocyanin and leaf thickness measurements were completed, we removed the leaves from their stems, placed them inside an ice chest and moved them to the lab for further measurements. Leaf toughness was measured with METER MODEL HERE following PROTOCOL XXXX (or measurements were taken by puncturing a 2 mm diameter hole in various locations on the leaf surface. We punctured at the base, mid-leaf and tip of the leaf on both sides of the midvein, avoiding minor leaf veins when possible). Once leaf toughness was measured, we punctured a 7 mm diameter punch hole per leaf for leaf mass per area (LMA) measurements. The punches of leaf tissue dried at 60 °C for 48-72 hours.
-Leaf tissue preparation
-The selected leaves were also used to profile endophyte community composition, abundance, and richness via amplicon sequencing (Illumina MiSeq). The leaf tissue leftover after the leaf trait measurement had the main vein and margins excised so that only the lamina remained. The lamina was haphazardly cut into 2 mm2 segments, enough to obtain a total of 16, and surface sterilized by sequential rinsing in 95% ethanol (10 s), 10% sodium hypochlorite (original concentration, 5.25 % NaOCl) (2 mins) and 70% ethanol (2 mins), as per (Arnold et al. 2003, Higgins et al. 2014; Tellez et al 2022). After, leaves were air-dried briefly under sterile conditions and agar plates for culture assays. Sixteen leaf segments per leaf, a total of forty-eight leaf segments per plant, were plated in 2% malt extract agar (MEA), sealed with Parafilm M (Bemis Company Inc., U.S.A.) and incubated at room temperature. The cultured leaf segments were used to estimate endophyte colonization of E+ and E- leaves. The presence or absence of endophytic fungi in the leaf cuttings was assessed 7 days after plating.  The remaining sterilized leaf lamina was preserved in sterile 15 mL tubes with ~ 10 mL CTAB solution ((1 M Tris–HCl pH 8, 5 M NaCl, 0.5 M EDTA, and 20 g CTAB). Leaf tissue in CTAB solution was used amplicon sequencing (described in detail below).
+## Field
 
-Amplicon sequencing
-Leaf tissue in CTBA solution was stored for 2 months at room temperature prior to being placed at -80 C for 3 months before extracting DNA. In preparation for DNA extraction, we decontaminated all instruments, materials, and surfaces with DNAway (Molecular BioProducts Inc., San Diego, CA, United States), 95% Ethanol, 0.5 % NaOCl, and 70 % Ethanol, and subsequently treated with UV light for 30 minutes in biosafety cabinet. We then transferred 0.2 – 0.3 g of leaf tissue into duplicate sterile 2mL tubes, resulting in 2 subsamples. Total genomic DNA from subsamples was extracted as described in U’Ren & Arnold (2017). In brief, added two sterile 3.2 mm stainless steel beads to each tube and proceeded to lyophilize samples for 72 hours to fully remove CTAB content from tissue. After this period, we submerged the sample tubes in liquid nitrogen for 30s and proceeded to homogenize samples to a fine powder for 45 s in FastPrep-24 Tissue and Cell Homogenizer (MP Biomedicals, Solon, OH, USA). Afterwards, we repeated the decontamination procedure described before and used QIAGEN DNeasy 96 PowerPlant Pro-HTP Kit (U’Ren & Arnold (2017?) (QIAGEN, Valencia, CA, USA). After all genomic DNA was extracted, we pooled the subsamples for each individual sample before amplification. We used sterile equipment and pipettes with aerosol-resistant tips with filters in all steps before amplification.
-We followed a two-step amplification approach previously described by Sarmiento et al. 2017 and U´Ren & Arnold 2017. We used primers for the fungal ITSrDNA region, ITS1f (5’-CTTGGTCATTTAGAGGAAGTAA-3’) and ITS4 (5’-TCCTCCGCTTATTGATATGC-3’) with modified universal consensus sequences CS1 and CS2 and 0–5 bp for phase-shifting. Every sample was amplified in two parallel reactions containing 1-2 µL of DNA template (U’Ren & Arnold 2017, see also Tellez et al 2022). We visualized PCR (PCR1) reactions with SYBR Green 1 (Invitrogen, Carlsbad, CA, USA) on 2% agarose gel (Oita et al 2021). Based on the electrophoresis band intensity, we combined parallel PCR1 reactions and diluted 5 µL of amplicon product with molecular grade water to standardize to a concentration of 1:15 (Tellez et al 2022; see Sarmiento et al 2017 for details). We included DNA extraction blanks and PCR1 negatives in this step. We used a separate set of sterile pipettes, tips, and equipment to reduce contamination. We used a designated PCR area to restrict contact with pre-PCR materials (Oita et al 2021).  
-We used 1 µL of PCR1 product from samples and negative control for a second PCR (PCR2) with barcoded adapters (IBEST Genomics Resource Core, Moscow, ID, USA). Each PCR2 reaction (total 15 µL) contained 1X Phusion Flash High Fidelity PCR Master Mix, 0.075 µM of barcoded primers (forward and reverse pooled at a concentration of 2 µM) and 0.24mg/mL of BSA following (Sarmiento et al. 2017; U’Ren & Arnold 2017). Before final pooling for sequencing, we purified the amplicons using Agencourt AMPure XP Beads (Beckman Coulter Inc, Brea, CA USA) to a ratio of 1:1 following the manufacturer’s instructions. The products were evaluated with Bio Analyzer 2100 (Agilent Technologies, Santa Clara, CA, USA) (Tellez et al 2022). We quantified the samples through University of Arizona Genetics Core, and subsequently diluted them to the same concentration to prevent over representation of samples with higher concentration, see (CITATION). Amplicons were normalized to 1ng/µL, then pooled 2µL of each for sequencing. No contamination was detected visually or by fluorometric analysis. To provide robust controls we combined 5µL of each PCR1 negative and the DNA extraction blanks and sequenced them as samples. Ultimately, we combined samples into a single tube with 20ng/µL of amplified DNA with barcoded adapters for sequencing on the Illumina MiSeq platform with Reagent Kit v3 (2 × 300 bp) following protocols from the IBEST Genomics Resource Core at the University of Idaho, USA. Again, we included the DNA extraction blanks and two PCR1 negatives and sequenced with samples.
-Sequencing yielded 3,778,081 total ITS1 reads. We performer biostatistical analyses on  forward reads (ITS1) due to their high quality, rather than reverse reads (ITS4).. We performed demultiplexing, quality control, and dereplicating following Sarmiento et al. (2017). For post-sequencing quality control, we used FastQC (CITATION) and VSEARCH, an open-source alternative to USEARCH that used uses an optimal global aligner (full dynamic programming Needleman-Wunsch), resulting in more accurate alignments and sensitivity (VSEARCH CITATION). In short, we trimmed reads to a length of 250 bp and filtered them at a maximum expected error of 1.0. The result was XXXX total reads after quality control and 569 Ascomycota OTUs (See Supplementary Methods for details). 
-Mock Communities
-We processed and sequenced two mock communities following the methods described above. This allowed us to assess the quality of our NGS data set. We used two mock communities that consisted of PCR product from DNA extractions of 31 phylogenetically distinct fungi, representing lineages that are typically observed as endophytes (Oita et al. 2021, see Daru et al. 2018 for details). In brief, we used a mock community with equimolar concentrations of DNA from all 31 fungal taxa and a second mock community with tiered concentrations of DNA from the same fungal taxa (Daru et al. 2018). Each mock community was sequenced five times (i.e., five replicates) (Oita et al. 2021). The read abundance from the tiered community was positively associated with the expected read number (with replicate as a random factor: R2Adj = 0.87, P = XXXX, see Supplementary material). Accordingly, we used read abundance as a relevant proxy for biological abundance (Taylor et al. 2016; U’Ren et al. 2019)
+Greenhouse growth and host plant inoculation Seven tropical tree species
+were grown in the greenhouse at the Gamboa Research Station, Smithsonian
+Tropical Research institute, Republic of Panama. The species, Theobroma
+cacao, Dypterix sp., Lacmellea panamensis, Apeiba membranacea, Heisteria
+concinna, Chrysophyllum caimito, and Cordia alliodora were chosen due to
+their variance in leaf traits (J.Wright unpublished data) and the
+availability of seeds in January- April 2019. Seeds of tree species were
+collected from the forest floor and grown in the greenhouse. Seedlings
+were kept in a chamber made out of PVC and clear plastic to prevent
+inoculation from spore fall inside the greenhouse. Seedlings reached a
+minimum of 4 true leaves before endophyte inoculation. Then 10
+individual plants of each species were exposed to 10 nights of spore
+fall to achieve a high endophyte load (E+) and 10 homologous plants were
+kept inside the greenhouse plastic chamber to maintain a low endophyte
+load (E-) (Fig. 1). Plants exposed to forest spore fall were placed near
+the forest edge at dusk and returned to the greenhouse at dawn
+(Bittleston et al. 2011). Leaf trait measurements Three mature leaves
+were haphazardly collected from each of the individual plants in each
+treatment (E+, E-) within 7-10 days after treatment. Anthocyanin and
+leaf thickness were measured while the leaf was still attached to the
+plant. We measured anthocyanin levels with ACM-200 (BRAND HERE) on three
+haphazardly selected locations (working from the petiole out to the leaf
+tip) on the leaf surface of three haphazardly selected leaves for a
+total of nine measurements per plant (Tellez, et al 2022). On compound
+leaves (i.e., Dypterix sp.) we measured at three different leaflets.
+Leaf thickness was measured with METER MODEL HERE following the same
+manner as the anthocyanin measurements. After anthocyanin and leaf
+thickness measurements were completed, we removed the leaves from their
+stems, placed them inside an ice chest and moved them to the lab for
+further measurements. Leaf toughness was measured with METER MODEL HERE
+following PROTOCOL XXXX (or measurements were taken by puncturing a 2 mm
+diameter hole in various locations on the leaf surface. We punctured at
+the base, mid-leaf and tip of the leaf on both sides of the midvein,
+avoiding minor leaf veins when possible). Once leaf toughness was
+measured, we punctured a 7 mm diameter punch hole per leaf for leaf mass
+per area (LMA) measurements. The punches of leaf tissue dried at 60 °C
+for 48-72 hours. Leaf tissue preparation The selected leaves were also
+used to profile endophyte community composition, abundance, and richness
+via amplicon sequencing (Illumina MiSeq). The leaf tissue leftover after
+the leaf trait measurement had the main vein and margins excised so that
+only the lamina remained. The lamina was haphazardly cut into 2 mm2
+segments, enough to obtain a total of 16, and surface sterilized by
+sequential rinsing in 95% ethanol (10 s), 10% sodium hypochlorite
+(original concentration, 5.25 % NaOCl) (2 mins) and 70% ethanol (2
+mins), as per (Arnold et al. 2003, Higgins et al. 2014; Tellez et al
+2022). After, leaves were air-dried briefly under sterile conditions and
+agar plates for culture assays. Sixteen leaf segments per leaf, a total
+of forty-eight leaf segments per plant, were plated in 2% malt extract
+agar (MEA), sealed with Parafilm M (Bemis Company Inc., U.S.A.) and
+incubated at room temperature. The cultured leaf segments were used to
+estimate endophyte colonization of E+ and E- leaves. The presence or
+absence of endophytic fungi in the leaf cuttings was assessed 7 days
+after plating. The remaining sterilized leaf lamina was preserved in
+sterile 15 mL tubes with \~ 10 mL CTAB solution ((1 M Tris--HCl pH 8, 5
+M NaCl, 0.5 M EDTA, and 20 g CTAB). Leaf tissue in CTAB solution was
+used amplicon sequencing (described in detail below).
 
+## Amplicon sequencing
 
-Ant-endophyte interaction assays 
-A fresh fourth leaf was used in ant assays. To assess leaf-cutter ant damage, we introduced one detached leaf per plant per treatment to an actively foraging leaf-cutter ant colony for a two-hour trial. We presented leaf-cutter ant colonies with a choice of an E+ or an E- leaf on a disposable plastic plate next to an active nest trail. Carefully, we collected and placed debris from the trail leading up to the plate to lure ants into the plate. We initiated the ant trial/assay as soon as an ant entered the plate and explored the leaf contents (for ~ 10-20 seconds).  Every five minutes we took a digital photo of the choice arena until about 75% of the leaf content of one of the leaves was consumed. We used the digital photo at time zero and at the end of trial to quantify the leaf area removed using  ImageJ (VERSION?). Ant recruitment was estimated by counting individuals in choice arena throughout trial event. 
-Pathogen assays 
-For the pathogen assays, we introduced an agar plug inoculated with hyphae of Calonectria sp. (P+ treatment), and an agar plug without the pathogen (P- control) to similarly aged/sized leaves within 10-14 days after treatment. Leaves with the P+ or P- treatment were misted with sterile water two times a day (morning and afternoon) to maintain moisture. After four days, we removed the plugs and took digital photos to analyze leaf area damage using ImageJ.  
+Leaf tissue in CTBA solution was stored for 2 months at room temperature
+prior to being placed at -80 C for 3 months before extracting DNA. In
+preparation for DNA extraction, we decontaminated all instruments,
+materials, and surfaces with DNAway (Molecular BioProducts Inc., San
+Diego, CA, United States), 95% Ethanol, 0.5 % NaOCl, and 70 % Ethanol,
+and subsequently treated with UV light for 30 minutes in biosafety
+cabinet. We then transferred 0.2 -- 0.3 g of leaf tissue into duplicate
+sterile 2mL tubes, resulting in 2 subsamples. Total genomic DNA from
+subsamples was extracted as described in U'Ren & Arnold (2017). In
+brief, added two sterile 3.2 mm stainless steel beads to each tube and
+proceeded to lyophilize samples for 72 hours to fully remove CTAB
+content from tissue. After this period, we submerged the sample tubes in
+liquid nitrogen for 30s and proceeded to homogenize samples to a fine
+powder for 45 s in FastPrep-24 Tissue and Cell Homogenizer (MP
+Biomedicals, Solon, OH, USA). Afterwards, we repeated the
+decontamination procedure described before and used QIAGEN DNeasy 96
+PowerPlant Pro-HTP Kit (U'Ren & Arnold (2017?) (QIAGEN, Valencia, CA,
+USA). After all genomic DNA was extracted, we pooled the subsamples for
+each individual sample before amplification. We used sterile equipment
+and pipettes with aerosol-resistant tips with filters in all steps
+before amplification. We followed a two-step amplification approach
+previously described by Sarmiento et al. 2017 and U´Ren & Arnold 2017.
+We used primers for the fungal ITSrDNA region, ITS1f
+(5'-CTTGGTCATTTAGAGGAAGTAA-3') and ITS4 (5'-TCCTCCGCTTATTGATATGC-3')
+with modified universal consensus sequences CS1 and CS2 and 0--5 bp for
+phase-shifting. Every sample was amplified in two parallel reactions
+containing 1-2 µL of DNA template (U'Ren & Arnold 2017, see also Tellez
+et al 2022). We visualized PCR (PCR1) reactions with SYBR Green 1
+(Invitrogen, Carlsbad, CA, USA) on 2% agarose gel (Oita et al 2021).
+Based on the electrophoresis band intensity, we combined parallel PCR1
+reactions and diluted 5 µL of amplicon product with molecular grade
+water to standardize to a concentration of 1:15 (Tellez et al 2022; see
+Sarmiento et al 2017 for details). We included DNA extraction blanks and
+PCR1 negatives in this step. We used a separate set of sterile pipettes,
+tips, and equipment to reduce contamination. We used a designated PCR
+area to restrict contact with pre-PCR materials (Oita et al 2021).\
+We used 1 µL of PCR1 product from samples and negative control for a
+second PCR (PCR2) with barcoded adapters (IBEST Genomics Resource Core,
+Moscow, ID, USA). Each PCR2 reaction (total 15 µL) contained 1X Phusion
+Flash High Fidelity PCR Master Mix, 0.075 µM of barcoded primers
+(forward and reverse pooled at a concentration of 2 µM) and 0.24mg/mL of
+BSA following (Sarmiento et al. 2017; U'Ren & Arnold 2017). Before final
+pooling for sequencing, we purified the amplicons using Agencourt AMPure
+XP Beads (Beckman Coulter Inc, Brea, CA USA) to a ratio of 1:1 following
+the manufacturer's instructions. The products were evaluated with Bio
+Analyzer 2100 (Agilent Technologies, Santa Clara, CA, USA) (Tellez et al
+2022). We quantified the samples through University of Arizona Genetics
+Core, and subsequently diluted them to the same concentration to prevent
+over representation of samples with higher concentration, see
+(CITATION). Amplicons were normalized to 1ng/µL, then pooled 2µL of each
+for sequencing. No contamination was detected visually or by
+fluorometric analysis. To provide robust controls we combined 5µL of
+each PCR1 negative and the DNA extraction blanks and sequenced them as
+samples. Ultimately, we combined samples into a single tube with 20ng/µL
+of amplified DNA with barcoded adapters for sequencing on the Illumina
+MiSeq platform with Reagent Kit v3 (2 × 300 bp) following protocols from
+the IBEST Genomics Resource Core at the University of Idaho, USA. Again,
+we included the DNA extraction blanks and two PCR1 negatives and
+sequenced with samples. Sequencing yielded 3,778,081 total ITS1 reads.
+We performer biostatistical analyses on forward reads (ITS1) due to
+their high quality, rather than reverse reads (ITS4).. We performed
+demultiplexing, quality control, and dereplicating following Sarmiento
+et al. (2017). For post-sequencing quality control, we used FastQC
+(CITATION) and VSEARCH, an open-source alternative to USEARCH that used
+uses an optimal global aligner (full dynamic programming
+Needleman-Wunsch), resulting in more accurate alignments and sensitivity
+(VSEARCH CITATION). In short, we trimmed reads to a length of 250 bp and
+filtered them at a maximum expected error of 1.0. The result was XXXX
+total reads after quality control and 569 Ascomycota OTUs (See
+Supplementary Methods for details). Mock Communities We processed and
+sequenced two mock communities following the methods described above.
+This allowed us to assess the quality of our NGS data set. We used two
+mock communities that consisted of PCR product from DNA extractions of
+31 phylogenetically distinct fungi, representing lineages that are
+typically observed as endophytes (Oita et al. 2021, see Daru et al. 2018
+for details). In brief, we used a mock community with equimolar
+concentrations of DNA from all 31 fungal taxa and a second mock
+community with tiered concentrations of DNA from the same fungal taxa
+(Daru et al. 2018). Each mock community was sequenced five times (i.e.,
+five replicates) (Oita et al. 2021). The read abundance from the tiered
+community was positively associated with the expected read number (with
+replicate as a random factor: R2Adj = 0.87, P = XXXX, see Supplementary
+material). Accordingly, we used read abundance as a relevant proxy for
+biological abundance (Taylor et al. 2016; U'Ren et al. 2019)
 
+Ant-endophyte interaction assays A fresh fourth leaf was used in ant
+assays. To assess leaf-cutter ant damage, we introduced one detached
+leaf per plant per treatment to an actively foraging leaf-cutter ant
+colony for a two-hour trial. We presented leaf-cutter ant colonies with
+a choice of an E+ or an E- leaf on a disposable plastic plate next to an
+active nest trail. Carefully, we collected and placed debris from the
+trail leading up to the plate to lure ants into the plate. We initiated
+the ant trial/assay as soon as an ant entered the plate and explored the
+leaf contents (for \~ 10-20 seconds). Every five minutes we took a
+digital photo of the choice arena until about 75% of the leaf content of
+one of the leaves was consumed. We used the digital photo at time zero
+and at the end of trial to quantify the leaf area removed using ImageJ
+(VERSION?). Ant recruitment was estimated by counting individuals in
+choice arena throughout trial event. Pathogen assays For the pathogen
+assays, we introduced an agar plug inoculated with hyphae of Calonectria
+sp. (P+ treatment), and an agar plug without the pathogen (P- control)
+to similarly aged/sized leaves within 10-14 days after treatment. Leaves
+with the P+ or P- treatment were misted with sterile water two times a
+day (morning and afternoon) to maintain moisture. After four days, we
+removed the plugs and took digital photos to analyze leaf area damage
+using ImageJ.
 
-Bioinformatic methods
-Amplicon sequencing
+Bioinformatic methods Amplicon sequencing
 
-Will be updating this during week of Sept 1. 
-Follow Tellez Culture free method section
-    • Command Line Pipeline with Usearch
-    • Cleaning results from pipeline in R
-        ◦ Shuzo and Mareli’s cleaning an cut-offs
-    • 
+Will be updating this during week of Sept 1. Follow Tellez Culture free
+method section • Command Line Pipeline with Usearch • Cleaning results
+from pipeline in R ◦ Shuzo and Mareli's cleaning an cut-offs •
 
+Statistical analyses Needs to be updated with analyses of Summer 2022 To
+address H1, we used a multivariate analysis of variance (MANOVA) for the
+all the tree species using the "manova" function in the "stats" package
+in R (The R Core Team, 2013). A MANOVA allows for an analysis of
+variance with two or more covariates (i.e., endophyte load (E_load ) and
+tree species)) and multiple dependent variables (i.e., ACI, LMA,
+Thickness, Toughness). With the "summary.aov" function and argument
+"split" set to "list ("E_load:Species")" I determined how independent
+variables, E_load and tree species, influenced variance of my
+covariates: Thickness, Toughness, LMA, and ACI. I computed Wilk's tests
+statistic for MANOVA where in the closer to zero the statistic is, the
+variable in question contributes more to the model, hence we reject the
+null hypothesis if zero. Additionally, to determine which interactions
+of E_load and tree species are significant in regard to abundance, I
+performed two way ANOVAs using "aov" function and post-hoc Tukey tests
+using "TukeyHSD" function in the "stats' package in R (The R Core Team,
+2013). This allows for a more in-depth look at interactions between and
+among groups, not necessarily apparent from MANOVA tests.
 
-Statistical analyses
-Needs to be updated with analyses of Summer 2022
-To address H1, we used a multivariate analysis of variance (MANOVA) for the all the tree species using the “manova” function in the “stats” package in R (The R Core Team, 2013). A MANOVA allows for an analysis of variance with two or more covariates (i.e., endophyte  load (E_load ) and tree species)) and multiple dependent variables (i.e., ACI, LMA, Thickness, Toughness). With the “summary.aov” function and argument “split” set to “list ("E_load:Species")” I determined how independent variables, E_load and tree species, influenced variance of my covariates: Thickness, Toughness, LMA, and ACI. I computed Wilk’s tests statistic for MANOVA where in the closer to zero the statistic is, the variable in question contributes more to the model, hence we reject the null hypothesis if zero. Additionally, to determine which interactions of E_load and tree species are significant in regard to abundance, I performed two way ANOVAs using “aov” function and post-hoc Tukey tests using “TukeyHSD” function in the “stats’ package in R (The R Core Team, 2013). This allows for a more in-depth look at interactions between and among groups, not necessarily apparent from MANOVA tests. 
+To test for H2, I used a general linear mixed model (GLM). First, to
+determine which fixed effects to include in my model I created a
+correlation matrix with "cor()" function in R statistical software.
+Covariates (Thickness, Toughness, LMA, ACI, E_load, and Tree Species)
+with correlation coefficients greater than 0.25 were not included in
+linear model analyses. Secondly, Principal Component Analysis (PCA) was
+used to determine underlying interactions among covariates that could
+influence fungal endophyte abundance in seedlings (hereafter,
+abundance). The PCA was computed using the "prcomp" function in R
+statistical software (The R Core Team, 2013). The PCA was computed using
+the following covariates: Thickness, Toughness, LMA, and ACI, to test
+the effect of ACI, Species, Toughness, Thickness, LMA, endophyte load
+(E_load) as my independent variables (fixed effects) on the abundance of
+endophytes, dependent variable. The PCA was used to inform which
+covariates to include in linear model analyses. From PCA and correlation
+analysis, Thickness, Toughness and E_load were chosen to compute an
+initial linear model with interaction. Linear model was computed using
+"lm" function from the "stats" package in R (The R Core Team, 2013). I
+selected the best fit model using "stepAIC" function in the "MASS"
+package with "direction" argument set to "both" for backward and forward
+selection (The R Core Team, 2013). The best fit model was achieved when
+all covariates had a significant P-value. Results Results support my
+first hypothesis: H1) endophyte abundance will be significantly
+different across tree species and endophyte treatments. The results from
+the MANOVA for E_load (p-value \< 0.0001), Species (p-value \< 0.0001)
+and the interaction between E_load and Species (P-value \< 0.0001)
+support this hypothesis, with a Wilk's test statistic of 0.44, 0.02, and
+0.75 respectively, hence the null hypothesis is rejected (Fig. 2 and 3).
+Multiple interactions between endophyte abundance and endophyte
+treatment and tree species were significantly different. A two-way ANOVA
+and post-hoc Tukey test of these interactions show in detail which
+interaction between and among groups are significant (see Table 4 in
+supplementary materials).
 
-To test for H2, I used a general linear mixed model (GLM). First, to determine which fixed effects to include in my model I created a correlation matrix with “cor()” function in R statistical software. Covariates (Thickness, Toughness, LMA, ACI, E_load, and Tree Species) with correlation coefficients greater than 0.25 were not included in linear model analyses.  Secondly, Principal Component Analysis (PCA) was used to determine underlying interactions among covariates that could influence fungal endophyte abundance in seedlings (hereafter, abundance).  The PCA was computed using the “prcomp” function in R statistical software (The R Core Team, 2013). The PCA was computed using the following covariates: Thickness, Toughness, LMA, and ACI, to test the effect of ACI, Species, Toughness, Thickness, LMA, endophyte load (E_load) as my independent variables (fixed effects) on the abundance of endophytes, dependent variable. The PCA was used to inform which covariates to include in linear model analyses. From PCA and correlation analysis, Thickness, Toughness and E_load were chosen to compute an initial linear model with interaction. Linear model was computed using “lm” function from the “stats” package in R (The R Core Team, 2013). I selected the best fit model using “stepAIC” function in the “MASS” package with “direction” argument set to “both” for backward and forward selection (The R Core Team, 2013). The best fit model was achieved when all covariates had a significant P-value. 
-Results
-Results support my first hypothesis: H1) endophyte abundance will be significantly different across tree species and endophyte treatments. The results from the MANOVA for E_load (p-value  < 0.0001), Species (p-value < 0.0001) and the interaction between E_load and Species (P-value < 0.0001) support this hypothesis, with a Wilk’s test statistic of 0.44, 0.02, and 0.75 respectively, hence the null hypothesis is rejected (Fig. 2 and 3). Multiple interactions between endophyte abundance and endophyte treatment and tree species were significantly different. A two-way ANOVA and post-hoc Tukey test of these interactions show in detail which interaction between and among groups are significant (see Table 4 in supplementary materials). 
+Principal Component Analysis revealed how covariates (LMA, ACI,
+Thickness and Toughness) interact. I overlapped tree species groups on
+the PCA axes to show how the variance in the data is explained by PC1
+(60%) and PC2 (27%) (Fig. 4). This is indicative of correlation among
+covariates. Thickness and toughness were orthogonal to each other in
+PCA, indicative of low correlation. Correlation analysis revealed that
+these covariates were negatively correlated to each other (r = -0.12).
+Additionally, both Toughness and Thickess had the greatest loadings on
+PC1 and PC2, respectively (Fig. 4).
 
-Principal Component Analysis revealed how covariates (LMA, ACI, Thickness and Toughness) interact. I overlapped tree species groups on the PCA axes to show how the variance in the data is explained by PC1 (60%) and PC2 (27%) (Fig. 4). This is indicative of correlation among covariates. Thickness and toughness were orthogonal to each other in PCA, indicative of low correlation. Correlation analysis revealed that these covariates were negatively correlated to each other (r = -0.12). Additionally, both Toughness and Thickess had the greatest loadings on PC1 and PC2, respectively (Fig. 4).
+The best fit model that resulted from using "stepAIC" function includes
+Toughness and E_load as fixed effects as well as their interaction
+effect (F-statistic=180.6, df = 463, p-value: \< 2.2e-16). The AIC value
+for the best fit model is -108.1. I did not include in further analyses
+covariates that were above the 0.25 correlation cut-off established (see
+Table 1 in supplementary materials). Finally, two equations resulted
+from the multivariate regression analysis of the best fit model: for E-
+plants and for E+ plants (Fig. 5). Plants exposed E+ treatment have a
+negative correlation with leaf toughness. That is, as Toughness
+increased endophyte abundance decreased. Plants exposed to E- treatment
+had a negative correlation as well, albeit the slope of the line was not
+as steep (Fig. 5). No random effects were modeled.
 
-The best fit model that resulted from using “stepAIC” function includes Toughness and E_load as fixed effects as well as their interaction effect (F-statistic=180.6, df = 463, p-value: < 2.2e-16). The AIC value for the best fit model is -108.1. I did not include in further analyses covariates that were above the 0.25 correlation cut-off established (see Table 1 in supplementary materials). Finally, two equations resulted from the multivariate regression analysis of the best fit model: for E- plants  and for E+ plants    (Fig. 5). Plants exposed E+ treatment have a negative correlation with leaf toughness. That is, as Toughness increased endophyte abundance decreased. Plants exposed to E- treatment had a negative correlation as well, albeit the slope of the line was not as steep (Fig. 5). No random effects were modeled. 
-
-
-
-
-
-
-
-
-
-References
-Arnold, A. E., L. C. Mejía, D. Kyllo, E. I. Rojas, Z. Maynard, N. Robbins, and E. A. Herre. 2003. Fungal endophytes limit pathogen damage in a tropical tree. Proceedings of the National Academy of Sciences 100:15649–15654.
-Higgins, K. L., A. E. Arnold, P. D. Coley, and T. A. Kursar. 2014. Communities of fungal endophytes in tropical forest grasses: Highly diverse host- and habitat generalists characterized by strong spatial structure. Fungal Ecology.
+References Arnold, A. E., L. C. Mejía, D. Kyllo, E. I. Rojas, Z.
+Maynard, N. Robbins, and E. A. Herre. 2003. Fungal endophytes limit
+pathogen damage in a tropical tree. Proceedings of the National Academy
+of Sciences 100:15649--15654. Higgins, K. L., A. E. Arnold, P. D. Coley,
+and T. A. Kursar. 2014. Communities of fungal endophytes in tropical
+forest grasses: Highly diverse host- and habitat generalists
+characterized by strong spatial structure. Fungal Ecology.

@@ -48,19 +48,23 @@ This are the statistical analyses for Aim 3 Leaf Traits and Endophytes project w
 
 -   Pathogen simple linear model plots
 
-# To-do list
-
 -   GLMs and main effects in tree-style plot.
+
+    -   Decide to present them as a table.
+
+# To-do list
 
 # R packages used
 
 Not all of these packages are used. They are here just in case need further along the analyses.
 
-```{r, message = FALSE}
+```{r}
+#| echo: false
+#| warning: false
 # Data manipulation and visualizations ####
 library("conflicted")
-library("devtools")
-library("DiagrammeR")
+#library("devtools")
+#library("DiagrammeR")
 library("factoextra")
 library("ggfortify")
 library("ggiraph")
@@ -74,15 +78,16 @@ library("hrbrthemes")
 library("igraph")
 library("tidyverse")
 library("plotrix")
-library("viridis")
+#library("viridis")
 library("MetBrewer")
 library("formatR")
 library("wesanderson")
-library("knitr")
-library("rmarkdown")
+#library("knitr")
+#library("rmarkdown")
 library("data.table")
 
 # Stats ####
+library("broom")
 library("vegan")
 library("nlme")
 library("MASS")
@@ -122,13 +127,13 @@ rm(list = ls())
 #setwd("H:/.shortcut-targets-by-id/0B9v0CdUUCqU5VVR4a3BvNHM1Z28/VBL_users/Grad_Students/Bolivar/Dissertation/Leaf_Traits_Panama/Data/Sequence_analyses")
 
 #Working Directory and Path for Windows
-# setwd("C:/Users/boloq/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses")
-# save.path <- "C:/Users/boloq/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses"
+setwd("C:/Users/boloq/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses")
+save.path <- "C:/Users/boloq/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses"
 
 #Working Directory and Path for Linux
-setwd("/home/baponte/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses/")
-
-save.path <- ("/home/baponte/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses/")
+# setwd("/home/baponte/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses/")
+# 
+# save.path <- ("/home/baponte/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses/")
 ```
 
 # Data frames
@@ -2023,7 +2028,7 @@ As of 06/04/2023: The final model as a results of `stepAIC()` is: `logit_herbivo
 
 Models for predicting herbivory loss using FEF community diversity. Use of raw functional leaf trait values.
 
--   I opted to remove Anthocyanins and Toughness due to high colinearity with LMA (see Correlations section). \### ML: fixed terms
+-   I opted to remove Anthocyanins and Toughness due to high colinearity with LMA (see Correlations section). ML: fixed terms
 
 ```{r, Ant masterant2 ML model selection, tidy = TRUE}
 #Using results from stepAIC() as the starting point.
@@ -2196,7 +2201,7 @@ M4REM <- lme(logit_herbivory ~ Thickness  + LMA,  weights = varIdent(form = ~ 1|
 # Validation
 plot(M4REM)
 summary(M4REM)
-AIC(M4REM) #575.565 # 756 as of 06/04/2023
+AIC(M4REM) #575.565 # 753 as of 01/NOV/2023
 plot_model(M4REM, type = "diag")
 ```
 
@@ -2231,74 +2236,15 @@ Let's see if I can lower the AIC score more.
 
 #### Notes on Manual model selection
 
-From the previous section I can see that model M4 and M5 have the lowest AIC scores. This is achieved by modeling interaction of the explanatory variables. Yet some interactions do not seem to be significant. What is the most parsimonious model I can achieve?
+From the previous section I can see that model M3 and M5 have the lowest AIC scores. This is achieved by modeling interaction of the explanatory variables. Yet some interactions do not seem to be significant. What is the most parsimonious model I can achieve?
 
 This doesn't make much sense to me. Sure E_load reduces the AIC score but of course it is going to have an impact or predict well herbivory loss. It is a treatment, not a continuous explanatory variable. It just does not fit the question well.
 
+The best fit model, considering the eliminatiion of Anthocyanins and Toughness due to high colinearity, is M3REM (AIC 741). It also models fixed effects, not interactions.
+
 ### Conclusions of model selection using REML model estimation
 
-The interaction between `logit_herbivory ~ Anthocyanins : Toughness : Thickness : LMA :E_load, random = ~1 | Species, weights = varIdent(form = ~ 1|Species)` is the best fit model with random effect (Species). We are trying to understand how FEF diversity influences herbivory on an per species/plant basis. The variance structure seems to not be nested. Hence, no need to nest Species/E_load.
-
-### Plotting Estimates (Fixed Effects) of Best Fit model
-
-Using [`sjPlot`](https://strengejacke.github.io/sjPlot/articles/plot_model_estimates.html) package to visualize model estimates.
-
-```{r, sjPlot visualizations, tidy = TRUE}
-# Regression model table
-# M2.lme, M5, M6
-
-tab_model(M5REM,M3REM, 
-          show.aic = TRUE, 
-          show.intercept = TRUE, 
-          show.df = TRUE, 
-          title = "Linear mixed effects models for predicting leaf herbivory", 
-          CSS = list(
-            css.depvarhead = 'font-weight:bold;',
-            css.centeralign = 'text-align: left;',
-            css.firsttablecol = 'font-weight: bold;',
-            css.summary = 'color: blue; font-weight: bold;',
-            p.style = "numeric_stars"))
-
-#Reproducible example
-# mtcars$fact_cyl <- as.factor(mtcars$cyl)
-# 
-# lm1 <- lme(mpg ~ cyl, mtcars)
-# lm2 <- lme(mpg ~ hp, mtcars)
-# lm3 <- lme(mpg ~  hp + gear, random = ~1|fact_cyl, mtcars)
-# 
-# AIC(lm1, lm2, lm3)
-# 
-# tab_model(lm3,
-#           show.re.var = T,
-#           show.aicc = TRUE,
-#           show.intercept = TRUE,
-#           df.method = "normal",
-#           p.val = "satterhwaite")
-
-
-
-# Model estimate plots
-# Model 
-modCoeff <- plot_model(M5REM, vline.color = "black", sort.est = TRUE, transform = NULL, dot.size = 3, value.offset = .4,
-  value.size = 4, title = "Best fit linear mixed effects model coefficients for predicting leaf herbivory") +
-  theme_sjplot()
-modCoeff
-
-#ggsave(filename="Aim3_GLM_Coeff_estimates.jpeg", plot = modCoeff, dpi=600, units=c("mm"), width=200, height=200)
-
-# Best fit model standarized coeeficients
-stCoeff <- plot_model(M5REM, type = "std", vline.color = "black", sort.est = F, transform = NULL, dot.size = 3, value.offset = .4,
-  value.size = 4, title = "Best fit GLM model coefficients for predicting leaf herbivory (standarized coefficients)")
-stCoeff
-#ggsave(filename="Aim3_GLM_STDCoeff_estimates.jpeg", plot = stCoeff, dpi=600, units=c("mm"), width=200, height=200)
-
-# best fit model slope predictions
-#
-# Simple diagnostic-plots, where a linear model for each single predictor is plotted against the response variable, or the model's residuals. Additionally, a loess-smoothed line is added to the plot. The main purpose of these plots is to check whether the relationship between outcome (or residuals) and a predictor is roughly linear or not. Since the plots are based on a simple linear regression with only one model predictor at the moment, the slopes (i.e. coefficients) may differ from the coefficients of the complete model.
-#slope <- plot_model(M6REM,  type =  "slope")
-plot_model(M6REM, type = "diag")
-#ggsave(filename = "Aim3_GLMSlope_LeafTraits_06272022.jpeg", plot = slope, dpi=600, units=c("mm"), width=200, height=200)
-```
+The interaction between `lme(logit_herbivory ~ Thickness  + LMA + E_load, weights = varIdent(form = ~ 1|Species),  random = ~ 1 | Species, method = "REML", control = ctrl, data = masterant2, na.action = na.exclude)` is the best fit model with random effect (Species). We are trying to understand how FEF diversity influences herbivory on an per species/plant basis. The variance structure seems to not be nested. Nesting it increases AIC score. Hence, no need to nest Species/E_load.
 
 # Figure S1?
 
@@ -2811,7 +2757,7 @@ Let's model with interactions and remove variance structure. Having Treatment an
 ```{r, Pathogen RAW REML interactions, tidy = TRUE}
 #P5_INTERACTIONS_
 P5REM <- lme(logit_pathogenicity ~  LMA * Thickness * E_load * Treatment, random = ~1 | Species, method = "REML", data = masterpat2, na.action = na.exclude)
-summary(M5REM)
+summary(p5REM)
 AIC(P5REM) #1057.048 as of 30/OCT/2023
 plot(P5REM)
 plot_model(P5REM, type = "diag")
@@ -2825,10 +2771,6 @@ AIC(P6REM) #1071.056 as of 30/OCT/2023
 plot_model(P6REM, type = "diag")
 #REMOVAL OF E_LOAD INCREASES AIC SCORE.
 ```
-
-### Conclusions of model selection with raw functional leaf traits
-
-I think I need to transform the data: Pathogen damage. There is too much non-normality. The variance structure seems to not be nested. Hence, no need to nest Species/E_load.
 
 ## REML: Variance Structure
 
@@ -2848,7 +2790,9 @@ AIC(P3REM) #1011.239 as of 30/OCT/2023
 plot_model(P3REM, type = "diag")
 ```
 
-Model P3REM has the lowest AIS score. It has variance structure (`varIdent()`) nested in Species/E_load/Treatment. It also uses an optimizer `lmeControl(opt='optim')`. It is the best model for the pathogen data set, at the moment.
+### Conclusions of pathogen model selection with raw functional leaf traits
+
+Model `P3REM` has the lowest AIC score. It has variance structure (`varIdent()`) nested in Species/E_load/Treatment. It also uses an optimizer `lmeControl(opt='optim')`. It is the best model for the pathogen data set, at the moment.
 
 ## Plots: Pathogen
 
@@ -3041,6 +2985,84 @@ arranged_with_caption
 #ggsave(filename ="./plots/Aim3_Pathogen_regression_01NOV2023.jpg", plot = arranged_with_caption, dpi= 600, units=c("mm"), width=180, height=140, bg = "white")
 
 ```
+
+# LMM tables and estimites for ant and pathogen GLMs with `logit_herbivory` and `logit_pathogenicity`
+
+### Plotting Estimates (Fixed Effects) of Best Fit model for Ant and Pathogen data sets
+
+Using [`sjPlot`](https://strengejacke.github.io/sjPlot/articles/plot_model_estimates.html) package to visualize model estimates.
+
+```{r, sjPlot visualizations, tidy = TRUE}
+# Regression model table
+
+tab_model(M3REM, P3REM, 
+          show.aic = TRUE, 
+          show.intercept = TRUE, 
+          show.df = TRUE, 
+          title = "Linear mixed effects models for predicting leaf herbivory and pathogenicity", 
+          CSS = list(
+            css.depvarhead = 'font-weight:bold;',
+            css.centeralign = 'text-align: left;',
+            css.firsttablecol = 'font-weight: bold;',
+            css.summary = 'color: grey; font-weight: bold;',
+            p.style = "numeric_stars"))
+
+
+# Model estimate plots
+# Model: Ants
+M3REM_coeff <- plot_model(M3REM,
+                       type = "est",
+                       vline.color = "black",
+                       sort.est = TRUE, 
+                       transform = NULL,
+                       dot.size = 3,
+                       value.offset = .4,
+                       value.size = 4,
+                       title = "Best fit linear mixed effects model coefficients for predicting leaf herbivory") +
+  theme_sjplot()
+M3REM_coeff
+
+#ggsave(filename="Aim3_GLM_Coeff_estimates.jpeg", plot = modCoeff, dpi=600, units=c("mm"), width=200, height=200)
+
+# Best fit model standarized coeeficients
+M5REM_coeff <- plot_model(M5REM, 
+                      type = "est", 
+                      vline.color = "black", 
+                      sort.est = F, 
+                      transform = NULL, 
+                      dot.size = 3, 
+                      value.offset = .4,
+                      value.size = 4,
+                      title = "Best fit GLM model coefficients for predicting leaf herbivory (standarized coefficients)")  +
+  theme_sjplot()
+M5REM_coeff
+0.#ggsave(filename="Aim3_GLM_STDCoeff_estimates.jpeg", plot = stCoeff, dpi=600, units=c("mm"), width=200, height=200)
+
+# best fit model slope predictions
+#slope <- plot_model(M6REM,  type =  "slope")
+plot_model(M3REM, type = "resid")
+#ggsave(filename = "Aim3_GLMSlope_LeafTraits_06272022.jpeg", plot = slope, dpi=600, units=c("mm"), width=200, height=200)
+
+
+
+
+# Model: Pathogen
+# 
+P3REM_coeff <- plot_model(P3REM,
+                       type = "est",
+                       vline.color = "black",
+                       sort.est = TRUE, 
+                       transform = NULL,
+                       dot.size = 3,
+                       value.offset = .4,
+                       value.size = 4,
+                       title = "Best fit linear mixed effects model coefficients for predicting leaf herbivory") +
+  theme_sjplot()
+P3REM_coeff
+
+```
+
+I believe the best way to represent the model coefficients if through a table no an estimate plot.
 
 # Dimensionality Reduction of leaf traits
 
@@ -4189,7 +4211,7 @@ tab_model(pglm, pglm_ident, pglm_exp, pglm_comb,
     # p.style = "numeric_stars"))
 ```
 
-# LMM tables and estimate plots for ant and pathogen models
+# LMM tables and estimate plots for ant and pathogen models with LDA axes
 
 ```{r, Tables comparing LMM models, tidy = TRUE}
 
