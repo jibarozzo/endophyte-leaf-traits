@@ -4,8 +4,6 @@ author: "Bolívar Aponte Rolón"
 date: "Last edited: `r format(Sys.time(), '%B %d, %Y')`"
 date: last-modified
 date-format: "[Last updated on] MMMM D, YYYY"
-bibliography: git_ref.bib
-csl: apa.csl
 format: 
   html:
     toc: true
