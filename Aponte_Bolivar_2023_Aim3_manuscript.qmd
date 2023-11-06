@@ -1,6 +1,48 @@
 ---
-title: "Manuscript Draft"
-format: html
+title: "Manuscript Draft : Aim3 Leaf Traits"
+bibliography: references.bib
+csl: ecology.csl
+author:
+  - name: Bolívar Aponte Rolón
+    orcid: 0000-0002-2544-4551
+    email: baponterolo@tulane.edu
+    corresponding: true
+    affiliation: 
+      - id: tu
+        name: Tulane University
+        department: Ecology and Evolutionary Biology
+        city: New Orleans
+        state: LA
+        country: US
+        url: www.tulane.edu
+  - name: A. Elizabeth Arnold
+    orcid: 0000-0002-7013-4026
+    email: arnold@ag.arizona.edu
+    corresponding: false
+    affiliation: 
+      - id: ua
+        name: University of Arizona
+        department: School of Plant Sciences
+        city: Tucson
+        state: AZ
+        country: US
+        url: www.arizona.edu
+      - id: ua2
+        name: University of Arizona
+        department: Department of Ecology and Evolutionary Biology
+        city: Tucson
+        state: AZ
+        country: US
+        url: www.arizona.edu  
+  - name: Sunshine A. Van BAel
+    orcid: 0000-0002-2544-4551
+    email: svanbael@tulane.edu
+    corresponding: false
+    affiliation: 
+      - ref: tu
+format: pdf
+
+
 editor: 
   markdown: 
     wrap: 72
@@ -14,62 +56,79 @@ editor:
 
 ## Field
 
-Greenhouse growth and host plant inoculation Seven tropical tree species
-were grown in the greenhouse at the Gamboa Research Station, Smithsonian
-Tropical Research institute, Republic of Panama. The species, Theobroma
-cacao, Dypterix sp., Lacmellea panamensis, Apeiba membranacea, Heisteria
-concinna, Chrysophyllum caimito, and Cordia alliodora were chosen due to
-their variance in leaf traits (J.Wright unpublished data) and the
-availability of seeds in January- April 2019. Seeds of tree species were
-collected from the forest floor and grown in the greenhouse. Seedlings
-were kept in a chamber made out of PVC and clear plastic to prevent
-inoculation from spore fall inside the greenhouse. Seedlings reached a
-minimum of 4 true leaves before endophyte inoculation. Then 10
-individual plants of each species were exposed to 10 nights of spore
-fall to achieve a high endophyte load (E+) and 10 homologous plants were
-kept inside the greenhouse plastic chamber to maintain a low endophyte
-load (E-) (Fig. 1). Plants exposed to forest spore fall were placed near
-the forest edge at dusk and returned to the greenhouse at dawn
-(Bittleston et al. 2011). Leaf trait measurements Three mature leaves
-were haphazardly collected from each of the individual plants in each
-treatment (E+, E-) within 7-10 days after treatment. Anthocyanin and
-leaf thickness were measured while the leaf was still attached to the
-plant. We measured anthocyanin levels with ACM-200 (BRAND HERE) on three
-haphazardly selected locations (working from the petiole out to the leaf
-tip) on the leaf surface of three haphazardly selected leaves for a
-total of nine measurements per plant (Tellez, et al 2022). On compound
-leaves (i.e., Dypterix sp.) we measured at three different leaflets.
-Leaf thickness was measured with METER MODEL HERE following the same
-manner as the anthocyanin measurements. After anthocyanin and leaf
-thickness measurements were completed, we removed the leaves from their
-stems, placed them inside an ice chest and moved them to the lab for
-further measurements. Leaf toughness was measured with METER MODEL HERE
-following PROTOCOL XXXX (or measurements were taken by puncturing a 2 mm
-diameter hole in various locations on the leaf surface. We punctured at
-the base, mid-leaf and tip of the leaf on both sides of the midvein,
-avoiding minor leaf veins when possible). Once leaf toughness was
-measured, we punctured a 7 mm diameter punch hole per leaf for leaf mass
-per area (LMA) measurements. The punches of leaf tissue dried at 60 °C
-for 48-72 hours. Leaf tissue preparation The selected leaves were also
-used to profile endophyte community composition, abundance, and richness
-via amplicon sequencing (Illumina MiSeq). The leaf tissue leftover after
-the leaf trait measurement had the main vein and margins excised so that
-only the lamina remained. The lamina was haphazardly cut into 2 mm2
-segments, enough to obtain a total of 16, and surface sterilized by
-sequential rinsing in 95% ethanol (10 s), 10% sodium hypochlorite
-(original concentration, 5.25 % NaOCl) (2 mins) and 70% ethanol (2
-mins), as per (Arnold et al. 2003, Higgins et al. 2014; Tellez et al
-2022). After, leaves were air-dried briefly under sterile conditions and
-agar plates for culture assays. Sixteen leaf segments per leaf, a total
-of forty-eight leaf segments per plant, were plated in 2% malt extract
-agar (MEA), sealed with Parafilm M (Bemis Company Inc., U.S.A.) and
-incubated at room temperature. The cultured leaf segments were used to
-estimate endophyte colonization of E+ and E- leaves. The presence or
-absence of endophytic fungi in the leaf cuttings was assessed 7 days
-after plating. The remaining sterilized leaf lamina was preserved in
-sterile 15 mL tubes with \~ 10 mL CTAB solution ((1 M Tris--HCl pH 8, 5
-M NaCl, 0.5 M EDTA, and 20 g CTAB). Leaf tissue in CTAB solution was
-used amplicon sequencing (described in detail below).
+Growth and host plant inoculation seven tropical tree species was
+conducted at the greenhouses in the Gamboa Research Station, Smithsonian
+Tropical Research institute, Republic of Panama. The species, *Theobroma
+cacao*, *Dypterix* sp., *Lacmellea panamensis*, *Apeiba membranacea*,
+*Heisteria concinna*, *Chrysophyllum caimito*, and *Cordia alliodora*
+were chosen due to their variance in leaf traits (J.Wright unpublished
+data) and the availability of seeds in January- April 2019. Seeds of
+tree species were collected from the forest floor and grown in the
+greenhouse. Seedlings were kept in a chamber made out of PVC and clear
+plastic to prevent inoculation from spore fall inside the
+greenhouse.NEEDS INFORMATION ON THE SOIL MIXTURE AND AUTOCLAVING
+PROTOCOL. Seedlings reached a minimum of 4 true leaves before endophyte
+inoculation. Then 10 individual plants of each species were exposed to
+10 nights of spore fall to achieve a high endophyte load (E+) and 10
+homologous plants were kept inside the greenhouse plastic chamber to
+maintain a low endophyte load (E-) (Fig. ? MAKE A DIRAGRAM?). Plants
+exposed to spore fall were placed near (\~10 m) the forest edge at dusk
+(\~18:OO hours) and returned to the greenhouse at dawn (\~07:00 hours)
+(Bittleston et al. 2011).
+
+### Leaf trait measurements
+
+Three mature leaves were haphazardly collected from each of the
+individual plants in each treatment (E+, E-) within 7-10 days after
+inoculation treatment. Anthocyanin content and leaf thickness were
+measured while the leaf was still attached to the plant. We measured
+anthocyanin content with ACM-200plus (Opti-Sciences Inc. Hudson, New
+Hampshire, U.S.A.) on three haphazardly selected locations (working from
+the petiole out to the leaf tip) on the leaf surface of three
+haphazardly selected leaves for a total of nine measurements per plant
+[@tellezTraits2022]. The ACM-200 calculates an anthocyanin content index
+(ACI) value from the ratio of % transmittance at 931 nm/% transmittance
+at 525 nm [@tellezRedCol2016, CITE COMPANY] . On compound leaves (i.e.,
+*Dypterix* sp.) we measured at three different leaflets. Leaf thickness
+was measured with METER MODEL HERE following the same manner as the
+anthocyanin measurements. After anthocyanin and leaf thickness
+measurements were completed, we removed the leaves from their stems,
+placed them inside a plastic bag (i.e. Ziploc :tm:Ⓡ), place in an ice
+chest and moved them to the lab for further measurements. Leaf toughness
+was measured with METER MODEL HERE following PROTOCOL XXXX (or
+measurements were taken by puncturing a 2 mm diameter hole in various
+locations on the leaf surface. We punctured the leaf lamina at the base,
+mid-leaf and tip on both sides of the mid-vein, avoiding minor leaf
+veins when possible (CITE). Once leaf toughness was measured, we used a
+7 mm diameter punch hole to puncture disks for leaf mass per area (LMA)
+measurements. We collected one three disks per leaf (see S? material for
+details). The disk punches dried at 60 °C for 48-72 hours. before being
+weighed.
+
+### Leaf tissue preparation for molecular work
+
+The selected leaves were also used to profile endophyte community
+composition, abundance, and richness via amplicon sequencing (Illumina
+MiSeq). The leaf tissue remaining after the leaf trait measurements had
+the main vein and margins excised so that only the lamina remained. The
+lamina was haphazardly cut into 2 x 2 mm segments, enough to obtain a
+total of 16, and surface sterilized by sequential rinsing in 95% ethanol
+(10 s), 0.5 NaOCl (2 mins) and 70% ethanol (2 mins), as per
+[@arnold2003; @higgins2014; @tellezLeaf2002]. After, leaves were
+air-dried briefly under sterile conditions. Sixteen leaf segments per
+leaf, a total of forty-eight leaf segments per plant, were plated in 2%
+malt extract agar (MEA), sealed with Parafilm M (Bemis Company Inc.,
+U.S.A.) and incubated at room temperature. The cultured leaf segments
+were used to estimate endophyte colonization of E+ and E- leaves. The
+presence or absence of endophytic fungi in the leaf cuttings was
+assessed 7 days after plating. The remaining sterilized leaf lamina was
+preserved in sterile 15 mL tubes with \~ 10 mL CTAB solution (1 M
+Tris--HCl pH 8, 5 M NaCl, 0.5 M EDTA, and 20 g CTAB). Leaf tissue in
+CTAB solution was used for amplicon sequencing (described in detail
+below). All leaf tissue handling was performed in a biosafety cabinet
+with all surfaces sterilized by exposure to UV light for 30 minutes and
+cleaned sequentially in between samples with 95% ethanol, 0.5% NaOCl and
+70% ethanol to prevent cross contamination.
 
 ## Amplicon sequencing
 
@@ -81,7 +140,7 @@ Diego, CA, United States), 95% Ethanol, 0.5 % NaOCl, and 70 % Ethanol,
 and subsequently treated with UV light for 30 minutes in biosafety
 cabinet. We then transferred 0.2 -- 0.3 g of leaf tissue into duplicate
 sterile 2mL tubes, resulting in 2 subsamples. Total genomic DNA from
-subsamples was extracted as described in U'Ren & Arnold (2017). In
+subsamples was extracted as described in U'Ren & Arnold [-@uren2017]. In
 brief, added two sterile 3.2 mm stainless steel beads to each tube and
 proceeded to lyophilize samples for 72 hours to fully remove CTAB
 content from tissue. After this period, we submerged the sample tubes in
@@ -94,65 +153,66 @@ USA). After all genomic DNA was extracted, we pooled the subsamples for
 each individual sample before amplification. We used sterile equipment
 and pipettes with aerosol-resistant tips with filters in all steps
 before amplification. We followed a two-step amplification approach
-previously described by Sarmiento et al. 2017 and U´Ren & Arnold 2017.
-We used primers for the fungal ITSrDNA region, ITS1f
-(5'-CTTGGTCATTTAGAGGAAGTAA-3') and ITS4 (5'-TCCTCCGCTTATTGATATGC-3')
-with modified universal consensus sequences CS1 and CS2 and 0--5 bp for
-phase-shifting. Every sample was amplified in two parallel reactions
-containing 1-2 µL of DNA template (U'Ren & Arnold 2017, see also Tellez
-et al 2022). We visualized PCR (PCR1) reactions with SYBR Green 1
-(Invitrogen, Carlsbad, CA, USA) on 2% agarose gel (Oita et al 2021).
-Based on the electrophoresis band intensity, we combined parallel PCR1
-reactions and diluted 5 µL of amplicon product with molecular grade
-water to standardize to a concentration of 1:15 (Tellez et al 2022; see
-Sarmiento et al 2017 for details). We included DNA extraction blanks and
-PCR1 negatives in this step. We used a separate set of sterile pipettes,
-tips, and equipment to reduce contamination. We used a designated PCR
-area to restrict contact with pre-PCR materials (Oita et al 2021).\
+previously described by Sarmiento et al. [-@sarmiento2017] and U´Ren &
+Arnold [-@uren2017]. We used primers for the fungal ITSrDNA region,
+ITS1f (5'-CTTGGTCATTTAGAGGAAGTAA-3') and ITS4
+(5'-TCCTCCGCTTATTGATATGC-3') with modified universal consensus sequences
+CS1 and CS2 and 0--5 bp for phase-shifting. Every sample was amplified
+in two parallel reactions containing 1-2 µL of DNA template (U'Ren &
+Arnold 2017, see also Tellez et al 2022). We visualized PCR (PCR1)
+reactions with SYBR Green 1 (Invitrogen, Carlsbad, CA, USA) on 2%
+agarose gel (Oita et al 2021). Based on the electrophoresis band
+intensity, we combined parallel PCR1 reactions and diluted 5 µL of
+amplicon product with molecular grade water to standardize to a
+concentration of 1:15 [@tellez2022; @sarmiento2017 for details]. We
+included DNA extraction blanks and PCR1 negatives in this step. We used
+a separate set of sterile pipettes, tips, and equipment to reduce
+contamination. We used a designated PCR area to restrict contact with
+pre-PCR materials [oita201].\
 We used 1 µL of PCR1 product from samples and negative control for a
-second PCR (PCR2) with barcoded adapters (IBEST Genomics Resource Core,
+second PCR (PCR2) with barcode adapters (IBEST Genomics Resource Core,
 Moscow, ID, USA). Each PCR2 reaction (total 15 µL) contained 1X Phusion
 Flash High Fidelity PCR Master Mix, 0.075 µM of barcoded primers
 (forward and reverse pooled at a concentration of 2 µM) and 0.24mg/mL of
-BSA following (Sarmiento et al. 2017; U'Ren & Arnold 2017). Before final
-pooling for sequencing, we purified the amplicons using Agencourt AMPure
-XP Beads (Beckman Coulter Inc, Brea, CA USA) to a ratio of 1:1 following
-the manufacturer's instructions. The products were evaluated with Bio
-Analyzer 2100 (Agilent Technologies, Santa Clara, CA, USA) (Tellez et al
-2022). We quantified the samples through University of Arizona Genetics
+BSA following [@sarmiento2017; @uren2017]. Before final pooling for
+sequencing, we purified the amplicons using Agencourt AMPure XP Beads
+(Beckman Coulter Inc, Brea, CA USA) to a ratio of 1:1 following the
+manufacturer's instructions. The products were evaluated with Bio
+Analyzer 2100 (Agilent Technologies, Santa Clara, CA, USA) ([Tellez et al
+2022)]@tellez2022]. We quantified the samples through University of Arizona Genetics
 Core, and subsequently diluted them to the same concentration to prevent
 over representation of samples with higher concentration, see
-(CITATION). Amplicons were normalized to 1ng/µL, then pooled 2µL of each
+(CITATION). Amplicons were normalized to 1 ng/µL, then pooled 2 µL of each
 for sequencing. No contamination was detected visually or by
-fluorometric analysis. To provide robust controls we combined 5µL of
+fluorometric analysis. To provide robust controls we combined 5 µL of
 each PCR1 negative and the DNA extraction blanks and sequenced them as
-samples. Ultimately, we combined samples into a single tube with 20ng/µL
+samples. Ultimately, we combined samples into a single tube with 20 ng/µL
 of amplified DNA with barcoded adapters for sequencing on the Illumina
 MiSeq platform with Reagent Kit v3 (2 × 300 bp) following protocols from
 the IBEST Genomics Resource Core at the University of Idaho, USA. Again,
 we included the DNA extraction blanks and two PCR1 negatives and
 sequenced with samples. Sequencing yielded 3,778,081 total ITS1 reads.
 We performer biostatistical analyses on forward reads (ITS1) due to
-their high quality, rather than reverse reads (ITS4).. We performed
+their high quality, rather than reverse reads (ITS4). We performed
 demultiplexing, quality control, and dereplicating following Sarmiento
-et al. (2017). For post-sequencing quality control, we used FastQC
-(CITATION) and VSEARCH, an open-source alternative to USEARCH that used
-uses an optimal global aligner (full dynamic programming
+et al. [-@sarmiento2017]. For post-sequencing quality control, we used FastQC
+(CITATION) and VSEARCH, an open-source alternative to USEARCH that uses an optimal global aligner (full dynamic programming
 Needleman-Wunsch), resulting in more accurate alignments and sensitivity
 (VSEARCH CITATION). In short, we trimmed reads to a length of 250 bp and
 filtered them at a maximum expected error of 1.0. The result was XXXX
 total reads after quality control and 569 Ascomycota OTUs (See
-Supplementary Methods for details). Mock Communities We processed and
-sequenced two mock communities following the methods described above.
+Supplementary Methods for details). 
+### Mock Communities
+We processed and sequenced two mock communities following the methods described above.
 This allowed us to assess the quality of our NGS data set. We used two
 mock communities that consisted of PCR product from DNA extractions of
 31 phylogenetically distinct fungi, representing lineages that are
-typically observed as endophytes (Oita et al. 2021, see Daru et al. 2018
+typically observed as endophytes [@oita2021; see @daru2019
 for details). In brief, we used a mock community with equimolar
 concentrations of DNA from all 31 fungal taxa and a second mock
 community with tiered concentrations of DNA from the same fungal taxa
-(Daru et al. 2018). Each mock community was sequenced five times (i.e.,
-five replicates) (Oita et al. 2021). The read abundance from the tiered
+[@daru2019]. Each mock community was sequenced five times (i.e.,
+five replicates) [@oita2021]. The read abundance from the tiered
 community was positively associated with the expected read number (with
 replicate as a random factor: R2Adj = 0.87, P = XXXX, see Supplementary
 material). Accordingly, we used read abundance as a relevant proxy for
