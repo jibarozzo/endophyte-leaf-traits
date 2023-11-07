@@ -1,6 +1,7 @@
 ---
 title: "Manuscript Draft : Aim3 Leaf Traits"
-bibliography: aim3_references.bib
+date: today
+bibliography: references.bib
 csl: apa.csl
 author:
   - name: Bolívar Aponte Rolón
@@ -34,18 +35,25 @@ author:
         state: AZ
         country: US
         url: www.arizona.edu  
-  - name: Sunshine A. Van BAel
-    orcid: 0000-0002-2544-4551
+  - name: Sunshine A. Van Bael
+    orcid: 0000-0001-7317-3533
     email: svanbael@tulane.edu
     corresponding: false
     affiliation: 
       - ref: tu
-format: pdf
-
-
-editor: 
-  markdown: 
-    wrap: 72
+format: 
+  # pdf:
+  #   include-in-header: 
+  #     text: '\usepackage{lineno}\linenumbers'
+  #   linestretch: 2.0
+  #   number-sections: true
+  #   citation-package: biblatex
+  docx: 
+    reference-docx: custom-reference-doc.docx
+    number-sections: true
+    citation-package: biblatex
+    
+editor: source
 ---
 
 # Abstract
@@ -66,7 +74,7 @@ data) and the availability of seeds in January- April 2019. Seeds of
 tree species were collected from the forest floor and grown in the
 greenhouse. Seedlings were kept in a chamber made out of PVC and clear
 plastic to prevent inoculation from spore fall inside the
-greenhouse.NEEDS INFORMATION ON THE SOIL MIXTURE AND AUTOCLAVING
+greenhouse. NEEDS INFORMATION ON THE SOIL MIXTURE AND AUTOCLAVING
 PROTOCOL. Seedlings reached a minimum of 4 true leaves before endophyte
 inoculation. Then 10 individual plants of each species were exposed to
 10 nights of spore fall to achieve a high endophyte load (E+) and 10
@@ -93,14 +101,14 @@ at 525 nm [@tellezRedCol2016, CITE COMPANY] . On compound leaves (i.e.,
 was measured with METER MODEL HERE following the same manner as the
 anthocyanin measurements. After anthocyanin and leaf thickness
 measurements were completed, we removed the leaves from their stems,
-placed them inside a plastic bag (i.e. Ziploc :tm:Ⓡ), place in an ice
-chest and moved them to the lab for further measurements. Leaf toughness
-was measured with METER MODEL HERE following PROTOCOL XXXX (or
-measurements were taken by puncturing a 2 mm diameter hole in various
-locations on the leaf surface. We punctured the leaf lamina at the base,
-mid-leaf and tip on both sides of the mid-vein, avoiding minor leaf
-veins when possible (CITE). Once leaf toughness was measured, we used a
-7 mm diameter punch hole to puncture disks for leaf mass per area (LMA)
+placed them inside a plastic bag (i.e. ZiplocⓇ), place in an ice chest
+and moved them to the lab for further measurements. Leaf toughness was
+measured with METER MODEL HERE following PROTOCOL XXXX (or measurements
+were taken by puncturing a 2 mm diameter hole in various locations on
+the leaf surface. We punctured the leaf lamina at the base, mid-leaf and
+tip on both sides of the mid-vein, avoiding minor leaf veins when
+possible (CITE). Once leaf toughness was measured, we used a 7 mm
+diameter punch hole to puncture disks for leaf mass per area (LMA)
 measurements. We collected one three disks per leaf (see S? material for
 details). The disk punches dried at 60 °C for 48-72 hours. before being
 weighed.
@@ -114,7 +122,7 @@ the main vein and margins excised so that only the lamina remained. The
 lamina was haphazardly cut into 2 x 2 mm segments, enough to obtain a
 total of 16, and surface sterilized by sequential rinsing in 95% ethanol
 (10 s), 0.5 NaOCl (2 mins) and 70% ethanol (2 mins), as per
-[@arnold2003; @higgins2014; @tellezLeaf2002]. After, leaves were
+[@arnold2003; @higgins2014; @tellezTraits2022]. After, leaves were
 air-dried briefly under sterile conditions. Sixteen leaf segments per
 leaf, a total of forty-eight leaf segments per plant, were plated in 2%
 malt extract agar (MEA), sealed with Parafilm M (Bemis Company Inc.,
@@ -148,7 +156,7 @@ liquid nitrogen for 30s and proceeded to homogenize samples to a fine
 powder for 45 s in FastPrep-24 Tissue and Cell Homogenizer (MP
 Biomedicals, Solon, OH, USA). Afterwards, we repeated the
 decontamination procedure described before and used QIAGEN DNeasy 96
-PowerPlant Pro-HTP Kit (U'Ren & Arnold (2017?) (QIAGEN, Valencia, CA,
+PowerPlant Pro-HTP Kit [@uren2017] (QIAGEN, Valencia, CA,
 USA). After all genomic DNA was extracted, we pooled the subsamples for
 each individual sample before amplification. We used sterile equipment
 and pipettes with aerosol-resistant tips with filters in all steps
@@ -158,17 +166,17 @@ Arnold [-@uren2017]. We used primers for the fungal ITSrDNA region,
 ITS1f (5'-CTTGGTCATTTAGAGGAAGTAA-3') and ITS4
 (5'-TCCTCCGCTTATTGATATGC-3') with modified universal consensus sequences
 CS1 and CS2 and 0--5 bp for phase-shifting. Every sample was amplified
-in two parallel reactions containing 1-2 µL of DNA template (U'Ren &
-Arnold 2017, see also Tellez et al 2022). We visualized PCR (PCR1)
+in two parallel reactions containing 1-2 µL of DNA template [@uren2017; see also @tellezTraits2022]. We visualized PCR (PCR1)
 reactions with SYBR Green 1 (Invitrogen, Carlsbad, CA, USA) on 2%
-agarose gel (Oita et al 2021). Based on the electrophoresis band
+agarose gel [@oita2021]. Based on the electrophoresis band
 intensity, we combined parallel PCR1 reactions and diluted 5 µL of
 amplicon product with molecular grade water to standardize to a
-concentration of 1:15 [@tellez2022; @sarmiento2017 for details]. We
+concentration of 1:15 [@tellezTraits2022; @sarmiento2017 for details]. We
 included DNA extraction blanks and PCR1 negatives in this step. We used
 a separate set of sterile pipettes, tips, and equipment to reduce
 contamination. We used a designated PCR area to restrict contact with
-pre-PCR materials [oita201].\
+pre-PCR materials [@oita2021].\
+
 We used 1 µL of PCR1 product from samples and negative control for a
 second PCR (PCR2) with barcode adapters (IBEST Genomics Resource Core,
 Moscow, ID, USA). Each PCR2 reaction (total 15 µL) contained 1X Phusion
@@ -178,92 +186,107 @@ BSA following [@sarmiento2017; @uren2017]. Before final pooling for
 sequencing, we purified the amplicons using Agencourt AMPure XP Beads
 (Beckman Coulter Inc, Brea, CA USA) to a ratio of 1:1 following the
 manufacturer's instructions. The products were evaluated with Bio
-Analyzer 2100 (Agilent Technologies, Santa Clara, CA, USA) ([Tellez et al
-2022)]@tellez2022]. We quantified the samples through University of Arizona Genetics
-Core, and subsequently diluted them to the same concentration to prevent
-over representation of samples with higher concentration, see
-(CITATION). Amplicons were normalized to 1 ng/µL, then pooled 2 µL of each
-for sequencing. No contamination was detected visually or by
-fluorometric analysis. To provide robust controls we combined 5 µL of
-each PCR1 negative and the DNA extraction blanks and sequenced them as
-samples. Ultimately, we combined samples into a single tube with 20 ng/µL
-of amplified DNA with barcoded adapters for sequencing on the Illumina
-MiSeq platform with Reagent Kit v3 (2 × 300 bp) following protocols from
-the IBEST Genomics Resource Core at the University of Idaho, USA. Again,
-we included the DNA extraction blanks and two PCR1 negatives and
-sequenced with samples. Sequencing yielded 3,778,081 total ITS1 reads.
-We performer biostatistical analyses on forward reads (ITS1) due to
-their high quality, rather than reverse reads (ITS4). We performed
-demultiplexing, quality control, and dereplicating following Sarmiento
-et al. [-@sarmiento2017]. For post-sequencing quality control, we used FastQC
-(CITATION) and VSEARCH, an open-source alternative to USEARCH that uses an optimal global aligner (full dynamic programming
-Needleman-Wunsch), resulting in more accurate alignments and sensitivity
-(VSEARCH CITATION). In short, we trimmed reads to a length of 250 bp and
-filtered them at a maximum expected error of 1.0. The result was XXXX
-total reads after quality control and 569 Ascomycota OTUs (See
-Supplementary Methods for details). 
+Analyzer 2100 (Agilent Technologies, Santa Clara, CA, USA) ([Tellez et
+al 2022) @tellezTraits2022]. We quantified the samples through University of
+Arizona Genetics Core, and subsequently diluted them to the same
+concentration to prevent over representation of samples with higher
+concentration, see (CITATION). Amplicons were normalized to 1 ng/µL,
+then pooled 2 µL of each for sequencing. No contamination was detected
+visually or by fluorometric analysis. To provide robust controls we
+combined 5 µL of each PCR1 negative and the DNA extraction blanks and
+sequenced them as samples. Ultimately, we combined samples into a single
+tube with 20 ng/µL of amplified DNA with barcoded adapters for
+sequencing on the Illumina MiSeq platform with Reagent Kit v3 (2 × 300
+bp) following protocols from the IBEST Genomics Resource Core at the
+University of Idaho, USA. Again, we included the DNA extraction blanks
+and two PCR1 negatives and sequenced with samples. Sequencing yielded
+3,778,081 total ITS1 reads.
+
 ### Mock Communities
-We processed and sequenced two mock communities following the methods described above.
-This allowed us to assess the quality of our NGS data set. We used two
-mock communities that consisted of PCR product from DNA extractions of
-31 phylogenetically distinct fungi, representing lineages that are
-typically observed as endophytes [@oita2021; see @daru2019
-for details). In brief, we used a mock community with equimolar
+
+We processed and sequenced two mock communities following the methods
+described above. This allowed us to assess the quality of our NGS data
+set. We used two mock communities that consisted of PCR product from DNA
+extractions of 31 phylogenetically distinct fungi, representing lineages
+that are typically observed as endophytes [@oita2021; see @daru2019 for
+details]. In brief, we used a mock community with equimolar
 concentrations of DNA from all 31 fungal taxa and a second mock
 community with tiered concentrations of DNA from the same fungal taxa
-[@daru2019]. Each mock community was sequenced five times (i.e.,
-five replicates) [@oita2021]. The read abundance from the tiered
-community was positively associated with the expected read number (with
-replicate as a random factor: R2Adj = 0.87, P = XXXX, see Supplementary
-material). Accordingly, we used read abundance as a relevant proxy for
-biological abundance (Taylor et al. 2016; U'Ren et al. 2019)
+[@daru2019]. Each mock community was sequenced five times (i.e., five
+replicates) [@oita2021]. The read abundance from the tiered community
+was positively associated with the expected read number (with replicate
+as a random factor: R2Adj = 0.87, P = XXXX, see Supplementary material).
+Accordingly, we used read abundance as a relevant proxy for biological
+abundance (Taylor et al. 2016; U'Ren et al. 2019)
 
-Ant-endophyte interaction assays A fresh fourth leaf was used in ant
-assays. To assess leaf-cutter ant damage, we introduced one detached
+
+
+### Bioinformatic analyses
+
+We used forward reads (ITS1) for downstream bioinformatics and statistical analyse due to their high quality, rather than reverse reads (ITS4). We followed Sarmiento et al. [-@sarmiento2017] for bioinformatic analyeses. In short, for
+post-sequencing quality control, we used FastQC (CITATION). We used VSEARCH for demultiplexing, dereplication and sequence alignment. VSEARCH is
+an open-source alternative to USEARCH that uses an optimal global
+aligner (full dynamic programming Needleman-Wunsch), resulting in more
+accurate alignments and sensitivity (VSEARCH CITATION). We
+trimmed reads to a length of 250 bp and filtered them at a maximum
+expected error of 1.0. The result was XXXX total reads after sequencing quality
+control. 
+ HOW TO MAKE ZOTUS. eXPLAIN HOW WE MADE ZOTUS.
+
+and 569 Ascomycota OTUs (See Supplementary Methods for details).
+
+
+
+
+
+
+
+
+### Ant-endophyte interaction assays
+
+A fresh fourth leaf was used in ant assays. To assess leaf-cutter ant damage, we introduced one detached
 leaf per plant per treatment to an actively foraging leaf-cutter ant
-colony for a two-hour trial. We presented leaf-cutter ant colonies with
+colony for a two-hour assay. We presented leaf-cutter ant colonies with
 a choice of an E+ or an E- leaf on a disposable plastic plate next to an
 active nest trail. Carefully, we collected and placed debris from the
 trail leading up to the plate to lure ants into the plate. We initiated
-the ant trial/assay as soon as an ant entered the plate and explored the
+the ant assay as soon as an ant entered the plate and explored the
 leaf contents (for \~ 10-20 seconds). Every five minutes we took a
 digital photo of the choice arena until about 75% of the leaf content of
 one of the leaves was consumed. We used the digital photo at time zero
 and at the end of trial to quantify the leaf area removed using ImageJ
 (VERSION?). Ant recruitment was estimated by counting individuals in
-choice arena throughout trial event. Pathogen assays For the pathogen
-assays, we introduced an agar plug inoculated with hyphae of Calonectria
-sp. (P+ treatment), and an agar plug without the pathogen (P- control)
-to similarly aged/sized leaves within 10-14 days after treatment. Leaves
-with the P+ or P- treatment were misted with sterile water two times a
+choice arena throughout trial event. 
+
+### Pathogen assays 
+
+For the pathogen assays, we introduced an agar plug inoculated with hyphae of *Calonectria* sp. (P+ treatment), and an agar plug without the pathogen (P- control)
+to similarly aged/sized leaves within 10-14 days after endophyte inoculations. Leaves
+with the $P+$ or $P-$  treatment were misted with sterile water two times a
 day (morning and afternoon) to maintain moisture. After four days, we
 removed the plugs and took digital photos to analyze leaf area damage
-using ImageJ.
+using ImageJ (CITE).
 
-Bioinformatic methods Amplicon sequencing
 
-Will be updating this during week of Sept 1. Follow Tellez Culture free
-method section • Command Line Pipeline with Usearch • Cleaning results
-from pipeline in R ◦ Shuzo and Mareli's cleaning an cut-offs •
+### Statistical Analyses 
 
-Statistical analyses Needs to be updated with analyses of Summer 2022 To
-address H1, we used a multivariate analysis of variance (MANOVA) for the
-all the tree species using the "manova" function in the "stats" package
-in R (The R Core Team, 2013). A MANOVA allows for an analysis of
-variance with two or more covariates (i.e., endophyte load (E_load ) and
-tree species)) and multiple dependent variables (i.e., ACI, LMA,
-Thickness, Toughness). With the "summary.aov" function and argument
-"split" set to "list ("E_load:Species")" I determined how independent
-variables, E_load and tree species, influenced variance of my
-covariates: Thickness, Toughness, LMA, and ACI. I computed Wilk's tests
-statistic for MANOVA where in the closer to zero the statistic is, the
-variable in question contributes more to the model, hence we reject the
-null hypothesis if zero. Additionally, to determine which interactions
-of E_load and tree species are significant in regard to abundance, I
-performed two way ANOVAs using "aov" function and post-hoc Tukey tests
-using "TukeyHSD" function in the "stats' package in R (The R Core Team,
-2013). This allows for a more in-depth look at interactions between and
-among groups, not necessarily apparent from MANOVA tests.
+we used a multivariate analysis of variance (MANOVA) for the all the
+tree species using the "manova" function in the "stats" package in R
+(The R Core Team, 2013). A MANOVA allows for an analysis of variance
+with two or more covariates (i.e., endophyte load (E_load ) and tree
+species)) and multiple dependent variables (i.e., ACI, LMA, Thickness,
+Toughness). With the "summary.aov" function and argument "split" set to
+"list ("E_load:Species")" I determined how independent variables, E_load
+and tree species, influenced variance of my covariates: Thickness,
+Toughness, LMA, and ACI. I computed Wilk's tests statistic for MANOVA
+where in the closer to zero the statistic is, the variable in question
+contributes more to the model, hence we reject the null hypothesis if
+zero. Additionally, to determine which interactions of E_load and tree
+species are significant in regard to abundance, I performed two way
+ANOVAs using "aov" function and post-hoc Tukey tests using "TukeyHSD"
+function in the "stats' package in R (The R Core Team, 2013). This
+allows for a more in-depth look at interactions between and among
+groups, not necessarily apparent from MANOVA tests.
 
 To test for H2, I used a general linear mixed model (GLM). First, to
 determine which fixed effects to include in my model I created a
@@ -322,10 +345,7 @@ increased endophyte abundance decreased. Plants exposed to E- treatment
 had a negative correlation as well, albeit the slope of the line was not
 as steep (Fig. 5). No random effects were modeled.
 
-References Arnold, A. E., L. C. Mejía, D. Kyllo, E. I. Rojas, Z.
-Maynard, N. Robbins, and E. A. Herre. 2003. Fungal endophytes limit
-pathogen damage in a tropical tree. Proceedings of the National Academy
-of Sciences 100:15649--15654. Higgins, K. L., A. E. Arnold, P. D. Coley,
-and T. A. Kursar. 2014. Communities of fungal endophytes in tropical
-forest grasses: Highly diverse host- and habitat generalists
-characterized by strong spatial structure. Fungal Ecology.
+# References
+
+::: {#refs}
+:::
