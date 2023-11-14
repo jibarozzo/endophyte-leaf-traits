@@ -2998,7 +2998,8 @@ Using [`sjPlot`](https://strengejacke.github.io/sjPlot/articles/plot_model_estim
 tab_model(M3REM, P3REM, 
           show.aic = TRUE, 
           show.intercept = TRUE, 
-          show.df = TRUE, 
+          show.df = FALSE,
+          show.ci = 0.95,
           title = "Linear mixed effects models for predicting leaf herbivory and pathogenicity", 
           CSS = list(
             css.depvarhead = 'font-weight:bold;',
