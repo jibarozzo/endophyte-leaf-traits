@@ -223,14 +223,11 @@ abundance (Taylor et al. 2016; U'Ren et al. 2019)
 
 ### Bioinformatic analyses
 
-We used forward reads (ITS1) for downstream bioinformatics and statistical analyse due to their high quality, rather than reverse reads (ITS4). We followed Sarmiento et al. [-@sarmiento2017] for bioinformatic analyeses. In short, for
-post-sequencing quality control, we used FastQC (CITATION). We used VSEARCH for demultiplexing, dereplication and sequence alignment. VSEARCH is
-an open-source alternative to USEARCH that uses an optimal global
-aligner (full dynamic programming Needleman-Wunsch), resulting in more
-accurate alignments and sensitivity (VSEARCH CITATION). We
-trimmed reads to a length of 250 bp and filtered them at a maximum
-expected error of 1.0. The result was XXXX total reads after sequencing quality
-control. 
+We used VSEARCH (v2.14.1) for *de novo* chimera detection, dereplication and sequence alignment. VSEARCH is an open-source alternative to USEARCH that uses an optimal global aligner (full dynamic programming Needleman-Wunsch), resulting in more accurate alignments and sensitivity [@rognes2016]. We used forward reads (ITS1) for downstream bioinformatics analyses due to their high quality, rather than reverse reads (ITS4). Following Sarmiento et al. [-@sarmiento2017], we concatenated all reads in a single file and used FastQC (CITATION) to assess Phred scores above 30 to determine and adequate length of truncation in post-sequencing quality control. READNUMBER OF THAT FILE. We truncated reads to a length of 250 bp with command `fast_trunclen` and filtered them at a maximum
+expected error of 1.0 with command `fast_maxee`. The result was XXXX total reads after sequencing quality
+control. We clustered unique sequence zero radius OTUs (zOTU), by using commands `derep_fulllength` and `minseqlength` set at 2. Sequentially we denoised and removed chimeras from read sequences with commands `cluster_unoise`,  and `uchime3_denovo`, respectively (see Supplementary YYY for details). After which, GGGGG number of read sequences remained. Finally, we clustered zOTUs at a 95% sequence similarity with command `usearch_global` and option `id` set at 0.95. 
+ Taxonomy was assigned with the Tree-Based Alignment Selector Toolkit [@carbone2019] by placing unknowns within the Pezizomycotina v2 reference tree [@carbone2017]. ITS sequences were blasted against the UNITE database by the ribosomal database project (RDP) classifier. Only OTUs representing Ascomycota were used for dowstream statistical analyses since foliar endoophyte communities in tropical trees are dominated by Ascomycota [@arnold2007]. in our data the total OTUs with BLAST hits are composed of FFFF% Ascomycota, GGG% Basidiomycota, etc etc. 
+ 
  HOW TO MAKE ZOTUS. eXPLAIN HOW WE MADE ZOTUS.
 
 and 569 Ascomycota OTUs (See Supplementary Methods for details).
