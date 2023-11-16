@@ -204,36 +204,34 @@ and two PCR1 negatives and sequenced with samples. Sequencing yielded
 
 ### Mock Communities
 
-We processed and sequenced two mock communities following the methods
+We processed and sequenced 12 mock communities following the methods
 described above. This allowed us to assess the quality of our NGS data
 set. We used two mock communities that consisted of PCR product from DNA
-extractions of 31 phylogenetically distinct fungi, representing lineages
-that are typically observed as endophytes [@oita2021; see @daru2019 for
-details]. In brief, we used a mock community with equimolar
-concentrations of DNA from all 31 fungal taxa and a second mock
+extractions of 32 phylogenetically distinct fungi, representing lineages
+that are typically observed as endophytes: Ascomycota, Basidiomycota, Zygomycota and Chytridiomycota [@oita2021; see @daru2019 for
+details]. In brief, we used six mock community with equimolar
+concentrations of DNA from all 32 fungal taxa and another six mock
 community with tiered concentrations of DNA from the same fungal taxa
 [@daru2019]. Each mock community was sequenced five times (i.e., five
-replicates) [@oita2021]. The read abundance from the tiered community
-was positively associated with the expected read number (with replicate
-as a random factor: R2Adj = 0.87, P = XXXX, see Supplementary material).
-Accordingly, we used read abundance as a relevant proxy for biological
-abundance (Taylor et al. 2016; U'Ren et al. 2019)
+replicates) [@oita2021]. The read abundance from the equimolar and tiered communities
+was positively associated with the expected read number (with replicates
+as a random factor: R2Adj = 0.87, P = XXXX, see Supplementary material). Allowing us to evaluate the sequencing effectiveness in communities with known composition and structure [@bowman2021]. Henceforth, we used read abundance as a relevant proxy for biological OTU
+abundance [@taylor2016; @uren2019].
 
 
 
 ### Bioinformatic analyses
 
-We used VSEARCH (v2.14.1) for *de novo* chimera detection, dereplication and sequence alignment. VSEARCH is an open-source alternative to USEARCH that uses an optimal global aligner (full dynamic programming Needleman-Wunsch), resulting in more accurate alignments and sensitivity [@rognes2016]. We used forward reads (ITS1) for downstream bioinformatics analyses due to their high quality, rather than reverse reads (ITS4). Following Sarmiento et al. [-@sarmiento2017], we concatenated all reads in a single file and used FastQC (CITATION) to assess Phred scores above 30 to determine and adequate length of truncation in post-sequencing quality control. READNUMBER OF THAT FILE. We truncated reads to a length of 250 bp with command `fast_trunclen` and filtered them at a maximum
-expected error of 1.0 with command `fast_maxee`. The result was XXXX total reads after sequencing quality
-control. We clustered unique sequence zero radius OTUs (zOTU), by using commands `derep_fulllength` and `minseqlength` set at 2. Sequentially we denoised and removed chimeras from read sequences with commands `cluster_unoise`,  and `uchime3_denovo`, respectively (see Supplementary YYY for details). After which, GGGGG number of read sequences remained. Finally, we clustered zOTUs at a 95% sequence similarity with command `usearch_global` and option `id` set at 0.95. 
+We used VSEARCH (v2.14.1) for *de novo* chimera detection, dereplication and sequence alignment. VSEARCH is an open-source alternative to USEARCH that uses an optimal global aligner (full dynamic programming Needleman-Wunsch), resulting in more accurate alignments and sensitivity [@rognes2016]. For mock communities and experimental samples, we used forward reads (ITS1) for downstream bioinformatics analyses due to their high quality, rather than reverse reads (ITS4). Following Sarmiento et al. [-@sarmiento2017], we concatenated all reads in a single file and used FastQC (CITATION) to assess Phred scores above 30 to determine and adequate length of truncation in post-sequencing quality control. READNUMBER OF THAT FILE. We truncated mock community reads to a length of 270 bp and experimental sample reads to a length of 250 bp with command `fast_trunclen` and filtered them at a maximum
+expected error of 1.0 with command `fast_maxee`. The result for experimental samples was XXXX total reads after sequencing quality
+control. We clustered unique sequence zero radius OTUs (that is, zOTUs; analogous to amplicon sequence variants [@callahan2016]), by using commands `derep_fulllength` and `minseqlength` set at 2. Sequentially we denoised and removed chimeras from read sequences with commands `cluster_unoise`,  and `uchime3_denovo`, respectively (see Supplementary YYY for details). After which, GGGGG number of read sequences remained. Finally, we clustered zOTUs at a 95% sequence similarity with command `usearch_global` and option `id` set at 0.95. 
  Taxonomy was assigned with the Tree-Based Alignment Selector Toolkit [@carbone2019] by placing unknowns within the Pezizomycotina v2 reference tree [@carbone2017]. ITS sequences were blasted against the UNITE database by the ribosomal database project (RDP) classifier. Only OTUs representing Ascomycota were used for dowstream statistical analyses since foliar endoophyte communities in tropical trees are dominated by Ascomycota [@arnold2007]. in our data the total OTUs with BLAST hits are composed of FFFF% Ascomycota, GGG% Basidiomycota, etc etc. 
  
  HOW TO MAKE ZOTUS. eXPLAIN HOW WE MADE ZOTUS.
 
 and 569 Ascomycota OTUs (See Supplementary Methods for details).
 
-
-
+Our analysis of mock communities allowed use to identify and remove false OTUs from experimental samples, those with fewer than 10 reads, and remove 0.1% of the read relative abundance across all samples. Removed reads represent the frequency of reads classified as contamination in the mock communities relative to the expected read count.  FIGURE OUT IF YOU REMOVED ANY OTHER BECAUSE THEY HAD LOW COUNTS IN GENERAL.  The OTUs found exclusively in control ($E-$) plants were deemed as artifacts resulting from the greenhouse conditions. Consequently, these were consistently eliminated from treatment ($E+$) plants across all species. Reads for each fungal OTU were converted to proportions of total sequence abundance per sample to reduce differences in sampling effort, following previous studies (Weiss et al. 2017; McMurdie and Holmes 2014; Kivlin et al. 2022).
 
 
 
