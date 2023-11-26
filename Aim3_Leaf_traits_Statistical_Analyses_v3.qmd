@@ -62,6 +62,7 @@ Not all of these packages are used. They are here just in case need further alon
 #| echo: false
 #| warning: false
 # Data manipulation and visualizations ####
+library("rmarkdown")
 library("conflicted")
 #library("devtools")
 #library("DiagrammeR")
@@ -127,13 +128,13 @@ rm(list = ls())
 #setwd("H:/.shortcut-targets-by-id/0B9v0CdUUCqU5VVR4a3BvNHM1Z28/VBL_users/Grad_Students/Bolivar/Dissertation/Leaf_Traits_Panama/Data/Sequence_analyses")
 
 #Working Directory and Path for Windows
-setwd("C:/Users/boloq/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses")
-save.path <- "C:/Users/boloq/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses"
+#setwd("C:/Users/boloq/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses")
+#save.path <- "C:/Users/boloq/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses"
 
 #Working Directory and Path for Linux
-# setwd("/home/baponte/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses/")
+setwd("/home/baponte/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses/")
 # 
-# save.path <- ("/home/baponte/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses/")
+save.path <- ("/home/baponte/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses/")
 ```
 
 # Data frames
@@ -383,7 +384,7 @@ The taxonomic assignment was completed with T-BAS. The 'unite_report" returned i
 # Saving
 # saveRDS(OTU, file.path(save.path, "R_objects", "otu_table.rds"))
 
-# Taxonomic Table: 1707 OTU by 7 taxonomic ranks
+# Taxonomic Table: 1473 OTU by 7 taxonomic ranks
 # TAX <- tax_table(tbas)
 
 # Saving
