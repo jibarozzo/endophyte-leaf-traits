@@ -1,7 +1,7 @@
 ---
 title: "Manuscript Draft : Aim3 Leaf Traits"
 date: today
-bibliography: references.bib
+bibliography: VBL_library.bib
 csl: apa.csl
 author:
   - name: Bolívar Aponte Rolón
@@ -42,16 +42,16 @@ author:
     affiliation: 
       - ref: tu
 format: 
-  # pdf:
-  #   include-in-header: 
-  #     text: '\usepackage{lineno}\linenumbers'
-  #   linestretch: 2.0
-  #   number-sections: true
-  #   citation-package: biblatex
-  docx: 
-    reference-docx: custom-reference-doc.docx
+  pdf:
+    include-in-header:
+      text: '\usepackage{lineno}\linenumbers'
+    linestretch: 2.0
     number-sections: true
     citation-package: biblatex
+  # docx: 
+  #   reference-docx: custom-reference-doc.docx
+  #   number-sections: true
+  #   citation-package: biblatex
     
 editor: source
 ---
@@ -96,20 +96,17 @@ the petiole out to the leaf tip) on the leaf surface of three
 haphazardly selected leaves for a total of nine measurements per plant
 [@tellezTraits2022]. The ACM-200 calculates an anthocyanin content index
 (ACI) value from the ratio of % transmittance at 931 nm/% transmittance
-at 525 nm [@tellezRedCol2016, CITE COMPANY] . On compound leaves (i.e.,
-*Dypterix* sp.) we measured at three different leaflets. Leaf thickness
-was measured with METER MODEL HERE following the same manner as the
-anthocyanin measurements. After anthocyanin and leaf thickness
+at 525 nm [@tellezRedCol2016, @opti-sciencesinc.] . On compound leaves (i.e.,
+*Dypterix* sp.) we measured at three different leaflets. Leaf thickness (μm)
+was measured with a Mitutoyo 7327 Micrometer Gauge (Mitutoyo, Takatsu-ku, Kawasaki, Japan) in sthe same manner as the anthocyanin measurements, taking care to avoid major and secondary veins. After anthocyanin and leaf thickness
 measurements were completed, we removed the leaves from their stems,
 placed them inside a plastic bag (i.e. ZiplocⓇ), place in an ice chest
-and moved them to the lab for further measurements. Leaf toughness was
-measured with METER MODEL HERE following PROTOCOL XXXX (or measurements
-were taken by puncturing a 2 mm diameter hole in various locations on
-the leaf surface. We punctured the leaf lamina at the base, mid-leaf and
+and moved them to the lab for further measurements. Leaf punch strength was
+measured with an Imada DST-11a digital force gauge (Imada Inc., Northbrook, IL, United States) by conducting punch-and-die tests with a sharp-edged cylindrical steel punch (2.0 mm diameter) and a steel die with a sharp-edged aperture of small clearance (0.05 mm). The leaf punch measurements were taken by puncturing the leaf lamina at the base, mid-leaf and
 tip on both sides of the mid-vein, avoiding minor leaf veins when
-possible (CITE). Once leaf toughness was measured, we used a 7 mm
+possible [@tellezTraits2022]. Once leaf toughness was measured, we used a 7 mm
 diameter punch hole to puncture disks for leaf mass per area (LMA)
-measurements. We collected one three disks per leaf (see S? material for
+measurements. We collected one three disks per leaf (see Supplementary material for
 details). The disk punches dried at 60 °C for 48-72 hours. before being
 weighed.
 
@@ -175,7 +172,7 @@ concentration of 1:15 [@tellezTraits2022; @sarmiento2017 for details]. We
 included DNA extraction blanks and PCR1 negatives in this step. We used
 a separate set of sterile pipettes, tips, and equipment to reduce
 contamination. We used a designated PCR area to restrict contact with
-pre-PCR materials [@oita2021].\
+pre-PCR materials [@oita2021].
 
 We used 1 µL of PCR1 product from samples and negative control for a
 second PCR (PCR2) with barcode adapters (IBEST Genomics Resource Core,
@@ -209,25 +206,24 @@ described above. This allowed us to assess the quality of our NGS data
 set. We used two mock communities that consisted of PCR product from DNA
 extractions of 32 phylogenetically distinct fungi, representing lineages
 that are typically observed as endophytes: Ascomycota, Basidiomycota, Zygomycota and Chytridiomycota [@oita2021; see @daru2019 for details]. In brief, we used six mock community with equimolar concentrations of DNA from all 32 fungal taxa and another six mock
-community with tiered concentrations of DNA from the same fungal taxa [@daru2019]. Each mock community was sequenced five times (i.e., five replicates) [@oita2021]. The read abundance from the equimolar and tiered communities was positively associated with the expected read number (with replicates as a random factor: R2Adj = 0.87, P = XXXX, see Supplementary material). Allowing us to evaluate the sequencing effectiveness in communities with known composition and structure [@bowman2021]. Henceforth, we used read abundance as a relevant proxy for biological OTU abundance [@taylor2016; @uren2019].
+community with tiered concentrations of DNA from the same fungal taxa [@daru2019]. Each mock community was sequenced five times (i.e., five replicates) [@oita2021]. The read abundance from the equimolar and tiered communities was positively associated with the expected read number (with replicates as a random factor: R2Adj = 0.87, P = XXXX, see Supplementary material). Allowing us to evaluate the sequencing effectiveness in communities with known composition and structure [@bowman2021]. Henceforth, we used read abundance as a relevant proxy for biological OTU abundance [@uren2019].
 
 
 
 ### Bioinformatic analyses
 
-We used VSEARCH (v2.14.1) for *de novo* chimera detection, dereplication and sequence alignment. VSEARCH is an open-source alternative to USEARCH that uses an optimal global aligner (full dynamic programming Needleman-Wunsch), resulting in more accurate alignments and sensitivity [@rognes2016]. For mock communities and experimental samples, we used forward reads (ITS1) for downstream bioinformatics analyses due to their high quality, rather than reverse reads (ITS4). Following Sarmiento et al. [-@sarmiento2017], we concatenated all reads in a single file and used FastQC (CITATION) to assess Phred scores above 30 and determine the adequate length of truncation in post-sequencing quality control. READNUMBER OF THAT FILE. We truncated mock community reads to a length of 270 bp and experimental sample reads to a length of 250 bp with command `fast_trunclen` and filtered them at a maximum
-expected error of 1.0 with command `fast_maxee`. After these steps, we obtained XXXX total reads for the mock community samples and YYYYYY for experimental samples. We clustered unique sequence zero radius OTUs (that is, zOTUs; analogous to amplicon sequence variants [@callahan2016]), by using commands `derep_fulllength` and `minseqlength` set at 2. Sequentially we denoised and removed chimeras from read sequences with commands `cluster_unoise`,  and `uchime3_denovo`, respectively (see Supplementary YYY for details). After which, GGGGG number of read sequences remained for experimental samples. Finally, we clustered zOTUs at a 95% sequence similarity with command `usearch_global` and option `id` set at 0.95.
+We used VSEARCH (v2.14.1) for *de novo* chimera detection, dereplication and sequence alignment. VSEARCH is an open-source alternative to USEARCH that uses an optimal global aligner (full dynamic programming Needleman-Wunsch), resulting in more accurate alignments and sensitivity [@rognes2016]. For mock communities and experimental samples, we used forward reads (ITS1) for downstream bioinformatics analyses due to their high quality, rather than reverse reads (ITS4). Following Sarmiento et al. [-@sarmiento2017], we concatenated all reads in a single file and used FastQC reports to assess Phred scores above 30 and determine the adequate length of truncation. We processed 892,713 of sequence reads from mock communities and 3,778,081 from experimental samples. We truncated mock community and experimental sample reads to a length of 250 bp with command `fast_trunclen` and filtered them at a maximum
+expected error of 1.0 with command `fast_maxee`. We then clustered unique sequence zero radius OTUs (that is, zOTUs; analogous to amplicon sequence variants [@callahan2016]), by using commands `derep_fulllength` and `minseqlength` set at 2. Sequentially we denoised and removed chimeras from read sequences with commands `cluster_unoise`,  and `uchime3_denovo`, respectively (see Supplementary YYY for details). Finally, we clustered zOTUs at a 95% sequence similarity with command `usearch_global` and option `id` set at 0.95. After which, 3,035,960 sequence reads from experimental samples remained.
 
-Taxonomy was assigned with the Tree-Based Alignment Selector Toolkit [@carbone2019] by placing unknowns within the Pezizomycotina v2 reference tree [@carbone2017]. ITS sequences were blasted against the UNITE database by the ribosomal database project (RDP) classifier. The result was a total 2147 OTUs hits are composed of 68.6% Ascomycota, 26.8% Basidiomycota,<0.05% Chytridiomycota, <0.05% Glomeromycota,  <0.05% Mortierellomycota, <0.05% Rozellomycota, 0.05% Kickxellomycota, and 4.2 % BLAST hit misses. Only OTUs representing Ascomycota were used for downstream statistical analyses since foliar endophyte communities in tropical trees are dominated by Ascomycota [@arnold2007].
+Taxonomy was assigned with the Tree-Based Alignment Selector Toolkit [v2.2; @carbone2019] by placing unknowns within the Pezizomycotina v2 reference tree [@carbone2017]. ITS sequences were blasted against the UNITE database by the ribosomal database project (RDP) classifier. A total 2147 OTUs hits were obtained and are composed of 68.6% Ascomycota, 26.8% Basidiomycota,<0.05% Chytridiomycota, <0.05% Glomeromycota,  <0.05% Mortierellomycota, <0.05% Rozellomycota, 0.05% Kickxellomycota, and 4.2 % BLAST hit misses. Only OTUs representing Ascomycota were used for downstream statistical analyses since foliar endophyte communities in tropical trees are dominated by Ascomycota [@arnold2007]. 
  
 For each OTU identified, we removed laboratory contaminants from experimental samples by substracting the average read count found in control samples from the DNA extraction and PCR steps. Our analysis of mock communities allowed use to identify and remove false OTUs from experimental samples, those with fewer than 10 reads, and remove 0.1% of the read relative abundance across all samples [@oita2021]. Removed reads represent the frequency of reads classified as contamination in the mock communities relative to the expected read count.  Three experimental samples from *Theobroma cacao* ($n$=2) and *Apeiba membranacea* ($n$=1) were removed from all analyses due to incomplete entires.
-After pruning taxa with zero reads from experimental samples, we identified OTUs found exclusively ($n$= 260) in control ($E-$) plants ($n$=78) and deemed them as artifacts resulting from the greenhouse conditions. Consequently, these were consistently eliminated from treatment ($E+$) plants across all species. We converted reads for each fungal OTU to proportions of total sequence abundance per sample to reduce differences in sampling effort, following previous studies (@weiss2017; @mcmurdie2014 ). We then removed singletons and obtained an average of CCCC reads in 529 Ascomycota OTUs accross 156 experimental samples of 7 tree species. All analyses post taxonomic assignment were performed in R [v. 4.3.2; @rcoreteam2023] using the `phyloseq` package [@mcmurdie2013] and custom scripts (see Supplementary material).
+After pruning taxa with zero reads from experimental samples, we identified OTUs found exclusively ($n$= 260) in control ($E-$) plants ($n$=78) and deemed them as artifacts resulting from the greenhouse conditions. Consequently, these were consistently eliminated from treatment ($E+$) plants across all species. We converted reads for each fungal OTU to proportions of total sequence abundance per sample to reduce differences in sampling effort, following previous studies (@weiss2017; @mcmurdie2014 ). We then removed singletons and obtained an average of 2,464,558 sequence reads in 529 Ascomycota OTUs accross 156 experimental samples of 7 tree species. All analyses post taxonomic assignment were performed in R [v. 4.3.2; @rcoreteam2023] using the `phyloseq` package [@mcmurdie2013] and custom scripts (see Supplementary material).
 
 
 ### Ant-endophyte interaction assays
 
-A fresh fourth leaf was used in ant assays. To assess leaf-cutter ant damage, we introduced one detached
-leaf per plant per treatment to an actively foraging leaf-cutter ant
+A fresh fourth leaf was used in ant assays. To assess leaf-cutter ant damage, we introduced one detached leaf per plant per treatment to an actively foraging leaf-cutter ant
 colony for a two-hour assay. We presented leaf-cutter ant colonies with
 a choice of an E+ or an E- leaf on a disposable plastic plate next to an
 active nest trail. Carefully, we collected and placed debris from the
@@ -237,17 +233,16 @@ leaf contents (for \~ 10-20 seconds). Every five minutes we took a
 digital photo of the choice arena until about 75% of the leaf content of
 one of the leaves was consumed. We used the digital photo at time zero
 and at the end of trial to quantify the leaf area removed using ImageJ
-(VERSION?). Ant recruitment was estimated by counting individuals in
-choice arena throughout trial event. 
+[v1.52r; @schneider2012]. Ant recruitment was estimated by counting individuals in the choice arena throughout trial event. 
 
 ### Pathogen assays 
 
-For the pathogen assays, we introduced an agar plug inoculated with hyphae of *Calonectria* sp. (P+ treatment), and an agar plug without the pathogen (P- control)
+For the pathogen assays, we introduced an agar plug inoculated with hyphae of *Calonectria* sp. ($P+$ treatment), and an agar plug without the pathogen ($P-$ control)
 to similarly aged/sized leaves within 10-14 days after endophyte inoculations. Leaves
 with the $P+$ or $P-$  treatment were misted with sterile water two times a
 day (morning and afternoon) to maintain moisture. After four days, we
 removed the plugs and took digital photos to analyze leaf area damage
-using ImageJ (CITE).
+using ImageJ [v1.52r; @schneider2012].
 
 
 ### Statistical Analyses 
