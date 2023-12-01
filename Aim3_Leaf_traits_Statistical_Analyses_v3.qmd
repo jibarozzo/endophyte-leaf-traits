@@ -50,7 +50,7 @@ This are the statistical analyses for Aim 3 Leaf Traits and Endophytes project w
 
 -   GLMs and main effects in tree-style plot.
 
-    -   Decide to present them as a table.
+    -   Decided- to present them as a table.
 
 # To-do list
 
@@ -137,9 +137,226 @@ setwd("/home/baponte/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_anal
 save.path <- ("/home/baponte/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses/")
 ```
 
-# Data frames
+# Post VSEARCH and T-BAS sequence pre-processing
 
-Data frames needed for diversity, abundance, and richness analyses. Clean sample sequences data (no contaminants). T-BAS taxonomic assignment and leaf traits data set.
+```{r, Post VSEARCH and T-BAS data cleaning, tidy = TRUE}
+#Script for cleaning and reshaping Sample and PCR blanks Sequence data for Leaf Traits Panama
+#Bolívar Aponte Rolón
+#February 16, 2022
+#Last modified: November 30, 2023
+
+####################################################
+###Cleaning and reshaping Blanks and PCR_CONTROLS###
+####################################################
+
+pcrdata <- read.csv("clean_data/post_biopipeline/All_PCR_R1_otuFINAL_95.csv") #PCR2NEGPLATE1 is missing. This is due to mislabeling in the original sequence files.
+#There is a q.fastq.gz file that might be this sample.INSPECT THIS FILE. G:\My Drive\VBL_users\Grad_Students\Bolivar\Dissertation\Leaf_Traits_Panama\Data\Sample_Sequencing\Post_Sequencing\Original_Sample_gzip_files
+#The issue stated in the above line has been resolved as of March 10, 2022. -BAR
+
+pcrdata <- pcrdata %>%
+  rename(OTU_ID = X.OTU.ID)
+
+###Cleaning and reshaping Samples###
+####################################
+
+realsamp <- read.csv("clean_data/post_biopipeline/All_Samples_R1_otuFINAL95.csv")
+
+realsamp <- realsamp %>%
+  na.omit() %>%
+  rename(OTU_ID = X.OTU.ID)
+
+###############################################################################
+###Full_join of the data frames to retain all values and row and transposing###
+###############################################################################
+
+#joined <- full_join(realsamp,pcrdata, by = "OTU_ID" ) %>%
+ # mutate(across(everything(), replace_na, replace = 0))
+
+joined <- full_join(realsamp,pcrdata, by = "OTU_ID" ) %>%
+  dplyr::mutate(across(c(2:168),~replace_na(.x, 0)))
+str(joined)
+
+joined.t <- as.data.frame(t(joined))
+str(joined.t)
+
+names(joined.t) <- joined.t %>% slice(1) %>% unlist()
+
+joined.t <-  joined.t %>% 
+  rownames_to_column("Sample_names") %>%
+  slice(-1)
+ 
+str(joined.t)
+
+#####################################################
+###Make subset tables from each sequence plate run###
+#####################################################
+
+################### Plate1 #####################
+
+filter_table1<- read.csv("filters/Filter_Table_Plate1.csv")
+
+names(filter_table1)
+filter_table1 <- filter_table1 %>%
+  rename(A = ?..A)
+str(filter_table1)
+
+filter_table1 <-filter_table1 %>% 
+  pivot_longer(cols = 1:12, names_to = "samples", values_to = "values") %>%
+  select(-samples) %>%
+  slice(-5, -6)
+
+plate1 <- semi_join(joined.t, filter_table1, by= c("Sample_names" = "values"))
+
+plate1 <- plate1 %>%
+  mutate(across(!Sample_names, as.numeric))
+plate1 <- as_tibble(plate1)
+
+filter_filter <- anti_join( filter_table1, plate1, by = c("values"="Sample_names"))#Corroborating if indeed all match. Supposed to be ZERO.
+str(plate1)
+
+#From factor dataframe to numeric
+
+indx <- sapply(plate1, is.tibble)
+plate1[indx] <- lapply(plate1[indx], function(x) as.numeric(as.character(x)))
+
+################ Plate2 ####################
+
+filter_table2<- read.csv("filters/Filter_Table_Plate2.csv")
+
+names(filter_table2)
+
+filter_table2 <- filter_table2 %>%
+  rename(A = ?..A)
+
+filter_table2 <- filter_table2 %>% 
+  pivot_longer(cols = 1:10, names_to = "samples", values_to = "values") %>%
+  select(-samples) %>%
+  slice(-69, -70, -71, -77, -78, -79, -80)
+
+plate2 <- semi_join(joined.t, filter_table2, by= c("Sample_names" = "values"))
+
+plate2 <- plate2 %>%
+  mutate(across(!Sample_names, as.numeric))
+plate2 <- as_tibble(plate2)
+filter_filter <- anti_join( filter_table2, plate2, by = c("values"="Sample_names")) #Corroborating if indeed all match. 
+str(plate2)
+
+#From factor dataframe to numeric
+
+indx <- sapply(plate2, is.tibble)
+plate2[indx] <- lapply(plate2[indx], function(x) as.numeric(as.character(x)))
+
+###################################
+###CC_fungi Contaminant removal.### 
+###Adapted from MARIE and Shuzo Oita#####
+###This code works by substracting the SUM of contaminants from each OTU cell. 
+###If the value is negative it replaces it with 0. 
+
+########MARELI MAGIC#########
+##### Substracts the sum of the average of the ExtractionBlank avg and PCR negative control of Batch 001 from OTU sample reads, then removed control rows #####
+######################################
+
+################### Plate1 #####################
+
+as.data.frame(plate1)
+plate1 <- column_to_rownames(plate1, var = "Sample_names")
+
+#add column with sums for each OTU
+
+cont <- row.names(plate1)
+cont <- cont[92:94] #change accordingly to your data - these are the negative controls
+contamination <- c()
+for(c in 1:ncol(plate1)){
+  contamination[c]<- mean(plate1[rownames(plate1) %in% cont, c], na.rm = TRUE)
+}
+plate1 <-rbind(plate1, contamination)
+row.names(plate1)[95] <- "contamination" #change the name of row 104
+
+###subtract total contaminants from each OTU, if it is a negative number make it 0
+cont2 <- c(cont, "contamination")
+row <- which(!rownames(plate1) %in% cont2)
+for(r in row){
+  for(c in 1:ncol(plate1)){
+    if(plate1[r,c] > plate1["contamination",c]) {
+      new_reads <- plate1[r,c] - plate1["contamination",c]
+      plate1[r,c] <- new_reads
+    } else {plate1[r,c] <- 0}
+  }
+}
+
+
+##remove controls from dataframe and makes a text file to paste into existing excel sheet
+
+new_data_decontaminated001 <- plate1[!rownames(plate1) %in% cont2, ]
+write.table(new_data_decontaminated001,"clean_data/otu_data/MinusNegsBlanks_001.txt", sep="\t") ### This became tab "Filtered-BlankNegbyCode" in "ExtractionBatch0001_PCR102NC.xlsx". 
+
+
+################### Plate2 #####################
+
+as.data.frame(plate2)
+plate2 <- column_to_rownames(plate2, var = "Sample_names")
+
+#add column with sums for each OTU
+
+cont <- row.names(plate2)
+cont <- cont[66:73] #change accordingly to your data - these are the negative controls
+contamination <- c()
+for(c in 1:ncol(plate2)){
+  contamination[c]<- mean(plate2[rownames(plate2) %in% cont, c], na.rm = TRUE)
+}
+plate2 <-rbind(plate2, contamination)
+row.names(plate2)[74] <- "contamination" #change the name of row 104
+
+###subtract total contaminants from each OTU, if it is a negative number make it 0
+
+cont2 <- c(cont, "contamination")
+row <- which(!rownames(plate2) %in% cont2)
+for(r in row){
+  for(c in 1:ncol(plate2)){
+    if(plate2[r,c] > plate2["contamination",c]) {
+      new_reads <- plate2[r,c] - plate2["contamination",c]
+      plate2[r,c] <- new_reads
+    } else {plate2[r,c] <- 0}
+  }
+}
+
+
+
+##remove controls from dataframe and makes a text file to paste into exisitng excel sheet
+
+new_data_decontaminated002 <- plate2[!rownames(plate2) %in% cont2, ]
+write.table(new_data_decontaminated002,"clean_data/otu_data/MinusNegsBlanks_002.txt", sep="\t")
+
+
+###################################
+####Saving decontaminated file ####
+###################################
+all_complete_decontaminated <- bind_rows(new_data_decontaminated001, new_data_decontaminated002)
+
+write.csv(all_complete_decontaminated,"clean_data/otu_data/all_Decontaminated_byBlankandNegs_complete.csv")
+trans <- t(all_complete_decontaminated)
+trans <- as.data.frame(trans)
+write.csv(trans, "clean_data/otu_data/all_toFilt_10_percent.csv") ## in the format to remove <10% OTUs -- see below
+
+
+
+##########################################################################
+#### Script to remove < 0.10% abundance per sample #### From Shuzo Oita###
+##########################################################################
+## csv file should have row = OTU, col = sample
+
+otu.data <- read.csv('clean_data/otu_data/all_toFilt_10_percent.csv', row.names = 1,as.is = T)
+otu.data2 <- apply(otu.data, 2, function(x) ifelse({100*x/sum(x)} < 0.10, 0, x))
+OTU_table.cleaned <- subset((otu.data2), rowSums(otu.data2)>1)
+OTU_table.cleaned <- as.data.frame(OTU_table.cleaned)
+write.csv(OTU_table.cleaned, "all_cleaned_at_10_percent.csv")
+```
+
+## Data frames
+
+Data frames needed for diversity, abundance, and richness analyses using clean sample sequences data (no contaminants). T-BAS taxonomic assignment and leaf traits data set.
+
+### Clean sample sequences
 
 ```{r, Clean sequences, tidy = TRUE}
 set.seed(123)
@@ -161,6 +378,8 @@ set.seed(123)
 csamp <- readRDS(file.path(save.path, "R_objects", "clean_sequences.rds"))
 ```
 
+### T-BAS
+
 ```{r, TBAS, tidy = TRUE}
 # T-BAS taxonomic assignment ####
 #tbas
@@ -181,6 +400,8 @@ csamp <- readRDS(file.path(save.path, "R_objects", "clean_sequences.rds"))
 # Reading
 tbas <- readRDS(file.path(save.path, "R_objects", "tbas_filtered.rds"))
 ```
+
+### Leaf traits measurements
 
 ```{r, Leaf trait variables data, tidy = TRUE}
 # data
@@ -368,11 +589,9 @@ glimpse(patho2)
 kable(head(patho2))
 ```
 
-# Taxonomical assignment of OTU's
-
-The taxonomic assignment was completed with T-BAS. The 'unite_report" returned is what I used for creating the `phyloseq` objects. Here I bind the taxonomy, OTUs and sample metadata together. All is done with the `phyloseq` package. For reference <https://joey711.github.io/phyloseq/>.
-
 ## Phyloseq objects and dataframes
+
+The taxonomic assignment was completed with T-BAS. The file `unite_report2BSDHQZP.csv` returned is what I used for creating the `phyloseq` objects. Here I bind the taxonomy, OTUs and sample metadata together. All is done with the `phyloseq` package. For reference <https://joey711.github.io/phyloseq/>.
 
 ```{r, Objects and dataframes, tidy = TRUE}
 ### Phyloseq objects ####
@@ -415,14 +634,13 @@ pq1 <- readRDS(file.path(save.path, "R_objects", "phyloseq_main.rds"))
 #write.nexus(random_tree, file = "random_tree.nex") #Creating nexus file to latter manipulate with FigTree software.
 ```
 
-## Pre-processing: Ascomycota
+### Pre-processing: Ascomycota
 
 **Code modified from Mareli Sánchez Juliá.**
 
 Are there any taxa with no (0) reads? \#
 
 ```{r, Mareli code, tidy = TRUE}
-#
 # pq2 <- prune_taxa(taxa_sums(pq1) > 0, pq1)
 # ntaxa(pq2) #There are 488 taxa with 0 reads.
 
@@ -476,13 +694,13 @@ newpq <- merge_phyloseq(pq2ET, tax_table(pq2), sample_data(pq2), rtree(ntaxa(pq2
 # End of Mareli's Code #
 ```
 
-## Singleton removal
+### Singleton removal
 
 ```{r, Singleton removal, tidy=TRUE}
 # Filtering Taxa: Removal of singletons ####
  # Removal of  singletons
 newpq1 <- filter_taxa(newpq, function (x) {sum(x > 0) > 1}, prune=TRUE)
-# The result is 569 taxa in 156 samples.
+# The result is 2,464,558 sequence reads from 569 taxa in 156 samples.
 
 # Relative abundance calculation ####
 # Code below is for making the .csv file. After that refer to df rawra from .csv file.
@@ -586,103 +804,7 @@ rawra <- readRDS(file.path(save.path, "R_objects", "rawra_tidy.rds"))
 
 ```
 
-# Leaf functional traits: Correlations, autocorrelations, and network plots
-
-In July 5, 2020 I attempted various ways to visualize and understand the correlations between covariates using autocorrelation functions, network correlations and Variance Inflation Factor (VIF) between independent variables (explanatory variables).
-
-```{r, Correlations and network, tidy = TRUE}
-#Joining data frames
-joined_newdata <- left_join(ndata2, ants, by = "Sample_name") #Possibly better to use full_join()
-joined_newdata <-left_join(joined_newdata, patho, by = "Sample_name")
-
-#Data frame for correlation network of explanatory variables ####
-corr.data <- joined_newdata %>%
-  ungroup() %>%
-  select(Anthocyanins, Thickness, Toughness, LMA, Ant_percent_leafloss, Pathogen_percent_damage) 
-
-#Unite Area loss and Damage area using mutate() and coalesce() These two are a measure of leaf damage either by pathogen or herbivore
-corr.data <- corr.data %>%
-  mutate(Area_damaged = coalesce(Ant_percent_leafloss, Pathogen_percent_damage)) %>%
-  select(-Ant_percent_leafloss, -Pathogen_percent_damage) %>%
-  na.omit()
-
-# Looking for autocorrelations
-c1 <- cor(ndata[,c(7:10)])
-c1
-
-# cor ####
-#using cor() from 'stats'
-cor.matrix <- as.data.frame(cor(ndata[c(7:10)]))
-
-#Use 0.25 cut-off.
-#Least correlated covariates are Toughness and Thickness: -0.124 
-
-#Correlation matrix for correlation network using correlate() from 'corrr'
-
-###All in one go to make correlation network plot following code from #https://www.datanovia.com/en/blog/easily-create-a-correlation-network-in-r-using-the-corrr-package/
-
-wes_paleta <- wes_palette(name = "Darjeeling1", 3, type = "continuous")
-
-network_traits <- corr.data %>% 
-  correlate(use = "pairwise.complete.obs", method = "spearman", quiet = TRUE) %>%
-  network_plot(rdf = .,
-               min_cor = 0.0, 
-               colors = c(wes_paleta), 
-               curved = TRUE) +
-  labs(title = "Correlation network of leaf traits" ) +
-  theme(legend.text = element_text(size = 14))
-
-network_traits
-```
-
-### VIF
-
-```{r, tidy = TRUE}
-#Variance Inflation Factor on simple LM with Toughness and Thickness
-
-vif(lm(Abun_7 ~ Anthocyanins + Thickness + Toughness + LMA, data = ndata))
-
-#
-```
-
-Variance inflation factors range from 1 upwards. The numerical value for VIF tells you (in decimal form) what percentage the variance (i.e. the standard error squared) is inflated for each coefficient. For example, a VIF of 1.9 tells you that the variance of a particular coefficient is 90% bigger than what you would expect if there was no multicollinearity --- if there was no correlation with other predictors. A rule of thumb for interpreting the variance inflation factor: -1 = not correlated. -Between 1 and 5 = moderately correlated. -Greater than 5 = highly correlated.
-
-```{r}
-# Reference code
-###Following code from https://drsimonj.svbtle.com/how-to-create-correlation-network-plots-with-corrr-and-ggraph
-
-# cor.matrix3 <- corr.data %>%
-#   correlate()%>%
-#   stretch()
-# 
-# filter <- dplyr::filter
-# 
-# graph.cors <- cor.matrix3 %>%
-# filter(abs(r) > .02) %>%
-#  graph_from_data_frame(directed = TRUE)
-# graph.cors
-# 
-# ggraph(graph.cors) +
-#   geom_edge_link() +
-#   # geom_node_point() +
-#   geom_node_text(aes(label = name))
-
-# ggraph(graph.cors) +
-#   geom_edge_link(aes(edge_alpha = abs(r), edge_width = abs(r), color = r)) +
-#   guides(edge_alpha = "none", edge_width = "none") +
-#   scale_edge_colour_gradientn(limits = c(-1, 1), colors = c("firebrick2", "dodgerblue2")) +
-#   geom_node_point(color = "grey", size = 5) +
-#   geom_node_text(aes(label = name), repel = TRUE) +
-#   theme_graph() +
-#   labs(title = "Correlations between leaf traits")
-
-#Following code from https://jamesmarquezportfolio.com/correlation_matrices_in_r.html
-
-#chart.Correlation(cor.matrix3, histogram = TRUE, pch=19)
-
-```
-
-# Master data set: richness, diversity and abundances post-phyloseq
+## Master data set: richness, diversity and abundances post-phyloseq
 
 This data frame combines all the necessary richness, diverstiy and relative abundance estimates post-`phyloseq` manipulation with the data frames from the ant and pathogen assays. This is useful for testing hypothesis directly from one data set.
 
@@ -736,7 +858,7 @@ glimpse(master)
 
 For `master` I remove empty rows just as I did in above section. Because I use `left_join()` with `ndata2` it returns empty cells for ant assay data but complete leaf trait measurements.
 
-## masterant
+### `masterant` and `masterant2`
 
 ```{r, Ant Master Data, tidy = TRUE}
 # Masterant on a per plant level
@@ -776,7 +898,7 @@ glimpse(masterant2)
 
 For `masterant` I remove THEO T1 & T2 and APE28-29 just as I did in above section. I need to do this again because in creating the `master` data frame I join the data with `left_join()`. It results in rows with missing pathogen assay data and complete leaf trait data. There is no need for omiting NA's in `masterpat` because all the cells are complete.
 
-## masterpat
+### `masterpat` and `masterpat2`
 
 ```{r, Pathogen Master data, tidy = TRUE}
 # Pathogen Observations per plant level
@@ -813,11 +935,381 @@ masterpat2 <- df_list_ant2 %>%
 #masterpat2$log_damage <- log(masterpat2$Pathogen_percent_damage)
 ```
 
+# Descriptive statistics
+
+Evaluating non-normality of the data. Do not use `master` data set to assess the assumption of normality. It includes duplicate information for the explanatory variables. Meaning a sample and its data are paired multiples times with the OTU's that are present in it. Use either `data` or `ndata`.
+
+Proceeding with exploring normality assumptions with `data` and `masterant`. It retains the mean values for all leaf replicates.
+
+```{r, Normality, tidy = TRUE}
+# Data
+# Histograms ####
+# Explanatory variables
+hist(data$Anthocyanins)
+hist(data$Thickness..micro.m.,
+     xlim = c(0,500))
+hist(data$Toughness)
+hist(data$LMA)
+
+
+# QQnorms ####
+#qqnorm(rnorm(n = length(data$Anthocyanins..aci.), 
+             #mean =mean(data$Anthocyanins..aci., na.rm = TRUE), 
+             #sd = sd(data$Anthocyanins..aci., na.rm = TRUE)))
+
+# QQPlots ####
+#qqPlot(rnorm(n = length(data$Anthocyanins..aci.), 
+             #mean =mean(data$Anthocyanins..aci., na.rm = TRUE), 
+             #sd = sd(data$Anthocyanins..aci., na.rm = TRUE)))
+             
+#Using "data" set
+qqPlot(data$Anthocyanins..aci.)
+qqPlot(data$Thickness..micro.m.)
+qqPlot(data$Toughness..lbf.)
+qqPlot(data$LMA_dw)
+
+
+masterant$Prop_area_loss <- masterant$Ant_percent_leafloss/100
+
+qqPlot(masterant$Prop_area_loss)
+
+#Using "masterant2"
+
+qqPlot(masterant2$Ant_percent_leafloss)
+qqPlot(masterant2$Anthocyanins)
+qqPlot(masterant2$Thickness)
+qqPlot(masterant2$Toughness)
+qqPlot(masterant2$LMA)
+qqPlot(masterant2$Shannon)
+
+#Nothing has a normal distribution. It looks like it will be necessary to use a negative binomial distribution. 
+
+# Shapiro-Wilks tests ####
+#shapiro.test(rnorm(n = length(data$Anthocyanins..aci.), 
+                   #mean =mean(data$Anthocyanins..aci., na.rm = TRUE), 
+                   #sd = sd(data$Anthocyanins..aci., na.rm = TRUE)))
+                   #shapiro.test(masterant$Prop_area_loss)
+                   
+
+hist(masterant$Ant_percent_leafloss) #Binomial 
+shapiro.test(masterant$Ant_percent_leafloss) #Data deviates from the normal distribution. p-values is 0.0002607
+shapiro.test(masterant$Anthocyanins) #Borderline non-normal p-value = 0.05605
+
+shapiro.test(masterant$Thickness) #Non-normal p-value = 0.07201
+shapiro.test(masterant$Toughness) #Non-normal p-value = 0.0005036
+hist(masterant$Toughness)
+shapiro.test(masterant$LMA) #normal p-value = 0.4742
+shapiro.test(masterant$Shannon) #Normal p-value = 0.4886
+hist(masterant$Shannon)
+```
+
+Somewhat better distributions. Ant_percent_leafloss is not normally distributed. It looks more like a binomial distribution. Evaluate accordingly. Conclusion from the Shapiro-Wilk tests: Some of the independent variables are not normally distributed. \## Variance Inflation Factor on simple LM with Toughness and Thickness
+
+```{r, VIF, tidy = TRUE}
+
+vif(lm(Ant_percent_leafloss ~ Anthocyanins + Thickness + Toughness + LMA + Observed + Shannon + Total_reads, data = masterant))
+#Variance inflation factors range from 1 upwards. The numerical value for VIF tells you (in decimal form) what percentage the variance (i.e. the standard error squared) is inflated for each coefficient. For example, a VIF of 1.9 tells you that the variance of a particular coefficient is 90% bigger than what you would expect if there was no multicollinearity — if there was no correlation with other predictors.
+#A rule of thumb for interpreting the variance inflation factor:
+
+#1 = not correlated.
+#Between 1 and 5 = moderately correlated.
+#Greater than 5 = highly correlated.
+
+# All explanatory variables have a VIF that is moderately correlated.
+# cor()
+corr <- cor(masterant[,c(6:13)])
+corr
+corrplot::corrplot(corr, type="upper", order="hclust")
+
+#To compute the matrix of p-value, a custom R function is used :
+
+# mat : is a matrix of data
+# ... : further arguments to pass to the native R cor.test function
+cor.mtest <- function(mat, ...) {
+    mat <- as.matrix(mat)
+    n <- ncol(mat)
+    p.mat<- matrix(NA, n, n)
+    diag(p.mat) <- 0
+    for (i in 1:(n - 1)) {
+        for (j in (i + 1):n) {
+            tmp <- cor.test(mat[, i], mat[, j], ...)
+            p.mat[i, j] <- p.mat[j, i] <- tmp$p.value
+        }
+    }
+  colnames(p.mat) <- rownames(p.mat) <- colnames(mat)
+  p.mat
+}
+# matrix of the p-value of the correlation
+p.mat <- cor.mtest(corr)
+head(p.mat[, 1:8])
+
+corrplot::corrplot(corr, method = "color", type = "upper", order = "hclust",addCoef.col = "black", # Add coefficient of correlation
+         tl.col="black", tl.srt=45, #Text label color and rotation
+         # Combine with significance
+         p.mat = p.mat, sig.level = 0.05, 
+         # hide correlation coefficient on the principal diagonal
+         diag=FALSE
+         )
+
+```
+
+From this autocorrelation matrix I can see that the Observed richness, Shannon diversity and Total_reads have low autocorrelation the physical leaf functional traits. These three measures of community composition are somewhat correlated. Especially the Observed species richness and the Shannon diversity index (0.719735754) and Total_reads x Shannon(-0.3244523). For this reason I am going to stick to using Shannon diversity are a community traits for predicting leaf herbivory and pathogenicity. LMA is highly collinear with Anthocyanins and Toughness, while it has very low correlation with Ant_percent_leafloss. I will not include Anthocyanins in the linear models. Thickness and toughness are inversely correlated with each other. Toughness seems to have a low negative correlation with *Ant_percent_leafloss*, or *Total_leaf_area_cut*. I will not include it in the linear models.
+
+## Correlations, autocorrelations, and network plots of explanatory variables
+
+In July 5, 2020 I attempted various ways to visualize and understand the correlations between covariates using autocorrelation functions, network correlations and Variance Inflation Factor (VIF) between independent variables (explanatory variables).
+
+```{r, Correlations and network, tidy = TRUE}
+#Joining data frames
+joined_newdata <- left_join(ndata2, ants, by = "Sample_name") #Possibly better to use full_join()
+joined_newdata <-left_join(joined_newdata, patho, by = "Sample_name")
+
+#Data frame for correlation network of explanatory variables ####
+corr.data <- joined_newdata %>%
+  ungroup() %>%
+  select(Anthocyanins, Thickness, Toughness, LMA, Ant_percent_leafloss, Pathogen_percent_damage) 
+
+#Unite Area loss and Damage area using mutate() and coalesce() These two are a measure of leaf damage either by pathogen or herbivore
+corr.data <- corr.data %>%
+  mutate(Area_damaged = coalesce(Ant_percent_leafloss, Pathogen_percent_damage)) %>%
+  select(-Ant_percent_leafloss, -Pathogen_percent_damage) %>%
+  na.omit()
+
+# Looking for autocorrelations
+c1 <- cor(ndata[,c(7:10)])
+c1
+
+# cor ####
+#using cor() from 'stats'
+cor.matrix <- as.data.frame(cor(ndata[c(7:10)]))
+
+#Use 0.25 cut-off.
+#Least correlated covariates are Toughness and Thickness: -0.124 
+
+#Correlation matrix for correlation network using correlate() from 'corrr'
+
+###All in one go to make correlation network plot following code from #https://www.datanovia.com/en/blog/easily-create-a-correlation-network-in-r-using-the-corrr-package/
+
+wes_paleta <- wes_palette(name = "Darjeeling1", 3, type = "continuous")
+
+network_traits <- corr.data %>% 
+  correlate(use = "pairwise.complete.obs", method = "spearman", quiet = TRUE) %>%
+  network_plot(rdf = .,
+               min_cor = 0.0, 
+               colors = c(wes_paleta), 
+               curved = TRUE) +
+  labs(title = "Correlation network of leaf traits" ) +
+  theme(legend.text = element_text(size = 14))
+
+network_traits
+```
+
+References
+
+-   https://drsimonj.svbtle.com/how-to-create-correlation-network-plots-with-corrr-and-ggraph
+
+-   https://jamesmarquezportfolio.com/correlation_matrices_in_r.html
+
+
+# Leaf traits and relative abundance and total reads of OTUs
+
+```{r, Total reads boxplot, tidy = TRUE}
+mycomparisons <- list(c("APEIME", "DYPTE", "CORDAL", "THEOCA","LACPA", "HEISCO", "CHRYCA")) 
+              #map_signif_level=TRUE)
+# mycomparisons <- list(c(master$Species))
+
+ecomparisons <- list(c(master$E_load))
+
+#Total reads
+ggplot(data = master, aes(x = E_load, y = Total_reads), group_by(Species)) +
+  geom_boxplot(aes(fill = E_load), outlier.shape = NA)+
+  theme_bw(base_size = 16) + 
+  labs(x="", y="Total_reads")+
+  theme(legend.position="right", legend.title = element_blank(),
+        legend.text = element_text(size = 24),
+        axis.text.x=element_blank()) +
+  annotate("text", x = 2.5, y = .65, label = "")+
+  ylim(0,75000) +
+  facet_wrap(~Species)
+
+```
+
+```{r, Relative abundance boxplot, tidy = TRUE}
+# By tree species
+RA <- ggplot(data= master, aes(x = Species, y = Relative_Abundance)) +
+  geom_boxplot(aes(fill = E_load), outlier.shape = NA) +
+  geom_crossbar(stat="summary", fun = mean, fun.max = mean, fun.min = mean,  fatten = 2, width = 0.5) +
+  geom_point(color="black", alpha = 0.2,size =2, position = position_jitter(w=0.05)) +
+  scale_fill_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
+  theme_bw(base_size = 16) + 
+  theme(panel.grid.major = element_line(colour = "grey")) +
+  theme(panel.grid.minor = element_line(colour = "grey")) +
+  theme(strip.background = element_rect(fill = "white")) +
+  theme(strip.text.x = element_text(colour = "black", face = "bold")) +
+  theme(legend.title = element_text(face = "bold")) +
+  theme(panel.border = element_rect(linetype = "blank", fill = NA)) +
+  labs(y="Relative Abundance of OTUs (Ascomycota)")+
+  theme(legend.position="right", legend.title = element_blank(),
+        legend.text = element_text(size = 24),
+        axis.text.x=element_text(angle = 30)) +
+  labs(caption = "*Outliers and singletons removed.") +
+  scale_x_discrete(labels= mycomparisons) +
+  #annotate("text", x = 2.5, y = .65, label = "") +
+  stat_compare_means(comparisons = mycomparisons) +
+  stat_compare_means(comparisons = ecomparisons) +
+  stat_compare_means(method = "kruskal.test", label = "p.signif") 
+  #ylim(0, 0.13) +
+  #facet_wrap(~E_load)
+RA
+#ggsave(filename="Aim3_RA_Species_0706202.png", plot = RA, dpi=600, units=c("mm"), width = 300, height = 300)
+
+```
+
+## Figure 1?
+
+```{r, RA per E_load boxplot, tidy = TRUE}
+# RA per E_load
+
+newname <- c("A. membranacea", "C. cainito", "C. alliodora", "Dypterix .sp", "H. concinna", "L. panamensis", "T. cacao")
+
+names(newname) <- c("APEIME", "CHRYCA", "CORDAL", "DYPTE", "HEISCO", "LACPA", "THEOCA")
+
+RAE <- ggplot(data= master, aes(x = E_load, y = Relative_Abundance)) +
+  geom_violin(aes(fill = E_load)) +
+    geom_boxplot(width=0.1, color="grey40", alpha=0.2, outlier.shape = -1) +
+# geom_crossbar(stat="summary", fun = mean, fun.max = mean, fun.min = mean,  fatten = 2, width = 0.5) +
+# geom_point(color="black", alpha = 0.4,size = 2, position = position_jitter(w=0.05)) +
+  scale_fill_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
+  theme_bw(base_size = 14)+
+  
+  theme(panel.grid.major = element_line(colour = "grey")) +
+  theme(panel.grid.minor = element_line(colour = "grey")) +
+  theme(strip.background = element_rect(fill = "white")) +
+  theme(strip.text.x = element_text(colour = "grey15", face = "italic")) +
+  theme(legend.title = element_text(face = "bold")) +
+  theme(panel.border = element_rect(linetype = "blank", fill = NA)) +
+  labs(x="", y="Relative Abundance of OTUs (Ascomycota)", face = "bold")+
+  theme(legend.position="right", legend.title = element_blank(),
+        legend.text = element_text(size = 16),
+        axis.text.x=element_blank()) +
+  labs(caption = "*Outliers and singletons removed.") +
+  stat_compare_means(comparisons = list(c("E-", "E+")), 
+                     method = "t.test",
+                     label = "p.signif", label.y = 0.3, bracket.size = 0.65) +
+  facet_wrap(~Species, labeller = as_labeller(newname))
+  
+
+RAE
+#ggsave(filename="./plots/Aim3_RA_Eload_SEPT182023.png", plot = RAE, dpi=600, units=c("mm"), width = 180, height = 180)
+```
+
+```{r, Functional traits violins, tidy = TRUE}
+# Leaf thickness by endophyte load and species
+
+LT <- ggplot(data = master, aes(x = Species, y = Thickness), color = Species) +
+  geom_violin(aes(fill = E_load),outlier.shape = NA) +
+  geom_crossbar(stat="summary", fun = mean, fun.max = mean, fun.min = mean,  fatten = 2, width = 0.5) +
+  geom_point(color="black", alpha = 0.2,size =2, position = position_jitter(w=0.05)) +
+  scale_fill_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
+  theme_bw(base_size = 18) +
+  theme(panel.grid.major = element_line(colour = "grey")) +
+  theme(panel.grid.minor = element_line(colour = "grey")) +
+  theme(strip.background = element_rect(fill = "white")) +
+  theme(strip.text.x = element_text(colour = "black", face = "bold")) +
+  theme(legend.title = element_text(face = "bold")) +
+  theme(panel.border = element_rect(linetype = "blank", fill = NA)) +
+  labs(x="", y= expression(paste("Leaf thickness (",mu,"m)"))) +
+  theme(legend.position="right", legend.title = element_blank(),
+        legend.text = element_text(size = 24)) +
+  labs(caption = "*Outliers and singletons removed.") +
+  annotate("text", x = 2.5, y = .65, label = "") +
+  #stat_compare_means(comparisons = mycomparisons) +
+ # stat_compare_means(method = "kruskal.test", label = "p.signif") +
+  stat_compare_means(label = "p.signif", method = "t.test",
+                     ref.group = ".all.", label.y = 300) +
+  ylim(100,325)
+LT
+#ggsave(filename="Aim3_LT_Species_07062022.png", plot = LT, dpi=600, units=c("mm"), width = 300, height = 300)
+
+
+# Leaf toughness (lbf) by  endophyte load and species with data (data) ####
+ggplot(data = master, aes( x = Species, y = Toughness), group_by(Species)) +
+  geom_violin(aes(fill = E_load), outlier.shape = NA) +
+  geom_crossbar(stat="summary", fun = mean, fun.max = mean, fun.min = mean,  fatten = 2, width = 1) +
+  geom_point(color="black", alpha = 0.2,size =2, position = position_jitter(w=0.05)) +
+  scale_fill_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
+  theme_bw(base_size = 16) +
+  theme(panel.grid.major = element_line(colour = "grey")) +
+  theme(panel.grid.minor = element_line(colour = "grey")) +
+  theme(strip.background = element_rect(fill = "white")) +
+  theme(strip.text.x = element_text(colour = "black", face = "bold")) +
+  theme(legend.title = element_text(face = "bold")) +
+  theme(panel.border = element_rect(linetype = "blank", fill = NA)) +
+  labs(x="", y= expression(paste("Leaf punch strength(N mm","^-1)"))) +
+  theme(legend.position="right", legend.title = element_blank(),
+        legend.text = element_text(size = 24)) +
+  labs(caption = "*Outliers and singletons removed.") 
+ # stat_compare_means(comparisons = mycomparisons ) +
+  #stat_compare_means(method = "kruskal.test", label = "p.signif") +
+  #ylim(0.10, 1) 
+
+# Leaf mass per area (LMA) by  endophyte load and species
+ggplot(data = master, aes(x = E_load, y = LMA), group_by(Species)) +
+  geom_boxplot(aes(fill = E_load)) +
+  theme_bw(base_size = 18) + 
+  labs(x="", y="LMA (mg)")+
+  theme(legend.position="right", legend.title = element_blank(),
+        legend.text = element_text(face = "italic", size = 18),
+        axis.text.x=element_blank()) +
+  annotate("text", x = 2.5, y = 0.0024, label = "")+
+   scale_y_continuous(limits=c(0.0001,0.0025)) +
+  stat_compare_means(comparisons = mycomparisons ) +
+  stat_compare_means(method = "kruskal.test", label = "p.signif") +
+  facet_wrap(~Species)
+
+# Diversity
+DVI <- ggplot(data= master, aes(x = E_load, y = Shannon)) +
+  geom_violin(aes(fill = E_load), outlier.shape = NA) +
+  geom_crossbar(stat="summary", fun = mean, fun.max = mean, fun.min = mean,  fatten = 2, width = 0.5) +
+  geom_point(color="black", alpha = 0.2,size =2, position = position_jitter(w=0.05)) +
+  scale_fill_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
+  theme_bw(base_size = 16) + 
+  theme(panel.grid.major = element_line(colour = "grey")) +
+  theme(panel.grid.minor = element_line(colour = "grey")) +
+  theme(strip.background = element_rect(fill = "white")) +
+  theme(strip.text.x = element_text(colour = "black", face = "bold")) +
+  theme(legend.title = element_text(face = "bold")) +
+  theme(panel.border = element_rect(linetype = "blank", fill = NA)) +
+  labs(x="", y="Shannon Diversity Index of OTUs (Ascomycota)")+
+  theme(legend.position="right", legend.title = element_blank(),
+        legend.text = element_text(size = 24),
+        axis.text.x=element_blank()) +
+  labs(caption = "*Outliers and singletons removed.") +
+  annotate("text", x = 2.5, y = .65, label = "") +
+  stat_compare_means(comparisons = mycomparisons ) +
+  stat_compare_means(method = "kruskal.test", label = "p.signif") +
+  facet_wrap(~Species)
+DVI
+#ggsave(filename="Aim3_DV_Eload_07122022.png", plot = DVI, dpi=600, units=c("mm"), width = 300, height = 300)
+
+
+####I HAVE TO INVESTIGATE FURTHER AS TO WHY THIS LAST GGPLOT FOR LMA GIVE THIS OUTPUT: Warning messages:1: Removed 34 rows containing non-finite values (stat_boxplot). 2: Removed 7 rows containing missing values (geom_text).
+####
+####This problem was due to having values out of the ylab.
+```
+
 # Principal Component Analysis (PCA) of leaf functional traits
+
+The idea here is to see which leaf functional trait and community diversity traits (relative abundance, richness and diversity) impact herbivory and pathogenicity. Only using LMA, thickness and toughness, as these covariates are orthagonal to each other in PCA analysis. Reminder that de `ndata`'s experimental unit is the leaf, not the plant.
 
 ## Full PCA
 
-```{r, PCA, tidy = FALSE}
+```{r, Full PCA, tidy = FALSE}
 # PCA using covariates to explain species richness/abundance ####
 data.pca <- ndata[c(7,8,9,10)]
 data.pca <- data.pca %>%
@@ -898,7 +1390,9 @@ auto
 
 ## Ant PCA
 
-```{r}
+Data points represent leafs of plants used in ant assays.
+
+```{r, Ant PCA, tidy=TRUE}}
 # PCA using covariates to explain species richness/abundance ####
 ant_pcadata <- masterant2[c(7,8,9,10)]
 ant_pcadata <- ant_pcadata %>%
@@ -945,7 +1439,9 @@ auto_ant
 
 ## Pathogen PCA
 
-```{r}
+Data points represent leafs of plants used in pathogen assays.
+
+```{r, Pathogen PCA, tidy=TRUE}
 # PCA using covariates to explain species richness/abundance ####
 pat_pcadata <- masterpat2[c(8,9,10,11)]
 pat_pcadata <- pat_pcadata %>%
@@ -988,9 +1484,9 @@ auto_pat
 #ggsave(filename="./plots/Aim3_Pathogen_PCA_08162023.png", plot = auto_pat, dpi=600, units=c("mm"), width = 180, height = 180, bg = "white")
 ```
 
-# Fig. 2? Grid PCA plot
+## Fig. 2? Grid PCA plot
 
-```{r}
+```{r, Grid PCA, tidy=TRUE}
 grid_pca <- ggarrange(auto, auto_ant, auto_pat, nrow = 1, ncol=3, common.legend = TRUE, legend="bottom")
 
 grid_pca
@@ -1005,9 +1501,9 @@ grid_pca
 
 # PCA: Simple linear models with PC1 and PC2
 
-### Ants
+## Ants
 
-Here I take the loading (PCs) from the **Ant Full PCA** and join them to the ant herbivory (leafloss) data. Thus being able to perform linear regressions from this new dataset (ant_paca + masterant2).
+Here I take the loading (PCs) from the **Ant Full PCA** and join them to the ant herbivory (leafloss) data. Thus being able to perform linear regressions from this new dataset (`ant_pca` + `masterant2`).
 
 ```{r, Lm PCA data, tidy=TRUE}
 # PCA loadings (rotations) data frame
@@ -1023,7 +1519,7 @@ ant_pcalm <- cbind(ant_pcalm, ant.pci) #Both data sets have 467 observations
 
 The functions `prcomp` and `princomp` are both possible to use for this analysis. The `prcomp` stores the "scores" as `x`, while `princomp` stores them as `scores`. Useful to know when extracting the data from it for linear regressions. The function `princomp` uses Eigen decomposition of the covariance and correlations between samples. The `prcomp` uses the singular value decomposition between variables.
 
-#### Ants \~ PC1 & PC2
+## Ants \~ PC1 & PC2
 
 ```{r, Ant PC1-2, tidy=TRUE}
 # Formatting formula for p value
@@ -1098,7 +1594,7 @@ ant_pc2
 #ggsave(filename="./plots/Aim3_AntPC2_JUL102023.png", plot = ant_pc2, dpi=600, units=c("mm"), width = 180, height = 180, bg = "white")
 ```
 
-### Pathogen
+## Pathogen
 
 Here I take the loading (PCs) from the **Pathogen Full PCA** and join them to the fungal pathogenicity (leaf damage) data. Thus being able to perform linear regressions from this new dataset (pat_pac + masterpat2).
 
@@ -1116,7 +1612,7 @@ pat_pcalm <- cbind(pat_pcalm, pat.pci) #Both data sets have 467 observations
 
 The functions `prcomp` and `princomp` are both possible to use for this analysis. The `prcomp` stores the "scores" as `x`, while `princomp` stores them as `scores`. Useful to know when extracting the data from it for linear regressions. The function `princomp` uses Eigen decomposition of the covariance and correlations between samples. The `prcomp` uses the singular value decomposition between variables.
 
-#### Pathogen \~ PC1 & PC2
+## Pathogen \~ PC1 & PC2
 
 ```{r, Ant PC1-2, tidy=TRUE}
 # Formatting formula for p value
@@ -1190,9 +1686,9 @@ pat_pc2
 #ggsave(filename="./plots/Aim3_PatPC2_AUG282023.png", plot = pat_pc2, dpi=600, units=c("mm"), width = 180, height = 180, bg = "white")
 ```
 
-# Fig 3? Ant and Pathogen PC-LMs Grid plot
+## Fig 3? Ant and Pathogen PC-LMs Grid plot
 
-```{r}
+```{r, Ant & Patthogen PC1-2, tidy=TRUE}
 antpat_arranged <- ggarrange(ant_pc1, ant_pc2, pat_pc1, pat_pc2, nrow = 2, ncol=2, common.legend = TRUE, legend="bottom")
 
 antpat_arranged
@@ -1229,7 +1725,7 @@ antpat_arranged
 
 ## Statistical analyses and data visualization with Phyloseq
 
-The phyloseq package allows me to perform most of the necessary analyses with just a couple of phyloseq objects (e.g. data frames, relative abundance calculations, etc.). Previous data frames created are still needed for further analyses (e.g. dbRDA and PSLR). There are some difficulties with manipulating the data with `phyloseq`. When merging objects the categorical facotrs are coerced to numeric, hence losing that information. See [here](https://github.com/joey711/phyloseq/issues/465) and comments in code chunks.
+The `phyloseq` package allows me to perform most of the necessary analyses with just a couple of phyloseq objects (e.g. data frames, relative abundance calculations, etc.). Previous data frames created are still needed for further analyses (e.g. dbRDA and PSLR). There are some difficulties with manipulating the data with `phyloseq`. When merging objects the categorical factors are coerced to numeric, hence losing that information. See [here](https://github.com/joey711/phyloseq/issues/465) and comments in code chunks.
 
 ## Phyloseq: plots and graphs
 
@@ -1378,203 +1874,9 @@ p3
 
 After meddling with this for a little bit, I do not like how this plots my data. I find it confusing to edit and know what it is plotting exactly. I will plot these ordinations by using the data frames cleaned and trimmed with phyloseq. -BAR 06/19/2022 *The main ordination plot is the one produces in the dbRDA section. These ordination are good for supplementary material information* -BAR 7/04/2023
 
-# Leaf traits and relative abundance and total reads of OTUs
-
-```{r, tidy = FALSE}
-# Endophyte growth proportion at day 7 grouped by endophyte load and species with data (data) ####
-
-mycomparisons <- list(c("APEIME", "DYPTE", "CORDAL", "THEOCA","LACPA", "HEISCO", "CHRYCA")) 
-              #map_signif_level=TRUE)
-# mycomparisons <- list(c(master$Species))
-
-ecomparisons <- list(c(master$E_load))
-
-#Total reads
-ggplot(data = master, aes(x = E_load, y = Total_reads), group_by(Species)) +
-  geom_boxplot(aes(fill = E_load), outlier.shape = NA)+
-  theme_bw(base_size = 16) + 
-  labs(x="", y="Total_reads")+
-  theme(legend.position="right", legend.title = element_blank(),
-        legend.text = element_text(size = 24),
-        axis.text.x=element_blank()) +
-  annotate("text", x = 2.5, y = .65, label = "")+
-  ylim(0,75000) +
-  facet_wrap(~Species)
- 
-# Relative abundance boxplots
-
-RA <- ggplot(data= master, aes(x = Species, y = Relative_Abundance)) +
-  geom_boxplot(aes(fill = E_load), outlier.shape = NA) +
-  geom_crossbar(stat="summary", fun = mean, fun.max = mean, fun.min = mean,  fatten = 2, width = 0.5) +
-  geom_point(color="black", alpha = 0.2,size =2, position = position_jitter(w=0.05)) +
-  scale_fill_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
-  scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
-  theme_bw(base_size = 16) + 
-  theme(panel.grid.major = element_line(colour = "grey")) +
-  theme(panel.grid.minor = element_line(colour = "grey")) +
-  theme(strip.background = element_rect(fill = "white")) +
-  theme(strip.text.x = element_text(colour = "black", face = "bold")) +
-  theme(legend.title = element_text(face = "bold")) +
-  theme(panel.border = element_rect(linetype = "blank", fill = NA)) +
-  labs(y="Relative Abundance of OTUs (Ascomycota)")+
-  theme(legend.position="right", legend.title = element_blank(),
-        legend.text = element_text(size = 24),
-        axis.text.x=element_text(angle = 30)) +
-  labs(caption = "*Outliers and singletons removed.") +
-  scale_x_discrete(labels= mycomparisons) +
-  #annotate("text", x = 2.5, y = .65, label = "") +
-  stat_compare_means(comparisons = mycomparisons) +
-  stat_compare_means(comparisons = ecomparisons) +
-  stat_compare_means(method = "kruskal.test", label = "p.signif") 
-  #ylim(0, 0.13) +
-  #facet_wrap(~E_load)
-RA
-#ggsave(filename="Aim3_RA_Species_0706202.png", plot = RA, dpi=600, units=c("mm"), width = 300, height = 300)
-
-```
-
-# Figure 1?
-
-```{r}
-# RA per E_load
-# 
-newname <- c("A. membranacea", "C. cainito", "C. alliodora", "Dypterix .sp", "H. concinna", "L. panamensis", "T. cacao")
-
-names(newname) <- c("APEIME", "CHRYCA", "CORDAL", "DYPTE", "HEISCO", "LACPA", "THEOCA")
-
-RAE <- ggplot(data= master, aes(x = E_load, y = Relative_Abundance)) +
-  geom_violin(aes(fill = E_load)) +
-    geom_boxplot(width=0.1, color="grey40", alpha=0.2, outlier.shape = -1) +
-# geom_crossbar(stat="summary", fun = mean, fun.max = mean, fun.min = mean,  fatten = 2, width = 0.5) +
-# geom_point(color="black", alpha = 0.4,size = 2, position = position_jitter(w=0.05)) +
-  scale_fill_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
-  scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
-  theme_bw(base_size = 14)+
-  
-  theme(panel.grid.major = element_line(colour = "grey")) +
-  theme(panel.grid.minor = element_line(colour = "grey")) +
-  theme(strip.background = element_rect(fill = "white")) +
-  theme(strip.text.x = element_text(colour = "grey15", face = "italic")) +
-  theme(legend.title = element_text(face = "bold")) +
-  theme(panel.border = element_rect(linetype = "blank", fill = NA)) +
-  labs(x="", y="Relative Abundance of OTUs (Ascomycota)", face = "bold")+
-  theme(legend.position="right", legend.title = element_blank(),
-        legend.text = element_text(size = 16),
-        axis.text.x=element_blank()) +
-  labs(caption = "*Outliers and singletons removed.") +
-  stat_compare_means(comparisons = list(c("E-", "E+")), 
-                     method = "t.test",
-                     label = "p.signif", label.y = 0.3, bracket.size = 0.65) +
-  facet_wrap(~Species, labeller = as_labeller(newname))
-  
-
-RAE
-#ggsave(filename="./plots/Aim3_RA_Eload_SEPT182023.png", plot = RAE, dpi=600, units=c("mm"), width = 180, height = 180)
-```
-
-```{r}
-# Leaf thickness by endophyte load and species
-
-LT <- ggplot(data = master, aes(x = Species, y = Thickness), color = Species) +
-  geom_violin(aes(fill = E_load),outlier.shape = NA) +
-  geom_crossbar(stat="summary", fun = mean, fun.max = mean, fun.min = mean,  fatten = 2, width = 0.5) +
-  geom_point(color="black", alpha = 0.2,size =2, position = position_jitter(w=0.05)) +
-  scale_fill_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
-  scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
-  theme_bw(base_size = 18) +
-  theme(panel.grid.major = element_line(colour = "grey")) +
-  theme(panel.grid.minor = element_line(colour = "grey")) +
-  theme(strip.background = element_rect(fill = "white")) +
-  theme(strip.text.x = element_text(colour = "black", face = "bold")) +
-  theme(legend.title = element_text(face = "bold")) +
-  theme(panel.border = element_rect(linetype = "blank", fill = NA)) +
-  labs(x="", y= expression(paste("Leaf thickness (",mu,"m)"))) +
-  theme(legend.position="right", legend.title = element_blank(),
-        legend.text = element_text(size = 24)) +
-  labs(caption = "*Outliers and singletons removed.") +
-  annotate("text", x = 2.5, y = .65, label = "") +
-  #stat_compare_means(comparisons = mycomparisons) +
- # stat_compare_means(method = "kruskal.test", label = "p.signif") +
-  stat_compare_means(label = "p.signif", method = "t.test",
-                     ref.group = ".all.", label.y = 300) +
-  ylim(100,325)
-LT
-#ggsave(filename="Aim3_LT_Species_07062022.png", plot = LT, dpi=600, units=c("mm"), width = 300, height = 300)
-
-
-# Leaf toughness (lbf) by  endophyte load and species with data (data) ####
-ggplot(data = master, aes( x = Species, y = Toughness), group_by(Species)) +
-  geom_violin(aes(fill = E_load), outlier.shape = NA) +
-  geom_crossbar(stat="summary", fun = mean, fun.max = mean, fun.min = mean,  fatten = 2, width = 1) +
-  geom_point(color="black", alpha = 0.2,size =2, position = position_jitter(w=0.05)) +
-  scale_fill_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
-  scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
-  theme_bw(base_size = 16) +
-  theme(panel.grid.major = element_line(colour = "grey")) +
-  theme(panel.grid.minor = element_line(colour = "grey")) +
-  theme(strip.background = element_rect(fill = "white")) +
-  theme(strip.text.x = element_text(colour = "black", face = "bold")) +
-  theme(legend.title = element_text(face = "bold")) +
-  theme(panel.border = element_rect(linetype = "blank", fill = NA)) +
-  labs(x="", y= expression(paste("Leaf punch strength(N mm","^-1)"))) +
-  theme(legend.position="right", legend.title = element_blank(),
-        legend.text = element_text(size = 24)) +
-  labs(caption = "*Outliers and singletons removed.") 
- # stat_compare_means(comparisons = mycomparisons ) +
-  #stat_compare_means(method = "kruskal.test", label = "p.signif") +
-  #ylim(0.10, 1) 
-
-# Leaf mass per area (LMA) by  endophyte load and species
-ggplot(data = master, aes(x = E_load, y = LMA), group_by(Species)) +
-  geom_boxplot(aes(fill = E_load)) +
-  theme_bw(base_size = 18) + 
-  labs(x="", y="LMA (mg)")+
-  theme(legend.position="right", legend.title = element_blank(),
-        legend.text = element_text(face = "italic", size = 18),
-        axis.text.x=element_blank()) +
-  annotate("text", x = 2.5, y = 0.0024, label = "")+
-   scale_y_continuous(limits=c(0.0001,0.0025)) +
-  stat_compare_means(comparisons = mycomparisons ) +
-  stat_compare_means(method = "kruskal.test", label = "p.signif") +
-  facet_wrap(~Species)
-
-# Diversity
-DVI <- ggplot(data= master, aes(x = E_load, y = Shannon)) +
-  geom_violin(aes(fill = E_load), outlier.shape = NA) +
-  geom_crossbar(stat="summary", fun = mean, fun.max = mean, fun.min = mean,  fatten = 2, width = 0.5) +
-  geom_point(color="black", alpha = 0.2,size =2, position = position_jitter(w=0.05)) +
-  scale_fill_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
-  scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
-  theme_bw(base_size = 16) + 
-  theme(panel.grid.major = element_line(colour = "grey")) +
-  theme(panel.grid.minor = element_line(colour = "grey")) +
-  theme(strip.background = element_rect(fill = "white")) +
-  theme(strip.text.x = element_text(colour = "black", face = "bold")) +
-  theme(legend.title = element_text(face = "bold")) +
-  theme(panel.border = element_rect(linetype = "blank", fill = NA)) +
-  labs(x="", y="Shannon Diversity Index of OTUs (Ascomycota)")+
-  theme(legend.position="right", legend.title = element_blank(),
-        legend.text = element_text(size = 24),
-        axis.text.x=element_blank()) +
-  labs(caption = "*Outliers and singletons removed.") +
-  annotate("text", x = 2.5, y = .65, label = "") +
-  stat_compare_means(comparisons = mycomparisons ) +
-  stat_compare_means(method = "kruskal.test", label = "p.signif") +
-  facet_wrap(~Species)
-DVI
-#ggsave(filename="Aim3_DV_Eload_07122022.png", plot = DVI, dpi=600, units=c("mm"), width = 300, height = 300)
-
-
-####I HAVE TO INVESTIGATE FURTHER AS TO WHY THIS LAST GGPLOT FOR LMA GIVE THIS OUTPUT: Warning messages:1: Removed 34 rows containing non-finite values (stat_boxplot). 2: Removed 7 rows containing missing values (geom_text).
-####
-####This problem was due to having values out of the ylab.
-```
-
 # FEF Community Analysis
 
 ## Distance-based redundancy analyses (dbRDA)
-
-### dbRDA and partial dbrda
 
 Code written by Mareli Sánchez Juliá. Modified by Bolívar Aponte Rolón- March 2022 Partial dbRDA was eliminated. Due to my experimental set up, performing a partial dbRDA does not make much sense. This is useful when looking at change over time in a categorical manner (e.g. sampling every two weeks). My data set does not test for anything similar.
 
@@ -1645,9 +1947,9 @@ m3.forsel <- ordistep(m0, scope = formula(m3), Pin = 0.5, Pout = 0.1, trace = T,
 ## Model 3 and 5 keep species and trial type as the most significant explanatory variables. Yes, the community composition will be different across spcies but this is due to the inherent leaf traits of each species. Not "species" itself. 
 ```
 
-### dbRDA Results
+## dbRDA Results
 
-#### Plotting m3 model dbRDA
+### Plotting m3 model dbRDA
 
 ```{r, m3 dbRDA, tidy = TRUE}
 #m3.forsel 
@@ -1780,176 +2082,6 @@ summary(otu.anosim)
 plot(otu.anosim) 
 ```
 
-# PLSR: Partial Least Squares Regression
-
-Results not included. Analysis is not complete -11/21/2022
-
-```{r, include = FALSE}
-# Manipulating the data for PLSR
-# master22 <- master2 %>% 
-#    rowwise() %>%
-#mutate(ReAbun = list(x/sum(across(starts_with("OTU")),
-#  # na.rm = T))
-# 
-# estimate_richness(newpq, measures = c("Observed", "Shannon"))
-# 
-# plr <- plsr(otu_e.dist_T ~ Anthocyanins + Toughness +Thickness + LMA, data= ndata2, validation = "CV", na.action = na.omit)
-```
-
-# Raw Leaf Trait Analyses
-
-### Leaf-cutter ants analyses
-
-The idea here is to see which leaf functional trait and community diversity traits (relative abundance, richness and diversity) impact herbivory and pathogenicity. Only using LMA, thickness and toughness, as these covariates are orthagonal to each other in PCA analysis.
-
-### Descriptive statistics
-
-**Preliminary analyses as of 08/26/2019** These preliminary analyses were performed before the Ecological Analyses course. Not everything is useful. Certainly the GGPLOT MAGIC section is the exception. Those plots are an essential part of the story.
-
-Evaluating non-normality of the data do not use `master` data set to assess the assumption of normality. It includes duplicate information for the explanatory variables. Meaning a sample and its data are paired multiples times with the OTU's that are present in it. Use either `data` or `ndata`.
-
-Proceeding with exploring normality assumptions with `data` and `masterant`. It retains the mean values for all leaf replicates.
-
-From this autocorrelation matrix I can see that the Observed richness, Shannon diversity and Total_reads have low autocorrelation the physical leaf functional traits. These three measures of community composition are somewhat correlated. Especially the Observed species richness and the Shannon diversity index (0.719735754) and Total_reads x Shannon(-0.3244523). For this reason I am going to stick to using Shannon diversity are a community traits for predicting leaf herbivory and pathogenicity. LMA is highly collinear with Anthocyanins and Toughness, while it has very low correlation with Ant_percent_leafloss. I will not include ANthocyanins in the linear models. Thickness and toughness are inversely correlated with each other. Toughness seems to have a low negative correlation with *Ant_percent_leafloss*, or *Total_leaf_area_cut*. I will not include it in the linear models.
-
-```{r}
-# Data
-# Histograms ####
-# Explanatory variables
-hist(data$Anthocyanins)
-hist(data$Thickness..micro.m.,
-     xlim = c(0,500))
-hist(data$Toughness)
-hist(data$LMA)
-
-
-# QQnorms ####
-#qqnorm(rnorm(n = length(data$Anthocyanins..aci.), 
-             #mean =mean(data$Anthocyanins..aci., na.rm = TRUE), 
-             #sd = sd(data$Anthocyanins..aci., na.rm = TRUE)))
-
-# QQPlots ####
-#qqPlot(rnorm(n = length(data$Anthocyanins..aci.), 
-             #mean =mean(data$Anthocyanins..aci., na.rm = TRUE), 
-             #sd = sd(data$Anthocyanins..aci., na.rm = TRUE)))
-             
-#Using "data" set
-qqPlot(data$Anthocyanins..aci.)
-qqPlot(data$Thickness..micro.m.)
-qqPlot(data$Toughness..lbf.)
-qqPlot(data$LMA_dw)
-
-
-masterant$Prop_area_loss <- masterant$Ant_percent_leafloss/100
-
-qqPlot(masterant$Prop_area_loss)
-
-#Using "masterant2"
-
-qqPlot(masterant2$Ant_percent_leafloss)
-qqPlot(masterant2$Anthocyanins)
-qqPlot(masterant2$Thickness)
-qqPlot(masterant2$Toughness)
-qqPlot(masterant2$LMA)
-qqPlot(masterant2$Shannon)
-
-#Nothing has a normal distribution. It looks like it will be necessary to use a negative binomial distribution. 
-
-# Shapiro-Wilks tests ####
-#shapiro.test(rnorm(n = length(data$Anthocyanins..aci.), 
-                   #mean =mean(data$Anthocyanins..aci., na.rm = TRUE), 
-                   #sd = sd(data$Anthocyanins..aci., na.rm = TRUE)))
-                   #shapiro.test(masterant$Prop_area_loss)
-                   
-
-hist(masterant$Ant_percent_leafloss) #Binomial 
-shapiro.test(masterant$Ant_percent_leafloss) #Data deviates from the normal distribution. p-values is 0.0002607
-shapiro.test(masterant$Anthocyanins) #Borderline non-normal p-value = 0.05605
-
-shapiro.test(masterant$Thickness) #Non-normal p-value = 0.07201
-shapiro.test(masterant$Toughness) #Non-normal p-value = 0.0005036
-hist(masterant$Toughness)
-shapiro.test(masterant$LMA) #normal p-value = 0.4742
-shapiro.test(masterant$Shannon) #Normal p-value = 0.4886
-hist(masterant$Shannon)
-
-
-
-# Somewhat better distributions.
-
-# Ant_percent_leafloss is not normally distributed. It looks more like a binomial distribution. Evaluate accordingly. 
-
-#Conclusion from the Shapiro-Wilk tests. Some of the independent variables are not normally distributed. 
-
-# Re-eveluating autocorrelation of terms ####
-
-# Variance Inflation Factor on simple LM with Toughness and Thickness
-
-vif(lm(Ant_percent_leafloss ~ Anthocyanins + Thickness + Toughness + LMA + Observed + Shannon + Total_reads, data = masterant))
-#Variance inflation factors range from 1 upwards. The numerical value for VIF tells you (in decimal form) what percentage the variance (i.e. the standard error squared) is inflated for each coefficient. For example, a VIF of 1.9 tells you that the variance of a particular coefficient is 90% bigger than what you would expect if there was no multicollinearity — if there was no correlation with other predictors.
-#A rule of thumb for interpreting the variance inflation factor:
-
-#1 = not correlated.
-#Between 1 and 5 = moderately correlated.
-#Greater than 5 = highly correlated.
-
-# All explanatory variables have a VIF that is moderately correlated.
-# cor()
-corr <- cor(masterant[,c(6:13)])
-corr
-corrplot::corrplot(corr, type="upper", order="hclust")
-
-#To compute the matrix of p-value, a custom R function is used :
-
-# mat : is a matrix of data
-# ... : further arguments to pass to the native R cor.test function
-cor.mtest <- function(mat, ...) {
-    mat <- as.matrix(mat)
-    n <- ncol(mat)
-    p.mat<- matrix(NA, n, n)
-    diag(p.mat) <- 0
-    for (i in 1:(n - 1)) {
-        for (j in (i + 1):n) {
-            tmp <- cor.test(mat[, i], mat[, j], ...)
-            p.mat[i, j] <- p.mat[j, i] <- tmp$p.value
-        }
-    }
-  colnames(p.mat) <- rownames(p.mat) <- colnames(mat)
-  p.mat
-}
-# matrix of the p-value of the correlation
-p.mat <- cor.mtest(corr)
-head(p.mat[, 1:8])
-
-corrplot::corrplot(corr, method = "color", type = "upper", order = "hclust",addCoef.col = "black", # Add coefficient of correlation
-         tl.col="black", tl.srt=45, #Text label color and rotation
-         # Combine with significance
-         p.mat = p.mat, sig.level = 0.05, 
-         # hide correlation coefficient on the principal diagonal
-         diag=FALSE
-         )
-
-```
-
-### Paired T-tests: Ant Herbivory
-
-Paired is not the same as pairwise. Pairwise refers to the comparison each group compared with every other group.
-
-```{r, Total leaf area cut, tidy = TRUE}
-t.test(formula = Total_leaf_area_cut ~ E_load,
-  alternative = "two.sided",
-       mu = 0, 
-       paired = T,   
-       var.equal = TRUE,
-       na.rm = FALSE,
-       conf.level = 0.95, data = masterant)
- plot(Total_leaf_area_cut ~ E_load, data = masterant)
-ant_paired <- ggplot(masterant, aes(E_load, Total_leaf_area_cut)) +
-  geom_boxplot(aes(fill = Species))
-ant_paired
-
-#ggsave(filename = "ant_paired.png", plot = ant_paired, dpi=600, units=c("mm"), width=300, height=300)
-```
 
 # How do leaf traits influence herbivory and pathogenicity?
 
@@ -2241,7 +2373,7 @@ From the previous section I can see that model M3 and M5 have the lowest AIC sco
 
 This doesn't make much sense to me. Sure E_load reduces the AIC score but of course it is going to have an impact or predict well herbivory loss. It is a treatment, not a continuous explanatory variable. It just does not fit the question well.
 
-The best fit model, considering the eliminatiion of Anthocyanins and Toughness due to high colinearity, is M3REM (AIC 741). It also models fixed effects, not interactions.
+The best fit model, considering the elimination of Anthocyanins and Toughness due to high colinearity, is M3REM (AIC 741). It also models fixed effects, not interactions.
 
 ### Conclusions of model selection using REML model estimation
 
@@ -5102,3 +5234,42 @@ The plants least damaged by pathogen have 92 OTUs significantly correlated with 
 
 <!-- ``` -->
 
+################################################################################################# 
+
+# Tangents
+
+# PLSR: Partial Least Squares Regression
+
+Results not included. Analysis is not complete -11/21/2022
+
+```{r, include = FALSE}
+# Manipulating the data for PLSR
+# master22 <- master2 %>% 
+#    rowwise() %>%
+#mutate(ReAbun = list(x/sum(across(starts_with("OTU")),
+#  # na.rm = T))
+# 
+# estimate_richness(newpq, measures = c("Observed", "Shannon"))
+# 
+# plr <- plsr(otu_e.dist_T ~ Anthocyanins + Toughness +Thickness + LMA, data= ndata2, validation = "CV", na.action = na.omit)
+```
+
+### Paired T-tests: Ant Herbivory
+
+Paired is not the same as pairwise. Pairwise refers to the comparison each group compared with every other group.
+
+```{r, Total leaf area cut, tidy = TRUE}
+t.test(formula = Total_leaf_area_cut ~ E_load,
+  alternative = "two.sided",
+       mu = 0, 
+       paired = T,   
+       var.equal = TRUE,
+       na.rm = FALSE,
+       conf.level = 0.95, data = masterant)
+ plot(Total_leaf_area_cut ~ E_load, data = masterant)
+ant_paired <- ggplot(masterant, aes(E_load, Total_leaf_area_cut)) +
+  geom_boxplot(aes(fill = Species))
+ant_paired
+
+#ggsave(filename = "ant_paired.png", plot = ant_paired, dpi=600, units=c("mm"), width=300, height=300)
+```

@@ -247,24 +247,6 @@ using ImageJ [v1.52r; @schneider2012].
 
 ### Statistical Analyses 
 
-we used a multivariate analysis of variance (MANOVA) for the all the
-tree species using the "manova" function in the "stats" package in R
-(The R Core Team, 2013). A MANOVA allows for an analysis of variance
-with two or more covariates (i.e., endophyte load (E_load ) and tree
-species)) and multiple dependent variables (i.e., ACI, LMA, Thickness,
-Toughness). With the "summary.aov" function and argument "split" set to
-"list ("E_load:Species")" I determined how independent variables, E_load
-and tree species, influenced variance of my covariates: Thickness,
-Toughness, LMA, and ACI. I computed Wilk's tests statistic for MANOVA
-where in the closer to zero the statistic is, the variable in question
-contributes more to the model, hence we reject the null hypothesis if
-zero. Additionally, to determine which interactions of E_load and tree
-species are significant in regard to abundance, I performed two way
-ANOVAs using "aov" function and post-hoc Tukey tests using "TukeyHSD"
-function in the "stats' package in R (The R Core Team, 2013). This
-allows for a more in-depth look at interactions between and among
-groups, not necessarily apparent from MANOVA tests.
-
 To test for H2, I used a general linear mixed model (GLM). First, to
 determine which fixed effects to include in my model I created a
 correlation matrix with "cor()" function in R statistical software.
