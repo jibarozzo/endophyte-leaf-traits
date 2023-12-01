@@ -1,7 +1,7 @@
 #Script for cleaning and reshaping Sample and PCR blanks Sequence data for Leaf Traits Panama
-#Bolivar Aponte Rolon
+#Bolívar Aponte Rolón
 #February 16, 2022
-#Last modified: October 29, 2023
+#Last modified: November 30, 2023
 
 rm(list = ls()) 
 setwd("G:/My Drive/VBL_users/Grad_Students/Bolivar/Dissertation/Leaf_Traits_Panama/Data/Sample_Sequencing/Post_Sequencing/Sequence_analyses")
@@ -16,9 +16,6 @@ library("tidyverse")
 library("ggthemes")
 library("ggiraphExtra")
 
-###############################################################################################################################
-
-###############################################################################################################################
 ####################################################
 ###Cleaning and reshaping Blanks and PCR_CONTROLS###
 ####################################################
@@ -39,11 +36,12 @@ realsamp <- realsamp %>%
   na.omit() %>%
   rename(OTU_ID = X.OTU.ID)
 
+###############################################################################
 ###Full_join of the data frames to retain all values and row and transposing###
 ###############################################################################
 
 #joined <- full_join(realsamp,pcrdata, by = "OTU_ID" ) %>%
- # mutate(across(everything(), replace_na, replace = 0))
+# mutate(across(everything(), replace_na, replace = 0))
 
 joined <- full_join(realsamp,pcrdata, by = "OTU_ID" ) %>%
   dplyr::mutate(across(c(2:168),~replace_na(.x, 0)))
@@ -57,13 +55,12 @@ names(joined.t) <- joined.t %>% slice(1) %>% unlist()
 joined.t <-  joined.t %>% 
   rownames_to_column("Sample_names") %>%
   slice(-1)
- 
+
 str(joined.t)
 
-#######################################################
-###Using decontam package to decontaminate samples###
-#######################################################
-#Make subset tables from each sequence plate run
+#####################################################
+###Make subset tables from each sequence plate run###
+#####################################################
 
 ################### Plate1 #####################
 
@@ -120,14 +117,17 @@ str(plate2)
 indx <- sapply(plate2, is.tibble)
 plate2[indx] <- lapply(plate2[indx], function(x) as.numeric(as.character(x)))
 
-############################################################################
-########CC_fungi Contaminant removal. Adapted from MARIE and Shuzo Oita########
-########THis is a good code. As of now, it works by substracting the SUM of contaminants from each OTU cell. If the value is negative it replaces it with 0. 
-########MARELI MAGIC#########
-##### Substracts the sum of the average of the ExtractionBlank avg and pcr negative control of Batch 001 from OTU sample reads, then removed control rows ##
-############################################################################
+###################################
+###CC_fungi Contaminant removal.### 
+###Adapted from MARIE and Shuzo Oita#####
+###This code works by substracting the SUM of contaminants from each OTU cell. 
+###If the value is negative it replaces it with 0. 
 
-###PLATE 1####
+########MARELI MAGIC#########
+##### Substracts the sum of the average of the ExtractionBlank avg and PCR negative control of Batch 001 from OTU sample reads, then removed control rows #####
+######################################
+
+################### Plate1 #####################
 
 as.data.frame(plate1)
 plate1 <- column_to_rownames(plate1, var = "Sample_names")
@@ -162,7 +162,7 @@ new_data_decontaminated001 <- plate1[!rownames(plate1) %in% cont2, ]
 write.table(new_data_decontaminated001,"clean_data/otu_data/MinusNegsBlanks_001.txt", sep="\t") ### This became tab "Filtered-BlankNegbyCode" in "ExtractionBatch0001_PCR102NC.xlsx". 
 
 
-###PLATE 2###
+################### Plate2 #####################
 
 as.data.frame(plate2)
 plate2 <- column_to_rownames(plate2, var = "Sample_names")
@@ -199,10 +199,9 @@ new_data_decontaminated002 <- plate2[!rownames(plate2) %in% cont2, ]
 write.table(new_data_decontaminated002,"clean_data/otu_data/MinusNegsBlanks_002.txt", sep="\t")
 
 
-##########################################################
+###################################
 ####Saving decontaminated file ####
-##########################################################
-
+###################################
 all_complete_decontaminated <- bind_rows(new_data_decontaminated001, new_data_decontaminated002)
 
 write.csv(all_complete_decontaminated,"clean_data/otu_data/all_Decontaminated_byBlankandNegs_complete.csv")
@@ -212,9 +211,9 @@ write.csv(trans, "clean_data/otu_data/all_toFilt_10_percent.csv") ## in the form
 
 
 
-####################################################
-#### Script to remove < 0.10% abundance per sample #### From Shuzo Oita
-####################################################
+##########################################################################
+#### Script to remove < 0.10% abundance per sample #### From Shuzo Oita###
+##########################################################################
 ## csv file should have row = OTU, col = sample
 
 otu.data <- read.csv('clean_data/otu_data/all_toFilt_10_percent.csv', row.names = 1,as.is = T)

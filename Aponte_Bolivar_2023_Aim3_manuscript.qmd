@@ -88,7 +88,7 @@ exposed to spore fall were placed near (\~10 m) the forest edge at dusk
 
 Three mature leaves were haphazardly collected from each of the
 individual plants in each treatment (E+, E-) within 7-10 days after
-inoculation treatment. Anthocyanin content and leaf thickness were
+inoculation treatment. Anthocyanin (ACI) content and leaf thickness (LT) were
 measured while the leaf was still attached to the plant. We measured
 anthocyanin content with ACM-200plus (Opti-Sciences Inc. Hudson, New
 Hampshire, U.S.A.) on three haphazardly selected locations (working from
@@ -101,7 +101,7 @@ at 525 nm [@tellezRedCol2016, @opti-sciencesinc.] . On compound leaves (i.e.,
 was measured with a Mitutoyo 7327 Micrometer Gauge (Mitutoyo, Takatsu-ku, Kawasaki, Japan) in sthe same manner as the anthocyanin measurements, taking care to avoid major and secondary veins. After anthocyanin and leaf thickness
 measurements were completed, we removed the leaves from their stems,
 placed them inside a plastic bag (i.e. ZiplocⓇ), place in an ice chest
-and moved them to the lab for further measurements. Leaf punch strength was
+and moved them to the lab for further measurements. Leaf punch strength (LPS) was
 measured with an Imada DST-11a digital force gauge (Imada Inc., Northbrook, IL, United States) by conducting punch-and-die tests with a sharp-edged cylindrical steel punch (2.0 mm diameter) and a steel die with a sharp-edged aperture of small clearance (0.05 mm). The leaf punch measurements were taken by puncturing the leaf lamina at the base, mid-leaf and
 tip on both sides of the mid-vein, avoiding minor leaf veins when
 possible [@tellezTraits2022]. Once leaf toughness was measured, we used a 7 mm
@@ -247,20 +247,19 @@ using ImageJ [v1.52r; @schneider2012].
 
 ### Statistical Analyses 
 
-To test for H2, I used a general linear mixed model (GLM). First, to
-determine which fixed effects to include in my model I created a
-correlation matrix with "cor()" function in R statistical software.
-Covariates (Thickness, Toughness, LMA, ACI, E_load, and Tree Species)
-with correlation coefficients greater than 0.25 were not included in
-linear model analyses. Secondly, Principal Component Analysis (PCA) was
+We explore the role of leaf functional traits and foliar fungal symbionts in response to herbivory and pathogenicity. We present the analyses at the leaf and the plant level. Leaf functional traits were measured and are presented in their raw form, at the leaf level. While FEF data was explored and is presented at the plant level. In analyses were leaf functional traits and FEF are combined the corresponding transformations were made (e.g. averages). 
+
+To test for H2, I used a general linear mixed model (GLM). First to
+determine which fixed effects to include in my models we used the `vif` function in *R* to calculated the variance inflation factor for all explanatory variables (ACI, LT, LPS and LMA) [@rcoreteam2023]. We then created a
+correlation matrix with `cor` function in R statistical software.
+Explanatory variables with correlation coefficients greater than 0.25 were not included in
+linear model analyses. IS THIS REALY TRUE?
+
+Secondly, Principal Component Analysis (PCA) was
 used to determine underlying interactions among covariates that could
-influence fungal endophyte abundance in seedlings (hereafter,
-abundance). The PCA was computed using the "prcomp" function in R
-statistical software (The R Core Team, 2013). The PCA was computed using
-the following covariates: Thickness, Toughness, LMA, and ACI, to test
-the effect of ACI, Species, Toughness, Thickness, LMA, endophyte load
-(E_load) as my independent variables (fixed effects) on the abundance of
-endophytes, dependent variable. The PCA was used to inform which
+influence fungal endophyte abundance, diversity and community composition in seedlings. The PCA was computed using the `prcomp` function in R
+statistical software [@rcoreteam2023]. A PCA owas computed using
+the following covariates: ACI, LT, LPS, and LMA . The PCA was used to inform which
 covariates to include in linear model analyses. From PCA and correlation
 analysis, Thickness, Toughness and E_load were chosen to compute an
 initial linear model with interaction. Linear model was computed using
