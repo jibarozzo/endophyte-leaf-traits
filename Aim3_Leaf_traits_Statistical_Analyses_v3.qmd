@@ -62,56 +62,57 @@ Not all of these packages are used. They are here just in case need further alon
 #| echo: false
 #| warning: false
 # Data manipulation and visualizations ####
-renv::install("rmarkdown")
-renv::install("conflicted")
-renv::install("devtools")
-#renv::install("DiagrammeR")
-renv::install("factoextra")
-renv::install("ggfortify")
-renv::install("ggiraph")
-renv::install("ggiraphExtra")
-renv::install("ggplot2")
-renv::install("ggpubr")
-renv::install("gridExtra")
-renv::install("ggthemes")
-renv::install("ggraph")
-renv::install("hrbrthemes")
-renv::install("igraph")
-renv::install("tidyverse")
-renv::install("plotrix")
-#renv::install("viridis")
-renv::install("MetBrewer")
-renv::install("formatR")
-renv::install("wesanderson")
-#renv::install("knitr")
-#renv::install("rmarkdown")
-renv::install("data.table")
+library("rmarkdown")
+library("conflicted")
+library("devtools")
+#library("DiagrammeR")
+library("factoextra")
+library("ggfortify")
+library("ggiraph")
+library("ggiraphExtra")
+library("ggplot2")
+library("ggpubr")
+library("gridExtra")
+library("ggthemes")
+library("ggraph")
+library("hrbrthemes")
+library("igraph")
+library("tidyverse")
+library("plotrix")
+#library("viridis")
+library("MetBrewer")
+library("formatR")
+library("wesanderson")
+#library("knitr")
+#library("rmarkdown")
+library("data.table")
+library("kableExtra")
 
 # Stats ####
-renv::install("broom")
-renv::install("vegan")
-renv::install("nlme")
-renv::install("MASS")
-renv::install("car") #For type 3 Anova with Anova() function.
-renv::install("PerformanceAnalytics")
-renv::install("corrr")
-renv::install("permute")
-renv::install("lattice")
-renv::install("pls")
-renv::install("buildmer")
-renv::install("lme4")
-renv::install("sjPlot")
-renv::install("glmmTMB")
-renv::install("indicspecies")
+library("broom")
+library("vegan")
+library("nlme")
+library("MASS")
+library("car") #For type 3 Anova with Anova() function.
+library("PerformanceAnalytics")
+library("corrr")
+library("permute")
+library("lattice")
+library("pls")
+library("buildmer")
+library("lme4")
+library("sjPlot")
+library("glmmTMB")
+library("indicspecies")
 
 # Phylogenetic analyses #source("https://raw.githubusercontent.com/joey711/phyloseq/master/inst/scripts/installer.R",local = TRUE)
-renv::install("mgcv")
-renv::install("phyloseq")
-renv::install("ape")
+library("mgcv")
+library("phyloseq")
+library("ape")
 library("metagMisc")
-remotes::install_github("vmikk/metagMisc")
-#renv::install("speedyseq")
-renv::install("picante")
+#remotes::install_github("vmikk/metagMisc")
+#library("speedyseq")
+library("picante")
 #source("http://bioconductor.org/biocLite.R")
 
 
@@ -149,207 +150,207 @@ save.path <- ("/home/baponte/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Seque
 ###Cleaning and reshaping Blanks and PCR_CONTROLS###
 ####################################################
 
-pcrdata <- read.csv("clean_data/post_biopipeline/All_PCR_R1_otuFINAL_95.csv") #PCR2NEGPLATE1 is missing. This is due to mislabeling in the original sequence files.
-#There is a q.fastq.gz file that might be this sample.INSPECT THIS FILE. G:\My Drive\VBL_users\Grad_Students\Bolivar\Dissertation\Leaf_Traits_Panama\Data\Sample_Sequencing\Post_Sequencing\Original_Sample_gzip_files
-#The issue stated in the above line has been resolved as of March 10, 2022. -BAR
-
-pcrdata <- pcrdata %>%
-  rename(OTU_ID = X.OTU.ID)
-
-###Cleaning and reshaping Samples###
-####################################
-
-realsamp <- read.csv("clean_data/post_biopipeline/All_Samples_R1_otuFINAL95.csv")
-
-realsamp <- realsamp %>%
-  na.omit() %>%
-  rename(OTU_ID = X.OTU.ID)
-
-###############################################################################
-###Full_join of the data frames to retain all values and row and transposing###
-###############################################################################
-
-#joined <- full_join(realsamp,pcrdata, by = "OTU_ID" ) %>%
- # mutate(across(everything(), replace_na, replace = 0))
-
-joined <- full_join(realsamp,pcrdata, by = "OTU_ID" ) %>%
-  dplyr::mutate(across(c(2:168),~replace_na(.x, 0)))
-str(joined)
-
-joined.t <- as.data.frame(t(joined))
-str(joined.t)
-
-names(joined.t) <- joined.t %>% slice(1) %>% unlist()
-
-joined.t <-  joined.t %>% 
-  rownames_to_column("Sample_names") %>%
-  slice(-1)
- 
-str(joined.t)
-
-#####################################################
-###Make subset tables from each sequence plate run###
-#####################################################
-
-################### Plate1 #####################
-
-filter_table1<- read.csv("filters/Filter_Table_Plate1.csv")
-
-names(filter_table1)
-filter_table1 <- filter_table1 %>%
-  rename(A = ?..A)
-str(filter_table1)
-
-filter_table1 <-filter_table1 %>% 
-  pivot_longer(cols = 1:12, names_to = "samples", values_to = "values") %>%
-  select(-samples) %>%
-  slice(-5, -6)
-
-plate1 <- semi_join(joined.t, filter_table1, by= c("Sample_names" = "values"))
-
-plate1 <- plate1 %>%
-  mutate(across(!Sample_names, as.numeric))
-plate1 <- as_tibble(plate1)
-
-filter_filter <- anti_join( filter_table1, plate1, by = c("values"="Sample_names"))#Corroborating if indeed all match. Supposed to be ZERO.
-str(plate1)
-
-#From factor dataframe to numeric
-
-indx <- sapply(plate1, is.tibble)
-plate1[indx] <- lapply(plate1[indx], function(x) as.numeric(as.character(x)))
-
-################ Plate2 ####################
-
-filter_table2<- read.csv("filters/Filter_Table_Plate2.csv")
-
-names(filter_table2)
-
-filter_table2 <- filter_table2 %>%
-  rename(A = ?..A)
-
-filter_table2 <- filter_table2 %>% 
-  pivot_longer(cols = 1:10, names_to = "samples", values_to = "values") %>%
-  select(-samples) %>%
-  slice(-69, -70, -71, -77, -78, -79, -80)
-
-plate2 <- semi_join(joined.t, filter_table2, by= c("Sample_names" = "values"))
-
-plate2 <- plate2 %>%
-  mutate(across(!Sample_names, as.numeric))
-plate2 <- as_tibble(plate2)
-filter_filter <- anti_join( filter_table2, plate2, by = c("values"="Sample_names")) #Corroborating if indeed all match. 
-str(plate2)
-
-#From factor dataframe to numeric
-
-indx <- sapply(plate2, is.tibble)
-plate2[indx] <- lapply(plate2[indx], function(x) as.numeric(as.character(x)))
-
-###################################
-###CC_fungi Contaminant removal.### 
-###Adapted from MARIE and Shuzo Oita#####
-###This code works by substracting the SUM of contaminants from each OTU cell. 
-###If the value is negative it replaces it with 0. 
-
-########MARELI MAGIC#########
-##### Substracts the sum of the average of the ExtractionBlank avg and PCR negative control of Batch 001 from OTU sample reads, then removed control rows #####
-######################################
-
-################### Plate1 #####################
-
-as.data.frame(plate1)
-plate1 <- column_to_rownames(plate1, var = "Sample_names")
-
-#add column with sums for each OTU
-
-cont <- row.names(plate1)
-cont <- cont[92:94] #change accordingly to your data - these are the negative controls
-contamination <- c()
-for(c in 1:ncol(plate1)){
-  contamination[c]<- mean(plate1[rownames(plate1) %in% cont, c], na.rm = TRUE)
-}
-plate1 <-rbind(plate1, contamination)
-row.names(plate1)[95] <- "contamination" #change the name of row 104
-
-###subtract total contaminants from each OTU, if it is a negative number make it 0
-cont2 <- c(cont, "contamination")
-row <- which(!rownames(plate1) %in% cont2)
-for(r in row){
-  for(c in 1:ncol(plate1)){
-    if(plate1[r,c] > plate1["contamination",c]) {
-      new_reads <- plate1[r,c] - plate1["contamination",c]
-      plate1[r,c] <- new_reads
-    } else {plate1[r,c] <- 0}
-  }
-}
-
-
-##remove controls from dataframe and makes a text file to paste into existing excel sheet
-
-new_data_decontaminated001 <- plate1[!rownames(plate1) %in% cont2, ]
-write.table(new_data_decontaminated001,"clean_data/otu_data/MinusNegsBlanks_001.txt", sep="\t") ### This became tab "Filtered-BlankNegbyCode" in "ExtractionBatch0001_PCR102NC.xlsx". 
-
-
-################### Plate2 #####################
-
-as.data.frame(plate2)
-plate2 <- column_to_rownames(plate2, var = "Sample_names")
-
-#add column with sums for each OTU
-
-cont <- row.names(plate2)
-cont <- cont[66:73] #change accordingly to your data - these are the negative controls
-contamination <- c()
-for(c in 1:ncol(plate2)){
-  contamination[c]<- mean(plate2[rownames(plate2) %in% cont, c], na.rm = TRUE)
-}
-plate2 <-rbind(plate2, contamination)
-row.names(plate2)[74] <- "contamination" #change the name of row 104
-
-###subtract total contaminants from each OTU, if it is a negative number make it 0
-
-cont2 <- c(cont, "contamination")
-row <- which(!rownames(plate2) %in% cont2)
-for(r in row){
-  for(c in 1:ncol(plate2)){
-    if(plate2[r,c] > plate2["contamination",c]) {
-      new_reads <- plate2[r,c] - plate2["contamination",c]
-      plate2[r,c] <- new_reads
-    } else {plate2[r,c] <- 0}
-  }
-}
-
-
-
-##remove controls from dataframe and makes a text file to paste into exisitng excel sheet
-
-new_data_decontaminated002 <- plate2[!rownames(plate2) %in% cont2, ]
-write.table(new_data_decontaminated002,"clean_data/otu_data/MinusNegsBlanks_002.txt", sep="\t")
-
-
-###################################
-####Saving decontaminated file ####
-###################################
-all_complete_decontaminated <- bind_rows(new_data_decontaminated001, new_data_decontaminated002)
-
-write.csv(all_complete_decontaminated,"clean_data/otu_data/all_Decontaminated_byBlankandNegs_complete.csv")
-trans <- t(all_complete_decontaminated)
-trans <- as.data.frame(trans)
-write.csv(trans, "clean_data/otu_data/all_toFilt_10_percent.csv") ## in the format to remove <10% OTUs -- see below
-
-
-
-##########################################################################
-#### Script to remove < 0.10% abundance per sample #### From Shuzo Oita###
-##########################################################################
-## csv file should have row = OTU, col = sample
-
-otu.data <- read.csv('clean_data/otu_data/all_toFilt_10_percent.csv', row.names = 1,as.is = T)
-otu.data2 <- apply(otu.data, 2, function(x) ifelse({100*x/sum(x)} < 0.10, 0, x))
-OTU_table.cleaned <- subset((otu.data2), rowSums(otu.data2)>1)
-OTU_table.cleaned <- as.data.frame(OTU_table.cleaned)
-write.csv(OTU_table.cleaned, "all_cleaned_at_10_percent.csv")
+# pcrdata <- read.csv("clean_data/post_biopipeline/All_PCR_R1_otuFINAL_95.csv") #PCR2NEGPLATE1 is missing. This is due to mislabeling in the original sequence files.
+# #There is a q.fastq.gz file that might be this sample.INSPECT THIS FILE. G:\My Drive\VBL_users\Grad_Students\Bolivar\Dissertation\Leaf_Traits_Panama\Data\Sample_Sequencing\Post_Sequencing\Original_Sample_gzip_files
+# #The issue stated in the above line has been resolved as of March 10, 2022. -BAR
+# 
+# pcrdata <- pcrdata %>%
+#   rename(OTU_ID = X.OTU.ID)
+# 
+# ###Cleaning and reshaping Samples###
+# ####################################
+# 
+# realsamp <- read.csv("clean_data/post_biopipeline/All_Samples_R1_otuFINAL95.csv")
+# 
+# realsamp <- realsamp %>%
+#   na.omit() %>%
+#   rename(OTU_ID = X.OTU.ID)
+# 
+# ###############################################################################
+# ###Full_join of the data frames to retain all values and row and transposing###
+# ###############################################################################
+# 
+# #joined <- full_join(realsamp,pcrdata, by = "OTU_ID" ) %>%
+#  # mutate(across(everything(), replace_na, replace = 0))
+# 
+# joined <- full_join(realsamp,pcrdata, by = "OTU_ID" ) %>%
+#   dplyr::mutate(across(c(2:168),~replace_na(.x, 0)))
+# str(joined)
+# 
+# joined.t <- as.data.frame(t(joined))
+# str(joined.t)
+# 
+# names(joined.t) <- joined.t %>% slice(1) %>% unlist()
+# 
+# joined.t <-  joined.t %>% 
+#   rownames_to_column("Sample_names") %>%
+#   slice(-1)
+#  
+# str(joined.t)
+# 
+# #####################################################
+# ###Make subset tables from each sequence plate run###
+# #####################################################
+# 
+# ################### Plate1 #####################
+# 
+# filter_table1<- read.csv("filters/Filter_Table_Plate1.csv")
+# 
+# names(filter_table1)
+# filter_table1 <- filter_table1 %>%
+#   rename(A = ?..A)
+# str(filter_table1)
+# 
+# filter_table1 <-filter_table1 %>% 
+#   pivot_longer(cols = 1:12, names_to = "samples", values_to = "values") %>%
+#   select(-samples) %>%
+#   slice(-5, -6)
+# 
+# plate1 <- semi_join(joined.t, filter_table1, by= c("Sample_names" = "values"))
+# 
+# plate1 <- plate1 %>%
+#   mutate(across(!Sample_names, as.numeric))
+# plate1 <- as_tibble(plate1)
+# 
+# filter_filter <- anti_join( filter_table1, plate1, by = c("values"="Sample_names"))#Corroborating if indeed all match. Supposed to be ZERO.
+# str(plate1)
+# 
+# #From factor dataframe to numeric
+# 
+# indx <- sapply(plate1, is.tibble)
+# plate1[indx] <- lapply(plate1[indx], function(x) as.numeric(as.character(x)))
+# 
+# ################ Plate2 ####################
+# 
+# filter_table2<- read.csv("filters/Filter_Table_Plate2.csv")
+# 
+# names(filter_table2)
+# 
+# filter_table2 <- filter_table2 %>%
+#   rename(A = ?..A)
+# 
+# filter_table2 <- filter_table2 %>% 
+#   pivot_longer(cols = 1:10, names_to = "samples", values_to = "values") %>%
+#   select(-samples) %>%
+#   slice(-69, -70, -71, -77, -78, -79, -80)
+# 
+# plate2 <- semi_join(joined.t, filter_table2, by= c("Sample_names" = "values"))
+# 
+# plate2 <- plate2 %>%
+#   mutate(across(!Sample_names, as.numeric))
+# plate2 <- as_tibble(plate2)
+# filter_filter <- anti_join( filter_table2, plate2, by = c("values"="Sample_names")) #Corroborating if indeed all match. 
+# str(plate2)
+# 
+# #From factor dataframe to numeric
+# 
+# indx <- sapply(plate2, is.tibble)
+# plate2[indx] <- lapply(plate2[indx], function(x) as.numeric(as.character(x)))
+# 
+# ###################################
+# ###CC_fungi Contaminant removal.### 
+# ###Adapted from MARIE and Shuzo Oita#####
+# ###This code works by substracting the SUM of contaminants from each OTU cell. 
+# ###If the value is negative it replaces it with 0. 
+# 
+# ########MARELI MAGIC#########
+# ##### Substracts the sum of the average of the ExtractionBlank avg and PCR negative control of Batch 001 from OTU sample reads, then removed control rows #####
+# ######################################
+# 
+# ################### Plate1 #####################
+# 
+# as.data.frame(plate1)
+# plate1 <- column_to_rownames(plate1, var = "Sample_names")
+# 
+# #add column with sums for each OTU
+# 
+# cont <- row.names(plate1)
+# cont <- cont[92:94] #change accordingly to your data - these are the negative controls
+# contamination <- c()
+# for(c in 1:ncol(plate1)){
+#   contamination[c]<- mean(plate1[rownames(plate1) %in% cont, c], na.rm = TRUE)
+# }
+# plate1 <-rbind(plate1, contamination)
+# row.names(plate1)[95] <- "contamination" #change the name of row 104
+# 
+# ###subtract total contaminants from each OTU, if it is a negative number make it 0
+# cont2 <- c(cont, "contamination")
+# row <- which(!rownames(plate1) %in% cont2)
+# for(r in row){
+#   for(c in 1:ncol(plate1)){
+#     if(plate1[r,c] > plate1["contamination",c]) {
+#       new_reads <- plate1[r,c] - plate1["contamination",c]
+#       plate1[r,c] <- new_reads
+#     } else {plate1[r,c] <- 0}
+#   }
+# }
+# 
+# 
+# ##remove controls from dataframe and makes a text file to paste into existing excel sheet
+# 
+# new_data_decontaminated001 <- plate1[!rownames(plate1) %in% cont2, ]
+# write.table(new_data_decontaminated001,"clean_data/otu_data/MinusNegsBlanks_001.txt", sep="\t") ### This became tab "Filtered-BlankNegbyCode" in "ExtractionBatch0001_PCR102NC.xlsx". 
+# 
+# 
+# ################### Plate2 #####################
+# 
+# as.data.frame(plate2)
+# plate2 <- column_to_rownames(plate2, var = "Sample_names")
+# 
+# #add column with sums for each OTU
+# 
+# cont <- row.names(plate2)
+# cont <- cont[66:73] #change accordingly to your data - these are the negative controls
+# contamination <- c()
+# for(c in 1:ncol(plate2)){
+#   contamination[c]<- mean(plate2[rownames(plate2) %in% cont, c], na.rm = TRUE)
+# }
+# plate2 <-rbind(plate2, contamination)
+# row.names(plate2)[74] <- "contamination" #change the name of row 104
+# 
+# ###subtract total contaminants from each OTU, if it is a negative number make it 0
+# 
+# cont2 <- c(cont, "contamination")
+# row <- which(!rownames(plate2) %in% cont2)
+# for(r in row){
+#   for(c in 1:ncol(plate2)){
+#     if(plate2[r,c] > plate2["contamination",c]) {
+#       new_reads <- plate2[r,c] - plate2["contamination",c]
+#       plate2[r,c] <- new_reads
+#     } else {plate2[r,c] <- 0}
+#   }
+# }
+# 
+# 
+# 
+# ##remove controls from dataframe and makes a text file to paste into exisitng excel sheet
+# 
+# new_data_decontaminated002 <- plate2[!rownames(plate2) %in% cont2, ]
+# write.table(new_data_decontaminated002,"clean_data/otu_data/MinusNegsBlanks_002.txt", sep="\t")
+# 
+# 
+# ###################################
+# ####Saving decontaminated file ####
+# ###################################
+# all_complete_decontaminated <- bind_rows(new_data_decontaminated001, new_data_decontaminated002)
+# 
+# write.csv(all_complete_decontaminated,"clean_data/otu_data/all_Decontaminated_byBlankandNegs_complete.csv")
+# trans <- t(all_complete_decontaminated)
+# trans <- as.data.frame(trans)
+# write.csv(trans, "clean_data/otu_data/all_toFilt_10_percent.csv") ## in the format to remove <10% OTUs -- see below
+# 
+# 
+# 
+# ##########################################################################
+# #### Script to remove < 0.10% abundance per sample #### From Shuzo Oita###
+# ##########################################################################
+# ## csv file should have row = OTU, col = sample
+# 
+# otu.data <- read.csv('clean_data/otu_data/all_toFilt_10_percent.csv', row.names = 1,as.is = T)
+# otu.data2 <- apply(otu.data, 2, function(x) ifelse({100*x/sum(x)} < 0.10, 0, x))
+# OTU_table.cleaned <- subset((otu.data2), rowSums(otu.data2)>1)
+# OTU_table.cleaned <- as.data.frame(OTU_table.cleaned)
+# write.csv(OTU_table.cleaned, "all_cleaned_at_10_percent.csv")
 ```
 
 ## Data frames
@@ -872,7 +873,7 @@ masterant <- master %>%
 glimpse(masterant)
 
 
-# Masterant on a per leaf level
+# Masterant on a per leaf level (70 plants, 3 leaves per plant = 210 leaves measured)
 df_list_ant2 <- list(ndata, cOTU, ants2, patho2, rich)
 
 masterant2 <- df_list_ant2 %>%
@@ -896,7 +897,7 @@ masterant2 <- df_list_ant2 %>%
 glimpse(masterant2)
 ```
 
-For `masterant` I remove THEO T1 & T2 and APE28-29 just as I did in above section. I need to do this again because in creating the `master` data frame I join the data with `left_join()`. It results in rows with missing pathogen assay data and complete leaf trait data. There is no need for omiting NA's in `masterpat` because all the cells are complete.
+For `masterant` I remove THEO T1 & T2 and APE28-29 just as I did in above section. I need to do this again because in creating the `master` data frame I join the data with `left_join()`. It results in rows with missing pathogen assay data and complete leaf trait data.
 
 ### `masterpat` and `masterpat2`
 
@@ -910,7 +911,7 @@ masterpat <- master %>%
 # Glimpse
 glimpse(masterpat)
 
-# Pathogen Observations per leaf level
+# Pathogen Observations per leaf level (64 plants, 3 leaves per plant = 192 leaves measured)
 # masterpat2
 
 masterpat2 <- df_list_ant2 %>%
@@ -927,13 +928,17 @@ masterpat2 <- df_list_ant2 %>%
          Trial_Code = Trial_Code.x) %>%
   subset(Trial_type == "Pathogen") %>%
   select(!c(12:13)) %>%
-  mutate(logit_pathogenicity = logit(Pathogen_percent_damage))
-
+  na.omit() %>%
+  mutate(logit_pathogenicity = logit(Pathogen_percent_damage)) 
 
 #mutate(Pathogen_percent_damage = pmin(pmax(Pathogen_percent_damage, 0), 1)) %>%  # Rescale values between 0 and 1
   #mutate(logit_damage = logit(Pathogen_percent_damage))
 #masterpat2$log_damage <- log(masterpat2$Pathogen_percent_damage)
 ```
+
+
+The `masterant2` and `masterpat2` data frames can be a little counter-intuitive if you are not familiar with the experimental design. The `masterant2` data frame includes all the leaves of the plants that were used in the ant assay. All measurements were taken in triplicate leaves per plant per E+ and E- treatment. Hence, 70 plants (35 E+ and 35 E-) x 3 leaves per plant = 210 leaves measured. The `masterpat2` data frame includes all the leaves of the plants that were used in the pathogen assay. All measurements were taken in triplicate leaves per plant with nested treatments E+ with control and pathogen and E- with control and pathogen. This means 64 plants with the control and pathogen levels equals 128 [(32 E+ x 2) and (32 E- *2)] leaves. The pathogen damage data is at the control and pathogen leaf level and the functional trait data is at the level of the other 3 leaves. We extrapolated the functional trait data to their corresponding control and pathogen leaves. This means that the `masterpat2` data frame has 384 rows of data.
+
 
 # Descriptive statistics
 
@@ -1004,6 +1009,7 @@ hist(masterant$Shannon)
 ```
 
 Somewhat better distributions. Ant_percent_leafloss is not normally distributed. It looks more like a binomial distribution. Evaluate accordingly. Conclusion from the Shapiro-Wilk tests: Some of the independent variables are not normally distributed. 
+
 ## Variance Inflation Factor on simple LM with Toughness and Thickness
 
 ```{r, VIF, tidy = TRUE}
@@ -1018,7 +1024,7 @@ vif(lm(Ant_percent_leafloss ~ Anthocyanins + Thickness + Toughness + LMA + Obser
 
 # All explanatory variables have a VIF that is moderately correlated.
 # cor()
-corr <- cor(masterant[,c(6:13)])
+corr <- cor(masterant[,c(6:9)])
 corr
 corrplot::corrplot(corr, type="upper", order="hclust")
 
