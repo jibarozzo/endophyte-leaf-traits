@@ -1,5 +1,5 @@
 ---
-title: "Manuscript Draft : Aim3 Leaf Traits"
+title: "Manuscript Draft: Aim3 Leaf Traits"
 date: today
 bibliography: VBL_library.bib
 csl: apa.csl
@@ -42,16 +42,17 @@ author:
     affiliation: 
       - ref: tu
 format: 
-  pdf:
-    include-in-header:
-      text: '\usepackage{lineno}\linenumbers'
-    linestretch: 2.0
-    number-sections: true
-    citation-package: biblatex
-  # docx: 
-  #   reference-docx: custom-reference-doc.docx
+  # pdf:
+  #   include-in-header:
+  #     text: '\usepackage{lineno}\linenumbers'
+  #   linestretch: 2.0
   #   number-sections: true
   #   citation-package: biblatex
+  docx:
+    reference-docx: custom-reference-doc.docx
+    number-sections: true
+    #linestretch: 2.0
+    citation-package: biblatex
     
 editor: source
 ---
@@ -108,7 +109,9 @@ To test for H2, I used a general linear mixed model (GLM). First to determine wh
 
 Additionally, Principal Component Analysis (PCA) was used to reduce dimensions among covariates and reval underlying interactions that could influence fungal endophyte abundance, diversity and community composition in seedlings. The PCA was computed using the `prcomp` function in R statistical software [@rcoreteam2023]. A complete PCA was computed with variables ACI, LT, LPS, and LMA (FIGURE 2a?). We then proceeded to compute a PCA with the data from leaves of plants used in the ant ($n$ = 210) and pathogen assays ($n$ = 192).
 
-The PCA rincipal Component Analysis revealed how covariates (LMA, ACI, Thickness and Toughness) interact. I overlapped tree species groups on the PCA axes to show how the variance in the data is explained by PC1 (60%) and PC2 (27%) (Fig. 4). This is indicative of correlation among covariates. Thickness and toughness were orthogonal to each other in PCA, indicative of low correlation. References
+The PCA rincipal Component Analysis revealed how covariates (LMA, ACI, Thickness and Toughness) interact. I overlapped tree species groups on the PCA axes to show how the variance in the data is explained by PC1 (60%) and PC2 (27%) (Fig. 4). This is indicative of correlation among covariates. Thickness and toughness were orthogonal to each other in PCA, indicative of low correlation. 
+
+# References
 
 ::: {#refs}
 :::
