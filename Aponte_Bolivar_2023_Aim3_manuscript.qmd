@@ -54,17 +54,17 @@ author:
     affiliation: 
       - ref: tu
 format: 
-  # pdf:
-  #   include-in-header:
-  #     text: '\usepackage{lineno}\linenumbers'
-  #   linestretch: 2.0
-  #   number-sections: true
-  #   citation-package: biblatex
-  docx:
-    reference-docx: custom-reference-doc.docx
+  pdf:
+    include-in-header:
+      text: '\usepackage{lineno}\linenumbers'
+    linestretch: 2.0
     number-sections: true
-    #linestretch: 2.0
     citation-package: biblatex
+  # docx:
+  #   reference-docx: custom-reference-doc.docx
+  #   number-sections: true
+  #   #linestretch: 2.0
+  #   citation-package: biblatex
     
 editor: source
 ---
@@ -121,7 +121,688 @@ To test for H2, we used a general linear mixed model (GLM) with XXXX as the resp
 
 Additionally, Principal Component Analysis (PCA) was used to reduce dimensions among covariates and reveal underlying interactions that could influence fungal endophyte abundance, diversity and community composition in seedlings. The PCA was computed using the `prcomp` function in R statistical software [@rcoreteam2023]. A complete PCA was computed with variables ACI, LT, LPS, and LMA (FIGURE 2a?). We then proceeded to compute a PCA with the data from leaves of plants used in the ant ($n$ = 210) and pathogen assays ($n$ = 192).
 
-The PCA revealed how covariates (LMA, ACI, Thickness and Toughness) interact. I overlapped tree species groups on the PCA axes to show how the variance in the data is explained by PC1 (60%) and PC2 (27%) (Fig. 4). This is indicative of correlation among covariates. Thickness and toughness were orthogonal to each other in PCA, indicative of low correlation. 
+The PCA revealed how covariates (LMA, ACI, Thickness and Toughness) interact. I overlapped tree species groups on the PCA axes to show how the variance in the data is explained by PC1 (60%) and PC2 (27%) (Fig. 4). This is indicative of correlation among covariates. Thickness and toughness were orthogonal to each other in PCA, indicative of low correlation.
+
+# Figures
+
+```{r, Packages}
+#| echo: false
+#| eval: true
+#| warning: false
+# Data manipulation and visualizations ####
+library("rmarkdown")
+library("conflicted")
+library("devtools")
+#library("DiagrammeR")
+library("factoextra")
+library("ggfortify")
+library("ggiraph")
+library("ggiraphExtra")
+library("ggplot2")
+library("ggpubr")
+library("gridExtra")
+library("ggthemes")
+library("ggraph")
+library("hrbrthemes")
+library("igraph")
+library("tidyverse")
+library("plotrix")
+#library("viridis")
+library("MetBrewer")
+library("formatR")
+library("wesanderson")
+#library("knitr")
+#library("rmarkdown")
+library("data.table")
+library("kableExtra")
+
+# Stats ####
+library("broom")
+library("vegan")
+library("nlme")
+library("MASS")
+library("car") #For type 3 Anova with Anova() function.
+library("PerformanceAnalytics")
+library("corrr")
+library("permute")
+library("lattice")
+library("pls")
+library("buildmer")
+library("lme4")
+library("sjPlot")
+library("glmmTMB")
+library("indicspecies")
+
+# Phylogenetic analyses #source("https://raw.githubusercontent.com/joey711/phyloseq/master/inst/scripts/installer.R",local = TRUE)
+library("mgcv")
+library("phyloseq")
+library("ape")
+library("metagMisc")
+#remotes::install_github("vmikk/metagMisc")
+#library("speedyseq")
+library("picante")
+#source("http://bioconductor.org/biocLite.R")
+
+
+# Preference of conflicted functions among packages ####
+conflict_prefer("select", "dplyr")
+conflict_prefer("filter", "dplyr")
+conflict_prefer_all("phyloseq")
+```
+
+```{r, Clean sequences}
+#| echo: false
+#| eval: true
+#| tidy: true
+#| warning: false
+
+#Working directory
+rm(list = ls()) 
+#setwd("H:/.shortcut-targets-by-id/0B9v0CdUUCqU5VVR4a3BvNHM1Z28/VBL_users/Grad_Students/Bolivar/Dissertation/Leaf_Traits_Panama/Data/Sequence_analyses")
+
+#Working Directory and Path for Windows
+setwd("C:/Users/boloq/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses")
+save.path <- "C:/Users/boloq/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses"
+
+#Working Directory and Path for Linux
+#setwd("/home/baponte/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses/")
+# 
+#save.path <- ("/home/baponte/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses/")
+
+
+
+set.seed(123)
+# Cleaned (decontaminated) sample sequences ####
+#csamp
+# csamp <- read.csv("clean_data/otu_data/all_cleaned_at_10_percent.csv")
+# csamp[,2:157] <- lapply(csamp[,2:157], as.integer)
+# csamp <- csamp %>%
+#   rename(OTU_ID = X) %>%
+#   column_to_rownames(var = "OTU_ID") %>%
+#   na.omit() %>%
+#   na.fail() %>%
+#   as.matrix()
+
+# Saving
+# saveRDS(csamp, file.path(save.path, "R_objects", "clean_sequences.rds"))
+
+# Reading
+csamp <- readRDS(file.path(save.path, "R_objects", "clean_sequences.rds"))
+```
+
+```{r, TBAS}
+#| echo: false
+#| eval: true
+#| tidy: true
+#| warning: false
+
+# T-BAS taxonomic assignment ####
+#tbas
+# tbas <- read.csv("unite_report2BSDHQZP.csv")
+# tbas <- tbas %>%
+#   dplyr::filter(phylum == "Ascomycota") %>%
+#   select(-match,-e.value, -percent, -coverage, -bitscore) %>% #eliminating some columns that I am not really using
+#   na.omit()%>%
+#   rename( OTU_ID = query) %>%
+#   column_to_rownames(var = "OTU_ID") %>%
+#   na.omit() %>%
+#   na.fail() %>%
+#   as.matrix()
+
+# Saving
+#saveRDS(tbas, file.path(save.path, "R_objects", "tbas_filtered.rds"))
+
+# Reading
+tbas <- readRDS(file.path(save.path, "R_objects", "tbas_filtered.rds"))
+```
+
+
+```{r, Leaf trait variables data}
+#| echo: false
+#| eval: true
+#| tidy: true
+#| warning: false
+
+data <- read.csv("field_data/Aim3_Bolivar_Summer_2019_Leaf_Traits_datasheet.csv")
+
+# data2
+# Data set created on May 23, 2023 for analysis with raw data.
+# data2 <- data %>% 
+#   separate(Unique_ID, c("Trial_Code", "ELoad", "Species2", "Replicate")) %>%
+#   unite("Sample_name", Species2:Replicate, sep = "") %>%
+#   relocate(Sample_name, Trial_Code, E_load, .after = Species) %>%
+#   select(!c(5, 15:17, 20)) %>%
+#   rename( Anthocyanins = Anthocyanins..aci., 
+#           Thickness = Thickness..micro.m.,  
+#           Toughness =Toughness..lbf., 
+#           LMA = LMA_dw, 
+#           Abun_3 = Abundance_Proportion_day3, 
+#           Abun_7 = Abundance_Proportion_day7)
+
+# Saving
+# saveRDS(data2, file.path(save.path, "R_objects", "leaf_data_raw_analyses.rds"))
+
+# Reading
+data2 <- readRDS(file.path(save.path, "R_objects", "leaf_data_raw_analyses.rds"))
+
+# ndata (new_data)
+# This data set can also be used to conduct analysis with "raw" data . It is summarized by leaf.
+
+# ndata <- data %>%  
+#   group_by(Species, Unique_ID, Trial_type, E_load, Leaf_ID) %>%
+#   summarise(Anthocyanins..aci. = mean(Anthocyanins..aci., na.rm = TRUE), 
+#             Thickness..micro.m. = mean(Thickness..micro.m., na.rm = TRUE),
+#             Toughness..lbf. = mean(Toughness..lbf., na.rm = TRUE),
+#             LMA_dw = mean(LMA_dw, na.rm = TRUE),
+#             Abundance_Proportion_day3 = mean(Abundance_Proportion_day3, na.rm = TRUE),
+#             Abundance_Proportion_day7 = mean(Abundance_Proportion_day7, na.rm = TRUE)) %>%
+#    separate(Unique_ID, c("Trial_Code", "ELoad", "Species2", "Replicate")) %>%
+#   unite("Sample_name", Species2:Replicate, sep = "") %>%
+#   relocate(Species, Trial_Code,.after = Sample_name) %>%
+#   rename( Anthocyanins = Anthocyanins..aci., 
+#           Thickness = Thickness..micro.m.,  
+#           Toughness =Toughness..lbf., 
+#           LMA = LMA_dw, 
+#           Abun_3 = Abundance_Proportion_day3, 
+#           Abun_7 = Abundance_Proportion_day7) %>%
+#   select(!ELoad) %>%
+#   ungroup() %>%
+#    mutate_if(is.character, as.factor) %>%
+#   na.omit() %>% 
+#   na.fail()
+
+# Saving
+# saveRDS(ndata, file.path(save.path, "R_objects", "new_leaf_data.rds"))
+
+# Reading
+ndata <- readRDS(file.path(save.path, "R_objects", "new_leaf_data.rds"))
+
+# Splitting and relocating Unique_ID column 
+# Extract names to match to phyloseq objects separate(Species2, c("Species3", "Numbers"), sep = "(?<=[A-Za-z])(?=[0-9])")
+
+# ndata2 (new_data2)
+# Data frame is summarized by plant (n = 156)
+
+# ndata2 <- ndata %>% 
+#   select(!c(Abun_3, Abun_7)) %>%
+#   mutate_if(is.character, as.factor) %>%
+#   group_by(Sample_name, Species, Trial_type, Trial_Code, E_load) %>%
+#   summarise(Anthocyanins = mean(Anthocyanins, na.rm = TRUE),
+#             Thickness = mean(Thickness, na.rm = TRUE),
+#             Toughness = mean(Toughness, na.rm =TRUE),
+#             LMA = mean(LMA, na.rm = TRUE)) 
+
+# Saving
+# saveRDS(ndata2, file.path(save.path, "R_objects", "new_leaf_data2.rds"))
+
+# Reading
+ndata2 <- readRDS(file.path(save.path, "R_objects", "new_leaf_data2.rds"))
+```
+
+
+```{r, Ant assay data}
+#| echo: false
+#| eval: true
+#| tidy: true
+#| warning: false
+
+#ants <- read.csv("field_data/Aim3_Bolivar_Summer_2019_Ant_Assay_datasheet.csv")
+# 
+# ants <- ants %>%
+#   separate(Unique.ID, c("Trial_Code", "ELoad", "Species2", "Replicate")) %>%
+#   unite("Sample_name", Species2:Replicate, sep = "") %>%
+#   relocate(Species, Trial_Code,.after = Sample_name)%>%
+#   slice(-c(11,12)) %>%
+#   dplyr::filter(Trial_success!="0") %>%
+#   select(!c(Leaf_ID, 
+#             Colony_ID, 
+#             Picture_ID, 
+#             Colony_location_Pipeline.Gamboa, 
+#             Attempt, 
+#             Date_analyzed, 
+#             X_coordinates, 
+#             Y_coordinates, 
+#             Elevation_meters, 
+#             ELoad, 
+#             Analyzer, 
+#            
+#             Time_start_trial, 
+#             Time_first_contact, 
+#             Time_first_cut, 
+#             Time_end_elapsed_trial )) %>%
+#   mutate(Ant_percent_leafloss = -100*{(Leaf_area_final-Leaf_area_initial)/Leaf_area_initial}) %>%
+#   mutate_if(is.character, as.factor)
+
+# Saving
+# saveRDS(ants, file.path(save.path, "R_objects", "ants_data.rds"))
+
+# Reading
+ants <- readRDS(file.path(save.path, "R_objects", "ants_data.rds"))
+
+
+# Just the area loss
+ants2 <- ants %>%
+  select(c(1,3,4,9,10))
+
+ants3 <- ants %>%
+  select(c(1,3,4,5,9,10))
+```
+
+
+```{r, Pathogen Assay Data}
+#| echo: false
+#| eval: true
+#| tidy: true
+#| warning: false
+
+# patho <- read.csv("field_data/Aim3_Bolivar_Summer_2019_Patho_Assay_datasheet.csv")
+# 
+# patho <- patho %>%
+#   separate(Unique.ID, c("Trial_Code", "ELoad", "Species2", "Replicate")) %>%
+#   unite("Sample_name", Species2:Replicate, sep = "") %>%
+#   relocate(Species, Trial_Code,.after = Sample_name) %>%
+#   slice(-c(41:48, 97:100)) %>%
+#   select(!c(ELoad,
+#             Leaf_ID,
+#             Trial_start_time,
+#             Date, 
+#             ImageJ_link, 
+#             X, 
+#             Notes)) %>%
+#   rename(Treatment = Treatment_Ctrl_Pathogen) %>%
+#   mutate(Pathogen_percent_damage = (Damage_area/Leaf_area)) %>%
+#   mutate_if(is.character, as.factor)
+
+# Saving
+# saveRDS(patho, file.path(save.path, "R_objects", "pathogen_data.rds"))
+
+# Reading
+patho <- readRDS(file.path(save.path, "R_objects", "pathogen_data.rds"))
+
+
+#Just the area damaged
+patho2 <- patho %>%
+  select(c(1,3,4,8,9,12))
+
+
+patho3 <- patho %>%
+  select(c(1,3,4,6,7,8,9,12))
+```
+
+```{r, Objects and dataframes}
+#| echo: false
+#| eval: true
+#| tidy: true
+#| warning: false
+
+### Phyloseq objects ####
+
+# OTU Table: 1774 OTU with 156 Samples
+# OTU <- otu_table(csamp, taxa_are_rows = TRUE)
+# OTU
+
+# Saving
+# saveRDS(OTU, file.path(save.path, "R_objects", "otu_table.rds"))
+
+# Taxonomic Table: 1473 OTU by 7 taxonomic ranks
+# TAX <- tax_table(tbas)
+
+# Saving
+# saveRDS(TAX, file.path(save.path, "R_objects", "taxonomy_table.rds"))
+
+# SAMP (sample metadata)
+
+# SAMP <- ndata2 %>%
+#   column_to_rownames(var = "Sample_name")
+# SAMP <- sample_data(SAMP)
+
+# Saving
+# saveRDS(SAMP, file.path(save.path, "R_objects", "samp_data.rds"))
+
+
+# Merging phyloseq objects ####
+# pq1 <- phyloseq(OTU, TAX, SAMP)
+
+# Saving
+# saveRDS(pq1, file.path(save.path, "R_objects", "phyloseq_main.rds"))
+
+# Reading
+pq1 <- readRDS(file.path(save.path, "R_objects", "phyloseq_main.rds"))
+
+# Random tree ####
+#random_tree <- rtree(ntaxa(pq), rooted=TRUE, tip.label=taxa_names(pq))
+
+#write.nexus(random_tree, file = "random_tree.nex") #Creating nexus file to latter manipulate with FigTree software.
+```
+
+
+```{r, Mareli code}
+#| echo: false
+#| eval: true
+#| tidy: true
+#| warning: false
+
+# pq2 <- prune_taxa(taxa_sums(pq1) > 0, pq1)
+# ntaxa(pq2) #There are 488 taxa with 0 reads.
+
+# Saving
+# saveRDS(pq2, file.path(save.path, "R_objects", "phyloseq_pq2.rds"))
+
+# Reading
+pq2 <- readRDS(file.path(save.path, "R_objects", "phyloseq_pq2.rds"))
+
+# Subset of pq1 -- only E+ samples and OTUs.
+#Important -- don't remove OTUs with 0 reads here, because we want to know which ones have no reads in E+ but DO have reads in E-.
+pq2E <- subset_samples(pq2, E_load == "E+")
+ntaxa(pq2E) #1219 taxa and 78 samples
+
+# Eliminate E- only OTUs. Keep OTUs with more than 0 reads in subset.
+pq2_EminusRemoved <- prune_taxa(taxa_sums(pq2E) > 0, pq2E)
+ntaxa(pq2_EminusRemoved) #959 taxa remain. 260 OTUs removed.
+
+#If OTU has 0 reads in E+, it will have reads in E-, so this prunes pq2E and identifies all OTUs that have 0 reads in E+, which by default, are the OTUs that DO have reads in E-.
+pq2_EminuOnly <- prune_taxa(taxa_sums(pq2E) == 0, pq2E)
+pq2_EminuOnly #260 taxa and 78 samples
+
+# Gets names of OTUs and make a data frame with column name the same as in pq2
+EminusOTUs2 <- taxa_names(pq2_EminuOnly)
+EminusOTUsList2 <- as.data.frame(EminusOTUs2)
+#write.table(EminusOTUsList2, "clean_data/otu_data/Aim3_RemovedOTUsList.txt")
+
+# Get vectors (names) of numbered OTUs from pq1
+OTU_ID <- rownames(otu_table(pq1))
+
+# Returns all OTU names that don't have a match in Eminus OTUs.
+notShared <- setdiff(OTU_ID, EminusOTUs2)
+
+# Subset phyloseq object to only these OTUs
+pq2ET <- subset(otu_table(pq2), rownames(otu_table(pq2)) %in% notShared)
+
+# Exported into "Sequence Analyses"
+#write.csv(pq2ET, "clean_data/Aim3_OTU_phyloseq_trimmed.csv")
+
+# New phyloseq object without E- OTUs.
+newpq <- merge_phyloseq(pq2ET, tax_table(pq2), sample_data(pq2), rtree(ntaxa(pq2), rooted=TRUE, tip.label=taxa_names(pq2)))
+
+# Relative Abundance of 959 OTUs. No removal of singletons yet.
+
+# rawra <- transform_sample_counts(newpq, function(x)x/sum(x))
+# rawRA <- subset(otu_table(rawra), rownames(otu_table(rawra)) %in% notShared)
+# write.csv(rawRA, "clean_data/otu_data/Aim3_OTU_Relative_Abundance_singletons_untrimmed.csv")
+
+# Outputs of this script -- OTU table without E minus only OTUs and phyloseq object with E- OTUs removed. No removal of singletons yet.
+
+# End of Mareli's Code #
+```
+
+
+```{r, Singleton removal}
+#| echo: false
+#| eval: true
+#| tidy: true
+#| warning: false
+
+# Filtering Taxa: Removal of singletons ####
+ # Removal of  singletons
+newpq1 <- filter_taxa(newpq, function (x) {sum(x > 0) > 1}, prune=TRUE)
+# The result is 2,464,558 sequence reads from 569 taxa in 156 samples.
+
+# Relative abundance calculation ####
+# Code below is for making the .csv file. After that refer to df rawra from .csv file.
+
+# newpqRA <- transform_sample_counts(newpq1, function(x)x/sum(x))
+# rabun <- subset(otu_table(newpqRA), rownames(otu_table(newpqRA)) %in% notShared)
+# write.csv(rabun, "clean_data/otu_data/Aim3_OTU_Relative_Abundance_singletons_trimmed.csv")
+#GPfr = filter_taxa(GPr, function(x) mean(x) > 1e-5, TRUE)
+
+
+# Richness data frame ####
+rich <- estimate_richness(newpq1, split = TRUE, measures = c("Observed","Shannon"))
+rich
+rich <- rich %>%
+  rownames_to_column() %>%
+  rename(Sample_name = rowname)
+
+# Phyloseq object to data frames ####
+
+# Cleaned: no singletons
+newpqDF <- phyloseq_to_df(newpq1, addtax = T, addtot = F, addmaxrank = F, sorting = "abundance")
+#write.csv(newpqDF, "clean_data/otu_data/Aim3_OTUs_assigned_nonsingletons.csv")
+```
+
+```{r, Loading phyloseq products}
+#| echo: false
+#| eval: true
+#| tidy: true
+#| warning: false
+
+#These are the data frames resulting from the phyloseq data wrangling.
+
+#The 569 OTUs and 156 samples (total abundances)
+newpqDF <- read.csv("clean_data/otu_data/Aim3_OTUs_assigned_nonsingletons.csv")
+newpqDF <- newpqDF %>%  # Code from the Taxonomical assginment section dopes the same. This is just calling it directly from the /csv to avoid running all the code. 
+  select(!c(1))
+
+# OTUs 959 and 156 samples (total abundances)
+
+# eOTU <- read.csv("clean_data/Aim3_OTU_phyloseq_trimmed.csv") 
+# Can upload as data frame. Use for distance matrices.
+# 
+# eOTU2 <- eOTU %>%
+#   rename(OTU_ID = X) %>%
+#   column_to_rownames(var = "OTU_ID") %>%
+#   t() %>%
+#   as.data.frame() %>%
+#   rownames_to_column() %>%
+#   rename(Sample_name = rowname)
+
+# Saving
+#saveRDS(eOTU2, file.path(save.path, "R_objects", "eOTU2.rds"))
+
+# Reading
+eOTU2 <- readRDS(file.path(save.path, "R_objects", "eOTU2.rds"))
+
+
+# Just 569 OTUs and 156 samples (total abundances)
+# cOTU <- newpqDF %>%
+#   select(-kingdom, -phylum, -class, -order, -family, -genus, -species) %>%
+#   column_to_rownames(var = "OTU") %>%
+#   as.matrix() %>%
+#   t() %>%
+#   as.data.frame() %>%
+#   rownames_to_column() %>%
+#   rename(Sample_name = rowname)
+
+# Saving
+# saveRDS(cOTU, file.path(save.path, "R_objects", "clean_OTU.rds"))
+
+# Reading
+cOTU <- readRDS(file.path(save.path, "R_objects", "clean_OTU.rds"))
+
+# Relative Abundance matrix (trimmed to 569 OTUs)
+# rabun <- read.csv("clean_data/otu_data/Aim3_OTU_Relative_Abundance_singletons_trimmed.csv")
+# rabun <- rabun %>%
+#   rename(OTU_ID = X) %>%
+#   column_to_rownames(var = "OTU_ID") %>%
+#   na.omit() %>%
+#   na.fail() %>%
+#   as.matrix()
+
+# Saving
+# saveRDS(rabun, file.path(save.path, "R_objects", "rabun_tidy.rds"))
+
+# Reading
+rabun <- readRDS(file.path(save.path, "R_objects", "rabun_tidy.rds"))
+
+# Relative Abundance matrix (singletons untrimmed Ascomycota 959 OTUs)
+# rawra <- read.csv("clean_data/otu_data/Aim3_OTU_Relative_Abundance_singletons_untrimmed.csv")
+# rawra <- rawra %>%
+#   rename(OTU_ID = X) %>%
+#   column_to_rownames(var = "OTU_ID") %>%
+#   na.omit() %>%
+#   na.fail() %>%
+#   as.matrix()
+
+# Saving
+# saveRDS(rawra, file.path(save.path, "R_objects", "rawra_tidy.rds"))
+
+# Reading
+rawra <- readRDS(file.path(save.path, "R_objects", "rawra_tidy.rds"))
+
+```
+
+
+## Figure 1
+```{r, Master data set}
+#| echo: false
+#| eval: true
+#| tidy: true
+#| warning: false
+
+#This contains all the OTU id's per sample type. Hence, 156 (# samples) observations per OTU_ID. The phyloseq object achieves the same purpose. This data set is easier to use with other functions or test not supported by phyloseq.
+
+# Master ####
+#put all data frames into list
+df_list_ant <- list(ndata2, cOTU, ants2, patho2, rich)    
+
+#merge all data frames together
+master <- df_list_ant %>% 
+  reduce(left_join, by= "Sample_name", "E_load") %>%
+  mutate(Total_reads = sum(across(starts_with("OTU")))) %>%
+  group_by(Species) %>%
+  mutate(Relative_Abundance = Total_reads/sum(Total_reads)) %>%
+  select(c(1:9, 579:591)) %>%
+  select(!c(E_load,
+            E_load.y,
+            Trial_Code,
+            Trial_Code.y)) %>%
+  relocate(Treatment, E_load.x, .after = Trial_type) %>%
+  rename(Pathogen_Damage_area = Damage_area, 
+         E_load = E_load.x, 
+         Trial_Code = Trial_Code.x)
+```
+
+```{r, Ant Master Data}
+#| echo: false
+#| eval: true
+#| tidy: true
+#| warning: false
+
+# Masterant on a per plant level
+masterant <- master %>%
+  subset(Trial_type == "Ant") %>%
+  drop_na(Trial_Code) %>%
+  select(!c(4, 13:14)) %>%
+  na.omit()
+
+# Masterant on a per leaf level (70 plants, 3 leaves per plant = 210 leaves measured)
+df_list_ant2 <- list(ndata, cOTU, ants2, patho2, rich)
+
+masterant2 <- df_list_ant2 %>%
+  reduce(left_join, by= "Sample_name", "E_load") %>%
+ mutate(Total_reads = sum(across(starts_with("OTU")))) %>%
+  group_by(Species) %>%
+  mutate(Relative_Abundance = Total_reads/sum(Total_reads)) %>%
+  select(c(1:10, 584:594)) %>%
+  select(!c(E_load,
+            Trial_Code)) %>%
+  relocate(Treatment, E_load.x, .after = Trial_type) %>%
+  rename(Pathogen_Damage_area = Damage_area, 
+         E_load = E_load.x, 
+         Trial_Code = Trial_Code.x) %>%
+  subset(Trial_type == "Ant") %>%
+  drop_na(Trial_Code) %>%
+  select(!c(5, 14:15)) %>%
+  na.omit() %>%
+  mutate(logit_herbivory = logit(Ant_percent_leafloss))
+```
+
+```{r, Pathogen Master data}
+#| echo: false
+#| eval: true
+#| tidy: true
+#| warning: false
+
+
+# Pathogen Observations per plant level
+masterpat <- master %>%
+  subset(Trial_type == "Pathogen") %>%
+  select(!c(11,12)) %>%
+  na.omit()
+
+# Pathogen Observations per leaf level (64 plants, 3 leaves per plant = 192 leaves measured)
+# masterpat2
+
+masterpat2 <- df_list_ant2 %>%
+  reduce(left_join, by= "Sample_name", "E_load") %>%
+ mutate(Total_reads = sum(across(starts_with("OTU")))) %>%
+  group_by(Species) %>%
+  mutate(Relative_Abundance = Total_reads/sum(Total_reads)) %>% 
+  select(c(1:10, 584:594)) %>%
+  select(!c(E_load,
+            Trial_Code)) %>%
+  relocate(Treatment, .after = Trial_type) %>%
+  rename(Pathogen_Damage_area = Damage_area, 
+         E_load = E_load.x, 
+         Trial_Code = Trial_Code.x) %>%
+  subset(Trial_type == "Pathogen") %>%
+  select(!c(12:13)) %>%
+  na.omit() %>%
+  mutate(logit_pathogenicity = logit(Pathogen_percent_damage)) 
+
+#mutate(Pathogen_percent_damage = pmin(pmax(Pathogen_percent_damage, 0), 1)) %>%  # Rescale values between 0 and 1
+  #mutate(logit_damage = logit(Pathogen_percent_damage))
+#masterpat2$log_damage <- log(masterpat2$Pathogen_percent_damage)
+```
+
+
+```{r fig1}
+#| echo: false
+#| eval: true
+#| warning: false
+#| fig.width: 8
+#| fig.cap: "Relative abundance (RA) of Ascomycota OTUs of seven tree species used in the study. Violin plots show the distribution of the RA. The horizontal line within the embedded boxplots represents the median, the box represents the interquartile range (IQR), and the whiskers represent the 1.5xIQR. Outliers are represented by dots. Siginificant levels are represented by p=0.05 (*), p=0.01 (**), and p=0.001 (***)."
+
+library("ggplot2")
+library("ggpubr")
+
+# RA per E_load
+
+newname <- c("A. membranacea", "C. cainito", "C. alliodora", "Dypterix .sp", "H. concinna", "L. panamensis", "T. cacao")
+
+names(newname) <- c("APEIME", "CHRYCA", "CORDAL", "DYPTE", "HEISCO", "LACPA", "THEOCA")
+
+RAE <- ggplot(data= master, aes(x = E_load, y = Relative_Abundance)) +
+  geom_violin(aes(fill = E_load)) +
+    geom_boxplot(width=0.1, color="grey40", alpha=0.2, outlier.shape = -1) +
+# geom_crossbar(stat="summary", fun = mean, fun.max = mean, fun.min = mean,  fatten = 2, width = 0.5) +
+# geom_point(color="black", alpha = 0.4,size = 2, position = position_jitter(w=0.05)) +
+  scale_fill_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
+  theme_bw(base_size = 14)+
+  
+  theme(panel.grid.major = element_line(colour = "grey")) +
+  theme(panel.grid.minor = element_line(colour = "grey")) +
+  theme(strip.background = element_rect(fill = "white")) +
+  theme(strip.text.x = element_text(colour = "grey15", face = "italic")) +
+  theme(legend.title = element_text(face = "bold")) +
+  theme(panel.border = element_rect(linetype = "blank", fill = NA)) +
+  labs(x="", y="Relative Abundance", face = "bold")+
+  theme(legend.position="right", legend.title = element_blank(),
+        legend.text = element_text(size = 16),
+        axis.text.x=element_blank()) +
+  #labs(caption = "*Outliers and singletons removed.") +
+  stat_compare_means(comparisons = list(c("E-", "E+")), 
+                     method = "t.test",
+                     label = "p.signif", label.y = 0.3, bracket.size = 0.65) +
+  facet_wrap(~Species, labeller = as_labeller(newname))
+  
+
+RAE
+#ggsave(filename="./plots/Aim3_RA_Eload_SEPT182023.png", plot = RAE, dpi=600, units=c("mm"), width = 180, height = 180)
+```
+
+
 
 # References
 

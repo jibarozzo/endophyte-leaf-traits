@@ -129,13 +129,13 @@ rm(list = ls())
 #setwd("H:/.shortcut-targets-by-id/0B9v0CdUUCqU5VVR4a3BvNHM1Z28/VBL_users/Grad_Students/Bolivar/Dissertation/Leaf_Traits_Panama/Data/Sequence_analyses")
 
 #Working Directory and Path for Windows
-#setwd("C:/Users/boloq/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses")
-#save.path <- "C:/Users/boloq/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses"
+setwd("C:/Users/boloq/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses")
+save.path <- "C:/Users/boloq/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses"
 
 #Working Directory and Path for Linux
-setwd("/home/baponte/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses/")
+#setwd("/home/baponte/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses/")
 # 
-save.path <- ("/home/baponte/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses/")
+#save.path <- ("/home/baponte/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses/")
 ```
 
 # Post VSEARCH and T-BAS sequence pre-processing
@@ -1197,11 +1197,11 @@ RAE <- ggplot(data= master, aes(x = E_load, y = Relative_Abundance)) +
   theme(strip.text.x = element_text(colour = "grey15", face = "italic")) +
   theme(legend.title = element_text(face = "bold")) +
   theme(panel.border = element_rect(linetype = "blank", fill = NA)) +
-  labs(x="", y="Relative Abundance of OTUs (Ascomycota)", face = "bold")+
+  labs(x="", y="Relative Abundance", face = "bold")+
   theme(legend.position="right", legend.title = element_blank(),
         legend.text = element_text(size = 16),
         axis.text.x=element_blank()) +
-  labs(caption = "*Outliers and singletons removed.") +
+  #labs(caption = "*Outliers and singletons removed.") +
   stat_compare_means(comparisons = list(c("E-", "E+")), 
                      method = "t.test",
                      label = "p.signif", label.y = 0.3, bracket.size = 0.65) +
@@ -2652,7 +2652,7 @@ cor.mtest <- function(mat, ...) {
 }
 # matrix of the p-value of the correlation
 p.mat <- cor.mtest(corr)
-head(p.mat[, 1:8])
+head(p.mat[, 1:4])
 
 corrplot::corrplot(corr, method = "color", type = "upper", order = "hclust",addCoef.col = "black", # Add coefficient of correlation
          tl.col="black", tl.srt=45, #Text label color and rotation
