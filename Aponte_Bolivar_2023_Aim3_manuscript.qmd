@@ -58,6 +58,8 @@ format:
     include-in-header:
       text: '\usepackage{lineno}\linenumbers'
     linestretch: 2.0
+    mainfont: TeX Gyre Termes #Alternative to Times New Roman
+    sansfont: TeX Gyre Termes #Another option is Liberation Serif
     number-sections: true
     citation-package: biblatex
   # docx:
@@ -122,6 +124,11 @@ To test for H2, we used a general linear mixed model (GLM) with XXXX as the resp
 Additionally, Principal Component Analysis (PCA) was used to reduce dimensions among covariates and reveal underlying interactions that could influence fungal endophyte abundance, diversity and community composition in seedlings. The PCA was computed using the `prcomp` function in R statistical software [@rcoreteam2023]. A complete PCA was computed with variables ACI, LT, LPS, and LMA (FIGURE 2a?). We then proceeded to compute a PCA with the data from leaves of plants used in the ant ($n$ = 210) and pathogen assays ($n$ = 192).
 
 The PCA revealed how covariates (LMA, ACI, Thickness and Toughness) interact. I overlapped tree species groups on the PCA axes to show how the variance in the data is explained by PC1 (60%) and PC2 (27%) (Fig. 4). This is indicative of correlation among covariates. Thickness and toughness were orthogonal to each other in PCA, indicative of low correlation.
+
+# References
+
+::: {#refs}
+:::
 
 # Figures
 
@@ -201,13 +208,13 @@ rm(list = ls())
 #setwd("H:/.shortcut-targets-by-id/0B9v0CdUUCqU5VVR4a3BvNHM1Z28/VBL_users/Grad_Students/Bolivar/Dissertation/Leaf_Traits_Panama/Data/Sequence_analyses")
 
 #Working Directory and Path for Windows
-setwd("C:/Users/boloq/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses")
-save.path <- "C:/Users/boloq/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses"
+#setwd("C:/Users/boloq/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses")
+#save.path <- "C:/Users/boloq/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses"
 
 #Working Directory and Path for Linux
-#setwd("/home/baponte/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses/")
+setwd("/home/baponte/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses/")
 # 
-#save.path <- ("/home/baponte/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses/")
+save.path <- ("/home/baponte/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses/")
 
 
 
@@ -255,7 +262,6 @@ csamp <- readRDS(file.path(save.path, "R_objects", "clean_sequences.rds"))
 # Reading
 tbas <- readRDS(file.path(save.path, "R_objects", "tbas_filtered.rds"))
 ```
-
 
 ```{r, Leaf trait variables data}
 #| echo: false
@@ -339,7 +345,6 @@ ndata <- readRDS(file.path(save.path, "R_objects", "new_leaf_data.rds"))
 ndata2 <- readRDS(file.path(save.path, "R_objects", "new_leaf_data2.rds"))
 ```
 
-
 ```{r, Ant assay data}
 #| echo: false
 #| eval: true
@@ -387,7 +392,6 @@ ants2 <- ants %>%
 ants3 <- ants %>%
   select(c(1,3,4,5,9,10))
 ```
-
 
 ```{r, Pathogen Assay Data}
 #| echo: false
@@ -472,9 +476,7 @@ pq1 <- readRDS(file.path(save.path, "R_objects", "phyloseq_main.rds"))
 # Random tree ####
 #random_tree <- rtree(ntaxa(pq), rooted=TRUE, tip.label=taxa_names(pq))
 
-#write.nexus(random_tree, file = "random_tree.nex") #Creating nexus file to latter manipulate with FigTree software.
 ```
-
 
 ```{r, Mareli code}
 #| echo: false
@@ -494,15 +496,15 @@ pq2 <- readRDS(file.path(save.path, "R_objects", "phyloseq_pq2.rds"))
 # Subset of pq1 -- only E+ samples and OTUs.
 #Important -- don't remove OTUs with 0 reads here, because we want to know which ones have no reads in E+ but DO have reads in E-.
 pq2E <- subset_samples(pq2, E_load == "E+")
-ntaxa(pq2E) #1219 taxa and 78 samples
+#ntaxa(pq2E) #1219 taxa and 78 samples
 
 # Eliminate E- only OTUs. Keep OTUs with more than 0 reads in subset.
 pq2_EminusRemoved <- prune_taxa(taxa_sums(pq2E) > 0, pq2E)
-ntaxa(pq2_EminusRemoved) #959 taxa remain. 260 OTUs removed.
+#ntaxa(pq2_EminusRemoved) #959 taxa remain. 260 OTUs removed.
 
 #If OTU has 0 reads in E+, it will have reads in E-, so this prunes pq2E and identifies all OTUs that have 0 reads in E+, which by default, are the OTUs that DO have reads in E-.
 pq2_EminuOnly <- prune_taxa(taxa_sums(pq2E) == 0, pq2E)
-pq2_EminuOnly #260 taxa and 78 samples
+#pq2_EminuOnly #260 taxa and 78 samples
 
 # Gets names of OTUs and make a data frame with column name the same as in pq2
 EminusOTUs2 <- taxa_names(pq2_EminuOnly)
@@ -535,7 +537,6 @@ newpq <- merge_phyloseq(pq2ET, tax_table(pq2), sample_data(pq2), rtree(ntaxa(pq2
 # End of Mareli's Code #
 ```
 
-
 ```{r, Singleton removal}
 #| echo: false
 #| eval: true
@@ -558,7 +559,7 @@ newpq1 <- filter_taxa(newpq, function (x) {sum(x > 0) > 1}, prune=TRUE)
 
 # Richness data frame ####
 rich <- estimate_richness(newpq1, split = TRUE, measures = c("Observed","Shannon"))
-rich
+
 rich <- rich %>%
   rownames_to_column() %>%
   rename(Sample_name = rowname)
@@ -651,8 +652,8 @@ rawra <- readRDS(file.path(save.path, "R_objects", "rawra_tidy.rds"))
 
 ```
 
-
 ## Figure 1
+
 ```{r, Master data set}
 #| echo: false
 #| eval: true
@@ -755,13 +756,13 @@ masterpat2 <- df_list_ant2 %>%
 #masterpat2$log_damage <- log(masterpat2$Pathogen_percent_damage)
 ```
 
-
 ```{r fig1}
 #| echo: false
 #| eval: true
 #| warning: false
-#| fig.width: 8
-#| fig.cap: "Relative abundance (RA) of Ascomycota OTUs of seven tree species used in the study. Violin plots show the distribution of the RA. The horizontal line within the embedded boxplots represents the median, the box represents the interquartile range (IQR), and the whiskers represent the 1.5xIQR. Outliers are represented by dots. Siginificant levels are represented by p=0.05 (*), p=0.01 (**), and p=0.001 (***)."
+#| fig.width: 7
+#| fig.height: 7
+#| fig.cap: "Relative abundance (RA) of Ascomycota OTUs of seven tree species used in the study. Violin plots show the distribution of the RA. The horizontal line within the embedded boxplots represents the median, the box represents the interquartile range (IQR), and the whiskers represent the 1.5xIQR. Outliers are represented by dots. Siginificant levels are represented by p = 0.05 (\\*), p = 0.01 (\\**), and p = 0.001 (\\***)."
 
 library("ggplot2")
 library("ggpubr")
@@ -801,10 +802,3 @@ RAE <- ggplot(data= master, aes(x = E_load, y = Relative_Abundance)) +
 RAE
 #ggsave(filename="./plots/Aim3_RA_Eload_SEPT182023.png", plot = RAE, dpi=600, units=c("mm"), width = 180, height = 180)
 ```
-
-
-
-# References
-
-::: {#refs}
-:::
