@@ -58,6 +58,10 @@ format:
     include-in-header:
       text: '\usepackage{lineno}\linenumbers'
     linestretch: 2.0
+    margin-left: 1in
+    margin-right: 1in
+    margin-top: 1in
+    margin-bottom: 1in
     mainfont: TeX Gyre Termes #Alternative to Times New Roman
     sansfont: TeX Gyre Termes #Another option is Liberation Serif
     number-sections: true
@@ -762,7 +766,7 @@ masterpat2 <- df_list_ant2 %>%
 #| warning: false
 #| fig.width: 7
 #| fig.height: 7
-#| fig.cap: "Relative abundance (RA) of Ascomycota OTUs of seven tree species used in the study. Violin plots show the distribution of the RA. The horizontal line within the embedded boxplots represents the median, the box represents the interquartile range (IQR), and the whiskers represent the 1.5xIQR. Outliers are represented by dots. Siginificant levels are represented by p = 0.05 (\\*), p = 0.01 (\\**), and p = 0.001 (\\***)."
+#| fig.cap: "Relative abundance (RA) of Ascomycota OTUs of seven tree species used in the study. Violin plots show the distribution of the RA. The horizontal line within the embedded boxplots represents the median, the box represents the interquartile range (IQR), and the whiskers represent the 1.5xIQR. Outliers are represented by dots. Siginificance levels are represented by asterisks [*p* = 0.05 (\\*), *p* = 0.01 (\\**), and *p* = 0.001 (\\***)]."
 
 library("ggplot2")
 library("ggpubr")
@@ -854,7 +858,6 @@ auto <- auto +
 
 #ggsave(filename="./plots/Aim3_PCA_SEPT252023.png", plot = auto, dpi=600, units=c("mm"), width = 180, height = 180, bg = "white")
 ```
-
 
 ```{r, Ant PCA, tidy=TRUE}
 #| echo: false
@@ -952,15 +955,13 @@ auto_pat <- auto_pat +
 #ggsave(filename="./plots/Aim3_Pathogen_PCA_08162023.png", plot = auto_pat, dpi=600, units=c("mm"), width = 180, height = 180, bg = "white")
 ```
 
-
-
 ```{r, Fig2 Grid PCA}
 #| echo: false
 #| eval: true
 #| tidy: true
 #| warning: false
-#| fig.width: 8 
-#| fig.height: 5
+#| fig.width:  6
+#| fig.height: 4
 #| fig.cap: "a) Principal Component Analysis (PCA) of leaf functional traits from all tree species separated by *E-* and *E+* treatment.   b) PCA of leaf functional traits of plants solely used in ant herbivory assays.  c) PCA leaf functional traits of plants used solely in pathogen damage assays.   Colors represent individual species. Circle and triangles represent *E-* and *E+* treatments, respectively.   Colored ellipses correspond to tree species and represent 95% confidence intervals."
 grid_pca <- ggarrange(auto, auto_ant, auto_pat, nrow = 1, ncol=3, common.legend = TRUE, legend="bottom")
 
@@ -973,3 +974,206 @@ grid_pca
 
 #ggsave(filename = "./plots/Aim3_GridPCA_SEPT182023.png", plot = grid_pca, dpi=300, units=c("mm"), width = 200, height = 120, bg = "white")
 ```
+
+## Figure 3
+
+```{r, Ant LM PCA data}
+#| echo: false
+#| eval: true
+#| tidy: true
+#| warning: false
+
+# PCA loadings (rotations) data frame
+ant.pci<-data.frame(ant.pca$x) #Species = ndata$Species not included.
+
+# joined data frame for PC llinear regressions
+
+ant_pcalm <- masterant2[c(1,2,5,12, 17)]
+
+ant_pcalm <- cbind(ant_pcalm, ant.pci) #Both data sets have 467 observations
+```
+
+```{r, Ant PC1-2}
+#| echo: false
+#| eval: true
+#| tidy: true
+#| warning: false
+# Formatting formula for p value
+format.p <- function(p, precision = 0.001) {
+  digits <- -log(precision, base = 10)
+  p <- formatC(p, format = 'f', digits = digits)
+  if (p < 0.001) {
+    p = paste0('< ', precision)}
+  if (p >= 0.001) {
+    p = paste0('= ', p)    }
+  sub("0", "", p)
+}
+
+lmpc1 <- lm(Ant_percent_leafloss ~ PC1, data = ant_pcalm)
+
+# PC1
+# Formatted p-value
+p1 <- cor.test(ant_pcalm$Ant_percent_leafloss, ant_pcalm$PC1)$p.value
+
+p1 = format.p(p1) # This is just to make the p-value nicer. 
+
+## Plot PC1
+       
+ant_pc1 <- ggplot(ant_pcalm, aes(PC1, Ant_percent_leafloss)) +
+  geom_jitter(aes(color = Species, shape = E_load), size = 2.2, alpha = 0.6) +
+  geom_smooth(method = lm, se = T , level = 0.95, na.rm = F, color = "black", size = 0.75) +
+  stat_regline_equation(aes(label = paste(..eq.label.., ..adj.rr.label.., sep = "~~~~"))) +
+  #stat_regline_equation(label.y.npc = "top", label.x.npc = "center", aes(label = ..eq.label..), color= "black", size = 2.2) +
+  scale_color_manual(labels=c("A. membranacea", "C. cainito", "C. alliodora", "Dypterix .sp", "H. concinna", "L. panamensis", "T. cacao"),values = met.brewer(name = "Cross", n = 8, type="discrete")) +
+  theme_minimal(base_size = 12) +
+  labs(title = "a", y = "Herbivory (%)", caption = "") +
+  theme(plot.title = element_text(color="black", size = 14, face="bold")) + 
+    annotate(geom="text",label=sprintf("italic('p')~'%s'", p1),parse=TRUE,x=-2.5,y=65) +
+  theme(legend.text = element_text(color="black", face="italic"))
+  #guides(color = "none")  +      #To turn off color legend
+  #guides(fill = "none") + #To turn off fill legend
+  #guides(shape = "none")
+
+#ant_pc1
+
+#ggsave(filename="./plots/Aim3_AntPC1_JUL102023.png", plot = ant_pc1, dpi=600, units=c("mm"), width = 180, height = 180, bg = "white")
+
+
+# PC2
+# Formatted p-values
+p2 <- cor.test(ant_pcalm$Ant_percent_leafloss, ant_pcalm$PC2)$p.value
+
+p2 =format.p(p2) # This is just to make the p-value nicer. 
+
+## Plot PC2
+lmpc2 <- lm(Ant_percent_leafloss ~ PC2, data = ant_pcalm)
+
+ant_pc2 <- ggplot(ant_pcalm, aes(PC2, Ant_percent_leafloss)) +
+  geom_jitter(aes(color = Species, shape = E_load), size = 2.2, alpha = 0.6) +
+  geom_smooth(method = lm, se = T , level = 0.95, na.rm = F, color = "black", size = 0.75) +
+  stat_regline_equation(aes(label = paste(..eq.label.., ..adj.rr.label.., sep = "~~~~"))) +
+  #stat_regline_equation(label.y.npc = "top", label.x.npc = "center", aes(label = ..eq.label..), color= "black", size = 2.2) +
+  scale_color_manual(values = met.brewer(name = "Cross", n = 8, type="discrete")) +
+  theme_minimal(base_size = 12) +
+  labs(title = "b", y = "Herbivory (%)", caption = "") +
+  theme(plot.title = element_text(color="black", size = 14, face="bold")) +
+ annotate(geom="text",label=sprintf("italic('p')~'%s'", p2),parse=TRUE,x=-1,y=65) +
+    guides(color = "none")  +      #To turn off color legend
+  guides(fill = "none") + #To turn off fill legend
+  guides(shape = "none")
+  
+  
+#ant_pc2
+
+#ggsave(filename="./plots/Aim3_AntPC2_JUL102023.png", plot = ant_pc2, dpi=600, units=c("mm"), width = 180, height = 180, bg = "white")
+```
+
+```{r, Pathogen LM PCA data}
+#| echo: false
+#| eval: true
+#| tidy: true
+#| warning: false
+# PCA loadings (rotations) data frame
+pat.pci<-data.frame(pat.pca$x) #Species = ndata$Species not included.
+
+# joined data frame for PC llinear regressions
+
+pat_pcalm <- masterpat2[c(1,2,5,6,13)]
+
+pat_pcalm <- cbind(pat_pcalm, pat.pci) #Both data sets have 467 observations
+```
+
+```{r, Pathogen PC1-2}
+#| echo: false
+#| eval: true
+#| tidy: true
+#| warning: false
+# Formatting formula for p value
+format.p <- function(p, precision = 0.001) {
+  digits <- -log(precision, base = 10)
+  p <- formatC(p, format = 'f', digits = digits)
+  if (p < 0.001) {
+    p = paste0('< ', precision)}
+  if (p >= 0.001) {
+    p = paste0('= ', p)    }
+  sub("0", "", p)
+}
+
+plmpc1 <- lm(Pathogen_percent_damage ~ PC1, data = pat_pcalm)
+
+# PC1
+# Formatted p-value
+p1 <- cor.test(pat_pcalm$Pathogen_percent_damage, pat_pcalm$PC1)$p.value
+
+p1 = format.p(p1) # This is just to make the p-value nicer. 
+
+## Plot PC1
+       
+pat_pc1 <- ggplot(pat_pcalm, aes(PC1, Pathogen_percent_damage)) +
+  geom_jitter(aes(color = Species, shape = E_load), size = 2.2, alpha = 0.6) +
+  geom_smooth(method = lm, se = T , level = 0.95, na.rm = F, color = "black", size = 0.75) +
+  stat_regline_equation(aes(label = paste(..eq.label.., ..adj.rr.label.., sep = "~~~~"))) +
+  #stat_regline_equation(label.y.npc = "top", label.x.npc = "center", aes(label = ..eq.label..), color= "black", size = 2.2) +
+  scale_color_manual(values = met.brewer(name = "Cross", n = 8, type="discrete")) +
+  theme_minimal(base_size = 12) +
+  labs(title = "c", y = "Pathogen damage (%)", caption = "") +
+  theme(plot.title = element_text(color="black", size = 14, face="bold"))+ 
+    annotate(geom="text",label=sprintf("italic('p')~'%s'", p1),parse=TRUE,x=-2.5,y=0.75) +
+  guides(color = "none")  +      #To turn off color legend
+  guides(fill = "none") + #To turn off fill legend
+  guides(shape = "none")
+
+#pat_pc1
+
+#ggsave(filename="./plots/Aim3_PatPC1_AUG282023.png", plot = pat_pc1, dpi=600, units=c("mm"), width = 180, height = 180, bg = "white")
+
+
+# PC2
+# Formatted p-values
+p2 <- cor.test(pat_pcalm$Pathogen_percent_damage, pat_pcalm$PC2)$p.value
+
+p2 =format.p(p2) # This is just to make the p-value nicer. 
+
+## Plot PC2
+plmpc2 <- lm(Pathogen_percent_damage ~ PC2, data = pat_pcalm)
+
+pat_pc2 <- ggplot(pat_pcalm, aes(PC2, Pathogen_percent_damage)) +
+  geom_jitter(aes(color = Species, shape = E_load), size = 2.2, alpha = 0.6) +
+  geom_smooth(method = lm, se = T , level = 0.95, na.rm = F, color = "black", size = 0.75) +
+  stat_regline_equation(aes(label = paste(..eq.label.., ..adj.rr.label.., sep = "~~~~"))) +
+  #stat_regline_equation(label.y.npc = "top", label.x.npc = "center", aes(label = ..eq.label..), color= "black", size = 2.2) +
+  scale_color_manual(values = met.brewer(name = "Cross", n = 8, type="discrete")) +
+  theme_minimal(base_size = 12) +
+  labs(title = "d", y = "Pathogen damage (%)", caption = "") +
+  theme(plot.title = element_text(color="black", size = 14, face="bold")) +
+ annotate(geom="text",label=sprintf("italic('p')~'%s'", p2),parse=TRUE,x=-1,y=0.75) +
+    guides(color = "none")  +      #To turn off color legend
+  guides(fill = "none") + #To turn off fill legend
+  guides(shape = "none")
+  
+  
+#pat_pc2
+
+#ggsave(filename="./plots/Aim3_PatPC2_AUG282023.png", plot = pat_pc2, dpi=600, units=c("mm"), width = 180, height = 180, bg = "white")
+```
+
+```{r, Ant-Pathogen PC1-2}
+#| echo: false
+#| eval: true
+#| tidy: true
+#| warning: false
+#| fig.width: 10
+#| fig.height: 10
+#| fig.cap: "Simple linear regressions of herbivory and pathogen damage on PC1 and PC2 axes from PCA's of leaf traits for ant herbivory and pathogen damage assays. Linear regression of a) percent herbivory damage and PC1 axis (R^2^-adjusted= -0.0024, *p* = 0.447); b) percent herbivory damage and PC2 axis (R^2^-adjusted = 0.079, *p* = <0.001); c) percent pathogen damage and PC1 axis (R^2^-adjusted = 0.064, *p* = <0.001); and d) percent pathogen damage and PC2 axis (R^2^-adjusted  = 0.0016, *p* = 0.207). Colors represent individual species. Circle and triangles represent *E-* and *E+* treatments, respectively."
+antpat_arranged <- ggarrange(ant_pc1, ant_pc2, pat_pc1, pat_pc2, nrow = 2, ncol=2, common.legend = TRUE, legend="bottom")
+
+antpat_arranged
+# Adding caption
+# ant_caption <- expression("*All individual leaves per individual per tree species included ("~ italic("n") ~ "= 210).")
+# ant_pca_with_caption <- annotate_figure(antpca_arranged, bottom = text_grob(ant_caption), fig.lab.pos = "bottom.right", fig.lab.size = 6)
+
+#ant_pca_with_caption
+
+#ggsave(filename = "./plots/Aim3_AntPCS_SEPT252023.png", plot = antpat_arranged, dpi=600, units=c("mm"), width = 200, height = 180, bg = "white")
+```
+
