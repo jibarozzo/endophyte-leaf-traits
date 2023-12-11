@@ -2380,9 +2380,9 @@ From the previous section I can see that model M3 and M5 have the lowest AIC sco
 
 This doesn't make much sense to me. Sure E_load reduces the AIC score but of course it is going to have an impact or predict well herbivory loss. It is a treatment, not a continuous explanatory variable. It just does not fit the question well.
 
-The best fit model, considering the elimination of Anthocyanins and Toughness due to high colinearity, is M3REM (AIC 741). It also models fixed effects, not interactions.
+The best fit model, considering the elimination of Anthocyanins and Toughness due to high colinearity, is `M3REM` (AIC 741). It also models fixed effects, not interactions.
 
-### Conclusions of model selection using REML model estimation
+# Conclusions of model selection using REML model estimation (ANT)
 
 The interaction between `lme(logit_herbivory ~ Thickness  + LMA + E_load, weights = varIdent(form = ~ 1|Species),  random = ~ 1 | Species, method = "REML", control = ctrl, data = masterant2, na.action = na.exclude)` is the best fit model with random effect (Species). We are trying to understand how FEF diversity influences herbivory on an per species/plant basis. The variance structure seems to not be nested. Nesting it increases AIC score. Hence, no need to nest Species/E_load.
 
@@ -2930,7 +2930,7 @@ AIC(P3REM) #1011.239 as of 30/OCT/2023
 plot_model(P3REM, type = "diag")
 ```
 
-### Conclusions of pathogen model selection with raw functional leaf traits
+# Conclusions of pathogen model selection with raw functional leaf traits (PATHOGEN)
 
 Model `P3REM` has the lowest AIC score. It has variance structure (`varIdent()`) nested in Species/E_load/Treatment. It also uses an optimizer `lmeControl(opt='optim')`. It is the best model for the pathogen data set, at the moment.
 
@@ -3126,6 +3126,7 @@ arranged_with_caption
 
 ```
 
+# Table 1
 # LMM tables and estimites for ant and pathogen GLMs with `logit_herbivory` and `logit_pathogenicity`
 
 ### Plotting Estimates (Fixed Effects) of Best Fit model for Ant and Pathogen data sets
@@ -3205,6 +3206,8 @@ P3REM_coeff
 
 I believe the best way to represent the model coefficients if through a table no an estimate plot.
 
+
+############################################################################################################################################################################################################################################    
 # Dimensionality Reduction of leaf traits
 
 ## LDA: Linear Discriminant Analyses

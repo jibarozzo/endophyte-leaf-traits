@@ -212,13 +212,13 @@ rm(list = ls())
 #setwd("H:/.shortcut-targets-by-id/0B9v0CdUUCqU5VVR4a3BvNHM1Z28/VBL_users/Grad_Students/Bolivar/Dissertation/Leaf_Traits_Panama/Data/Sequence_analyses")
 
 #Working Directory and Path for Windows
-#setwd("C:/Users/boloq/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses")
-#save.path <- "C:/Users/boloq/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses"
+setwd("C:/Users/boloq/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses")
+save.path <- "C:/Users/boloq/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses"
 
 #Working Directory and Path for Linux
-setwd("/home/baponte/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses/")
+#setwd("/home/baponte/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses/")
 # 
-save.path <- ("/home/baponte/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses/")
+#save.path <- ("/home/baponte/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses/")
 
 
 
@@ -1177,3 +1177,55 @@ antpat_arranged
 #ggsave(filename = "./plots/Aim3_AntPCS_SEPT252023.png", plot = antpat_arranged, dpi=600, units=c("mm"), width = 200, height = 180, bg = "white")
 ```
 
+
+## Figure 4
+```{r M3REM}
+#| echo: false
+#| eval: true
+#| tidy: true
+#| warning: false
+#| 
+#Optimizers
+ctrl <- lmeControl(opt='optim')
+ctrl2 <- lmeControl(opt = "nlminb")
+
+#M3REM: Same fixed terms as M2REM
+M3REM <- lme(logit_herbivory ~ Thickness  + LMA + E_load, weights = varIdent(form = ~ 1|Species),  random = ~ 1 | Species, method = "REML", control = ctrl, data = masterant2, na.action = na.exclude)
+
+#summary(M3REM)
+#AIC(M3REM) #584.711 #1902.209 as of 5/23/23 # 741.7825 as of 30/OCT/2023
+```
+
+```{r P3REM}
+#| echo: false
+#| eval: true
+#| tidy: true
+#| warning: false
+#| 
+ctrl <- lmeControl(opt='optim')
+ctrl2 <- lmeControl(opt = "nlminb")
+
+P3REM <- lme(logit_pathogenicity ~  LMA + Thickness, weights = varIdent(form = ~ 1|Species),  random = ~ 1 | Species/E_load/Treatment, method = "REML", control = ctrl, data = masterpat2, na.action = na.exclude)
+#summary(P3REM)
+#AIC(P3REM) #1011.239 as of 30/OCT/2023
+```
+
+```{r, Table1, tidy = TRUE}
+#| echo: false
+#| eval: true
+# Regression model table
+
+tab_model(M3REM, P3REM, 
+          show.aic = TRUE, 
+          show.intercept = TRUE, 
+          show.df = FALSE,
+          show.ci = 0.95,
+          title = "Linear mixed effects models for predicting leaf herbivory and pathogenicity", 
+          CSS = list(
+            css.depvarhead = 'font-weight:bold;',
+            css.centeralign = 'text-align: left;',
+            css.firsttablecol = 'font-weight: bold;',
+            css.summary = 'color: grey; font-weight: bold;',
+            p.style = "numeric_stars"))
+
+```
