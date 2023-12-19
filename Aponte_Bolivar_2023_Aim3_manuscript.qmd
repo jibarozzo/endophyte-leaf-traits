@@ -2,7 +2,7 @@
 title: "Manuscript Draft: Aim3 Leaf Traits"
 date: today
 bibliography: VBL_library.bib
-csl: apa.csl
+csl: functional-ecology.csl
 author:
   - name: Bolívar Aponte Rolón
     orcid: 0000-0002-2544-4551
@@ -55,6 +55,7 @@ author:
       - ref: tu
 format: 
   pdf:
+    documentclass: scrartcl
     include-in-header:
       text: '\usepackage{lineno}\linenumbers'
     linestretch: 2.0
@@ -66,20 +67,33 @@ format:
     sansfont: TeX Gyre Termes #Another option is Liberation Serif
     number-sections: true
     citation-package: biblatex
-  # docx:
-  #   reference-docx: custom-reference-doc.docx
+  # odt:
+  #   reference-doc: custom-reference-doc.docx
+  #   output-file: ~/manuscripts/
   #   number-sections: true
   #   #linestretch: 2.0
   #   citation-package: biblatex
-    
+
+project:
+  type: scrartcl
+  output-dir: manuscript
 editor: source
+execute:
+  echo: false
+  warning: false
 ---
 
 # Abstract
 
+# Keywords:
+
+endophytes, atta colombica, herbivory, calonectria, pathogen, foliar, fungal, symbionts
+
 # Introduction
 
-# Methods
+# 
+
+# Materials and Methods
 
 ## Field
 
@@ -98,6 +112,10 @@ The selected leaves were also used to profile endophyte community composition, a
 Leaf tissue in CTAB solution was stored for 2 months at room temperature prior to being placed at -80 C for 3 months before extracting DNA. In preparation for DNA extraction, we decontaminated all instruments, materials, and surfaces with DNAway (Molecular BioProducts Inc., San Diego, CA, United States), 95% Ethanol, 0.5 % NaOCl, and 70 % Ethanol, and subsequently treated with UV light for 30 minutes in biosafety cabinet. We then transferred 0.2 -- 0.3 g of leaf tissue into duplicate sterile 2mL tubes, resulting in 2 subsamples. Total genomic DNA from subsamples was extracted as described in U'Ren & Arnold [-@uren2017]. In brief, we added two sterile 3.2 mm stainless steel beads to each tube and proceeded to lyophilize samples for 72 hours to fully remove CTAB content from tissue. After this period, we submerged the sample tubes in liquid nitrogen for 30s and proceeded to homogenize samples to a fine powder for 45 s in FastPrep-24 Tissue and Cell Homogenizer (MP Biomedicals, Solon, OH, USA). Afterwards, we repeated the decontamination procedure described before and used QIAGEN DNeasy 96 PowerPlant Pro-HTP Kit [@uren2017] (QIAGEN, Valencia, CA, USA). After all genomic DNA was extracted, we pooled the subsamples for each individual sample before amplification. We used sterile equipment and pipettes with aerosol-resistant tips with filters in all steps before amplification. We followed a two-step amplification approach previously described by Sarmiento et al. [-@sarmiento2017] and U´Ren & Arnold [-@uren2017]. We used primers for the fungal ITSrDNA region, ITS1f (5'-CTTGGTCATTTAGAGGAAGTAA-3') and ITS4 (5'-TCCTCCGCTTATTGATATGC-3') with modified universal consensus sequences CS1 and CS2 and 0--5 bp for phase-shifting. Every sample was amplified in two parallel reactions containing 1-2 µL of DNA template [@uren2017; see also @tellezTraits2022]. We visualized PCR (PCR1) reactions with SYBR Green 1 (Invitrogen, Carlsbad, CA, USA) on 2% agarose gel [@oita2021]. Based on the electrophoresis band intensity, we combined parallel PCR1 reactions and diluted 5 µL of amplicon product with molecular grade water to standardize to a concentration of 1:15 [@tellezTraits2022; @sarmiento2017 for details]. We included DNA extraction blanks and PCR1 negatives in this step. We used a separate set of sterile pipettes, tips, and equipment to reduce contamination. We used a designated PCR area to restrict contact with pre-PCR materials [@oita2021].
 
 We used 1 µL of PCR1 product from samples and negative control for a second PCR (PCR2) with barcode adapters (IBEST Genomics Resource Core, Moscow, ID, USA). Each PCR2 reaction (total 15 µL) contained 1X Phusion Flash High Fidelity PCR Master Mix, 0.075 µM of barcoded primers (forward and reverse pooled at a concentration of 2 µM) and 0.24mg/mL of BSA following Sarmiento [-@sarmiento2017] and U'Ren & Arnold [-@uren2017]. Before final pooling for sequencing, we purified the amplicons using Agencourt AMPure XP Beads (Beckman Coulter Inc, Brea, CA USA) to a ratio of 1:1 following the manufacturer's instructions. The products were evaluated with Bio Analyzer 2100 (Agilent Technologies, Santa Clara, CA, USA) [@tellezTraits2022]. We quantified the samples through University of Arizona Genetics Core, and subsequently diluted them to the same concentration to prevent over representation of samples with higher concentration, see (CITATION). Amplicons were normalized to 1 ng/µL, then pooled 2 µL of each for sequencing. No contamination was detected visually or by fluorometric analysis. To provide robust controls we combined 5 µL of each PCR1 negative and the DNA extraction blanks and sequenced them as samples. Ultimately, we combined samples into a single tube with 20 ng/µL of amplified DNA with barcoded adapters for sequencing on the Illumina MiSeq platform with Reagent Kit v3 (2 × 300 bp) following protocols from the IBEST Genomics Resource Core at the University of Idaho, USA. Again, we included the DNA extraction blanks and two PCR1 negatives and sequenced with samples. Sequencing yielded 3,778,081 total ITS1 reads.
+
+### Replication Statement (maybe goes before stattistical analyses)
+
+*In the Materials and Methods section (before the description of the data analyses), authors **MUST** state i) the scale at which they seek to make inferences (for example at the level of species, populations or experimental units); ii) the scale(s) at which their treatment or factor of interest is(are) applied; and iii) the number of replicates for each level of treatment or factor. We have provided a table template for including this information, which the editors will use to decide whether the authors' inferences are supported and should therefore be peer-reviewed. Manuscripts without this table will be returned to authors.*
 
 ### Mock Communities
 
@@ -128,6 +146,10 @@ To test for H2, we used a general linear mixed model (GLM) with XXXX as the resp
 Additionally, Principal Component Analysis (PCA) was used to reduce dimensions among covariates and reveal underlying interactions that could influence fungal endophyte abundance, diversity and community composition in seedlings. The PCA was computed using the `prcomp` function in R statistical software [@rcoreteam2023]. A complete PCA was computed with variables ACI, LT, LPS, and LMA (FIGURE 2a?). We then proceeded to compute a PCA with the data from leaves of plants used in the ant ($n$ = 210) and pathogen assays ($n$ = 192).
 
 The PCA revealed how covariates (LMA, ACI, Thickness and Toughness) interact. I overlapped tree species groups on the PCA axes to show how the variance in the data is explained by PC1 (60%) and PC2 (27%) (Fig. 4). This is indicative of correlation among covariates. Thickness and toughness were orthogonal to each other in PCA, indicative of low correlation.
+
+# Results
+
+# Discussion
 
 # References
 
@@ -212,13 +234,13 @@ rm(list = ls())
 #setwd("H:/.shortcut-targets-by-id/0B9v0CdUUCqU5VVR4a3BvNHM1Z28/VBL_users/Grad_Students/Bolivar/Dissertation/Leaf_Traits_Panama/Data/Sequence_analyses")
 
 #Working Directory and Path for Windows
-setwd("C:/Users/boloq/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses")
-save.path <- "C:/Users/boloq/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses"
+#setwd("C:/Users/boloq/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses")
+#save.path <- "C:/Users/boloq/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses"
 
 #Working Directory and Path for Linux
-#setwd("/home/baponte/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses/")
+setwd("/home/baponte/Boxx/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses/")
 # 
-#save.path <- ("/home/baponte/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses/")
+save.path <- ("/home/baponte/Boxx/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses/")
 
 
 
@@ -766,7 +788,7 @@ masterpat2 <- df_list_ant2 %>%
 #| warning: false
 #| fig.width: 7
 #| fig.height: 7
-#| fig.cap: "Relative abundance (RA) of Ascomycota OTUs of seven tree species used in the study. Violin plots show the distribution of the RA. The horizontal line within the embedded boxplots represents the median, the box represents the interquartile range (IQR), and the whiskers represent the 1.5xIQR. Outliers are represented by dots. Siginificance levels are represented by asterisks [*p* = 0.05 (\\*), *p* = 0.01 (\\**), and *p* = 0.001 (\\***)]."
+#| fig.cap: "Relative abundance (RA) of Ascomycota OTUs of seven tree species used in the study. Violin plots show the distribution of the RA. The horizontal line within the embedded boxplots represents the median, the box represents the interquartile range (IQR), and the whiskers represent the 1.5xIQR. Outliers are represented by dots. Pink fille violin plots represent low endophyte (*E-*) treatment and yellow fille violins represent high endophyte (*E+*) treatment. Relative abundance is the percentage of endophyte colonization within individuals of the same species. Significance levels are represented by asterisks [*p* = 0.05 (\\*), *p* = 0.01 (\\**), and *p* = 0.001 (\\***)]."
 
 library("ggplot2")
 library("ggpubr")
@@ -836,14 +858,14 @@ auto <- autoplot((pca), data = data.frame(ndata), # For some reason this functio
          loadings.label=TRUE, loadings.label.colour="black",
          loadings.label.size= 4, size = 7, loadings.label.vjust = 1, 
          loadings.label.hjust = 1) + 
-  geom_point(aes(fill = Species, color = Species, shape = E_load), alpha = 0.6, size = 2.2) +
+  geom_point(aes(fill = Species, color = Species, shape = E_load), alpha = 0.6, size = 3) +
   geom_hline(yintercept = 0, colour = "gray45") +
   geom_vline(xintercept = 0, colour = "gray45") +
   scale_color_manual(labels=c("A. membranacea", "C. cainito", "C. alliodora", "Dypterix .sp", "H. concinna", "L. panamensis", "T. cacao"),values = met.brewer(name = "Cross", n = 8, type="discrete")) +
   stat_ellipse(aes(color=Species), geom = "path", size = 1, position = "identity", type = "t", linetype = 1, level = 0.95, segments = 51, na.rm = FALSE, show.legend = NA, inherit.aes = TRUE) +
   scale_fill_discrete(labels = c("A. membranacea", "C. cainito", "C. alliodora", "Dypterix .sp", "H. concinna", "L. panamensis", "T. cacao")) +
-  theme_bw(base_size = 12) +
-  labs(title = "a)") + 
+  theme_classic(base_size = 16) +
+  #labs(title = "(a)") + 
   theme(plot.title = element_text(color="black", size = 14, face="bold")) +
   theme(legend.text = element_text(color="black", face="italic"))
 
@@ -882,13 +904,13 @@ auto_ant <- autoplot((ant.pca), data = data.frame(masterant2), # For some reason
          loadings.label=TRUE, loadings.label.colour="black",
          loadings.label.size= 4, size = 7, loadings.label.vjust = 0, 
          loadings.label.hjust = 1.2) + 
-  geom_point(aes(fill = Species, color = Species, shape = E_load), alpha = 0.6, size = 2.2) +
+  geom_point(aes(fill = Species, color = Species, shape = E_load), alpha = 0.6, size = 3) +
   geom_hline(yintercept = 0, colour = "gray45") +
   geom_vline(xintercept = 0, colour = "gray45") +
   scale_color_manual(values = met.brewer(name = "Cross", n = 8, type="discrete")) +
   stat_ellipse(aes(color=Species), geom = "path", size = 1, position = "identity", type = "t", linetype = 1, level = 0.95, segments = 51, na.rm = FALSE, show.legend = NA, inherit.aes = TRUE) +
-  theme_bw(base_size = 12) +
-  labs(title = "b)") +
+  theme_classic(base_size = 12) +
+  #labs(title = "(b)") +
   theme(plot.title = element_text(color="black", size = 14, face="bold")) +
   guides(color = "none")  +      #To turn off color legend
   guides(fill = "none") + #To turn off fill legend
@@ -931,13 +953,13 @@ auto_pat <- autoplot((pat.pca), data = data.frame(masterpat2), # For some reason
          loadings.label=TRUE, loadings.label.colour="black",
          loadings.label.size= 4, size = 7, loadings.label.vjust = 0, 
          loadings.label.hjust = 1.2) + 
-  geom_point(aes(fill = Species, color = Species, shape = E_load), alpha = 0.6, size = 2.2) +
+  geom_point(aes(fill = Species, color = Species, shape = E_load), alpha = 0.6, size = 3) +
   geom_hline(yintercept = 0, colour = "gray45") +
   geom_vline(xintercept = 0, colour = "gray45") +
   scale_color_manual(values = met.brewer(name = "Cross", n = 8, type="discrete")) +
   stat_ellipse(aes(color=Species), geom = "path", size = 1, position = "identity", type = "t", linetype = 1, level = 0.95, segments = 51, na.rm = FALSE, show.legend = NA, inherit.aes = TRUE) +
-  theme_bw(base_size = 12) +
-  labs(title = "c)") +
+  theme_classic(base_size = 12) +
+  #labs(title = "(c)") +
   theme(plot.title = element_text(color="black", size = 14, face="bold")) + 
   guides(color = "none")  +      #To turn off color legend
   guides(fill = "none") + #To turn off fill legend
@@ -960,10 +982,11 @@ auto_pat <- auto_pat +
 #| eval: true
 #| tidy: true
 #| warning: false
-#| fig.width:  6
-#| fig.height: 4
-#| fig.cap: "a) Principal Component Analysis (PCA) of leaf functional traits from all tree species separated by *E-* and *E+* treatment.   b) PCA of leaf functional traits of plants solely used in ant herbivory assays.  c) PCA leaf functional traits of plants used solely in pathogen damage assays.   Colors represent individual species. Circle and triangles represent *E-* and *E+* treatments, respectively.   Colored ellipses correspond to tree species and represent 95% confidence intervals."
-grid_pca <- ggarrange(auto, auto_ant, auto_pat, nrow = 1, ncol=3, common.legend = TRUE, legend="bottom")
+#| fig.width:  5
+#| fig.height: 7
+#| fig.cap: "Leaf functional traits are conserved within tree species regardles of endophyte load treatment. (a) Principal Component Analysis (PCA) of leaf functional traits from all tree species separated by *E-* and *E+* treatment. (b) PCA of leaf functional traits of plants solely used in ant herbivory assays. (c) PCA leaf functional traits of plants used solely in pathogen damage assays. Colors represent individual species. Circle and triangles represent los (*E-*) and high (*E+*) endophyte treatments, respectively. Colored ellipses correspond to tree species and represent 95% confidence intervals."
+grid_pca <- ggarrange(auto, 
+                      ggarrange(auto_ant, auto_pat, nrow = 1, ncol=2, labels = c("(b)", "(c)")), nrow = 2, common.legend = TRUE, legend="bottom", labels = "(a)")
 
 grid_pca
 # Adding caption
@@ -972,7 +995,7 @@ grid_pca
 # 
 # ant_pca_with_caption
 
-#ggsave(filename = "./plots/Aim3_GridPCA_SEPT182023.png", plot = grid_pca, dpi=300, units=c("mm"), width = 200, height = 120, bg = "white")
+#ggsave(filename = "./plots/Aim3_GridPCA_SEPT182023.png", plot = grid_pca, dpi=600, units=c("mm"), width = 275, height = 300, bg = "white")
 ```
 
 ## Figure 3
@@ -1157,14 +1180,14 @@ pat_pc2 <- ggplot(pat_pcalm, aes(PC2, Pathogen_percent_damage)) +
 #ggsave(filename="./plots/Aim3_PatPC2_AUG282023.png", plot = pat_pc2, dpi=600, units=c("mm"), width = 180, height = 180, bg = "white")
 ```
 
-```{r, Ant-Pathogen PC1-2}
+```{r, Figure 3}
 #| echo: false
 #| eval: true
 #| tidy: true
 #| warning: false
 #| fig.width: 10
 #| fig.height: 10
-#| fig.cap: "Simple linear regressions of herbivory and pathogen damage on PC1 and PC2 axes from PCA's of leaf traits for ant herbivory and pathogen damage assays. Linear regression of a) percent herbivory damage and PC1 axis (R^2^-adjusted= -0.0024, *p* = 0.447); b) percent herbivory damage and PC2 axis (R^2^-adjusted = 0.079, *p* = <0.001); c) percent pathogen damage and PC1 axis (R^2^-adjusted = 0.064, *p* = <0.001); and d) percent pathogen damage and PC2 axis (R^2^-adjusted  = 0.0016, *p* = 0.207). Colors represent individual species. Circle and triangles represent *E-* and *E+* treatments, respectively."
+#| fig.cap: "Simple linear regressions of herbivory and pathogen damage on PC1 and PC2 axes from PCAs of leaf traits for ant herbivory and pathogen damage assays. Linear regression of a) percent herbivory damage and PC1 axis (R^2^-adjusted= -0.0024, *p* = 0.447); b) percent herbivory damage and PC2 axis (R^2^-adjusted = 0.079, *p* = <0.001); c) percent pathogen damage and PC1 axis (R^2^-adjusted = 0.064, *p* = <0.001); and d) percent pathogen damage and PC2 axis (R^2^-adjusted  = 0.0016, *p* = 0.207). Colors represent individual species. Circle and triangles represent *E-* and *E+* treatments, respectively."
 antpat_arranged <- ggarrange(ant_pc1, ant_pc2, pat_pc1, pat_pc2, nrow = 2, ncol=2, common.legend = TRUE, legend="bottom")
 
 antpat_arranged
@@ -1177,8 +1200,8 @@ antpat_arranged
 #ggsave(filename = "./plots/Aim3_AntPCS_SEPT252023.png", plot = antpat_arranged, dpi=600, units=c("mm"), width = 200, height = 180, bg = "white")
 ```
 
-
 ## Figure 4
+
 ```{r M3REM}
 #| echo: false
 #| eval: true
