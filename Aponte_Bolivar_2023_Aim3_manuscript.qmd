@@ -53,33 +53,6 @@ author:
     corresponding: false
     affiliation: 
       - ref: tu
-format: 
-  # pdf:
-  #   documentclass: scrartcl
-  #   include-in-header:
-  #     text: '\usepackage{lineno}\linenumbers'
-  #   linestretch: 2.0
-  #   margin-left: 1in
-  #   margin-right: 1in
-  #   margin-top: 1in
-  #   margin-bottom: 1in
-  #   mainfont: TeX Gyre Termes #Alternative to Times New Roman
-  #   sansfont: TeX Gyre Termes #Another option is Liberation Serif
-  #   number-sections: true
-  #   citation-package: biblatex
-  docx:
-    reference-doc: custom-reference-doc.docx
-    number-sections: true
-    #linestretch: 2.0
-    citation-package: biblatex
-
-project:
-  type: default
-  output-dir: manuscript
-editor: source
-execute:
-  echo: false
-  warning: false
 ---
 
 # Abstract
@@ -243,13 +216,13 @@ rm(list = ls())
 #setwd("H:/.shortcut-targets-by-id/0B9v0CdUUCqU5VVR4a3BvNHM1Z28/VBL_users/Grad_Students/Bolivar/Dissertation/Leaf_Traits_Panama/Data/Sequence_analyses")
 
 #Working Directory and Path for Windows
-#setwd("C:/Users/boloq/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses")
-#save.path <- "C:/Users/boloq/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses"
+setwd("C:/Users/boloq/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses")
+save.path <- "C:/Users/boloq/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses"
 
 #Working Directory and Path for Linux
-setwd("/home/baponte/Boxx/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses/")
+#setwd("/home/baponte/Boxx/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses/")
 # 
-save.path <- ("/home/baponte/Boxx/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses/")
+#save.path <- ("/home/baponte/Boxx/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses/")
 
 
 
