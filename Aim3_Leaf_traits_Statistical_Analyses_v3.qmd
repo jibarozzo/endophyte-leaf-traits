@@ -87,6 +87,9 @@ library("wesanderson")
 #library("rmarkdown")
 library("data.table")
 library("kableExtra")
+library("janitor")
+library("flextable")
+library("vtable")
 
 # Stats ####
 library("broom")
@@ -129,13 +132,13 @@ rm(list = ls())
 #setwd("H:/.shortcut-targets-by-id/0B9v0CdUUCqU5VVR4a3BvNHM1Z28/VBL_users/Grad_Students/Bolivar/Dissertation/Leaf_Traits_Panama/Data/Sequence_analyses")
 
 #Working Directory and Path for Windows
-setwd("C:/Users/boloq/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses")
-save.path <- "C:/Users/boloq/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses"
+#setwd("C:/Users/boloq/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses")
+#save.path <- "C:/Users/boloq/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses"
 
 #Working Directory and Path for Linux
-#setwd("/home/baponte/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses/")
+setwd("/home/baponte/Boxx/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses/")
 # 
-#save.path <- ("/home/baponte/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses/")
+save.path <- ("/home/baponte/Boxx/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses/")
 ```
 
 # Post VSEARCH and T-BAS sequence pre-processing
@@ -1010,6 +1013,25 @@ hist(masterant$Shannon)
 
 Somewhat better distributions. Ant_percent_leafloss is not normally distributed. It looks more like a binomial distribution. Evaluate accordingly. Conclusion from the Shapiro-Wilk tests: Some of the independent variables are not normally distributed. 
 
+## Table 1: Summary Table
+```{r, table1, tidy = TRUE}
+summa_t1 <- st(data2 %>%
+  group_by(Species) %>%
+  select(c(10:13)) %>%
+  rename('Anthocyanins (ACI)' = Anthocyanins, 
+           'Leaf Thickness (LT)'=Thickness, 
+           'Leaf Punch Strength (LPS)'= Toughness, 
+           'Leaf Mass per Area (LMA)' = LMA) %>%
+    na.omit(), 
+  #out="kable", 
+  digits=2, 
+  title="Summary statistics for the leaf functional traits of the 7 tropical tree species",
+  summ.names = c('N','Mean','Std. Dev.','Min','Max'),
+         group = 'Species', group.long = T)
+
+summa_t1
+```
+
 ## Variance Inflation Factor on simple LM with Toughness and Thickness
 
 ```{r, VIF, tidy = TRUE}
@@ -1122,8 +1144,7 @@ References
 
 ```{r, Total reads boxplot, tidy = TRUE}
 mycomparisons <- list(c("APEIME", "DYPTE", "CORDAL", "THEOCA","LACPA", "HEISCO", "CHRYCA")) 
-              #map_signif_level=TRUE)
-# mycomparisons <- list(c(master$Species))
+
 
 ecomparisons <- list(c(master$E_load))
 
@@ -1236,14 +1257,17 @@ LT <- ggplot(data = master, aes(x = Species, y = Thickness), color = Species) +
   #stat_compare_means(comparisons = mycomparisons) +
  # stat_compare_means(method = "kruskal.test", label = "p.signif") +
   stat_compare_means(label = "p.signif", method = "t.test",
-                     ref.group = ".all.", label.y = 300) +
+                     comparisons = Species, 
+                     label.y = 300) +
   ylim(100,325)
 LT
+cp <- compare_means(Thickness ~ Species, data = master, method = "t.test")
+res <- manova(cbind(Anthocyanins, Thickness, Toughness, LMA) ~ Species, data = master)
 #ggsave(filename="Aim3_LT_Species_07062022.png", plot = LT, dpi=600, units=c("mm"), width = 300, height = 300)
 
 
 # Leaf toughness (lbf) by  endophyte load and species with data (data) ####
-ggplot(data = master, aes( x = Species, y = Toughness), group_by(Species)) +
+lps <- ggplot(data = master, aes( x = Species, y = Toughness), group_by(Species)) +
   geom_violin(aes(fill = E_load), outlier.shape = NA) +
   geom_crossbar(stat="summary", fun = mean, fun.max = mean, fun.min = mean,  fatten = 2, width = 1) +
   geom_point(color="black", alpha = 0.2,size =2, position = position_jitter(w=0.05)) +
@@ -1259,10 +1283,12 @@ ggplot(data = master, aes( x = Species, y = Toughness), group_by(Species)) +
   labs(x="", y= expression(paste("Leaf punch strength(N mm","^-1)"))) +
   theme(legend.position="right", legend.title = element_blank(),
         legend.text = element_text(size = 24)) +
-  labs(caption = "*Outliers and singletons removed.") 
- # stat_compare_means(comparisons = mycomparisons ) +
-  #stat_compare_means(method = "kruskal.test", label = "p.signif") +
-  #ylim(0.10, 1) 
+  labs(caption = "*Outliers and singletons removed.") +
+  stat_compare_means(label = "p.signif", method = "t.test",
+                     ref.group = ".all.", label.y = 1) +
+  ylim(0.10, 1) 
+lps
+#ggsave(filename="Aim3_LPS_Species_07062022.png", plot = LT, dpi=600, units=c("mm"), width = 300, height = 300)
 
 # Leaf mass per area (LMA) by  endophyte load and species
 ggplot(data = master, aes(x = E_load, y = LMA), group_by(Species)) +
