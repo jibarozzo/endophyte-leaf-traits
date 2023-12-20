@@ -121,10 +121,9 @@ The PCA revealed how covariates (LMA, ACI, Thickness and Toughness) interact. I 
 
 # Results
 
-To test our hypothesis (MAKE SURE TO STATE HYPOTEHSIS IN INTRO) we inoculated tree seedlings with endophytes by exposing them to forest spore fall (see Materials and Methods). Seedlings exposed to forest spore fall, *E+*, had a significantly higher proportion of leaf segments colonized by fungal endophytes across all species (Fig. S1). After removal of baseline greenhouse endophyte community we see significant differences in endophyte treatment types with the exception of two species. Using our molecular data set we see that seedlings with *E+* treatment had a significantly higher fungal endophyte relative abundance (*p* = <0.05) for all tree species when compared to *E-* treatment with the exception of *C. cainito*  and *H. concinna* (Fig. 1).  This reflects the successful inoculation of our treatment types. Despite these significant differences, there is a high degree of variability in endophyte relative abundance within each treatment type (Fig. 1). We consider the potential effects of the treatments and conclusions therefore more like those of a continuous rather than a discrete variable.
+Seedlings exposed to forest spore fall, *E+*, had a significantly higher proportion of leaf segments colonized by fungal endophytes across all species (data from cultures, Fig. S1) Using our molecular data set we saw that seedlings with *E+* treatment had a significantly higher fungal endophyte relative abundance (*p* = \<0.05) for all tree species when compared to *E-* treatment with the exception of *C. cainito* and *H. concinna* (Fig. 1). This reflects the successful inoculation of our treatment types. Despite these significant differences, there is a high degree of variability in endophyte relative abundance within each treatment type (Fig. 1).
 
-For all tree species we measured LMA, ACI, LPS and LT. We observed general differences in leaf functional traits summarized in Table 1. For LT we observed significant differences for *A. membranacea* , *Dypteryx* sp., *L. panamensis* despite treatment type. Anthocyanins (ACI) were all leaf functional traits across all tree species. We did not see (CONTINUE HERE)
-
+For individuals of all tree species, we observed general differences in leaf functional traits summarized in Table 1. For LT we observed significant differences for *A. membranacea* , *Dypteryx* sp., and *L. panamensis* despite treatment type. Anthocyanins (ACI) were all leaf functional traits across all tree species. We did not see (CONTINUE HERE)
 
 # Discussion
 
@@ -168,7 +167,7 @@ library("kableExtra")
 library("janitor")
 library("flextable")
 library("vtable")
-#library("gtsummary")
+library("gtsummary")
 
 
 # Stats ####
@@ -1235,8 +1234,8 @@ tab_model(M3REM, P3REM,
 
 ```
 
-
 ## Table 1
+
 ```{r, table1}
 #| echo: false
 #| #eval: true

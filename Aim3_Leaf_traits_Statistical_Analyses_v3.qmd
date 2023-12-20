@@ -1014,7 +1014,9 @@ hist(masterant$Shannon)
 Somewhat better distributions. Ant_percent_leafloss is not normally distributed. It looks more like a binomial distribution. Evaluate accordingly. Conclusion from the Shapiro-Wilk tests: Some of the independent variables are not normally distributed. 
 
 ## Table 1: Summary Table
+Two packages to visualize summary statistics in a table. 
 ```{r, table1, tidy = TRUE}
+# Using `vtable` package
 summa_t1 <- st(data2 %>%
   group_by(Species) %>%
   select(c(10:13)) %>%
@@ -1030,6 +1032,20 @@ summa_t1 <- st(data2 %>%
          group = 'Species', group.long = T)
 
 summa_t1
+
+# Using `gtsummary` package
+summa2 <- tbl_summary(data2 %>%
+  group_by(Species, E_load) %>%
+  select(c(10:13)) %>%
+  rename('Anthocyanins (ACI)' = Anthocyanins, 
+           'Leaf Thickness (LT)'=Thickness, 
+           'Leaf Punch Strength (LPS)'= Toughness, 
+           'Leaf Mass per Area (LMA)' = LMA) %>%
+    na.omit(),
+  by = Species,
+  missing = "no",
+  statistic = list(all_continuous() ~ "{mean}({sd}\u00B1), {min}, {max}"))
+summa2
 ```
 
 ## Variance Inflation Factor on simple LM with Toughness and Thickness
