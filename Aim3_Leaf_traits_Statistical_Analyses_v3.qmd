@@ -1016,49 +1016,9 @@ Somewhat better distributions. Ant_percent_leafloss is not normally distributed.
 ## Table 1: Summary Table
 Two packages to visualize summary statistics in a table. 
 ```{r, table1, tidy = TRUE}
-# Using `vtable` package
-summa_t1 <- st(data2 %>%
-  group_by(Species) %>%
-  select(c(10:13)) %>%
-  rename('Anthocyanins (ACI)' = Anthocyanins, 
-           'Leaf Thickness (LT)'=Thickness, 
-           'Leaf Punch Strength (LPS)'= Toughness, 
-           'Leaf Mass per Area (LMA)' = LMA) %>%
-    na.omit(), 
-  #out="kable", 
-  digits=2, 
-  title="Summary statistics for the leaf functional traits of the 7 tropical tree species",
-  summ.names = c('N','Mean','Std. Dev.','Min','Max'),
-         group = 'Species', group.long = T)
 
-summa_t1
-
-# Using `gtsummary` package
-summa2 <- tbl_summary(data2 %>%
-  group_by(Species, E_load) %>%
-  select(c(10:13)) %>%
-  rename('Anthocyanins (ACI)' = Anthocyanins, 
-           'Leaf Thickness (LT)'=Thickness, 
-           'Leaf Punch Strength (LPS)'= Toughness, 
-           'Leaf Mass per Area (LMA)' = LMA) %>%
-    na.omit(),
-  by = Species,
-  missing = "no",
-  statistic = list(all_continuous() ~ "{mean} ({sd}\u00B1), {min}, {max}"))
-summa2 <- as_flex_table(summa2)
-
-summa2 <- set_header_labels(summa2, APEIME = "A. membranacea", 
-CHRYCA = "C. cainito", 
-CORDAL = "C. alliodora", 
-DYPTE ="Dypterix .sp", 
-HEISCO = "H. concinna", 
-LACPA = "L. panamensis", 
-THEOCA = "T. cacao")
-summa2
-summa2 <- set_caption(summa2, "Summary statistics for the leaf functional traits of the 7 tropical tree species")
-
-# Using `flextable` package
-summa3 <- flextable(data2 %>%
+# Using `gtsummary` and 'flextable' packages
+summa_t1 <- tbl_summary(data2 %>%
   group_by(Species, E_load) %>%
   select(c(10:13)) %>%
   rename( Treatment = E_load) %>%
@@ -1069,30 +1029,108 @@ summa3 <- flextable(data2 %>%
                             "HEISCO" ~ "H. concinna",
                             "LACPA" ~ "L. panamensis",
                             "THEOCA" ~ "T. cacao")) %>%
-  summarise(
-    across(
-      where(is.numeric), 
-      .fns = list(
-        Avg. = ~ mean(.x, na.rm = TRUE),
-        "Sd (\u00B1)" = ~ sd(.x, na.rm = TRUE)
+  rename('Anthocyanins (ACI)' = Anthocyanins, 
+           'Leaf Thickness (LT) (\U00B5m)'=Thickness, 
+           'Leaf Punch Strength (LPS) (N mm/-1)'= Toughness, 
+           'Leaf Mass per Area (LMA) (mg)' = LMA) %>%
+    na.omit(),
+  by = Species,
+  missing = "no",
+  statistic = list(
+    all_continuous() ~ "{mean} \u00B1 {sd}", 
+    all_categorical() ~ "{n}")) %>%
+  modify_header(label = "**Traits/treatment**",
+                stat_1 = '**A. membranacea**, n = 83',
+                stat_2 = '**C. alliodora**, n = 100',
+                stat_3 = '**C. cainito**, n = 150',
+                stat_4 = '**Dypterix .sp**, n = 288',
+                stat_5 = '**H. concinna**, n = 132',
+                stat_6 = '**L. panamensis**, n = 185',
+                stat_7 = '**T. cacao**, n = 176',
+                text_interpret = "md")
+  #modify_footnote(N = "N = count number", abbreviation = TRUE)
+  #modify_spanning_header(all_stat_cols(stat_0= T) ~ "**Species**") 
+  #modify_caption("**Table 1: Summary statistics for the leaf functional traits**")
+
+
+#Turning it into a flextable object for further manipulation.
+summa_t1 <- summa_t1 %>% 
+  as_flex_table() %>%
+  set_caption(
+    as_paragraph(
+      as_b(
+        as_chunk("Table 1: Summary statistics for the leaf functional traits",
+                 props = fp_text_default(font.family = "Tex Gyre Termes", font.size = 12)
+               )
       )
     ),
-    .groups = "drop") |> 
-rename_with(~ gsub("_", "_", .x, fixed = TRUE))) 
-summa3
-summa3 <- summa3 %>%
-  #padding(j = 1, padding.left = 40) %>%
-  #padding(j = 3:10, padding.left = 10) %>%
+  align_with_table = F) %>%
   align(j = 1, align = "right", part = "all") %>%
-  align(j = 2:10, align = "center", part = "all") %>%
-  italic(j = 1, italic = TRUE, part = "body") %>%
-  colformat_double(j = 2:8, big.mark = ",", digits = 3, na_str = "N/A") %>%
-  colformat_double(j = 9:10, big.mark = ",", digits = 5, na_str = "N/A") %>%
-  set_caption(as_paragraph(as_b("Table 1: Summary statistics for the leaf functional traits of the 7 tropical tree species")), align_with_table = F) %>%
-  separate_header() %>%
+  align(j = 2:8, align = "center", part = "all") %>%
+  italic(j = c(2:8), italic = TRUE, part = "header") %>%
+  bold(i = 1, bold = TRUE, part = "body") %>%
+  #padding(j = 1, padding.right= 40) %>%
+  width(j = 1, width = 1.5, unit = "in") %>%
+  flextable::font(
+    i = NULL,
+    j = NULL,
+    fontname = "Tex Gyre Termes",
+    part = "all",
+    cs.family = fontname,
+    hansi.family = fontname,
+    eastasia.family = fontname) %>%
   autofit()
 
-summa3
+# Adding some thicker borders to the table
+thick <- fp_border(color = "black", style = "solid", width = 2)
+
+summa_t1 <- summa_t1 %>%
+  hline_bottom(part = "body", border = thick) %>%
+  hline_top(part = "header", border = thick)
+
+summa_t1
+
+
+
+# Using `flextable` package
+# summa3 <- flextable(data2 %>%
+#   group_by(Species, E_load) %>%
+#   select(c(10:13)) %>%
+#   rename( Treatment = E_load) %>%
+#   mutate(Species = case_match(Species, "APEIME" ~ "A. membranacea", 
+#                             "CHRYCA" ~ "C. cainito", 
+#                             "CORDAL" ~ "C. alliodora",
+#                             "DYPTE" ~ "Dypterix .sp",
+#                             "HEISCO" ~ "H. concinna",
+#                             "LACPA" ~ "L. panamensis",
+#                             "THEOCA" ~ "T. cacao")) %>%
+#   summarise(
+#     across(
+#       where(is.numeric), 
+#       .fns = list(
+#         Avg. = ~ mean(.x, na.rm = TRUE),
+#         "Sd (\u00B1)" = ~ sd(.x, na.rm = TRUE)
+#       ),
+#     ),
+#     .groups = "drop") %>% 
+# rename_with(~ gsub("_", "_", .x, fixed = TRUE))) 
+# summa3
+# summa3 <- summa3 %>%
+#   #padding(j = 1, padding.left = 40) %>%
+#   #padding(j = 3:10, padding.left = 10) %>%
+#  
+#   align(j = 1, align = "right", part = "all") %>%
+#   align(j = 2:10, align = "center", part = "all") %>%  
+#   colformat_double(j = 2:8, big.mark = ",", digits = 3, na_str = "N/A") %>%
+#   colformat_double(j = 9:10, big.mark = ",", digits = 5, na_str = "N/A") %>%
+#   set_caption(
+#     as_paragraph(
+#       as_b("Table 1: Summary statistics for the leaf functional traits of the 7 tropical tree species")), align_with_table = F) %>%
+#   separate_header() %>%
+#   autofit()
+# 
+# summa3
+
 ```
 
 ## Variance Inflation Factor on simple LM with Toughness and Thickness

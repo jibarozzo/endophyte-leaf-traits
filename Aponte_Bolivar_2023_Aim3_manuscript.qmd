@@ -53,7 +53,31 @@ author:
     corresponding: false
     affiliation: 
       - ref: tu
+format: 
+  pdf:
+    documentclass: scrartcl
+    include-in-header:
+        text: '\usepackage{lineno}\linenumbers'
+    linestretch: 2.0
+    margin-left: 1in
+    margin-right: 1in
+    margin-top: 1in
+    margin-bottom: 1in
+    mainfont: TeX Gyre Termes #Alternative to Times New Roman
+    sansfont: TeX Gyre Termes #Another option is Liberation Serif
+    number-sections: true
+    citation-package: biblatex
+editor: source
+execute:
+  echo: false
+warning: false
 ---
+
+```{r}
+#| echo: false
+#| eval: true
+knitr::opts_chunk$set(ft.tabcolsep=0, ft.latex.float = "none")
+```
 
 # Abstract
 
@@ -168,6 +192,7 @@ library("janitor")
 library("flextable")
 library("vtable")
 library("gtsummary")
+library("officer")
 
 
 # Stats ####
@@ -215,13 +240,13 @@ rm(list = ls())
 #setwd("H:/.shortcut-targets-by-id/0B9v0CdUUCqU5VVR4a3BvNHM1Z28/VBL_users/Grad_Students/Bolivar/Dissertation/Leaf_Traits_Panama/Data/Sequence_analyses")
 
 #Working Directory and Path for Windows
-setwd("C:/Users/boloq/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses")
-save.path <- "C:/Users/boloq/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses"
+#setwd("C:/Users/boloq/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses")
+#save.path <- "C:/Users/boloq/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses"
 
 #Working Directory and Path for Linux
-#setwd("/home/baponte/Boxx/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses/")
+setwd("/home/baponte/Boxx/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses/")
 # 
-#save.path <- ("/home/baponte/Boxx/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses/")
+save.path <- ("/home/baponte/Boxx/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses/")
 
 
 
@@ -1241,19 +1266,96 @@ tab_model(M3REM, P3REM,
 #| #eval: true
 #| tidy: true
 #| warning: false
-summa <- st(data2 %>%
-  group_by(Species) %>%
+#| tbl-cap: "Summary statistics for the leaf functional traits"
+#| 
+
+# Using `gtsummary` and 'flextable' packages
+summa_t1 <- tbl_summary(data2 %>%
+  group_by(Species, E_load) %>%
   select(c(10:13)) %>%
+  rename( Treatment = E_load) %>%
+  mutate(Species = case_match(Species, "APEIME" ~ "A. membranacea", 
+                            "CHRYCA" ~ "C. cainito", 
+                            "CORDAL" ~ "C. alliodora",
+                            "DYPTE" ~ "Dypterix .sp",
+                            "HEISCO" ~ "H. concinna",
+                            "LACPA" ~ "L. panamensis",
+                            "THEOCA" ~ "T. cacao")) %>%
   rename('Anthocyanins (ACI)' = Anthocyanins, 
-           'Leaf Thickness (LT)'=Thickness, 
-           'Leaf Punch Strength (LPS)'= Toughness, 
-           'Leaf Mass per Area (LMA)' = LMA) %>%
-    na.omit(), 
-  #out='kable', 
-  digits=2, 
-  title="Summary statistics for the leaf functional traits of the 7 tropical tree species",
-  summ.names = c('N','Mean','Std. Dev.','Min','Max'),
-         group = 'Species', group.long = T)
-summa
-  
+           'Leaf Thickness (LT) (\U00B5m)'=Thickness, 
+           'Leaf Punch Strength (LPS) (N mm/-1)'= Toughness, 
+           'Leaf Mass per Area (LMA) (mg)' = LMA) %>%
+    na.omit(),
+  by = Species,
+  missing = "no",
+  statistic = list(
+    all_continuous() ~ "{mean} \u00B1 {sd}", 
+    all_categorical() ~ "{n}")) %>%
+  modify_header(label = "**Traits/treatment**",
+                stat_1 = '**A. membranacea**, n = 83',
+                stat_2 = '**C. alliodora**, n = 100',
+                stat_3 = '**C. cainito**, n = 150',
+                stat_4 = '**Dypterix .sp**, n = 288',
+                stat_5 = '**H. concinna**, n = 132',
+                stat_6 = '**L. panamensis**, n = 185',
+                stat_7 = '**T. cacao**, n = 176',
+                text_interpret = "md")
+  #modify_footnote(N = "N = count number", abbreviation = TRUE)
+  #modify_spanning_header(all_stat_cols(stat_0= T) ~ "**Species**") 
+  #modify_caption("**Table 1: Summary statistics for the leaf functional traits**")
+
+
+#Turning it into a flextable object for further manipulation.
+summa_t1 <- summa_t1 %>% 
+  as_flex_table() %>%
+  # set_caption(
+  #   as_paragraph(
+  #     as_b(
+  #       as_chunk("Table 1: Summary statistics for the leaf functional traits",
+  #                props = fp_text_default(font.family = "Tex Gyre Termes", font.size = 12)
+  #              )
+  #     )
+  #   ),
+  # align_with_table = F) %>%
+  align(j = 1, align = "right", part = "all") %>%
+  align(j = 2:8, align = "center", part = "all") %>%
+  italic(j = c(2:8), italic = TRUE, part = "header") %>%
+  bold(i = 1, bold = TRUE, part = "body") %>%
+  #padding(j = 1, padding.right= 40) %>%
+  width(j = 1, width = 1.5, unit = "in") %>%
+  flextable::font(
+    i = NULL,
+    j = NULL,
+    fontname = "Tex Gyre Termes",
+    part = "all",
+    cs.family = fontname,
+    hansi.family = fontname,
+    eastasia.family = fontname) %>%
+  autofit()
+
+# Adding some thicker borders to the table
+thick <- fp_border(color = "black", style = "solid", width = 2)
+
+summa_t1 <- summa_t1 %>%
+  hline_bottom(part = "body", border = thick) %>%
+  hline_top(part = "header", border = thick)
+
+#summa_t1
+
+sect_properties <- prop_section(
+  page_size = page_size(
+    orient = "landscape",
+    width = 8.25, height = 11.7
+  ),
+  type = "continuous",
+  page_margins = page_mar()
+)
+
+save_as_docx(x = summa_t1, path ="/home/baponte/Boxx/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses/tables/summa_t1.docx", pr_section = sect_properties, align = "center")
+
+
+
+
 ```
+
+
