@@ -1044,8 +1044,55 @@ summa2 <- tbl_summary(data2 %>%
     na.omit(),
   by = Species,
   missing = "no",
-  statistic = list(all_continuous() ~ "{mean}({sd}\u00B1), {min}, {max}"))
+  statistic = list(all_continuous() ~ "{mean} ({sd}\u00B1), {min}, {max}"))
+summa2 <- as_flex_table(summa2)
+
+summa2 <- set_header_labels(summa2, APEIME = "A. membranacea", 
+CHRYCA = "C. cainito", 
+CORDAL = "C. alliodora", 
+DYPTE ="Dypterix .sp", 
+HEISCO = "H. concinna", 
+LACPA = "L. panamensis", 
+THEOCA = "T. cacao")
 summa2
+summa2 <- set_caption(summa2, "Summary statistics for the leaf functional traits of the 7 tropical tree species")
+
+# Using `flextable` package
+summa3 <- flextable(data2 %>%
+  group_by(Species, E_load) %>%
+  select(c(10:13)) %>%
+  rename( Treatment = E_load) %>%
+  mutate(Species = case_match(Species, "APEIME" ~ "A. membranacea", 
+                            "CHRYCA" ~ "C. cainito", 
+                            "CORDAL" ~ "C. alliodora",
+                            "DYPTE" ~ "Dypterix .sp",
+                            "HEISCO" ~ "H. concinna",
+                            "LACPA" ~ "L. panamensis",
+                            "THEOCA" ~ "T. cacao")) %>%
+  summarise(
+    across(
+      where(is.numeric), 
+      .fns = list(
+        Avg. = ~ mean(.x, na.rm = TRUE),
+        "Sd (\u00B1)" = ~ sd(.x, na.rm = TRUE)
+      )
+    ),
+    .groups = "drop") |> 
+rename_with(~ gsub("_", "_", .x, fixed = TRUE))) 
+summa3
+summa3 <- summa3 %>%
+  #padding(j = 1, padding.left = 40) %>%
+  #padding(j = 3:10, padding.left = 10) %>%
+  align(j = 1, align = "right", part = "all") %>%
+  align(j = 2:10, align = "center", part = "all") %>%
+  italic(j = 1, italic = TRUE, part = "body") %>%
+  colformat_double(j = 2:8, big.mark = ",", digits = 3, na_str = "N/A") %>%
+  colformat_double(j = 9:10, big.mark = ",", digits = 5, na_str = "N/A") %>%
+  set_caption(as_paragraph(as_b("Table 1: Summary statistics for the leaf functional traits of the 7 tropical tree species")), align_with_table = F) %>%
+  separate_header() %>%
+  autofit()
+
+summa3
 ```
 
 ## Variance Inflation Factor on simple LM with Toughness and Thickness
