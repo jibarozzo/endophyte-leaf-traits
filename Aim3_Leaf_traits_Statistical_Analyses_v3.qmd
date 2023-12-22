@@ -84,7 +84,6 @@ library("MetBrewer")
 library("formatR")
 library("wesanderson")
 #library("knitr")
-#library("rmarkdown")
 library("data.table")
 library("kableExtra")
 library("janitor")
@@ -1016,7 +1015,6 @@ Somewhat better distributions. Ant_percent_leafloss is not normally distributed.
 ## Table 1: Summary Table
 Two packages to visualize summary statistics in a table. 
 ```{r, table1, tidy = TRUE}
-
 # Using `gtsummary` and 'flextable' packages
 summa_t1 <- tbl_summary(data2 %>%
   group_by(Species, E_load) %>%
@@ -1039,38 +1037,39 @@ summa_t1 <- tbl_summary(data2 %>%
   statistic = list(
     all_continuous() ~ "{mean} \u00B1 {sd}", 
     all_categorical() ~ "{n}")) %>%
-  modify_header(label = "**Traits/treatment**",
-                stat_1 = '**A. membranacea**, n = 83',
-                stat_2 = '**C. alliodora**, n = 100',
-                stat_3 = '**C. cainito**, n = 150',
-                stat_4 = '**Dypterix .sp**, n = 288',
-                stat_5 = '**H. concinna**, n = 132',
-                stat_6 = '**L. panamensis**, n = 185',
-                stat_7 = '**T. cacao**, n = 176',
+  modify_header(label = "",
+                stat_1 = 'A. membranacea, n = 83',
+                stat_2 = 'C. alliodora, n = 100',
+                stat_3 = 'C. cainito, n = 150',
+                stat_4 = 'Dypterix .sp, n = 288',
+                stat_5 = 'H. concinna, n = 132',
+                stat_6 = 'L. panamensis, n = 185',
+                stat_7 = 'T. cacao, n = 176',
                 text_interpret = "md")
+
   #modify_footnote(N = "N = count number", abbreviation = TRUE)
   #modify_spanning_header(all_stat_cols(stat_0= T) ~ "**Species**") 
   #modify_caption("**Table 1: Summary statistics for the leaf functional traits**")
 
-
 #Turning it into a flextable object for further manipulation.
-summa_t1 <- summa_t1 %>% 
+summa_t1 <- summa_t1 %>%
   as_flex_table() %>%
-  set_caption(
-    as_paragraph(
-      as_b(
-        as_chunk("Table 1: Summary statistics for the leaf functional traits",
-                 props = fp_text_default(font.family = "Tex Gyre Termes", font.size = 12)
-               )
-      )
-    ),
-  align_with_table = F) %>%
-  align(j = 1, align = "right", part = "all") %>%
-  align(j = 2:8, align = "center", part = "all") %>%
-  italic(j = c(2:8), italic = TRUE, part = "header") %>%
-  bold(i = 1, bold = TRUE, part = "body") %>%
+  # set_caption(
+  #   as_paragraph(
+  #     as_b(
+  #       as_chunk("Table 1: Summary statistics for the leaf functional traits",
+  #                props = fp_text_default(font.family = "Tex Gyre Termes", font.size = 12)
+  #              )
+  #     )
+  #   ),
+  # align_with_table = F) %>%
+  flextable::align(j = 1, align = "right", part = "all") %>%
+  flextable::align(j = 2:8, align = "center", part = "all") %>%
+  flextable::italic(j = c(2:8), italic = TRUE, part = "header") %>%
+  flextable::bold(i = 1, bold = TRUE, part = "header") %>%
+  flextable::italic(i = 1, italic = TRUE, part = "body") %>%
   #padding(j = 1, padding.right= 40) %>%
-  width(j = 1, width = 1.5, unit = "in") %>%
+  flextable::width(j = 1, width = 1.5, unit = "in") %>%
   flextable::font(
     i = NULL,
     j = NULL,
@@ -1078,8 +1077,7 @@ summa_t1 <- summa_t1 %>%
     part = "all",
     cs.family = fontname,
     hansi.family = fontname,
-    eastasia.family = fontname) %>%
-  autofit()
+    eastasia.family = fontname)
 
 # Adding some thicker borders to the table
 thick <- fp_border(color = "black", style = "solid", width = 2)
@@ -1088,48 +1086,48 @@ summa_t1 <- summa_t1 %>%
   hline_bottom(part = "body", border = thick) %>%
   hline_top(part = "header", border = thick)
 
-summa_t1
+
+sect_properties <- prop_section(
+  page_size = page_size(
+    orient = "portrait",
+    width = 8.25, height = 11.7
+  ),
+  type = "continuous",
+  page_margins = page_mar()
+)
+
+#save_as_docx(x = summa_t1, path ="/home/baponte/Boxx/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses/tables/summa_t1.docx", pr_section = sect_properties, align = "center")
 
 
+#Huxtable attempt
+#summa_t1 <- summa_t1 %>%
+  # as_hux() %>%
+  # set_italic(1, 2:8, TRUE) %>%
+  # set_align(3:7, 2:8, "center") %>%
+  # set_align(1, 1:8, "right") %>%
+  # set_tb_borders() %>%
+  #        set_width("10in") %>%
+  #        set_col_width(c(.7/8, .6/8, .6/8, .6/8, .6/8, .6/8, .6/8, .6/8)) %>%
+  # set_position("center")
+  #set_font(everywhere, value = "Tex Gyre Termes")
+#quick_pdf(summa_t1, width = "7in", height = "4in")
 
-# Using `flextable` package
-# summa3 <- flextable(data2 %>%
-#   group_by(Species, E_load) %>%
-#   select(c(10:13)) %>%
-#   rename( Treatment = E_load) %>%
-#   mutate(Species = case_match(Species, "APEIME" ~ "A. membranacea", 
-#                             "CHRYCA" ~ "C. cainito", 
-#                             "CORDAL" ~ "C. alliodora",
-#                             "DYPTE" ~ "Dypterix .sp",
-#                             "HEISCO" ~ "H. concinna",
-#                             "LACPA" ~ "L. panamensis",
-#                             "THEOCA" ~ "T. cacao")) %>%
-#   summarise(
-#     across(
-#       where(is.numeric), 
-#       .fns = list(
-#         Avg. = ~ mean(.x, na.rm = TRUE),
-#         "Sd (\u00B1)" = ~ sd(.x, na.rm = TRUE)
-#       ),
-#     ),
-#     .groups = "drop") %>% 
-# rename_with(~ gsub("_", "_", .x, fixed = TRUE))) 
-# summa3
-# summa3 <- summa3 %>%
-#   #padding(j = 1, padding.left = 40) %>%
-#   #padding(j = 3:10, padding.left = 10) %>%
-#  
-#   align(j = 1, align = "right", part = "all") %>%
-#   align(j = 2:10, align = "center", part = "all") %>%  
-#   colformat_double(j = 2:8, big.mark = ",", digits = 3, na_str = "N/A") %>%
-#   colformat_double(j = 9:10, big.mark = ",", digits = 5, na_str = "N/A") %>%
-#   set_caption(
-#     as_paragraph(
-#       as_b("Table 1: Summary statistics for the leaf functional traits of the 7 tropical tree species")), align_with_table = F) %>%
-#   separate_header() %>%
-#   autofit()
+# Alignments
+# summa_t1 <- set_align(summa_t1, col = 1, value = "right")
 # 
-# summa3
+# 
+# # Italicize header
+# summa_t1 <- set_italic(summa_t1, row = 1, TRUE)
+# 
+# # Bold the first row of the body
+# summa_t1[1,] <- set_bold(summa_t1[1,], TRUE)
+# 
+# # Set width of the first column
+# summa_t1 <- set_width(summa_t1, 1, 1.5)
+# 
+# # Set font family for the whole table
+# summa_t1 <- set_font(summa_t1, everywhere, value = "Tex Gyre Termes")
+summa_t1
 
 ```
 
