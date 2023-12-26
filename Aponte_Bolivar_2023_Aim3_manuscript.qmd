@@ -54,19 +54,19 @@ author:
     affiliation: 
       - ref: tu
 format:
-  # pdf:
-  #   documentclass: scrartcl
-  #   include-in-header:
-  #       text: '\usepackage{lineno}\linenumbers'
-  #   linestretch: 2.0
-  #   margin-left: 1in
-  #   margin-right: 1in
-  #   margin-top: 1in
-  #   margin-bottom: 1in
-  #   mainfont: TeX Gyre Termes #Alternative to Times New Roman
-  #   sansfont: TeX Gyre Termes #Another option is Liberation Serif
-  #   number-sections: true
-  #   citation-package: biblatex
+  pdf:
+    documentclass: scrartcl
+    include-in-header:
+        text: '\usepackage{lineno}\linenumbers'
+    linestretch: 2.0
+    margin-left: 1in
+    margin-right: 1in
+    margin-top: 1in
+    margin-bottom: 1in
+    mainfont: TeX Gyre Termes #Alternative to Times New Roman
+    sansfont: TeX Gyre Termes #Another option is Liberation Serif
+    number-sections: true
+    citation-package: biblatex
   docx:
     reference-doc: custom-reference-doc.docx
     number-sections: true
@@ -92,7 +92,22 @@ endophytes, atta colombica, herbivory, calonectria, pathogen, foliar, fungal, sy
 
 # Introduction
 
-# 
+***Hypothesis 2***
+If FEF improves leaf defenses against plant pests, then generalist
+herbivores and pathogens will remove or damage less leaf tissue from
+plants with treated high FEF levels relative to those with low FEF
+loads.
+
+**Predictions.**
+
+Leaf-cutter ants will remove less plant material from leaves with higher FEF
+abundance and richness, but this result will be modulated by leaf
+traits related to defenses. Leaves with longer lifespans will be less attractive to leaf-cutter ants. Alternatively, low FEF diversity in those leaves may outweigh this selection factor. Leaves treated with high FEF levels will have
+a smaller area of pathogen damage compared to those treated with low
+FEF levels. Endophyte-mediated defenses against pathogens will be
+most important in short-lived leaves since long-lived leaves are
+expected to rely more on constitutive defenses (e.g., leaf
+toughness).
 
 # Materials and Methods
 
@@ -158,7 +173,7 @@ The PCA revealed how covariates (ACI, LT, LPS and LMA) interact. We plotted cova
 
 Simple linear regressions of herbivory (%) against PC1 and PC2 reveal a statistically significant positive relationship (*p* = \<0.001) (Fig. 3a and 3b). Even though we note large spread in the data (Fig. 3a and 3b), we see a statistically significant positive trend of herbivory plotted against PC1, were positive values represent greater values of ACI, LPS and LMA. Herbivory plotted against PC2 shows a statistically significant positive trend, were positive values represent greater LT (Fig. 3b). Percent pathogen damage plotted against PC1 reveal a statistically significant positive relationship (*p* = \<0.001), were positive values represent greater values of ACI, LPS and LMA (Fig. 3c). We did not see a statistically significant relationship (*p* = 0.223) between pathogen damage and PC2 (Fig. 3d).
 
-TALK ABOUT SIMPLE LINEAR REGRESSIONS OF SUPPLEMENTARY FIGURES?
+**TALK ABOUT SIMPLE LINEAR REGRESSIONS OF SUPPLEMENTARY FIGURES?**
 
 # Discussion
 
@@ -805,11 +820,8 @@ masterpat2 <- df_list_ant2 %>%
 #| eval: true
 #| warning: false
 #| fig.width: 7
-#| fig.height: 7
-#| fig.cap: "Relative abundance (RA) of Ascomycota OTUs of seven tree species used in the study. Violin plots show the distribution of the RA. The horizontal line within the embedded boxplots represents the median, the box represents the interquartile range (IQR), and the whiskers represent the 1.5xIQR. Outliers are represented by dots. Pink fille violin plots represent low endophyte (*E-*) treatment and yellow fille violins represent high endophyte (*E+*) treatment. Relative abundance is the percentage of endophyte colonization within individuals of the same species. Significance levels are represented by asterisks [*p* = 0.05 (\\*), *p* = 0.01 (\\**), and *p* = 0.001 (\\***)]."
-
-library("ggplot2")
-library("ggpubr")
+#| fig.height: 4.5
+#| fig.cap: "Relative abundance (RA) of Ascomycota OTUs of seven tree species used in the study. (a) Violin plots show individuals' RA and and its distribution by species. The horizontal line within the violins represent the mean RA per species. (b) The RA of OTU's by treatment withing each tree species. Pink filled violin plots represent low endophyte (*E-*) treatment and yellow filled violins represent high endophyte (*E+*) treatment. Relative abundance is the percentage of endophyte colonization within individuals of the same species. Significance levels are represented by asterisks [*p* = 0.05 (\\*), *p* = 0.01 (\\**), and *p* = 0.001 (\\***)]."
 
 # RA per E_load
 
@@ -819,32 +831,66 @@ names(newname) <- c("APEIME", "CHRYCA", "CORDAL", "DYPTE", "HEISCO", "LACPA", "T
 
 RAE <- ggplot(data= master, aes(x = E_load, y = Relative_Abundance)) +
   geom_violin(aes(fill = E_load)) +
-    geom_boxplot(width=0.1, color="grey40", alpha=0.2, outlier.shape = -1) +
-# geom_crossbar(stat="summary", fun = mean, fun.max = mean, fun.min = mean,  fatten = 2, width = 0.5) +
-# geom_point(color="black", alpha = 0.4,size = 2, position = position_jitter(w=0.05)) +
-  scale_fill_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
+  #geom_boxplot(width=0.1, color="grey30", alpha=0.2) +
+  geom_crossbar(stat="summary", fun = mean, fun.max = mean, fun.min = mean,  fatten = 2, width = 0.5) +
+  geom_point(color="grey15", alpha = 0.4,size = 2, position = position_jitter(w=0.05)) +
+  scale_fill_manual(name = "Treatment", values= met.brewer("Cross", n = 2, type = "discrete")) +
   scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
-  theme_bw(base_size = 14)+
-  
+  theme_classic(base_size = 14)+
   theme(panel.grid.major = element_line(colour = "grey")) +
   theme(panel.grid.minor = element_line(colour = "grey")) +
   theme(strip.background = element_rect(fill = "white")) +
+  theme(axis.line.x.bottom = element_blank()) +
+  theme(strip.text.x = element_text(colour = "grey15", face = "italic")) +
+  theme(panel.border = element_rect(linetype = "blank", fill = NA)) +
+  labs(title = "(a)", x="", y="Relative Abundance of Ascomycota", face = "bold")+
+  theme(legend.position="right", 
+        legend.title = element_text(face = "bold"),
+        legend.text = element_text(size = 14),
+        plot.title = element_text(color="black", size = 14, face="bold"),
+        axis.text.x=element_blank()) +
+  #labs(caption = "*Outliers and singletons removed.") +
+  stat_compare_means(comparisons = list(c("E-", "E+")),
+                     method = "t.test",
+                     label = "p.signif", label.y = 25, bracket.size = 0.65) +
+  facet_wrap(~Species, labeller = as_labeller(newname))
+  
+#RAE
+
+
+RAE_bar <- ggplot(data= master, aes(x = Species, y = Relative_Abundance)) +
+  geom_bar(stat="identity", aes(fill = E_load), position = "stack") +
+  scale_fill_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_x_discrete(labels=c(newname)) +
+  theme_classic(base_size = 14)+
+  # theme(panel.grid.major = element_line(colour = "grey")) +
+  # theme(panel.grid.minor = element_line(colour = "grey")) +
+  # theme(strip.background = element_rect(fill = "white")) +
+  # theme(axis.line.x.bottom = element_blank()) +
   theme(strip.text.x = element_text(colour = "grey15", face = "italic")) +
   theme(legend.title = element_text(face = "bold")) +
   theme(panel.border = element_rect(linetype = "blank", fill = NA)) +
-  labs(x="", y="Relative Abundance", face = "bold")+
-  theme(legend.position="right", legend.title = element_blank(),
-        legend.text = element_text(size = 16),
-        axis.text.x=element_blank()) +
-  #labs(caption = "*Outliers and singletons removed.") +
-  stat_compare_means(comparisons = list(c("E-", "E+")), 
-                     method = "t.test",
-                     label = "p.signif", label.y = 0.3, bracket.size = 0.65) +
-  facet_wrap(~Species, labeller = as_labeller(newname))
-  
+  labs(title = "(b)", x="", y="Relative Abundance of Ascomycota", face = "bold")+
+  theme(legend.position="right",
+        legend.title = element_blank(),
+        legend.text = element_text(size = 14),
+        plot.title = element_text(color="black", size = 14, face="bold"),
+        axis.text.x=element_text(face = "italic", hjust = 1, angle = 30))
 
-RAE
+
+#RAE_bar
+
+# Arranged as a grid
+fig1<- ggarrange(RAE, RAE_bar, nrow = 1, ncol=2, common.legend = TRUE, legend="bottom")
+
+fig1
+
+
+# Saving
 #ggsave(filename="./plots/Aim3_RA_Eload_SEPT182023.png", plot = RAE, dpi=600, units=c("mm"), width = 180, height = 180)
+#
+
 ```
 
 ## Figure 2

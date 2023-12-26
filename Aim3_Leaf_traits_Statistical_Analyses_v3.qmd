@@ -823,7 +823,7 @@ master <- df_list_ant %>%
   reduce(left_join, by= "Sample_name", "E_load") %>%
   mutate(Total_reads = sum(across(starts_with("OTU")))) %>%
   group_by(Species) %>%
-  mutate(Relative_Abundance = Total_reads/sum(Total_reads)) %>%
+  mutate(Relative_Abundance = Total_reads/sum(Total_reads)*100) %>%
   select(c(1:9, 579:591)) %>%
   select(!c(E_load,
             E_load.y,
@@ -1293,9 +1293,9 @@ RA
 
 ```
 
-## Figure 1?
+## Figure 1a-b
 
-```{r, RA per E_load boxplot, tidy = TRUE}
+```{r, RA per E_load bar and violin plot, tidy = TRUE}
 # RA per E_load
 
 newname <- c("A. membranacea", "C. cainito", "C. alliodora", "Dypterix .sp", "H. concinna", "L. panamensis", "T. cacao")
@@ -1304,32 +1304,63 @@ names(newname) <- c("APEIME", "CHRYCA", "CORDAL", "DYPTE", "HEISCO", "LACPA", "T
 
 RAE <- ggplot(data= master, aes(x = E_load, y = Relative_Abundance)) +
   geom_violin(aes(fill = E_load)) +
-    geom_boxplot(width=0.1, color="grey40", alpha=0.2, outlier.shape = -1) +
-# geom_crossbar(stat="summary", fun = mean, fun.max = mean, fun.min = mean,  fatten = 2, width = 0.5) +
-# geom_point(color="black", alpha = 0.4,size = 2, position = position_jitter(w=0.05)) +
-  scale_fill_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
+  #geom_boxplot(width=0.1, color="grey30", alpha=0.2) +
+  geom_crossbar(stat="summary", fun = mean, fun.max = mean, fun.min = mean,  fatten = 2, width = 0.5) +
+  geom_point(color="grey15", alpha = 0.4,size = 2, position = position_jitter(w=0.05)) +
+  scale_fill_manual(name = "Treatment", values= met.brewer("Cross", n = 2, type = "discrete")) +
   scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
-  theme_bw(base_size = 14)+
-  
+  theme_classic(base_size = 18)+
   theme(panel.grid.major = element_line(colour = "grey")) +
   theme(panel.grid.minor = element_line(colour = "grey")) +
   theme(strip.background = element_rect(fill = "white")) +
+  theme(axis.line.x.bottom = element_blank()) +
+  theme(strip.text.x = element_text(colour = "grey15", face = "italic")) +
+  theme(panel.border = element_rect(linetype = "blank", fill = NA)) +
+  labs(title = "(a)", x="", y="Relative Abundance of Ascomycota", face = "bold")+
+  theme(legend.position="right", 
+        legend.title = element_text(face = "bold"),
+        legend.text = element_text(size = 18),
+        axis.text.x=element_blank()) +
+  #labs(caption = "*Outliers and singletons removed.") +
+  stat_compare_means(comparisons = list(c("E-", "E+")),
+                     method = "t.test",
+                     label = "p.signif", label.y = 30, bracket.size = 0.65) +
+  facet_wrap(~Species, labeller = as_labeller(newname))
+  
+RAE
+
+
+RAE_bar <- ggplot(data= master, aes(x = Species, y = Relative_Abundance)) +
+  geom_bar(stat="identity", aes(fill = E_load), position = "stack") +
+  scale_fill_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_x_discrete(labels=c(newname)) +
+  theme_classic(base_size = 18)+
+  # theme(panel.grid.major = element_line(colour = "grey")) +
+  # theme(panel.grid.minor = element_line(colour = "grey")) +
+  # theme(strip.background = element_rect(fill = "white")) +
+  # theme(axis.line.x.bottom = element_blank()) +
   theme(strip.text.x = element_text(colour = "grey15", face = "italic")) +
   theme(legend.title = element_text(face = "bold")) +
   theme(panel.border = element_rect(linetype = "blank", fill = NA)) +
-  labs(x="", y="Relative Abundance", face = "bold")+
+  labs(title = "(b)", x="", y="Relative Abundance of Ascomycota", face = "bold")+
   theme(legend.position="right", legend.title = element_blank(),
-        legend.text = element_text(size = 16),
-        axis.text.x=element_blank()) +
-  #labs(caption = "*Outliers and singletons removed.") +
-  stat_compare_means(comparisons = list(c("E-", "E+")), 
-                     method = "t.test",
-                     label = "p.signif", label.y = 0.3, bracket.size = 0.65) +
-  facet_wrap(~Species, labeller = as_labeller(newname))
-  
+        legend.text = element_text(size = 18),
+        axis.text.x=element_text(face = "italic", hjust = 1, angle = 30))
 
-RAE
+
+RAE_bar
+
+# Arranged as a grid
+fig1<- ggarrange(RAE, RAE_bar, nrow = 1, ncol=2, common.legend = TRUE, legend="bottom")
+
+fig1
+
+
+# Saving
 #ggsave(filename="./plots/Aim3_RA_Eload_SEPT182023.png", plot = RAE, dpi=600, units=c("mm"), width = 180, height = 180)
+#
+
 ```
 
 ```{r, Functional traits violins, tidy = TRUE}
