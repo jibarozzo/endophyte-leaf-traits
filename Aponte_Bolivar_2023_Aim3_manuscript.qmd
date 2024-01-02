@@ -730,7 +730,7 @@ master <- df_list_ant %>%
   reduce(left_join, by= "Sample_name", "E_load") %>%
   mutate(Total_reads = sum(across(starts_with("OTU")))) %>%
   group_by(Species) %>%
-  mutate(Relative_Abundance = Total_reads/sum(Total_reads)) %>%
+  mutate(Relative_Abundance = Total_reads/sum(Total_reads)*100) %>%
   select(c(1:9, 579:591)) %>%
   select(!c(E_load,
             E_load.y,
@@ -834,16 +834,16 @@ RAE <- ggplot(data= master, aes(x = E_load, y = Relative_Abundance)) +
   #geom_boxplot(width=0.1, color="grey30", alpha=0.2) +
   geom_crossbar(stat="summary", fun = mean, fun.max = mean, fun.min = mean,  fatten = 2, width = 0.5) +
   geom_point(color="grey15", alpha = 0.4,size = 2, position = position_jitter(w=0.05)) +
-  scale_fill_manual(name = "Treatment", values= met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_fill_manual(name = "Treatment ", values= met.brewer("Cross", n = 2, type = "discrete")) +
   scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
   theme_classic(base_size = 14)+
-  theme(panel.grid.major = element_line(colour = "grey")) +
-  theme(panel.grid.minor = element_line(colour = "grey")) +
-  theme(strip.background = element_rect(fill = "white")) +
-  theme(axis.line.x.bottom = element_blank()) +
-  theme(strip.text.x = element_text(colour = "grey15", face = "italic")) +
-  theme(panel.border = element_rect(linetype = "blank", fill = NA)) +
-  labs(title = "(a)", x="", y="Relative Abundance of Ascomycota", face = "bold")+
+  theme(panel.grid.major = element_line(colour = "grey"),
+        panel.grid.minor = element_line(colour = "grey"),
+        strip.background = element_rect(fill = "white"),
+        axis.line.x.bottom = element_blank(), 
+        strip.text.x = element_text(colour = "grey15", face = "italic"),
+        panel.border = element_rect(linetype = "blank", fill = NA)) +
+  labs(x="", y="Relative Abundance of Ascomycota", face = "bold")+
   theme(legend.position="right", 
         legend.title = element_text(face = "bold"),
         legend.text = element_text(size = 14),
@@ -864,31 +864,25 @@ RAE_bar <- ggplot(data= master, aes(x = Species, y = Relative_Abundance)) +
   scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
   scale_x_discrete(labels=c(newname)) +
   theme_classic(base_size = 14)+
-  # theme(panel.grid.major = element_line(colour = "grey")) +
-  # theme(panel.grid.minor = element_line(colour = "grey")) +
-  # theme(strip.background = element_rect(fill = "white")) +
-  # theme(axis.line.x.bottom = element_blank()) +
-  theme(strip.text.x = element_text(colour = "grey15", face = "italic")) +
-  theme(legend.title = element_text(face = "bold")) +
-  theme(panel.border = element_rect(linetype = "blank", fill = NA)) +
-  labs(title = "(b)", x="", y="Relative Abundance of Ascomycota", face = "bold")+
+  theme(strip.text.x = element_text(colour = "grey15", face = "italic"),
+        panel.border = element_rect(linetype = "blank", fill = NA)) +
+  labs(x="", y="Relative Abundance of Ascomycota", face = "bold")+
   theme(legend.position="right",
         legend.title = element_blank(),
         legend.text = element_text(size = 14),
         plot.title = element_text(color="black", size = 14, face="bold"),
         axis.text.x=element_text(face = "italic", hjust = 1, angle = 30))
 
-
 #RAE_bar
 
 # Arranged as a grid
-fig1<- ggarrange(RAE, RAE_bar, nrow = 1, ncol=2, common.legend = TRUE, legend="bottom")
+fig1<- ggarrange(RAE, RAE_bar, nrow = 1, ncol=2, widths = c(1.5, 1), common.legend = TRUE, legend="bottom", label.x = 0, vjust = 1, labels=c("(a)","(b)"))
 
 fig1
 
 
 # Saving
-#ggsave(filename="./plots/Aim3_RA_Eload_SEPT182023.png", plot = RAE, dpi=600, units=c("mm"), width = 180, height = 180)
+#ggsave(filename="./plots/Aim3_Fig1.png", plot = fig1, dpi=600, units=c("mm"), width = 210, height = 180, bg ="white")
 #
 
 ```
@@ -928,10 +922,12 @@ auto <- autoplot((pca), data = data.frame(ndata), # For some reason this functio
   scale_color_manual(labels=c("A. membranacea", "C. cainito", "C. alliodora", "Dypterix .sp", "H. concinna", "L. panamensis", "T. cacao"),values = met.brewer(name = "Cross", n = 8, type="discrete")) +
   stat_ellipse(aes(color=Species), geom = "path", size = 1, position = "identity", type = "t", linetype = 1, level = 0.95, segments = 51, na.rm = FALSE, show.legend = NA, inherit.aes = TRUE) +
   scale_fill_discrete(labels = c("A. membranacea", "C. cainito", "C. alliodora", "Dypterix .sp", "H. concinna", "L. panamensis", "T. cacao")) +
+  scale_shape_manual(name = "Treatment", labels = c("E-", "E+"), values = c(16, 17)) +
   theme_classic(base_size = 16) +
   #labs(title = "(a)") + 
-  theme(plot.title = element_text(color="black", size = 14, face="bold")) +
-  theme(legend.text = element_text(color="black", face="italic"))
+  theme(plot.title = element_text(color="black", size = 14, face="bold"),
+        legend.title = element_text(face = "bold"),
+        legend.text = element_text(color="black", size = 14, face="italic"))
 
 #caption = expression("ACI = anthocyanins, LPS = leaf punch strength, LMA = leaf mass per area, LT = leaf thickness. All leaf replicates per species ("~ italic("n") ~ "= 467).") #This goes in the labs() arguments
 
@@ -973,7 +969,7 @@ auto_ant <- autoplot((ant.pca), data = data.frame(masterant2), # For some reason
   geom_vline(xintercept = 0, colour = "gray45") +
   scale_color_manual(values = met.brewer(name = "Cross", n = 8, type="discrete")) +
   stat_ellipse(aes(color=Species), geom = "path", size = 1, position = "identity", type = "t", linetype = 1, level = 0.95, segments = 51, na.rm = FALSE, show.legend = NA, inherit.aes = TRUE) +
-  theme_classic(base_size = 12) +
+  theme_classic(base_size = 14) +
   #labs(title = "(b)") +
   theme(plot.title = element_text(color="black", size = 14, face="bold")) +
   guides(color = "none")  +      #To turn off color legend
@@ -1022,7 +1018,7 @@ auto_pat <- autoplot((pat.pca), data = data.frame(masterpat2), # For some reason
   geom_vline(xintercept = 0, colour = "gray45") +
   scale_color_manual(values = met.brewer(name = "Cross", n = 8, type="discrete")) +
   stat_ellipse(aes(color=Species), geom = "path", size = 1, position = "identity", type = "t", linetype = 1, level = 0.95, segments = 51, na.rm = FALSE, show.legend = NA, inherit.aes = TRUE) +
-  theme_classic(base_size = 12) +
+  theme_classic(base_size = 14) +
   #labs(title = "(c)") +
   theme(plot.title = element_text(color="black", size = 14, face="bold")) + 
   guides(color = "none")  +      #To turn off color legend
@@ -1050,7 +1046,7 @@ auto_pat <- auto_pat +
 #| fig.height: 10
 #| fig.cap: "Leaf functional traits are conserved within tree species regardles of endophyte load treatment. (a) Principal Component Analysis (PCA) of leaf functional traits from all tree species separated by *E-* and *E+* treatment. (b) PCA of leaf functional traits of plants solely used in ant herbivory assays. (c) PCA leaf functional traits of plants used solely in pathogen damage assays. Colors represent individual species. Circle and triangles represent los (*E-*) and high (*E+*) endophyte treatments, respectively. Colored ellipses correspond to tree species and represent 95% confidence intervals."
 grid_pca <- ggarrange(auto, 
-                      ggarrange(auto_ant, auto_pat, nrow = 1, ncol=2, labels = c("(b)", "(c)")), nrow = 2, common.legend = TRUE, legend="bottom", labels = "(a)")
+                      ggarrange(auto_ant, auto_pat, nrow = 1, ncol=2, label.x = -0.015, vjust = 1, labels = c("(b)", "(c)")), nrow = 2, common.legend = TRUE, legend="bottom", label.x = -0.01, vjust = 1, labels = "(a)")
 
 grid_pca
 # Adding caption
@@ -1059,7 +1055,9 @@ grid_pca
 # 
 # ant_pca_with_caption
 
-#ggsave(filename = "./plots/Aim3_GridPCA_SEPT182023.png", plot = grid_pca, dpi=600, units=c("mm"), width = 275, height = 300, bg = "white")
+#ggsave(filename = "./plots/Aim3_Fig2_02JAN2024.png", plot = grid_pca, dpi=600, units=c("mm"), width = 275, height = 300, bg = "white")
+#Previously called Aim3_GridPCA_SEPT182023.png
+
 ```
 
 ## Figure 3
@@ -1321,7 +1319,7 @@ tab_model(M3REM, P3REM,
 
 ```{r, table1}
 #| echo: false
-#| #eval: true
+#| eval: true
 #| tidy: true
 #| warning: false
 #| tbl-cap: "Summary statistics for the leaf functional traits"
@@ -1407,5 +1405,109 @@ sect_properties <- prop_section(
 )
 
 summa_t1
+
+```
+
+# Supplementary Materials
+
+## Figure S1
+
+## Figure S2a-S2b
+```{r suppfig-2}
+#| echo: false
+#| eval: true
+#| tidy: true
+#| warning: false
+#| fig.cap: "Figure S2: (a) Comparison of leaf thickness between *E-* and *E+* treatment groups. (b) Comparison of leaf thickness between *E-* and *E+* treatment groups per species. Significance levels are represented by asterisks [*p* = 0.05 (\\*), *p* = 0.01 (\\**), and *p* = 0.001 (\\***)]."
+#| fig.align: 'center'
+#| fig.height: 5
+#| fig.width: 5
+mycomparisons <- list(c("APEIME", "CHRYCA"), c("APEIME", "CORDAL"), c("APEIME", "DYPTE"), c("APEIME", "HEISCO"),c("APEIME", "LACPA"), c("APEIME","THEOCA"),
+                      c("CHRYCA","CORDAL"), c("CHRYCA","DYPTE"),c("CHRYCA","HEISCO"), c("CHRYCA","LACPA"), c("CHRYCA", "THEOCA"),
+                      c("CORDAL","DYPTE"), c("CORDAL","HEISCO"), c("CORDAL","LACPA"), c("CORDAL","THEOCA"), 
+                      c("DYPTE","HEISCO"), c("DYPTE","LACPA"), c("DYPTE","THEOCA"), 
+                      c("HEISCO","LACPA"), c("HEISCO","THEOCA"), c("LACPA","THEOCA"))
+
+newname <- c("A. membranacea", "C. cainito", "C. alliodora", "Dypterix .sp", "H. concinna", "L. panamensis", "T. cacao")
+
+names(newname) <- c("APEIME", "CHRYCA", "CORDAL", "DYPTE", "HEISCO", "LACPA", "THEOCA")
+
+# Leaf thickness by endophyte load and species
+
+LTa <- ggplot(data = master, aes(x = E_load, y = Thickness, fill = E_load)) +
+  geom_violin() +
+  geom_point(position = position_jitterdodge(dodge.width = 0.9, jitter.width = 0.2),
+             alpha = 0.3, color = "grey30", size = 2) +
+  geom_crossbar(stat="summary", 
+               fun = mean, 
+               fun.max = mean, 
+               fun.min = mean,
+               alpha = 0.3, 
+               size = 0.3, 
+               width = 0.7,
+               position = position_dodge(width = 0.9)) +
+  scale_fill_manual(name = "Treatment", values= met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_x_discrete(labels=c(newname)) +
+  scale_y_continuous(limits = c(100, 300)) +
+  theme_classic(base_size = 16) +
+  theme(panel.grid.major = element_line(colour = "grey"),
+        #panel.grid.minor = element_line(colour = "grey"),
+        # strip.background = element_rect(fill = "white"),
+        # strip.text.x = element_text(colour = "black", face = "bold"),
+        legend.title = element_text(face = "bold"),
+        panel.border = element_rect(linetype = "blank", fill = NA),
+        axis.text.x=element_blank()) +
+  labs(x="", y= expression(paste("Leaf thickness (",mu,"m)"))) +
+  theme(legend.position="right", 
+        legend.text = element_text(size = 14)) +
+  labs(caption = "*Outliers and singletons removed.") +
+  
+  annotate("text", x = 2.5, y = .65, label = "") +
+  stat_compare_means(label = "p.signif", 
+                     method = "t.test",
+                     comparisons =list(c("E-", "E+")),
+                     bracket.size = 0.8)
+
+#LTa
+
+
+LTb <- ggplot(data = master, aes(x = Species, y = Thickness, fill = E_load)) +
+  geom_violin() +
+  geom_point(position = position_jitterdodge(dodge.width = 0.9, jitter.width = 0.2),
+             alpha = 0.3, color = "grey30", size = 2) +
+  geom_crossbar(stat="summary", 
+               fun = mean, 
+               fun.max = mean, 
+               fun.min = mean,
+               alpha = 0.3, 
+               size = 0.3, 
+               width = 0.7,
+               position = position_dodge(width = 0.9)) +
+  scale_fill_manual(name = "Treatment", values= met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_x_discrete(labels=c(newname)) +
+  scale_y_continuous(limits = c(100, 300)) +
+  theme_classic(base_size = 16) +
+  theme(panel.grid.major = element_line(colour = "grey"),
+        #panel.grid.minor = element_line(colour = "grey"),
+        # strip.background = element_rect(fill = "white"),
+        # strip.text.x = element_text(colour = "black", face = "bold"),
+        legend.title = element_text(face = "bold"),
+        panel.border = element_rect(linetype = "blank", fill = NA),
+        axis.text.x=element_text(face = "italic", hjust = 1, angle = 30))+
+  labs(x="", y= expression(paste("Leaf thickness (",mu,"m)"))) +
+  theme(legend.position="right", 
+        legend.text = element_text(size = 14)) +
+  labs(caption = "*Outliers and singletons removed.") +
+  
+  annotate("text", x = 2.5, y = .65, label = "") +
+  stat_compare_means(label = "p.signif", method = "anova")
+#LTb
+
+# Figure S2a S2b
+grid_LT <- ggarrange(LTa, LTb, nrow = 1, ncol=, common.legend = TRUE, legend="bottom", labels = c("(a)", "(b)"))
+grid_LT
+
 
 ```
