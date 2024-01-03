@@ -88,7 +88,7 @@ knitr::opts_chunk$set(ft.tabcolsep=0, ft.latex.float = "none")
 
 # Keywords:
 
-endophytes, atta colombica, herbivory, calonectria, pathogen, foliar, fungal, symbionts
+Atta colombica, Calonectria, foliar fungal endophytes, herbivory, pathogen, tropical trees, symbioses
 
 # Introduction
 
@@ -157,21 +157,21 @@ For the pathogen assays, we introduced an agar plug inoculated with hyphae of *C
 
 We explored how leaf functional traits and foliar fungal symbionts correlated to herbivory and pathogen damage on leaves. We present the analyses at the leaf and at the plant level. Leaf functional traits were measured and are presented in their raw form, at the leaf level, while FEF data was explored and is presented at the plant level. In analyses where leaf functional traits and FEF are combined we used averages of the leaf functional traits.
 
-Principal Component Analysis (PCA) was used to reduce dimensions among covariates and reveal underlying interactions that could influence fungal endophyte abundance, diversity and community composition in seedlings. The PCA was computed using the `prcomp` function in R statistical software [@rcoreteam2023]. A complete PCA was computed with variables ACI, LT, LPS, and LMA (Fig. 2a). We then proceeded to compute a PCA with the data from leaves of plants used in the ant ($n$ = 210) and pathogen assays ($n$ = 192). To further explore the interactions of between herbivory and pathogen damage against ACI, LT, LPS and LMA we computed simple linear regressions ( Fig. S6 - S7).
+Principal Component Analysis (PCA) was used to reduce dimensions among covariates and reveal underlying interactions that could influence fungal endophyte abundance, diversity and community composition in seedlings. The PCA was computed using the `prcomp` function in R statistical software [@rcoreteam2023]. A complete PCA was computed with variables ACI, LT, LPS, and LMA (Fig. 2a). We then proceeded to compute a PCA with the data from leaves of plants used in the ant ($n$ = 210) and pathogen assays ($n$ = 192). To further explore the interactions of herbivory and pathogen damage ACI, LT, LPS and LMA we computed simple linear regressions ( Fig. S6 - S7).
 
-To test for H2, we used a general linear mixed model (GLM) with herbivory and pathogen damage percentage (logit transformed) as the response variable. To determine which fixed effects to include in the models we used the `vif` function in *R* to calculate the variance inflation factor for all explanatory variables (ACI, LT, LPS and LMA) [@rcoreteam2023]. We then created a correlation matrix with `cor` function to assess correlations among covariates (SUPPLEMENTARY FIGURE?). We opted to maintain explanatory variables pertaining to physical barriers (LT, LPS and LMA) and exclude ACI from subsequent general linear models due to high collinearity with LPS (0.54) and LMA (0.73). Every variable kept exhibits some degree of collinearity and this is well recorded in the literature (CITE HERE).
+To test for H2, we used a general linear mixed model (GLM) with herbivory and pathogen damage percentage (logit transformed) as the response variable. To determine which fixed effects to include in the models we used the `vif` function in *R* to calculate the variance inflation factor for all explanatory variables (ACI, LT, LPS and LMA) [@rcoreteam2023]. We then created a correlation matrix with `cor` function to assess correlations among covariates (SUPPLEMENTARY FIGURE?). We opted to maintain explanatory variables pertaining to physical barriers (LT, LPS and LMA) and exclude ACI from subsequent general linear models due to high collinearity with LPS (*r* = 0.54) and LMA (*r* = 0.73). Every variable kept exhibits some degree of collinearity and this is well recorded in the literature (CITE HERE).
 
 # Results
 
-Seedlings exposed to forest spore fall, *E+*, had a significantly higher proportion of leaf segments colonized by fungal endophytes across all species (data from cultures, Fig. S1) Using our molecular data set we saw that seedlings with *E+* treatment had a significantly higher fungal endophyte relative abundance (*p* = \<0.05) for all tree species when compared to *E-* treatment with the exception of *C. cainito* and *H. concinna* (Fig. 1). This reflects the successful inoculation of our treatment types. Despite these significant differences, there is a high degree of variability in endophyte relative abundance within each treatment type (Fig. 1).
+Seedlings exposed to forest spore fall, *E+*, had a significantly higher proportion of leaf segments colonized by fungal endophytes across all species (data from cultures, Fig. S1) Using our molecular data set we saw that seedlings with *E+* treatment had a significantly higher fungal endophyte relative abundance (*p*  \<0.05) for all tree species when compared to *E-* treatment with the exception of *C. cainito* and *H. concinna* (Fig. 1). Despite these significant differences, there is a high degree of variability in endophyte relative abundance within each treatment type (Fig. 1).
 
 For individuals of all tree species, we observed general differences in leaf functional traits summarized in Table 1. For LT we observed significant differences for *A. membranacea* , *Dypteryx* sp., and *L. panamensis* despite treatment type. Anthocyanins (ACI) were all leaf functional traits across all tree species. We did not see (CONTINUE HERE)
 
 **THE PARAGRAPH ABOVE NEEDS A LOT OF WORK. I NEED THE PLOTS FOR THIS TO WRITE ABOUT IT.**
 
-The PCA revealed how covariates (ACI, LT, LPS and LMA) interact. We plotted covariate data according to tree species groups on the PCA axes to show how the variance in the complete data set is explained by PC1 (60%) and PC2 (27%) (Fig. 2a). We observed that ACI, LPS and LMA loadings track along PC1 towards greater negative values, this indicative of correlation among these covariates (Fig. 2a). Covariates LT and LPS were orthogonal to each other in Fig. 2a, indicative of low correlation. We note distinct grouping of species along PC1 such as *C. alliodora* in direction of positive values of PC1 and *C. cainito* opposite. On PC1 we see distinct and tight clustering according to species in all groups except *H. concinna* and *A. membranacea* which overlap with various other species. We note that LT loading tracks towards negative values along PC2 (Fig.2a). Clear species groupings are detected, such as *Dypterix* sp. located towards positive values and *L. panamensis* towards negative values of the PC2 axis. We note a similar relationship between the covariates with respect to PC1 and PC2 in individual seedlings used for herbivory and pathogen damage trials (Fig. 2b-2c). The PCA of covariates from seedlings used in herbivory trials has a PC1 explaining 57.5% of the variance and a PC2 explaining 28% of the variance in the subset data (Fig. 2b). We saw an inversion of the LT loading in direction of positive values, as well as the main tree species clustered (i.e. *Dypteryx* sp. and *A. membranacea*) along PC2 (Fig. 2b) with respect to Fig. 2a. The PCA of covariates from seedling used in pathogen damage trials has a PC1 explaining 64% of the variance and a PC2 explaining 25% of the variance in the subset data (Fig. 2c). We detected similar relationships among covariates and PC axes in the pathogen damage subset data (Fig. 2c) when compared to the complete data set (Fig. 2a).
+The PCA revealed how leaf traits (ACI, LT, LPS and LMA) were related. We plotted leaf trait data according to tree species groups on the PCA axes to show how the variance in the complete data set is explained by PC1 (60%) and PC2 (27%) (Fig. 2a). We observed that ACI, LPS and LMA loadings tracked along PC1 towards more negative values, showing correlation among these traits (Fig. 2a). Traits LT and LPS were orthogonal to each other in Fig. 2a, indicative of low correlation. We note distinct grouping of species along PC1 such as *C. alliodora* in the direction of positive values of PC1 and *C. cainito* towards negative values. Along PC1 we see distinct and tight clustering according to species for all except *H. concinna* and *A. membranacea* which overlap with various other species. We note that LT loading tracks towards negative values along PC2 (Fig.2a). Clear species groupings are detected, such as *Dypterix* sp. located towards positive values and *L. panamensis* towards negative values of the PC2 axis. We note a similar relationship between the leaf traits with respect to PC1 and PC2 in individual seedlings used for herbivory versus pathogen damage trials (Fig. 2b-2c). The PCA of leaf traits from seedlings used in herbivory trials has a PC1 explaining 57.5% of the variance and a PC2 explaining 28% of the variance in the subset data (Fig. 2b). We saw an inversion of the LT loading in direction of positive values, as well as the main tree species clustered (i.e. *Dypteryx* sp. and *A. membranacea*) along PC2 (Fig. 2b) with respect to Fig. 2a. The PCA of leaf traits from seedling used in pathogen damage trials has a PC1 explaining 64% of the variance and a PC2 explaining 25% of the variance in the subset data (Fig. 2c). We detected similar relationships among leaf traits and PC axes in the pathogen damage subset data (Fig. 2c) when compared to the complete data set (Fig. 2a).
 
-Simple linear regressions of herbivory (%) against PC1 and PC2 reveal a statistically significant positive relationship (*p* = \<0.001) (Fig. 3a and 3b). Even though we note large spread in the data (Fig. 3a and 3b), we see a statistically significant positive trend of herbivory plotted against PC1, were positive values represent greater values of ACI, LPS and LMA. Herbivory plotted against PC2 shows a statistically significant positive trend, were positive values represent greater LT (Fig. 3b). Percent pathogen damage plotted against PC1 reveal a statistically significant positive relationship (*p* = \<0.001), were positive values represent greater values of ACI, LPS and LMA (Fig. 3c). We did not see a statistically significant relationship (*p* = 0.223) between pathogen damage and PC2 (Fig. 3d).
+Simple linear regressions of herbivory (%) against PC1 and PC2 revealed a statistically significant positive relationship (*p* \<0.001) (Fig. 3a and 3b). Even though we note large spread in the data (Fig. 3a and 3b), we see a statistically significant positive trend of herbivory plotted against PC1, where positive values represent greater values of ACI, LPS and LMA. Herbivory plotted against PC2 shows a statistically significant positive trend, where positive values represent greater LT (Fig. 3b). Percent pathogen damage plotted against PC1 revealed a statistically significant positive relationship (*p* = \<0.001), in which positive values represent greater values of ACI, LPS and LMA (Fig. 3c). We did not see a statistically significant relationship (*p* = 0.223) between pathogen damage and PC2 (Fig. 3d).
 
 **TALK ABOUT SIMPLE LINEAR REGRESSIONS OF SUPPLEMENTARY FIGURES?**
 
@@ -821,7 +821,7 @@ masterpat2 <- df_list_ant2 %>%
 #| warning: false
 #| fig.width: 7
 #| fig.height: 4.5
-#| fig.cap: "Relative abundance (RA) of Ascomycota OTUs of seven tree species used in the study. (a) Violin plots show individuals' RA and and its distribution by species. The horizontal line within the violins represent the mean RA per species. (b) The RA of OTU's by treatment withing each tree species. Pink filled violin plots represent low endophyte (*E-*) treatment and yellow filled violins represent high endophyte (*E+*) treatment. Relative abundance is the percentage of endophyte colonization within individuals of the same species. Significance levels are represented by asterisks [*p* = 0.05 (\\*), *p* = 0.01 (\\**), and *p* = 0.001 (\\***)]."
+#| fig.cap: "Relative abundance (RA) of Ascomycota OTUs of seven tree species used in the study. (a) Violin plots show individuals' RA and and its distribution by species. The horizontal line within the violins represent the mean RA per species. (b) The RA of OTU's by treatment withing each tree species. Pink filled violin plots represent low endophyte (*E-*) treatment and yellow filled represent high endophyte (*E+*) treatment. Relative abundance is the percentage of endophyte colonization within individuals of the same species. Significance levels are represented by asterisks [*p* = 0.05 (\\*), *p* = 0.01 (\\**), and *p* = 0.001 (\\***)]."
 
 # RA per E_load
 
@@ -1044,7 +1044,7 @@ auto_pat <- auto_pat +
 #| warning: false
 #| fig.width:  10
 #| fig.height: 10
-#| fig.cap: "Leaf functional traits are conserved within tree species regardles of endophyte load treatment. (a) Principal Component Analysis (PCA) of leaf functional traits from all tree species separated by *E-* and *E+* treatment. (b) PCA of leaf functional traits of plants solely used in ant herbivory assays. (c) PCA leaf functional traits of plants used solely in pathogen damage assays. Colors represent individual species. Circle and triangles represent los (*E-*) and high (*E+*) endophyte treatments, respectively. Colored ellipses correspond to tree species and represent 95% confidence intervals."
+#| fig.cap: "Leaf functional traits are conserved within tree species regardless of endophyte load treatment. (a) Principal Component Analysis (PCA) of leaf functional traits from all tree species separated by *E-* and *E+* treatment. (b) PCA of leaf functional traits of plants solely used in ant herbivory assays. (c) PCA leaf functional traits of plants used solely in pathogen damage assays. Colors represent individual species. Circle and triangles represent low (*E-*) and high (*E+*) endophyte treatments, respectively. Colored ellipses correspond to tree species and represent 95% confidence intervals."
 grid_pca <- ggarrange(auto, 
                       ggarrange(auto_ant, auto_pat, nrow = 1, ncol=2, label.x = -0.015, vjust = 1, labels = c("(b)", "(c)")), nrow = 2, common.legend = TRUE, legend="bottom", label.x = -0.01, vjust = 1, labels = "(a)")
 
@@ -1327,7 +1327,7 @@ tab_model(M3REM, P3REM,
 summa_t1 <- tbl_summary(data2 %>%
   group_by(Species, E_load) %>%
   select(c(10:13)) %>%
-  rename( Treatment = E_load) %>%
+  rename(Treatment = E_load) %>%
   mutate(Species = case_match(Species, "APEIME" ~ "A. membranacea", 
                             "CHRYCA" ~ "C. cainito", 
                             "CORDAL" ~ "C. alliodora",
@@ -1337,8 +1337,10 @@ summa_t1 <- tbl_summary(data2 %>%
                             "THEOCA" ~ "T. cacao")) %>%
   rename('Anthocyanins (ACI)' = Anthocyanins, 
            'Leaf Thickness (LT) (\U00B5m)'=Thickness, 
-           'Leaf Punch Strength (LPS) (N mm/-1)'= Toughness, 
-           'Leaf Mass per Area (LMA) (mg)' = LMA) %>%
+           'Leaf Punch Strength (LPS) (N mm/1)'= Toughness, 
+           'Leaf Mass per Area (LMA) (mg/mm)' = LMA) %>%
+  mutate(Treatment= case_match(Treatment, "E-" ~ "E- (n = 570)", 
+                        "E+" ~ "E+ (n = 544)")) %>% # The sum of E- and E+ was added after iterations of tbl_summary().
     na.omit(),
   by = Species,
   missing = "no",
@@ -1354,6 +1356,7 @@ summa_t1 <- tbl_summary(data2 %>%
                 stat_6 = 'L. panamensis, n = 185',
                 stat_7 = 'T. cacao, n = 176',
                 text_interpret = "md")
+#summa_t1
 
   #modify_footnote(N = "N = count number", abbreviation = TRUE)
   #modify_spanning_header(all_stat_cols(stat_0= T) ~ "**Species**") 
@@ -1413,15 +1416,16 @@ summa_t1
 ## Figure S1
 
 ## Figure S2a-S2b
-```{r suppfig-2}
+```{r suppfig_2}
 #| echo: false
 #| eval: true
 #| tidy: true
 #| warning: false
-#| fig.cap: "Figure S2: (a) Comparison of leaf thickness between *E-* and *E+* treatment groups. (b) Comparison of leaf thickness between *E-* and *E+* treatment groups per species. Significance levels are represented by asterisks [*p* = 0.05 (\\*), *p* = 0.01 (\\**), and *p* = 0.001 (\\***)]."
 #| fig.align: 'center'
 #| fig.height: 5
 #| fig.width: 5
+#| fig.cap: "Figure S2: (a) Comparison of leaf thickness between *E-* and *E+* treatment groups. (b) Comparison of leaf thickness between *E-* and *E+* treatment groups per species. Significance levels are represented by asterisks [*p* = 0.05 (\\*), *p* = 0.01 (\\**), and *p* = 0.001 (\\***)]."
+
 mycomparisons <- list(c("APEIME", "CHRYCA"), c("APEIME", "CORDAL"), c("APEIME", "DYPTE"), c("APEIME", "HEISCO"),c("APEIME", "LACPA"), c("APEIME","THEOCA"),
                       c("CHRYCA","CORDAL"), c("CHRYCA","DYPTE"),c("CHRYCA","HEISCO"), c("CHRYCA","LACPA"), c("CHRYCA", "THEOCA"),
                       c("CORDAL","DYPTE"), c("CORDAL","HEISCO"), c("CORDAL","LACPA"), c("CORDAL","THEOCA"), 
@@ -1451,19 +1455,22 @@ LTa <- ggplot(data = master, aes(x = E_load, y = Thickness, fill = E_load)) +
   scale_x_discrete(labels=c(newname)) +
   scale_y_continuous(limits = c(100, 300)) +
   theme_classic(base_size = 16) +
-  theme(panel.grid.major = element_line(colour = "grey"),
+  theme(
+        #panel.grid.major = element_line(colour = "grey"),
         #panel.grid.minor = element_line(colour = "grey"),
-        # strip.background = element_rect(fill = "white"),
-        # strip.text.x = element_text(colour = "black", face = "bold"),
+        #strip.background = element_rect(fill = "white"),
+        #strip.text.x = element_text(colour = "black", face = "bold"),
         legend.title = element_text(face = "bold"),
         panel.border = element_rect(linetype = "blank", fill = NA),
-        axis.text.x=element_blank()) +
+        axis.text.x=element_blank(),
+        legend.position="right", 
+        legend.text = element_text(size = 14)) +
   labs(x="", y= expression(paste("Leaf thickness (",mu,"m)"))) +
   theme(legend.position="right", 
         legend.text = element_text(size = 14)) +
-  labs(caption = "*Outliers and singletons removed.") +
+  #labs(caption = "*Outliers and singletons removed.") +
   
-  annotate("text", x = 2.5, y = .65, label = "") +
+  #annotate("text", x = 2.5, y = .65, label = "") +
   stat_compare_means(label = "p.signif", 
                      method = "t.test",
                      comparisons =list(c("E-", "E+")),
@@ -1489,25 +1496,125 @@ LTb <- ggplot(data = master, aes(x = Species, y = Thickness, fill = E_load)) +
   scale_x_discrete(labels=c(newname)) +
   scale_y_continuous(limits = c(100, 300)) +
   theme_classic(base_size = 16) +
-  theme(panel.grid.major = element_line(colour = "grey"),
+  theme(
+        #panel.grid.major = element_line(colour = "grey"),
         #panel.grid.minor = element_line(colour = "grey"),
-        # strip.background = element_rect(fill = "white"),
-        # strip.text.x = element_text(colour = "black", face = "bold"),
+        #strip.background = element_rect(fill = "white"),
+        #strip.text.x = element_text(colour = "black", face = "bold"),
         legend.title = element_text(face = "bold"),
         panel.border = element_rect(linetype = "blank", fill = NA),
-        axis.text.x=element_text(face = "italic", hjust = 1, angle = 30))+
-  labs(x="", y= expression(paste("Leaf thickness (",mu,"m)"))) +
-  theme(legend.position="right", 
+        axis.text.x=element_text(face = "italic", hjust = 1, angle = 30),
+        legend.position="right", 
         legend.text = element_text(size = 14)) +
-  labs(caption = "*Outliers and singletons removed.") +
-  
-  annotate("text", x = 2.5, y = .65, label = "") +
+  labs(x="", y= expression(paste("Leaf thickness (",mu,"m)"))) +
+  #theme(legend.position="right", 
+        #legend.text = element_text(size = 14)) +
+  #labs(caption = "*Outliers and singletons removed.") +
+  #annotate("text", x = 2.5, y = .65, label = "") +
   stat_compare_means(label = "p.signif", method = "anova")
-#LTb
+LTb
 
 # Figure S2a S2b
-grid_LT <- ggarrange(LTa, LTb, nrow = 1, ncol=, common.legend = TRUE, legend="bottom", labels = c("(a)", "(b)"))
-grid_LT
+suppfig_2 <- ggarrange(LTa, LTb, nrow = 1, ncol=2, common.legend = TRUE, legend="bottom", labels = c("(a)", "(b)"))
+suppfig_2
 
+#ggsave(filename="./plots/Aim3_FigS2_03JAN2024.png", plot = suppfig_2, dpi=600, units=c("mm"), width = 250, height = 200, bg ="white")
+#Previously saved under name: Aim3_LT_Species_07062022.png
+#
+#Table of results: Thickness T-tests
+
+thickness_comparisons <- compare_means(Thickness ~ Species, data = master, method = "t.test")
+thickness_cp_table <- as_hux(thickness_comparisons, detailed = TRUE)
+thickness_cp_table
+
+```
+
+### Figure S3a-S3b
+
+```{r, suppfig_3 }
+#| echo: false
+#| eval: true
+#| tidy: true
+#| warning: false
+#| fig.align: 'center'
+#| fig.height: 5
+#| fig.width: 5
+
+# Figure S3
+# Leaf toughness (lbf) by  endophyte load and species with data (data) ####
+LPSa <- ggplot(data = master, aes( x = E_load, y = Toughness, fill = E_load)) +
+geom_violin() +
+  geom_point(position = position_jitterdodge(dodge.width = 0.9, jitter.width = 0.2),
+             alpha = 0.3, color = "grey30", size = 2) +
+  geom_crossbar(stat="summary", 
+               fun = mean, 
+               fun.max = mean, 
+               fun.min = mean,
+               alpha = 0.3, 
+               size = 0.3, 
+               width = 0.7,
+               position = position_dodge(width = 0.9)) +
+  scale_fill_manual(name = "Treatment ", values= met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_x_discrete(labels=c(newname)) +
+  theme_classic(base_size = 16) +
+  theme(
+        #panel.grid.major = element_line(colour = "grey"),
+        #panel.grid.minor = element_line(colour = "grey"),
+        #strip.background = element_rect(fill = "white"),
+        #strip.text.x = element_text(colour = "black", face = "bold"),
+        legend.title = element_text(face = "bold"),
+        panel.border = element_rect(linetype = "blank", fill = NA),
+        axis.text.x=element_blank(),
+        legend.position="right", 
+        legend.text = element_text(size = 14)) +
+  labs(x="", y= expression(paste("Leaf punch strength(N mm","^-1)"))) +
+  #labs(caption = "*Outliers and singletons removed.") +
+  stat_compare_means(label = "p.signif", 
+                     method = "t.test",
+                     comparisons =list(c("E-", "E+")),
+                     bracket.size = 0.8) 
+#LPSa
+
+# 
+#
+LPSb <- ggplot(data = master, aes( x = Species, y = Toughness, fill = E_load)) +
+geom_violin() +
+  geom_point(position = position_jitterdodge(dodge.width = 0.9, jitter.width = 0.2),
+             alpha = 0.3, color = "grey30", size = 2) +
+  geom_crossbar(stat="summary", 
+               fun = mean, 
+               fun.max = mean, 
+               fun.min = mean,
+               alpha = 0.3, 
+               size = 0.3, 
+               width = 0.7,
+               position = position_dodge(width = 0.9)) +
+  scale_fill_manual(name = "Treatment ", values= met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_x_discrete(labels=c(newname)) +
+  theme_classic(base_size = 16) +
+  theme(
+        #panel.grid.major = element_line(colour = "grey"),
+        #panel.grid.minor = element_line(colour = "grey"),
+        #strip.background = element_rect(fill = "white"),
+        #strip.text.x = element_text(colour = "black", face = "bold"),
+        legend.title = element_text(face = "bold"),
+        panel.border = element_rect(linetype = "blank", fill = NA),
+        axis.text.x=element_text(face = "italic", hjust = 1, angle = 30),
+        legend.position="right", 
+        legend.text = element_text(size = 14)) +
+  labs(x="", y= expression(paste("Leaf punch strength(N mm","^-1)"))) +
+  #labs(caption = "*Outliers and singletons removed.") +
+  stat_compare_means(label = "p.signif", method = "anova") +
+  ylim(0.10, 1) 
+#LPSb
+
+# Figure S3a S3b
+# 
+suppfig_3 <- ggarrange(LPSa, LPSb, nrow = 1, ncol=2, common.legend = TRUE, legend="bottom", labels = c("(a)", "(b)"))
+suppfig_3
+#ggsave(filename="./plots/Aim3_FigS3_03JAN2024.png", plot = suppfig_3, dpi=600, units=c("mm"), width = 250, height = 200, bg ="white")
+#Previously named Aim3_LPS_Species_07062022.png
 
 ```

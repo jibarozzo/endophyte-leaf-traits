@@ -1016,10 +1016,11 @@ Somewhat better distributions. Ant_percent_leafloss is not normally distributed.
 Two packages to visualize summary statistics in a table. 
 ```{r, table1, tidy = TRUE}
 # Using `gtsummary` and 'flextable' packages
+# 
 summa_t1 <- tbl_summary(data2 %>%
   group_by(Species, E_load) %>%
   select(c(10:13)) %>%
-  rename( Treatment = E_load) %>%
+  rename(Treatment = E_load) %>%
   mutate(Species = case_match(Species, "APEIME" ~ "A. membranacea", 
                             "CHRYCA" ~ "C. cainito", 
                             "CORDAL" ~ "C. alliodora",
@@ -1031,6 +1032,8 @@ summa_t1 <- tbl_summary(data2 %>%
            'Leaf Thickness (LT) (\U00B5m)'=Thickness, 
            'Leaf Punch Strength (LPS) (N mm/-1)'= Toughness, 
            'Leaf Mass per Area (LMA) (mg)' = LMA) %>%
+  mutate(Treatment= case_match(Treatment, "E-" ~ "E- (n = 570)", 
+                        "E+" ~ "E+ (n = 544)")) %>% # The sum of E- and E+ was added after iterations of tbl_summary().
     na.omit(),
   by = Species,
   missing = "no",
@@ -1393,19 +1396,22 @@ LTa <- ggplot(data = master, aes(x = E_load, y = Thickness, fill = E_load)) +
   scale_x_discrete(labels=c(newname)) +
   scale_y_continuous(limits = c(100, 300)) +
   theme_classic(base_size = 16) +
-  theme(panel.grid.major = element_line(colour = "grey"),
+  theme(
+        #panel.grid.major = element_line(colour = "grey"),
         #panel.grid.minor = element_line(colour = "grey"),
-        # strip.background = element_rect(fill = "white"),
-        # strip.text.x = element_text(colour = "black", face = "bold"),
+        #strip.background = element_rect(fill = "white"),
+        #strip.text.x = element_text(colour = "black", face = "bold"),
         legend.title = element_text(face = "bold"),
         panel.border = element_rect(linetype = "blank", fill = NA),
-        axis.text.x=element_blank()) +
+        axis.text.x=element_blank(),
+        legend.position="right", 
+        legend.text = element_text(size = 14)) +
   labs(x="", y= expression(paste("Leaf thickness (",mu,"m)"))) +
   theme(legend.position="right", 
         legend.text = element_text(size = 14)) +
-  labs(caption = "*Outliers and singletons removed.") +
+  #labs(caption = "*Outliers and singletons removed.") +
   
-  annotate("text", x = 2.5, y = .65, label = "") +
+  #annotate("text", x = 2.5, y = .65, label = "") +
   stat_compare_means(label = "p.signif", 
                      method = "t.test",
                      comparisons =list(c("E-", "E+")),
@@ -1431,25 +1437,27 @@ LTb <- ggplot(data = master, aes(x = Species, y = Thickness, fill = E_load)) +
   scale_x_discrete(labels=c(newname)) +
   scale_y_continuous(limits = c(100, 300)) +
   theme_classic(base_size = 16) +
-  theme(panel.grid.major = element_line(colour = "grey"),
+  theme(
+        #panel.grid.major = element_line(colour = "grey"),
         #panel.grid.minor = element_line(colour = "grey"),
-        # strip.background = element_rect(fill = "white"),
-        # strip.text.x = element_text(colour = "black", face = "bold"),
+        #strip.background = element_rect(fill = "white"),
+        #strip.text.x = element_text(colour = "black", face = "bold"),
         legend.title = element_text(face = "bold"),
         panel.border = element_rect(linetype = "blank", fill = NA),
-        axis.text.x=element_text(face = "italic", hjust = 1, angle = 30))+
-  labs(x="", y= expression(paste("Leaf thickness (",mu,"m)"))) +
-  theme(legend.position="right", 
+        axis.text.x=element_text(face = "italic", hjust = 1, angle = 30),
+        legend.position="right", 
         legend.text = element_text(size = 14)) +
-  labs(caption = "*Outliers and singletons removed.") +
-  
-  annotate("text", x = 2.5, y = .65, label = "") +
+  labs(x="", y= expression(paste("Leaf thickness (",mu,"m)"))) +
+  #theme(legend.position="right", 
+        #legend.text = element_text(size = 14)) +
+  #labs(caption = "*Outliers and singletons removed.") +
+  #annotate("text", x = 2.5, y = .65, label = "") +
   stat_compare_means(label = "p.signif", method = "anova")
 LTb
 
 # Figure S2a S2b
-grid_LT <- ggarrange(LTa, LTb, nrow = 1, ncol=, common.legend = TRUE, legend="bottom", labels = c("(a)", "(b)"))
-grid_LT
+suppfig_2 <- ggarrange(LTa, LTb, nrow = 1, ncol=, common.legend = TRUE, legend="bottom", labels = c("(a)", "(b)"))
+suppfig_2
 
 
 # Table of results: Thickness T-tests
@@ -1462,30 +1470,84 @@ thickness_cp_table
 # res <- manova(cbind(Anthocyanins, Thickness, Toughness, LMA) ~ Species, data = master)
 #ggsave(filename="Aim3_LT_Species_07062022.png", plot = LT, dpi=600, units=c("mm"), width = 300, height = 300)
 
-
+# Figure S3
 # Leaf toughness (lbf) by  endophyte load and species with data (data) ####
-lps <- ggplot(data = master, aes( x = Species, y = Toughness), group_by(Species)) +
-  geom_violin(aes(fill = E_load), outlier.shape = NA) +
-  geom_crossbar(stat="summary", fun = mean, fun.max = mean, fun.min = mean,  fatten = 2, width = 1) +
-  geom_point(color="black", alpha = 0.2,size =2, position = position_jitter(w=0.05)) +
-  scale_fill_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
+LPSa <- ggplot(data = master, aes( x = E_load, y = Toughness, fill = E_load)) +
+geom_violin() +
+  geom_point(position = position_jitterdodge(dodge.width = 0.9, jitter.width = 0.2),
+             alpha = 0.3, color = "grey30", size = 2) +
+  geom_crossbar(stat="summary", 
+               fun = mean, 
+               fun.max = mean, 
+               fun.min = mean,
+               alpha = 0.3, 
+               size = 0.3, 
+               width = 0.7,
+               position = position_dodge(width = 0.9)) +
+  scale_fill_manual(name = "Treatment ", values= met.brewer("Cross", n = 2, type = "discrete")) +
   scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
-  theme_bw(base_size = 16) +
-  theme(panel.grid.major = element_line(colour = "grey")) +
-  theme(panel.grid.minor = element_line(colour = "grey")) +
-  theme(strip.background = element_rect(fill = "white")) +
-  theme(strip.text.x = element_text(colour = "black", face = "bold")) +
-  theme(legend.title = element_text(face = "bold")) +
-  theme(panel.border = element_rect(linetype = "blank", fill = NA)) +
+  scale_x_discrete(labels=c(newname)) +
+  theme_classic(base_size = 16) +
+  theme(
+        #panel.grid.major = element_line(colour = "grey"),
+        #panel.grid.minor = element_line(colour = "grey"),
+        #strip.background = element_rect(fill = "white"),
+        #strip.text.x = element_text(colour = "black", face = "bold"),
+        legend.title = element_text(face = "bold"),
+        panel.border = element_rect(linetype = "blank", fill = NA),
+        axis.text.x=element_blank(),
+        legend.position="right", 
+        legend.text = element_text(size = 14)) +
   labs(x="", y= expression(paste("Leaf punch strength(N mm","^-1)"))) +
-  theme(legend.position="right", legend.title = element_blank(),
-        legend.text = element_text(size = 24)) +
-  labs(caption = "*Outliers and singletons removed.") +
-  stat_compare_means(label = "p.signif", method = "t.test",
-                     ref.group = ".all.", label.y = 1) +
+  #labs(caption = "*Outliers and singletons removed.") +
+  stat_compare_means(label = "p.signif", 
+                     method = "t.test",
+                     comparisons =list(c("E-", "E+")),
+                     bracket.size = 0.8) 
+#LPSa
+
+# 
+#
+LPSb <- ggplot(data = master, aes( x = Species, y = Toughness, fill = E_load)) +
+geom_violin() +
+  geom_point(position = position_jitterdodge(dodge.width = 0.9, jitter.width = 0.2),
+             alpha = 0.3, color = "grey30", size = 2) +
+  geom_crossbar(stat="summary", 
+               fun = mean, 
+               fun.max = mean, 
+               fun.min = mean,
+               alpha = 0.3, 
+               size = 0.3, 
+               width = 0.7,
+               position = position_dodge(width = 0.9)) +
+  scale_fill_manual(name = "Treatment ", values= met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_x_discrete(labels=c(newname)) +
+  theme_classic(base_size = 16) +
+  theme(
+        #panel.grid.major = element_line(colour = "grey"),
+        #panel.grid.minor = element_line(colour = "grey"),
+        #strip.background = element_rect(fill = "white"),
+        #strip.text.x = element_text(colour = "black", face = "bold"),
+        legend.title = element_text(face = "bold"),
+        panel.border = element_rect(linetype = "blank", fill = NA),
+        axis.text.x=element_text(face = "italic", hjust = 1, angle = 30),
+        legend.position="right", 
+        legend.text = element_text(size = 14)) +
+  labs(x="", y= expression(paste("Leaf punch strength(N mm","^-1)"))) +
+  #labs(caption = "*Outliers and singletons removed.") +
+  stat_compare_means(label = "p.signif", method = "anova") +
   ylim(0.10, 1) 
-lps
-#ggsave(filename="Aim3_LPS_Species_07062022.png", plot = LT, dpi=600, units=c("mm"), width = 300, height = 300)
+#LPSb
+
+# Figure S3a S3b
+# 
+suppfig_3 <- ggarrange(LPSa, LPSb, nrow = 1, ncol=2, common.legend = TRUE, legend="bottom", labels = c("(a)", "(b)"))
+suppfig_3
+#ggsave(filename="./plots/Aim3_FigS3_03JAN2024.png", plot = suppfig_3, dpi=600, units=c("mm"), width = 250, height = 200, bg ="white")
+#Previously named Aim3_LPS_Species_07062022.png
+
+
 
 # Leaf mass per area (LMA) by  endophyte load and species
 ggplot(data = master, aes(x = E_load, y = LMA), group_by(Species)) +
