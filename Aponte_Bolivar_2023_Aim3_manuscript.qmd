@@ -129,9 +129,6 @@ Leaf tissue in CTAB solution was stored for 2 months at room temperature prior t
 
 We used 1 µL of PCR1 product from samples and negative control for a second PCR (PCR2) with barcode adapters (IBEST Genomics Resource Core, Moscow, ID, USA). Each PCR2 reaction (total 15 µL) contained 1X Phusion Flash High Fidelity PCR Master Mix, 0.075 µM of barcoded primers (forward and reverse pooled at a concentration of 2 µM) and 0.24mg/mL of BSA following Sarmiento [-@sarmiento2017] and U'Ren & Arnold [-@uren2017]. Before final pooling for sequencing, we purified the amplicons using Agencourt AMPure XP Beads (Beckman Coulter Inc, Brea, CA USA) to a ratio of 1:1 following the manufacturer's instructions. The products were evaluated with Bio Analyzer 2100 (Agilent Technologies, Santa Clara, CA, USA) [@tellezTraits2022]. We quantified the samples through University of Arizona Genetics Core, and subsequently diluted them to the same concentration to prevent over representation of samples with higher concentration, see (CITATION). Amplicons were normalized to 1 ng/µL, then pooled 2 µL of each for sequencing. No contamination was detected visually or by fluorometric analysis. To provide robust controls we combined 5 µL of each PCR1 negative and the DNA extraction blanks and sequenced them as samples. Ultimately, we combined samples into a single tube with 20 ng/µL of amplified DNA with barcoded adapters for sequencing on the Illumina MiSeq platform with Reagent Kit v3 (2 × 300 bp) following protocols from the IBEST Genomics Resource Core at the University of Idaho, USA. Again, we included the DNA extraction blanks and two PCR1 negatives and sequenced with samples. Sequencing yielded 3,778,081 total ITS1 reads.
 
-### Replication Statement (maybe goes before statistical analyses)
-
-*In the Materials and Methods section (before the description of the data analyses), authors **MUST** state i) the scale at which they seek to make inferences (for example at the level of species, populations or experimental units); ii) the scale(s) at which their treatment or factor of interest is(are) applied; and iii) the number of replicates for each level of treatment or factor. We have provided a table template for including this information, which the editors will use to decide whether the authors' inferences are supported and should therefore be peer-reviewed. Manuscripts without this table will be returned to authors.*
 
 ### Mock Communities
 
@@ -152,6 +149,10 @@ A fresh fourth leaf was used in ant assays. To assess leaf-cutter ant damage, we
 ### Pathogen assays
 
 For the pathogen assays, we introduced an agar plug inoculated with hyphae of *Calonectria* sp. ($P+$ treatment), and an agar plug without the pathogen ($P-$ control) to similarly aged/sized leaves within 10-14 days after endophyte inoculations (CITATION). Leaves with the $P+$ or $P-$ treatment were misted with sterile water two times a day (morning and afternoon) to maintain moisture. After four days, we removed the plugs and took digital photos to analyze leaf area damage using ImageJ [v1.52r; @schneider2012].
+
+### Replication Statement (maybe goes before statistical analyses)
+
+*In the Materials and Methods section (before the description of the data analyses), authors **MUST** state i) the scale at which they seek to make inferences (for example at the level of species, populations or experimental units); ii) the scale(s) at which their treatment or factor of interest is(are) applied; and iii) the number of replicates for each level of treatment or factor. We have provided a table template for including this information, which the editors will use to decide whether the authors' inferences are supported and should therefore be peer-reviewed. Manuscripts without this table will be returned to authors.*
 
 ### Statistical Analyses
 
@@ -919,9 +920,22 @@ auto <- autoplot((pca), data = data.frame(ndata), # For some reason this functio
   geom_point(aes(fill = Species, color = Species, shape = E_load), alpha = 0.6, size = 3) +
   geom_hline(yintercept = 0, colour = "gray45") +
   geom_vline(xintercept = 0, colour = "gray45") +
-  scale_color_manual(labels=c("A. membranacea", "C. cainito", "C. alliodora", "Dypterix .sp", "H. concinna", "L. panamensis", "T. cacao"),values = met.brewer(name = "Cross", n = 8, type="discrete")) +
+  scale_color_manual(labels=c("A. membranacea", 
+                              "C. cainito", 
+                              "C. alliodora", 
+                              "Dypterix .sp", 
+                              "H. concinna", 
+                              "L. panamensis", 
+                              "T. cacao"),
+                     values = met.brewer(name = "Cross", n = 8, type="discrete")) +
   stat_ellipse(aes(color=Species), geom = "path", size = 1, position = "identity", type = "t", linetype = 1, level = 0.95, segments = 51, na.rm = FALSE, show.legend = NA, inherit.aes = TRUE) +
-  scale_fill_discrete(labels = c("A. membranacea", "C. cainito", "C. alliodora", "Dypterix .sp", "H. concinna", "L. panamensis", "T. cacao")) +
+  scale_fill_discrete(labels = c("A. membranacea", 
+                                 "C. cainito", 
+                                 "C. alliodora", 
+                                 "Dypterix .sp", 
+                                 "H. concinna", 
+                                 "L. panamensis", 
+                                 "T. cacao")) +
   scale_shape_manual(name = "Treatment", labels = c("E-", "E+"), values = c(16, 17)) +
   theme_classic(base_size = 16) +
   #labs(title = "(a)") + 
@@ -1091,30 +1105,41 @@ format.p <- function(p, precision = 0.001) {
     p = paste0('< ', precision)}
   if (p >= 0.001) {
     p = paste0('= ', p)    }
-  sub("0", "", p)
+  sub("0", "0", p)
 }
 
 lmpc1 <- lm(Ant_percent_leafloss ~ PC1, data = ant_pcalm)
 
 # PC1
 # Formatted p-value
-p1 <- cor.test(ant_pcalm$Ant_percent_leafloss, ant_pcalm$PC1)$p.value
+ant_p1 <- cor.test(ant_pcalm$Ant_percent_leafloss, ant_pcalm$PC1)$p.value
 
-p1 = format.p(p1) # This is just to make the p-value nicer. 
+ant_p1 = format.p(ant_p1) # This is just to make the p-value nicer. 
 
 ## Plot PC1
        
 ant_pc1 <- ggplot(ant_pcalm, aes(PC1, Ant_percent_leafloss)) +
   geom_jitter(aes(color = Species, shape = E_load), size = 3, alpha = 0.6) +
   geom_smooth(method = lm, se = T , level = 0.95, na.rm = F, color = "black", size = 0.75) +
-  stat_regline_equation(aes(label = paste(..eq.label.., ..adj.rr.label.., sep = "~~~~"))) +
-  #stat_regline_equation(label.y.npc = "top", label.x.npc = "center", aes(label = ..eq.label..), color= "black", size = 2.2) +
-  scale_color_manual(labels=c("A. membranacea", "C. cainito", "C. alliodora", "Dypterix .sp", "H. concinna", "L. panamensis", "T. cacao"),values = met.brewer(name = "Cross", n = 8, type="discrete")) +
-  theme_minimal(base_size = 16) +
-  labs(title = "(a)", y = "Herbivory (%)", caption = "") +
-  theme(plot.title = element_text(color="black", size = 16, face="bold")) + 
-    annotate(geom="text",label=sprintf("italic('p')~'%s'", p1),parse=TRUE,x=-2.5,y=65) +
-  theme(legend.text = element_text(color="black", face="italic"))
+  stat_regline_equation(label.y.npc = "top", 
+                        label.x.npc = "left",
+                        size = 7,
+                        aes(label = paste(..eq.label..))) +
+  scale_color_manual(labels=c("A. membranacea", 
+                              "C. cainito", 
+                              "C. alliodora", 
+                              "Dypterix .sp", 
+                              "H. concinna", 
+                              "L. panamensis", 
+                              "T. cacao"),
+                     values = met.brewer(name = "Cross", n = 8, type="discrete")) +
+  scale_shape_manual(name = "Treatment",
+                     labels=c("E-", "E+"),
+                     values = c(16, 17)) +
+  theme_classic(base_size = 16) +
+  labs(y = "Herbivory (%)", caption = "") +
+  theme(legend.title = element_text(face = "bold"),
+        legend.text = element_text(color="black", size = 14, face="italic"))
   #guides(color = "none")  +      #To turn off color legend
   #guides(fill = "none") + #To turn off fill legend
   #guides(shape = "none")
@@ -1126,9 +1151,10 @@ ant_pc1 <- ggplot(ant_pcalm, aes(PC1, Ant_percent_leafloss)) +
 
 # PC2
 # Formatted p-values
-p2 <- cor.test(ant_pcalm$Ant_percent_leafloss, ant_pcalm$PC2)$p.value
 
-p2 =format.p(p2) # This is just to make the p-value nicer. 
+ant_p2 <- cor.test(ant_pcalm$Ant_percent_leafloss, ant_pcalm$PC2)$p.value
+
+ant_p2 =format.p(ant_p2) # This is just to make the p-value nicer. 
 
 ## Plot PC2
 lmpc2 <- lm(Ant_percent_leafloss ~ PC2, data = ant_pcalm)
@@ -1136,14 +1162,21 @@ lmpc2 <- lm(Ant_percent_leafloss ~ PC2, data = ant_pcalm)
 ant_pc2 <- ggplot(ant_pcalm, aes(PC2, Ant_percent_leafloss)) +
   geom_jitter(aes(color = Species, shape = E_load), size = 3, alpha = 0.6) +
   geom_smooth(method = lm, se = T , level = 0.95, na.rm = F, color = "black", size = 0.75) +
-  stat_regline_equation(aes(label = paste(..eq.label.., ..adj.rr.label.., sep = "~~~~"))) +
-  #stat_regline_equation(label.y.npc = "top", label.x.npc = "center", aes(label = ..eq.label..), color= "black", size = 2.2) +
-  scale_color_manual(values = met.brewer(name = "Cross", n = 8, type="discrete")) +
-  theme_minimal(base_size = 16) +
-  labs(title = "(b)", y = "Herbivory (%)", caption = "") +
-  theme(plot.title = element_text(color="black", size = 16, face="bold")) +
- annotate(geom="text",label=sprintf("italic('p')~'%s'", p2),parse=TRUE,x=-1,y=65) +
-    guides(color = "none")  +      #To turn off color legend
+  stat_regline_equation(label.y.npc = "top", 
+                        label.x.npc = "left",
+                        size = 7,
+                        aes(label = paste(..eq.label..))) +
+  scale_color_manual(labels=c("A. membranacea", 
+                            "C. cainito", 
+                            "C. alliodora", 
+                            "Dypterix .sp", 
+                            "H. concinna", 
+                            "L. panamensis", 
+                            "T. cacao"),
+                     values = met.brewer(name = "Cross", n = 8, type="discrete")) +
+  theme_classic(base_size = 16) +
+  labs(y = "Herbivory (%)", caption = "") +
+  guides(color = "none")  +      #To turn off color legend
   guides(fill = "none") + #To turn off fill legend
   guides(shape = "none")
   
@@ -1181,29 +1214,36 @@ format.p <- function(p, precision = 0.001) {
     p = paste0('< ', precision)}
   if (p >= 0.001) {
     p = paste0('= ', p)    }
-  sub("0", "", p)
+  sub("0", "0", p)
 }
 
-plmpc1 <- lm(Pathogen_percent_damage ~ PC1, data = pat_pcalm)
+plmpc1 <- lm(Pathogen_percent_damage ~ PC2, data = pat_pcalm)
 
 # PC1
 # Formatted p-value
-p1 <- cor.test(pat_pcalm$Pathogen_percent_damage, pat_pcalm$PC1)$p.value
+pathogen_p1 <- cor.test(pat_pcalm$Pathogen_percent_damage, pat_pcalm$PC1)$p.value
 
-p1 = format.p(p1) # This is just to make the p-value nicer. 
+pathogen_p1 = format.p(pathogen_p1) # This is just to make the p-value nicer. 
 
 ## Plot PC1
        
 pat_pc1 <- ggplot(pat_pcalm, aes(PC1, Pathogen_percent_damage)) +
   geom_jitter(aes(color = Species, shape = E_load), size = 3, alpha = 0.6) +
   geom_smooth(method = lm, se = T , level = 0.95, na.rm = F, color = "black", size = 0.75) +
-  stat_regline_equation(aes(label = paste(..eq.label.., ..adj.rr.label.., sep = "~~~~"))) +
-  #stat_regline_equation(label.y.npc = "top", label.x.npc = "center", aes(label = ..eq.label..), color= "black", size = 2.2) +
-  scale_color_manual(values = met.brewer(name = "Cross", n = 8, type="discrete")) +
-  theme_minimal(base_size = 16) +
-  labs(title = "(c)", y = "Pathogen damage (%)", caption = "") +
-  theme(plot.title = element_text(color="black", size = 16, face="bold"))+ 
-    annotate(geom="text",label=sprintf("italic('p')~'%s'", p1),parse=TRUE,x=-2.5,y=0.75) +
+  stat_regline_equation(label.y.npc = "top", 
+                        label.x.npc = "left",
+                        size = 7,
+                        aes(label = paste(..eq.label..))) +
+  scale_color_manual(labels=c("A. membranacea", 
+                              "C. cainito",
+                              "C. alliodora", 
+                              "Dypterix .sp", 
+                              "H. concinna", 
+                              "L. panamensis", 
+                              "T. cacao"),
+                     values = met.brewer(name = "Cross", n = 8, type="discrete")) +
+  theme_classic(base_size = 16) +
+  labs(y = "Pathogen damage (%)", caption = "") +
   guides(color = "none")  +      #To turn off color legend
   guides(fill = "none") + #To turn off fill legend
   guides(shape = "none")
@@ -1215,9 +1255,9 @@ pat_pc1 <- ggplot(pat_pcalm, aes(PC1, Pathogen_percent_damage)) +
 
 # PC2
 # Formatted p-values
-p2 <- cor.test(pat_pcalm$Pathogen_percent_damage, pat_pcalm$PC2)$p.value
+pathogen_p2 <- cor.test(pat_pcalm$Pathogen_percent_damage, pat_pcalm$PC2)$p.value
 
-p2 =format.p(p2) # This is just to make the p-value nicer. 
+pathogen_p2 =format.p(pathogen_p2) # This is just to make the p-value nicer. 
 
 ## Plot PC2
 plmpc2 <- lm(Pathogen_percent_damage ~ PC2, data = pat_pcalm)
@@ -1225,14 +1265,21 @@ plmpc2 <- lm(Pathogen_percent_damage ~ PC2, data = pat_pcalm)
 pat_pc2 <- ggplot(pat_pcalm, aes(PC2, Pathogen_percent_damage)) +
   geom_jitter(aes(color = Species, shape = E_load), size = 3, alpha = 0.6) +
   geom_smooth(method = lm, se = T , level = 0.95, na.rm = F, color = "black", size = 0.75) +
-  stat_regline_equation(aes(label = paste(..eq.label.., ..adj.rr.label.., sep = "~~~~"))) +
-  #stat_regline_equation(label.y.npc = "top", label.x.npc = "center", aes(label = ..eq.label..), color= "black", size = 2.2) +
-  scale_color_manual(values = met.brewer(name = "Cross", n = 8, type="discrete")) +
-  theme_minimal(base_size = 16) +
-  labs(title = "(d)", y = "Pathogen damage (%)", caption = "") +
-  theme(plot.title = element_text(color="black", size = 16, face="bold")) +
- annotate(geom="text",label=sprintf("italic('p')~'%s'", p2),parse=TRUE,x=-1,y=0.75) +
-    guides(color = "none")  +      #To turn off color legend
+  stat_regline_equation(label.y.npc = "top", 
+                        label.x.npc = "left",
+                        size = 7,
+                        aes(label = paste(..eq.label..))) +
+  scale_color_manual(labels=c("A. membranacea", 
+                              "C. cainito", 
+                              "C. alliodora",
+                              "Dypterix .sp",
+                              "H. concinna", 
+                              "L. panamensis", 
+                              "T. cacao"),
+                     values = met.brewer(name = "Cross", n = 8, type="discrete")) +
+  theme_classic(base_size = 16) +
+  labs(y = "Pathogen damage (%)", caption = "") +
+  guides(color = "none")  +      #To turn off color legend
   guides(fill = "none") + #To turn off fill legend
   guides(shape = "none")
   
@@ -1250,16 +1297,18 @@ pat_pc2 <- ggplot(pat_pcalm, aes(PC2, Pathogen_percent_damage)) +
 #| fig.width: 10
 #| fig.height: 10
 #| fig.cap: "Simple linear regressions of herbivory and pathogen damage on PC1 and PC2 axes from PCAs of leaf traits for ant herbivory and pathogen damage assays. Linear regression of a) percent herbivory damage and PC1 axis (R^2^-adjusted= -0.0024, *p* = 0.447); b) percent herbivory damage and PC2 axis (R^2^-adjusted = 0.079, *p* = <0.001); c) percent pathogen damage and PC1 axis (R^2^-adjusted = 0.064, *p* = <0.001); and d) percent pathogen damage and PC2 axis (R^2^-adjusted  = 0.0016, *p* = 0.207). Colors represent individual species. Circle and triangles represent *E-* and *E+* treatments, respectively."
-antpat_arranged <- ggarrange(ant_pc1, ant_pc2, pat_pc1, pat_pc2, nrow = 2, ncol=2, common.legend = TRUE, legend="bottom")
+figure3<- ggarrange(ant_pc1, ant_pc2, pat_pc1, pat_pc2,
+                    nrow = 2, 
+                    ncol=2, 
+                    label.x = -0.015, vjust = 1, 
+                    labels = c("(a)", "(b)", "(c)", "(d)"),
+                    common.legend = TRUE, 
+                    legend="bottom")
 
-antpat_arranged
-# Adding caption
-# ant_caption <- expression("*All individual leaves per individual per tree species included ("~ italic("n") ~ "= 210).")
-# ant_pca_with_caption <- annotate_figure(antpca_arranged, bottom = text_grob(ant_caption), fig.lab.pos = "bottom.right", fig.lab.size = 6)
+figure3
 
-#ant_pca_with_caption
-
-#ggsave(filename = "./plots/Aim3_AntPCS_SEPT252023.png", plot = antpat_arranged, dpi=600, units=c("mm"), width = 200, height = 180, bg = "white")
+#ggsave(filename = "./plots/Aim3_Fig3_04JAN2024.png", plot = figure3, dpi=600, units=c("mm"), width = 300, height = 225, bg = "white")
+#Previously named Aim3_AntPCS_SEPT252023.png
 ```
 
 ## Figure 4
@@ -1316,6 +1365,65 @@ tab_model(M3REM, P3REM,
 ```
 
 ## Table 1
+
+```{r, replication_statement}
+#| echo: false
+#| eval: true
+#| tidy: true
+#| warning: false
+#| tbl-cap: "Replication statement of the statistical analysis in this study."
+
+
+sect_properties <- prop_section(
+  page_size = page_size(
+    orient = "portrait",
+    width = 8.25, height = 11.7
+  ),
+  type = "continuous",
+  page_margins = page_mar()
+)
+
+
+rep_statement <- hux(
+  "Scale of inference" = c("Leaf functional traits",
+                           "Genomic data",
+                           "Herbivore and Pathogen trials"),
+  
+  "Scale at which the factor of interest is applied" = c("Species",
+                                                        "Species",
+                                                        "Species/individual"),
+  "Number of replicates at the appropriate scale" = c("Treatment = 2 (E-, E+), Tropical tree species = 7. Replicates per species = 5. Replicate leaves per plant = 3",
+                                                      "Treatment = 2 (E-, E+), Replicates per species = 5",
+                                                      "Treatment = 2 (E-, E+), Replicates per species = 5, Replicates per plant = 1"))
+
+
+rep_statement %>%
+  set_all_padding(4) %>% 
+      set_outer_padding(0) %>% 
+      set_bold(row = 1, col = everywhere) %>% 
+      set_bottom_border(row = 1, col = everywhere) %>% 
+      set_width(0.4) %>%
+  theme_article() %>%
+  huxtable::as_flextable(column_to_header=TRUE) %>%
+  flextable::align(j = 1:3, align = "center", part = "all") %>%
+ # flextable::width(j = 1, width = 1.5, unit = "in") %>%
+  flextable::font(
+    i = NULL,
+    j = NULL,
+    fontname = "Tex Gyre Termes",
+    part = "all",
+    cs.family = fontname,
+    hansi.family = fontname,
+    eastasia.family = fontname) 
+
+#quick_docx(rep_statement, file = "./tables/replication_statement.docx")
+
+
+```
+
+
+
+## Table 2
 
 ```{r, table1}
 #| echo: false
@@ -1423,8 +1531,8 @@ summa_t1
 #| warning: false
 #| fig.align: 'center'
 #| fig.height: 5
-#| fig.width: 5
-#| fig.cap: "Figure S2: (a) Comparison of leaf thickness between *E-* and *E+* treatment groups. (b) Comparison of leaf thickness between *E-* and *E+* treatment groups per species. Significance levels are represented by asterisks [*p* = 0.05 (\\*), *p* = 0.01 (\\**), and *p* = 0.001 (\\***)]."
+#| fig.width: 7
+#| fig.cap: "Figure S2: (a) Comparison of leaf thickness (LT) between *E-* and *E+* treatment groups. (b) Comparison of LT *E-* and *E+* treatment groups per species. Significance levels are represented by asterisks [*p* = 0.05 (\\*), *p* = 0.01 (\\**), and *p* = 0.001 (\\***)]."
 
 mycomparisons <- list(c("APEIME", "CHRYCA"), c("APEIME", "CORDAL"), c("APEIME", "DYPTE"), c("APEIME", "HEISCO"),c("APEIME", "LACPA"), c("APEIME","THEOCA"),
                       c("CHRYCA","CORDAL"), c("CHRYCA","DYPTE"),c("CHRYCA","HEISCO"), c("CHRYCA","LACPA"), c("CHRYCA", "THEOCA"),
@@ -1512,7 +1620,7 @@ LTb <- ggplot(data = master, aes(x = Species, y = Thickness, fill = E_load)) +
   #labs(caption = "*Outliers and singletons removed.") +
   #annotate("text", x = 2.5, y = .65, label = "") +
   stat_compare_means(label = "p.signif", method = "anova")
-LTb
+#LTb
 
 # Figure S2a S2b
 suppfig_2 <- ggarrange(LTa, LTb, nrow = 1, ncol=2, common.legend = TRUE, legend="bottom", labels = c("(a)", "(b)"))
@@ -1523,13 +1631,13 @@ suppfig_2
 #
 #Table of results: Thickness T-tests
 
-thickness_comparisons <- compare_means(Thickness ~ Species, data = master, method = "t.test")
-thickness_cp_table <- as_hux(thickness_comparisons, detailed = TRUE)
-thickness_cp_table
+# thickness_comparisons <- compare_means(Thickness ~ Species, data = master, method = "t.test")
+# thickness_cp_table <- as_hux(thickness_comparisons, detailed = TRUE)
+# thickness_cp_table
 
 ```
 
-### Figure S3a-S3b
+## Figure S3a-S3b
 
 ```{r, suppfig_3 }
 #| echo: false
@@ -1538,8 +1646,9 @@ thickness_cp_table
 #| warning: false
 #| fig.align: 'center'
 #| fig.height: 5
-#| fig.width: 5
-
+#| fig.width: 7
+#| fig.cap: "Figure S3: (a) Comparison of leaf punch strength (LPS) between *E-* and *E+* treatment groups. (b) Comparison of LPS between *E-* and *E+* treatment groups per species. Significance levels are represented by asterisks [*p* = 0.05 (\\*), *p* = 0.01 (\\**), and *p* = 0.001 (\\***)]."
+#| 
 # Figure S3
 # Leaf toughness (lbf) by  endophyte load and species with data (data) ####
 LPSa <- ggplot(data = master, aes( x = E_load, y = Toughness, fill = E_load)) +

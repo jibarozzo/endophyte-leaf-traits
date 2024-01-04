@@ -1826,66 +1826,84 @@ format.p <- function(p, precision = 0.001) {
     p = paste0('< ', precision)}
   if (p >= 0.001) {
     p = paste0('= ', p)    }
-  sub("0", "", p)
+  sub("0", "0", p)
 }
 
 lmpc1 <- lm(Ant_percent_leafloss ~ PC1, data = ant_pcalm)
 summary(lmpc1)
-
 # PC1
 # Formatted p-value
-p1 <- cor.test(ant_pcalm$Ant_percent_leafloss, ant_pcalm$PC1)$p.value
+ant_p1 <- cor.test(ant_pcalm$Ant_percent_leafloss, ant_pcalm$PC1)$p.value
 
-p1 = format.p(p1) # This is just to make the p-value nicer. 
+ant_p1 = format.p(ant_p1) # This is just to make the p-value nicer. 
 
 ## Plot PC1
        
 ant_pc1 <- ggplot(ant_pcalm, aes(PC1, Ant_percent_leafloss)) +
-  geom_jitter(aes(color = Species, shape = E_load), size = 2.2, alpha = 0.6) +
+  geom_jitter(aes(color = Species, shape = E_load), size = 3, alpha = 0.6) +
   geom_smooth(method = lm, se = T , level = 0.95, na.rm = F, color = "black", size = 0.75) +
-  stat_regline_equation(aes(label = paste(..eq.label.., ..adj.rr.label.., sep = "~~~~"))) +
-  #stat_regline_equation(label.y.npc = "top", label.x.npc = "center", aes(label = ..eq.label..), color= "black", size = 2.2) +
-  scale_color_manual(labels=c("A. membranacea", "C. cainito", "C. alliodora", "Dypterix .sp", "H. concinna", "L. panamensis", "T. cacao"),values = met.brewer(name = "Cross", n = 8, type="discrete")) +
-  theme_minimal(base_size = 12) +
-  labs(title = "a", y = "Herbivory (%)", caption = "") +
-  theme(plot.title = element_text(color="black", size = 14, face="bold")) + 
-    annotate(geom="text",label=sprintf("italic('p')~'%s'", p1),parse=TRUE,x=-2.5,y=65) +
+  stat_regline_equation(label.y.npc = "top", 
+                        label.x.npc = "left",
+                        size = 7,
+                        aes(label = paste(..eq.label.., sprintf("italic('p')~'%s'", ant_p1), 
+                                          sep = "~~~~"))) +
+  scale_color_manual(labels=c("A. membranacea", 
+                              "C. cainito", 
+                              "C. alliodora", 
+                              "Dypterix .sp", 
+                              "H. concinna", 
+                              "L. panamensis", 
+                              "T. cacao"),
+                     values = met.brewer(name = "Cross", n = 8, type="discrete")) +
+   scale_shape_manual(name = "Treatment",
+                     labels=c("E-", "E+"),
+                     values = c(16, 17)) +
+  theme_minimal(base_size = 16) +
+  labs(y = "Herbivory (%)", caption = "") +
   theme(legend.text = element_text(color="black", face="italic"))
   #guides(color = "none")  +      #To turn off color legend
   #guides(fill = "none") + #To turn off fill legend
   #guides(shape = "none")
 
-ant_pc1
+#ant_pc1
 
 #ggsave(filename="./plots/Aim3_AntPC1_JUL102023.png", plot = ant_pc1, dpi=600, units=c("mm"), width = 180, height = 180, bg = "white")
 
 
 # PC2
 # Formatted p-values
-p2 <- cor.test(ant_pcalm$Ant_percent_leafloss, ant_pcalm$PC2)$p.value
 
-p2 =format.p(p2) # This is just to make the p-value nicer. 
+ant_p2 <- cor.test(ant_pcalm$Ant_percent_leafloss, ant_pcalm$PC2)$p.value
+
+ant_p2 =format.p(ant_p2) # This is just to make the p-value nicer. 
 
 ## Plot PC2
 lmpc2 <- lm(Ant_percent_leafloss ~ PC2, data = ant_pcalm)
-summary(lmpc2)
 
 ant_pc2 <- ggplot(ant_pcalm, aes(PC2, Ant_percent_leafloss)) +
-  geom_jitter(aes(color = Species, shape = E_load), size = 2.2, alpha = 0.6) +
+  geom_jitter(aes(color = Species, shape = E_load), size = 3, alpha = 0.6) +
   geom_smooth(method = lm, se = T , level = 0.95, na.rm = F, color = "black", size = 0.75) +
-  stat_regline_equation(aes(label = paste(..eq.label.., ..adj.rr.label.., sep = "~~~~"))) +
-  #stat_regline_equation(label.y.npc = "top", label.x.npc = "center", aes(label = ..eq.label..), color= "black", size = 2.2) +
-  scale_color_manual(values = met.brewer(name = "Cross", n = 8, type="discrete")) +
-  theme_minimal(base_size = 12) +
-  labs(title = "b", y = "Herbivory (%)", caption = "") +
-  theme(plot.title = element_text(color="black", size = 14, face="bold")) +
- annotate(geom="text",label=sprintf("italic('p')~'%s'", p2),parse=TRUE,x=-1,y=65) +
-    guides(color = "none")  +      #To turn off color legend
+  stat_regline_equation(label.y.npc = "top", 
+                        label.x.npc = "left",
+                        size = 7,
+                        aes(label = paste(..eq.label.., sprintf("italic('p')~'%s'", ant_p2), 
+                                          sep = "~~~~"))) +
+  scale_color_manual(labels=c("A. membranacea", 
+                            "C. cainito", 
+                            "C. alliodora", 
+                            "Dypterix .sp", 
+                            "H. concinna", 
+                            "L. panamensis", 
+                            "T. cacao"),
+                     values = met.brewer(name = "Cross", n = 8, type="discrete")) +
+  theme_minimal(base_size = 16) +
+  labs(y = "Herbivory (%)", caption = "") +
+  guides(color = "none")  +      #To turn off color legend
   guides(fill = "none") + #To turn off fill legend
   guides(shape = "none")
   
   
-ant_pc2
+#ant_pc2
 
 #ggsave(filename="./plots/Aim3_AntPC2_JUL102023.png", plot = ant_pc2, dpi=600, units=c("mm"), width = 180, height = 180, bg = "white")
 ```
@@ -1912,6 +1930,7 @@ The functions `prcomp` and `princomp` are both possible to use for this analysis
 
 ```{r, Ant PC1-2, tidy=TRUE}
 # Formatting formula for p value
+# Formatting formula for p value
 format.p <- function(p, precision = 0.001) {
   digits <- -log(precision, base = 10)
   p <- formatC(p, format = 'f', digits = digits)
@@ -1919,30 +1938,37 @@ format.p <- function(p, precision = 0.001) {
     p = paste0('< ', precision)}
   if (p >= 0.001) {
     p = paste0('= ', p)    }
-  sub("0", "", p)
+  sub("0", "0", p)
 }
 
 plmpc1 <- lm(Pathogen_percent_damage ~ PC1, data = pat_pcalm)
-summary(plmpc1)
 
 # PC1
 # Formatted p-value
-p1 <- cor.test(pat_pcalm$Pathogen_percent_damage, pat_pcalm$PC1)$p.value
+pathogen_p1 <- cor.test(pat_pcalm$Pathogen_percent_damage, pat_pcalm$PC1)$p.value
 
-p1 = format.p(p1) # This is just to make the p-value nicer. 
+pathogen_p1 = format.p(pathogen_p1) # This is just to make the p-value nicer. 
 
 ## Plot PC1
        
 pat_pc1 <- ggplot(pat_pcalm, aes(PC1, Pathogen_percent_damage)) +
-  geom_jitter(aes(color = Species, shape = E_load), size = 2.2, alpha = 0.6) +
+  geom_jitter(aes(color = Species, shape = E_load), size = 3, alpha = 0.6) +
   geom_smooth(method = lm, se = T , level = 0.95, na.rm = F, color = "black", size = 0.75) +
-  stat_regline_equation(aes(label = paste(..eq.label.., ..adj.rr.label.., sep = "~~~~"))) +
-  #stat_regline_equation(label.y.npc = "top", label.x.npc = "center", aes(label = ..eq.label..), color= "black", size = 2.2) +
-  scale_color_manual(values = met.brewer(name = "Cross", n = 8, type="discrete")) +
-  theme_minimal(base_size = 12) +
-  labs(title = "c", y = "Pathogen damage (%)", caption = "") +
-  theme(plot.title = element_text(color="black", size = 14, face="bold"))+ 
-    annotate(geom="text",label=sprintf("italic('p')~'%s'", p1),parse=TRUE,x=-2.5,y=0.75) +
+  stat_regline_equation(label.y.npc = "top", 
+                        label.x.npc = "left",
+                        size = 7,
+                        aes(label = paste(..eq.label.., sprintf("italic('p')~'%s'", pathogen_p1), 
+                                          sep = "~~~~"))) +
+  scale_color_manual(labels=c("A. membranacea", 
+                              "C. cainito",
+                              "C. alliodora", 
+                              "Dypterix .sp", 
+                              "H. concinna", 
+                              "L. panamensis", 
+                              "T. cacao"),
+                     values = met.brewer(name = "Cross", n = 8, type="discrete")) +
+  theme_minimal(base_size = 16) +
+  labs(y = "Pathogen damage (%)", caption = "") +
   guides(color = "none")  +      #To turn off color legend
   guides(fill = "none") + #To turn off fill legend
   guides(shape = "none")
@@ -1954,68 +1980,64 @@ pat_pc1
 
 # PC2
 # Formatted p-values
-p2 <- cor.test(pat_pcalm$Pathogen_percent_damage, pat_pcalm$PC2)$p.value
+pathogen_p2 <- cor.test(pat_pcalm$Pathogen_percent_damage, pat_pcalm$PC2)$p.value
 
-p2 =format.p(p2) # This is just to make the p-value nicer. 
+pathogen_p2 =format.p(pathogen_p2) # This is just to make the p-value nicer. 
 
 ## Plot PC2
 plmpc2 <- lm(Pathogen_percent_damage ~ PC2, data = pat_pcalm)
-summary(plmpc2)
 
 pat_pc2 <- ggplot(pat_pcalm, aes(PC2, Pathogen_percent_damage)) +
-  geom_jitter(aes(color = Species, shape = E_load), size = 2.2, alpha = 0.6) +
+  geom_jitter(aes(color = Species, shape = E_load), size = 3, alpha = 0.6) +
   geom_smooth(method = lm, se = T , level = 0.95, na.rm = F, color = "black", size = 0.75) +
-  stat_regline_equation(aes(label = paste(..eq.label.., ..adj.rr.label.., sep = "~~~~"))) +
-  #stat_regline_equation(label.y.npc = "top", label.x.npc = "center", aes(label = ..eq.label..), color= "black", size = 2.2) +
-  scale_color_manual(values = met.brewer(name = "Cross", n = 8, type="discrete")) +
-  theme_minimal(base_size = 12) +
-  labs(title = "d", y = "Pathogen damage (%)", caption = "") +
-  theme(plot.title = element_text(color="black", size = 14, face="bold")) +
- annotate(geom="text",label=sprintf("italic('p')~'%s'", p2),parse=TRUE,x=-1,y=0.75) +
-    guides(color = "none")  +      #To turn off color legend
+  stat_regline_equation(label.y.npc = "top", 
+                        label.x.npc = "left",
+                        size = 7,
+                        aes(label = paste(..eq.label.., sprintf("italic('p')~'%s'", pathogen_p2), 
+                                          sep = "~~~~"))) +
+  scale_color_manual(labels=c("A. membranacea", 
+                              "C. cainito", 
+                              "C. alliodora",
+                              "Dypterix .sp",
+                              "H. concinna", 
+                              "L. panamensis", 
+                              "T. cacao"),
+                     values = met.brewer(name = "Cross", n = 8, type="discrete")) +
+  theme_minimal(base_size = 16) +
+  labs(y = "Pathogen damage (%)", caption = "") +
+  guides(color = "none")  +      #To turn off color legend
   guides(fill = "none") + #To turn off fill legend
   guides(shape = "none")
   
   
-pat_pc2
+#pat_pc2
 
 #ggsave(filename="./plots/Aim3_PatPC2_AUG282023.png", plot = pat_pc2, dpi=600, units=c("mm"), width = 180, height = 180, bg = "white")
 ```
 
-## Fig 3? Ant and Pathogen PC-LMs Grid plot
+## Fig 3
+Ant and Pathogen PC-LMs Grid plot
 
-```{r, Ant & Patthogen PC1-2, tidy=TRUE}
-antpat_arranged <- ggarrange(ant_pc1, ant_pc2, pat_pc1, pat_pc2, nrow = 2, ncol=2, common.legend = TRUE, legend="bottom")
+```{r, Ant & Pathogen PC1-2, tidy=TRUE}
+figure3<- ggarrange(ant_pc1, ant_pc2, pat_pc1, pat_pc2,
+                    nrow = 2, 
+                    ncol=2, 
+                    label.x = -0.015, vjust = 1, 
+                    labels = c("(a)", "(b)", "(c)", "(d)"),
+                    common.legend = TRUE, 
+                    legend="bottom")
 
-antpat_arranged
+figure3
 # Adding caption
 # ant_caption <- expression("*All individual leaves per individual per tree species included ("~ italic("n") ~ "= 210).")
 # ant_pca_with_caption <- annotate_figure(antpca_arranged, bottom = text_grob(ant_caption), fig.lab.pos = "bottom.right", fig.lab.size = 6)
 
 #ant_pca_with_caption
 
-#ggsave(filename = "./plots/Aim3_AntPCS_SEPT252023.png", plot = antpat_arranged, dpi=600, units=c("mm"), width = 200, height = 180, bg = "white")
+#ggsave(filename = "./plots/Aim3_Fig3_04JAN2024.png", plot = figure3, dpi=600, units=c("mm"), width = 300, height = 225, bg = "white")
+#Previously named Aim3_AntPCS_SEPT252023.png
 ```
 
-<!-- #### Pathogen Grid plot -->
-
-<!-- ```{r} -->
-
-<!-- patpca_arranged <- ggarrange(auto_pat, pat_pc1, pat_pc2, nrow = 2, ncol=2, common.legend = TRUE, legend="right") -->
-
-<!-- patpca_arranged -->
-
-<!-- # Adding caption -->
-
-<!-- pat_caption <- expression("*All individual leaves per individual per tree species included ("~ italic("n") ~ "= 400).") -->
-
-<!-- pat_pca_with_caption <- annotate_figure(patpca_arranged, bottom = text_grob(pat_caption), fig.lab.pos = "bottom.right", fig.lab.size = 6) -->
-
-<!-- pat_pca_with_caption -->
-
-<!-- #ggsave(filename = "./plots/Aim3_PatPCS_08282023.png", plot = pat_pca_with_caption, dpi=300, units=c("mm"), width = 300, height = 180, bg = "white") -->
-
-<!-- ``` -->
 
 # Phyloseq:
 
