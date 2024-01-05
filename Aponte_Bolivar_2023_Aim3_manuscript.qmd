@@ -1383,6 +1383,8 @@ sect_properties <- prop_section(
   page_margins = page_mar()
 )
 
+#Thick borders for table
+thick <- fp_border(color = "black", style = "solid", width = 2)
 
 rep_statement <- hux(
   "Scale of inference" = c("Leaf functional traits",
@@ -1405,6 +1407,8 @@ rep_statement %>%
       set_width(1.1) %>%
   theme_article() %>%
   huxtable::as_flextable(column_to_header=TRUE) %>%
+  hline_bottom(part = "body", border = thick) %>%
+  hline_top(part = "body", border = thick) %>%
   flextable::align(j = 1:3, align = "center", part = "all") %>%
  # flextable::width(j = 1, width = 1.5, unit = "in") %>%
   flextable::font(
@@ -1504,7 +1508,7 @@ thick <- fp_border(color = "black", style = "solid", width = 2)
 
 summa_t1 <- summa_t1 %>%
   hline_bottom(part = "body", border = thick) %>%
-  hline_top(part = "header", border = thick)
+  hline_top(part = "body", border = thick)
 
 
 sect_properties <- prop_section(
@@ -1522,7 +1526,377 @@ summa_t1
 
 # Supplementary Materials
 
-## Figure S1
+## Table S1
+```{r, supptable_S1}
+#| echo: false
+#| eval: true
+#| tidy: true
+#| warning: false
+#| tbl-cap: "Comparison of anthocyanin content (ACI) (\u03BCm) means between species."
+
+#Table of results: Anthocyanins T-tests
+#Using gt() package
+#https://gt.rstudio.com/
+
+#Comparison t-tests
+aci_comparisons <- compare_means(Anthocyanins ~ Species, data = master, method = "t.test")
+
+#Table of results
+supptable_S1<-  gt(aci_comparisons %>%
+                            
+                      mutate(group1 = case_match(group1, "APEIME" ~ "A. membranacea", 
+                            "CHRYCA" ~ "C. cainito", 
+                            "CORDAL" ~ "C. alliodora",
+                            "DYPTE" ~ "Dypterix .sp",
+                            "HEISCO" ~ "H. concinna",
+                            "LACPA" ~ "L. panamensis",
+                            "THEOCA" ~ "T. cacao")) %>%
+                        mutate(group2 = case_match(group2, "APEIME" ~ "A. membranacea", 
+                            "CHRYCA" ~ "C. cainito", 
+                            "CORDAL" ~ "C. alliodora",
+                            "DYPTE" ~ "Dypterix .sp",
+                            "HEISCO" ~ "H. concinna",
+                            "LACPA" ~ "L. panamensis",
+                            "THEOCA" ~ "T. cacao")) %>%
+                        select(!c(1,8)), 
+                      rowname_col = ".y.", 
+                      groupname_col = "group1") %>% 
+  tab_header(
+    title = md("**Student's t-Tests of means anthocyanins (ACI)**"),
+    subtitle = md("Pairwise comparisons of ACI between species.")) %>%
+  tab_stubhead(label = "") %>%
+  cols_label(
+    group2 = md("Comparison Species"),
+  ) %>%
+  tab_style(
+    style = list(
+      cell_text(style = "italic")
+      ),
+    locations = cells_body(
+      columns = group2)) %>%
+  tab_style(
+    style = cell_text(
+      weight = "bold",
+      style ="italic"),
+    locations = cells_row_groups()) %>%
+  tab_style(
+    style = list(
+      cell_text(weight = "bold")
+      ),
+    locations = cells_body(
+      columns = p:p.signif,
+      rows = p< 0.05
+      )
+    ) %>%
+  fmt_scientific(
+    columns = p:p.signif,
+    decimals = 3,
+  ) %>%
+  tab_spanner(
+    label = md("*p* - values"),
+    columns = c(
+      p, p.adj, p.format, p.signif
+    )
+  ) %>%
+  tab_footnote(
+    footnote = md("Significance levels are represented by *ns* (not significant) and asterisks [*p* = 0.05 (\\*), *p* = 0.01 (\\**), *p* = 0.001 (\\***), and *p* < 0.0001 (\\****)]."),
+    locations = cells_column_labels(columns = p.signif)
+  ) %>%
+  tab_footnote(
+    footnote = md("*n* = 156 individuals"),
+    locations = cells_column_labels(columns = group2)
+  ) %>%
+  opt_align_table_header(align = "left") %>%
+    opt_table_font(
+    font = list(
+      google_font(name = "Tex Gyre Termes"),
+       "serif"
+    )
+  )
+  
+supptable_S1
+#gtsave(supptable_S1, file = "Aim3_supptable_S1_05JAN2024.docx", path = "./tables")
+```
+
+
+## Table S2
+```{r, supptable_S2}
+#| echo: false
+#| eval: true
+#| tidy: true
+#| warning: false
+#| tbl-cap: "Comparison of leaf thickness (LT) (\u03BCm) means between species."
+
+#Table of results: Thickness T-tests
+#Using gt() package
+#https://gt.rstudio.com/
+
+#Comparison t-tests
+thickness_comparisons <- compare_means(Thickness ~ Species, data = master, method = "t.test")
+
+#Table of results
+supptable_S2<-  gt(thickness_comparisons %>%
+                            
+                      mutate(group1 = case_match(group1, "APEIME" ~ "A. membranacea", 
+                            "CHRYCA" ~ "C. cainito", 
+                            "CORDAL" ~ "C. alliodora",
+                            "DYPTE" ~ "Dypterix .sp",
+                            "HEISCO" ~ "H. concinna",
+                            "LACPA" ~ "L. panamensis",
+                            "THEOCA" ~ "T. cacao")) %>%
+                        mutate(group2 = case_match(group2, "APEIME" ~ "A. membranacea", 
+                            "CHRYCA" ~ "C. cainito", 
+                            "CORDAL" ~ "C. alliodora",
+                            "DYPTE" ~ "Dypterix .sp",
+                            "HEISCO" ~ "H. concinna",
+                            "LACPA" ~ "L. panamensis",
+                            "THEOCA" ~ "T. cacao")) %>%
+                        select(!c(1,8)), 
+                      rowname_col = ".y.", 
+                      groupname_col = "group1") %>% 
+  tab_header(
+    title = md("**Student's t-Tests of means leaf thickness (LT) (\u03BCm)**"),
+    subtitle = md("Pairwise comparisons of LT between species.")) %>%
+  tab_stubhead(label = "") %>%
+  cols_label(
+    group2 = md("Comparison Species"),
+  ) %>%
+  tab_style(
+    style = list(
+      cell_text(style = "italic")
+      ),
+    locations = cells_body(
+      columns = group2)) %>%
+  tab_style(
+    style = cell_text(
+      weight = "bold",
+      style ="italic"),
+    locations = cells_row_groups()) %>%
+  tab_style(
+    style = list(
+      cell_text(weight = "bold")
+      ),
+    locations = cells_body(
+      columns = p:p.signif,
+      rows = p< 0.05
+      )
+    ) %>%
+  fmt_scientific(
+    columns = p:p.signif,
+    decimals = 3,
+  ) %>%
+  tab_spanner(
+    label = md("*p* - values"),
+    columns = c(
+      p, p.adj, p.format, p.signif
+    )
+  ) %>%
+  tab_footnote(
+    footnote = md("Significance levels are represented by *ns* (not significant) and asterisks [*p* = 0.05 (\\*), *p* = 0.01 (\\**), *p* = 0.001 (\\***), and *p* < 0.0001 (\\****)]."),
+    locations = cells_column_labels(columns = p.signif)
+  ) %>%
+  tab_footnote(
+    footnote = md("*n* = 156 individuals"),
+    locations = cells_column_labels(columns = group2)
+  ) %>%
+  opt_align_table_header(align = "left") %>%
+    opt_table_font(
+    font = list(
+      google_font(name = "Tex Gyre Termes"),
+       "serif"
+    )
+  )
+  
+supptable_S2
+#gtsave(supptable_S2, file = "Aim3_supptable_S2_05JAN2024.docx", path = "./tables")
+```
+
+## Table S3
+```{r, supptable_S3}
+#| echo: false
+#| eval: true
+#| tidy: true
+#| warning: false
+#| tbl-cap: "Comparison of leaf punch strength (LPS) (N mm<sup>-1</sup>) means between species."
+
+#Table of results: Anthocyanins T-tests
+#Using gt() package
+#https://gt.rstudio.com/
+
+#Comparison t-tests
+lps_comparisons <- compare_means(Toughness ~ Species, data = master, method = "t.test")
+
+#Table of results
+supptable_S3<-  gt(lps_comparisons %>%
+                            
+                      mutate(group1 = case_match(group1, "APEIME" ~ "A. membranacea", 
+                            "CHRYCA" ~ "C. cainito", 
+                            "CORDAL" ~ "C. alliodora",
+                            "DYPTE" ~ "Dypterix .sp",
+                            "HEISCO" ~ "H. concinna",
+                            "LACPA" ~ "L. panamensis",
+                            "THEOCA" ~ "T. cacao")) %>%
+                        mutate(group2 = case_match(group2, "APEIME" ~ "A. membranacea", 
+                            "CHRYCA" ~ "C. cainito", 
+                            "CORDAL" ~ "C. alliodora",
+                            "DYPTE" ~ "Dypterix .sp",
+                            "HEISCO" ~ "H. concinna",
+                            "LACPA" ~ "L. panamensis",
+                            "THEOCA" ~ "T. cacao")) %>%
+                        select(!c(1,8)), 
+                      rowname_col = ".y.", 
+                      groupname_col = "group1") %>% 
+  tab_header(
+    title = md("**Student's t-Tests of means leaf punch strength (LPS) (N mm<sup>-1</sup>)**"),
+    subtitle = md("Pairwise comparisons of LPS between species.")) %>%
+  tab_stubhead(label = "") %>%
+  cols_label(
+    group2 = md("Comparison Species"),
+  ) %>%
+  tab_style(
+    style = list(
+      cell_text(style = "italic")
+      ),
+    locations = cells_body(
+      columns = group2)) %>%
+  tab_style(
+    style = cell_text(
+      weight = "bold",
+      style ="italic"),
+    locations = cells_row_groups()) %>%
+  tab_style(
+    style = list(
+      cell_text(weight = "bold")
+      ),
+    locations = cells_body(
+      columns = p:p.signif,
+      rows = p< 0.05
+      )
+    ) %>%
+  fmt_scientific(
+    columns = p:p.signif,
+    decimals = 3,
+  ) %>%
+  tab_spanner(
+    label = md("*p* - values"),
+    columns = c(
+      p, p.adj, p.format, p.signif
+    )
+  ) %>%
+  tab_footnote(
+    footnote = md("Significance levels are represented by *ns* (not significant) and asterisks [*p* = 0.05 (\\*), *p* = 0.01 (\\**), *p* = 0.001 (\\***), and *p* < 0.0001 (\\****)]."),
+    locations = cells_column_labels(columns = p.signif)
+  ) %>%
+  tab_footnote(
+    footnote = md("*n* = 156 individuals"),
+    locations = cells_column_labels(columns = group2)
+  ) %>%
+  opt_align_table_header(align = "left") %>%
+    opt_table_font(
+    font = list(
+      google_font(name = "Tex Gyre Termes"),
+       "serif"
+    )
+  )
+  
+supptable_S3
+#gtsave(supptable_S3, file = "Aim3_supptable_S3_05JAN2024.docx", path = "./tables")
+```
+
+## Table S4
+```{r, supptable_S4}
+#| echo: false
+#| eval: true
+#| tidy: true
+#| warning: false
+#| tbl-cap: "Comparison of leaf mass per are LMA) (mg mm^-2) means between species."
+
+#Table of results: Anthocyanins T-tests
+#Using gt() package
+#https://gt.rstudio.com/
+
+#Comparison t-tests
+lma_comparisons <- compare_means(Toughness ~ Species, data = master, method = "t.test")
+
+#Table of results
+supptable_S4 <-  gt(lma_comparisons %>%
+                            
+                      mutate(group1 = case_match(group1, "APEIME" ~ "A. membranacea", 
+                            "CHRYCA" ~ "C. cainito", 
+                            "CORDAL" ~ "C. alliodora",
+                            "DYPTE" ~ "Dypterix .sp",
+                            "HEISCO" ~ "H. concinna",
+                            "LACPA" ~ "L. panamensis",
+                            "THEOCA" ~ "T. cacao")) %>%
+                        mutate(group2 = case_match(group2, "APEIME" ~ "A. membranacea", 
+                            "CHRYCA" ~ "C. cainito", 
+                            "CORDAL" ~ "C. alliodora",
+                            "DYPTE" ~ "Dypterix .sp",
+                            "HEISCO" ~ "H. concinna",
+                            "LACPA" ~ "L. panamensis",
+                            "THEOCA" ~ "T. cacao")) %>%
+                        select(!c(1,8)), 
+                      rowname_col = ".y.", 
+                      groupname_col = "group1") %>% 
+  tab_header(
+    title = md("**Student's t-Tests of means leaf mass per area (LMA) (mg mm<sup>-2</sup>)**"),
+    subtitle = md("Pairwise comparisons of LMA between species.")) %>%
+  tab_stubhead(label = "") %>%
+  cols_label(
+    group2 = md("Comparison Species"),
+  ) %>%
+  tab_style(
+    style = list(
+      cell_text(style = "italic")
+      ),
+    locations = cells_body(
+      columns = group2)) %>%
+  tab_style(
+    style = cell_text(
+      weight = "bold",
+      style ="italic"),
+    locations = cells_row_groups()) %>%
+  tab_style(
+    style = list(
+      cell_text(weight = "bold")
+      ),
+    locations = cells_body(
+      columns = p:p.signif,
+      rows = p< 0.05
+      )
+    ) %>%
+  fmt_scientific(
+    columns = p:p.signif,
+    decimals = 3,
+  ) %>%
+  tab_spanner(
+    label = md("*p* - values"),
+    columns = c(
+      p, p.adj, p.format, p.signif
+    )
+  ) %>%
+  tab_footnote(
+    footnote = md("Significance levels are represented by *ns* (not significant) and asterisks: *p* = 0.05 (\\*), *p* = 0.01 (\\**), p = 0.001 (\\***), and *p* < 0.0001 (\\****)]."),
+    locations = cells_column_labels(columns = p.signif)
+  ) %>%
+  tab_footnote(
+    footnote = md("*n* = 156 individuals"),
+    locations = cells_column_labels(columns = group2)
+  ) %>%
+  opt_align_table_header(align = "left") %>%
+    opt_table_font(
+    font = list(
+      google_font(name = "Tex Gyre Termes"),
+       "serif"
+    )
+  )
+  
+supptable_S4
+#gtsave(supptable_S4, file = "Aim3_supptable_S4_05JAN2024.docx", path = "./tables")
+
+```
+
+## Figure S1a- S1b
 ```{r}
 #| echo: false
 #| eval: true
@@ -1531,6 +1905,7 @@ summa_t1
 ##| fig.align: 'center'
 #| fig.height: 5
 #| fig.width: 5
+#| fig.cap: "Distributions of values and means of anthocyanin content (ACI) in treatment groups (*E-* and *E+*) and tree species. a) Comparison of ACI means between treatment groups across indivuals of all species. Statistical significance was calculated using a two-sided Student's t-Test. b) Comparison of ACI means between treatment types of each species. Statistical significance was calulated with an analysis of variance (ANOVA). Significance levels are represented by *ns* (not significant) and asterisks [*p* = 0.05 (\\*), *p* = 0.01 (\\**), and *p* = 0.001 (\\***)]."
 
 
 # Comparisons
@@ -1557,7 +1932,7 @@ ACIa <- ggplot(data = master, aes(x = E_load, y = Anthocyanins, fill = E_load)) 
                size = 0.3, 
                width = 0.7,
                position = position_dodge(width = 0.9)) +
-  scale_fill_manual(name = "Treatment", values= met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_fill_manual(name = "Treatment ", values= met.brewer("Cross", n = 2, type = "discrete")) +
   scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
   scale_x_discrete(labels=c(newname)) +
   theme_classic(base_size = 16) +
@@ -1597,7 +1972,7 @@ ACIb <- ggplot(data = master, aes(x = Species, y = Anthocyanins, fill = E_load))
                size = 0.3, 
                width = 0.7,
                position = position_dodge(width = 0.9)) +
-  scale_fill_manual(name = "Treatment", values= met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_fill_manual(name = "Treatment ", values= met.brewer("Cross", n = 2, type = "discrete")) +
   scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
   scale_x_discrete(labels=c(newname)) +
   theme_classic(base_size = 16) +
@@ -1623,7 +1998,7 @@ ACIb <- ggplot(data = master, aes(x = Species, y = Anthocyanins, fill = E_load))
 # Figure S1a S1b
 suppfig_1 <- ggarrange(ACIa, ACIb, nrow = 1, ncol=2, common.legend = TRUE, legend="bottom", labels = c("(a)", "(b)"))
 suppfig_1
-ggsave(filename="./plots/Aim3_FigS1_04JAN2024.png", plot = suppfig_1, dpi=600, units=c("mm"), width = 250, height = 200, bg ="white")
+#ggsave(filename="./plots/Aim3_FigS1_04JAN2024.png", plot = suppfig_1, dpi=600, units=c("mm"), width = 250, height = 200, bg ="white")
 ```
 
 ## Figure S2a-S2b
@@ -1635,7 +2010,7 @@ ggsave(filename="./plots/Aim3_FigS1_04JAN2024.png", plot = suppfig_1, dpi=600, u
 ##| fig.align: 'center'
 #| fig.height: 5
 #| fig.width: 5
-#| fig.cap: "Figure S2: (a) Comparison of leaf thickness (LT) between *E-* and *E+* treatment groups. (b) Comparison of LT *E-* and *E+* treatment groups per species. Significance levels are represented by asterisks [*p* = 0.05 (\\*), *p* = 0.01 (\\**), and *p* = 0.001 (\\***)]."
+#| fig.cap: "Distributions of values and means of leaf thickness (LT) (\mug) in treatment groups (*E-* and *E+*) and tree species. a) Comparison of LT means between treatment groups across indivuals of all species. Statistical significance was calculated using a two-sided Student's t-Test. b) Comparison of LT means between treatment types of each species. Statistical significance was calulated with an analysis of variance (ANOVA). Significance levels are represented by *ns* (not significant) and asterisks [*p* = 0.05 (\\*), *p* = 0.01 (\\**), and *p* = 0.001 (\\***)]."
 
 # Leaf thickness by endophyte load and species
 
@@ -1651,7 +2026,7 @@ LTa <- ggplot(data = master, aes(x = E_load, y = Thickness, fill = E_load)) +
                size = 0.3, 
                width = 0.7,
                position = position_dodge(width = 0.9)) +
-  scale_fill_manual(name = "Treatment", values= met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_fill_manual(name = "Treatment ", values= met.brewer("Cross", n = 2, type = "discrete")) +
   scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
   scale_x_discrete(labels=c(newname)) +
   scale_y_continuous(limits = c(100, 300)) +
@@ -1692,7 +2067,7 @@ LTb <- ggplot(data = master, aes(x = Species, y = Thickness, fill = E_load)) +
                size = 0.3, 
                width = 0.7,
                position = position_dodge(width = 0.9)) +
-  scale_fill_manual(name = "Treatment", values= met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_fill_manual(name = "Treatment ", values= met.brewer("Cross", n = 2, type = "discrete")) +
   scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
   scale_x_discrete(labels=c(newname)) +
   scale_y_continuous(limits = c(100, 300)) +
@@ -1722,11 +2097,6 @@ suppfig_2
 #ggsave(filename="./plots/Aim3_FigS2_03JAN2024.png", plot = suppfig_2, dpi=600, units=c("mm"), width = 250, height = 200, bg ="white")
 #Previously saved under name: Aim3_LT_Species_07062022.png
 #
-#Table of results: Thickness T-tests
-
-# thickness_comparisons <- compare_means(Thickness ~ Species, data = master, method = "t.test")
-# thickness_cp_table <- as_hux(thickness_comparisons, detailed = TRUE)
-# thickness_cp_table
 
 ```
 
@@ -1740,7 +2110,7 @@ suppfig_2
 ##| fig.align: 'center'
 #| fig.height: 5
 #| fig.width: 5
-#| fig.cap: "Figure S3: (a) Comparison of leaf punch strength (LPS) between *E-* and *E+* treatment groups. (b) Comparison of LPS between *E-* and *E+* treatment groups per species. Significance levels are represented by asterisks [*p* = 0.05 (\\*), *p* = 0.01 (\\**), and *p* = 0.001 (\\***)]."
+#| fig.cap: "Distributions of values and means of leaf punch stength (LPS) (N mm^-1) in treatment groups (*E-* and *E+*) and tree species. a) Comparison of LPS means between treatment groups across indivuals of all species. Statistical significance was calculated using a two-sided Student's t-Test. b) Comparison of LPS means between treatment types of each species. Statistical significance was calulated with an analysis of variance (ANOVA). Significance levels are represented by *ns* (not significant) and asterisks [*p* = 0.05 (\\*), *p* = 0.01 (\\**), and *p* = 0.001 (\\***)]."
 #| 
 # Figure S3
 # Leaf toughness (lbf) by  endophyte load and species with data (data) ####
@@ -1770,7 +2140,7 @@ geom_violin() +
         axis.text.x=element_blank(),
         legend.position="right", 
         legend.text = element_text(size = 14)) +
-  labs(x="", y= expression(paste("Leaf punch strength(N mm","^-1)"))) +
+  labs(x="", y= expression(paste("Leaf punch strength (N mm","^-1)"))) +
   #labs(caption = "*Outliers and singletons removed.") +
   stat_compare_means(label = "p.signif", 
                      method = "t.test",
@@ -1829,6 +2199,7 @@ suppfig_3
 ##| fig.align: 'center'
 #| fig.height: 5
 #| fig.width: 5
+#| fig.cap: "Distributions of values and means of leaf mass per area (LMA) (mg mm^2) in treatment groups (*E-* and *E+*) and tree species. a) Comparison of LMA means between treatment groups across indivuals of all species. Statistical significance was calculated using a two-sided Student's t-Test. b) Comparison of LMA means between treatment types of each species. Statistical significance was calulated with an analysis of variance (ANOVA). Significance levels are represented by *ns* (not significant) and asterisks [*p* = 0.05 (\\*), *p* = 0.01 (\\**), and *p* = 0.001 (\\***)]."
 
 # Figure S4
 # Leaf mass per area (LMA) by  endophyte load and species
