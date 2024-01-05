@@ -1365,7 +1365,7 @@ fig1
 ```
 
 
-## Figure S2-S5
+## Figure S1-S4
 ```{r, Functional traits violins, tidy = TRUE}
 mycomparisons <- list(c("APEIME", "CHRYCA"), c("APEIME", "CORDAL"), c("APEIME", "DYPTE"), c("APEIME", "HEISCO"),c("APEIME", "LACPA"), c("APEIME","THEOCA"),
                       c("CHRYCA","CORDAL"), c("CHRYCA","DYPTE"),c("CHRYCA","HEISCO"), c("CHRYCA","LACPA"), c("CHRYCA", "THEOCA"),
@@ -1376,6 +1376,88 @@ mycomparisons <- list(c("APEIME", "CHRYCA"), c("APEIME", "CORDAL"), c("APEIME", 
 newname <- c("A. membranacea", "C. cainito", "C. alliodora", "Dypterix .sp", "H. concinna", "L. panamensis", "T. cacao")
 
 names(newname) <- c("APEIME", "CHRYCA", "CORDAL", "DYPTE", "HEISCO", "LACPA", "THEOCA")
+
+# Anthocyanins by endophyte load an species
+ACIa <- ggplot(data = master, aes(x = E_load, y = Anthocyanins, fill = E_load)) +
+  geom_violin() +
+  geom_point(position = position_jitterdodge(dodge.width = 0.9, jitter.width = 0.2),
+             alpha = 0.3, color = "grey30", size = 2) +
+  geom_crossbar(stat="summary", 
+               fun = mean, 
+               fun.max = mean, 
+               fun.min = mean,
+               alpha = 0.3, 
+               size = 0.3, 
+               width = 0.7,
+               position = position_dodge(width = 0.9)) +
+  scale_fill_manual(name = "Treatment", values= met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_x_discrete(labels=c(newname)) +
+  theme_classic(base_size = 16) +
+  theme(
+        #panel.grid.major = element_line(colour = "grey"),
+        #panel.grid.minor = element_line(colour = "grey"),
+        #strip.background = element_rect(fill = "white"),
+        #strip.text.x = element_text(colour = "black", face = "bold"),
+        legend.title = element_text(face = "bold"),
+        panel.border = element_rect(linetype = "blank", fill = NA),
+        axis.text.x=element_blank(),
+        legend.position="right", 
+        legend.text = element_text(size = 14)) +
+  labs(x="", y=expression(paste("ACI (% ", italic("A") [lambda]," at 931 nm / % ", italic("A") [lambda]," at 530 nm)"))) +
+  theme(legend.position="right", 
+        legend.text = element_text(size = 14)) +
+  #labs(caption = "*Outliers and singletons removed.") +
+  
+  #annotate("text", x = 2.5, y = .65, label = "") +
+  stat_compare_means(label = "p.signif", 
+                     method = "t.test",
+                     comparisons =list(c("E-", "E+")),
+                     bracket.size = 0.8)
+
+ACIa
+
+
+ACIb <- ggplot(data = master, aes(x = Species, y = Anthocyanins, fill = E_load)) +
+  geom_violin() +
+  geom_point(position = position_jitterdodge(dodge.width = 0.9, jitter.width = 0.2),
+             alpha = 0.3, color = "grey30", size = 2) +
+  geom_crossbar(stat="summary", 
+               fun = mean, 
+               fun.max = mean, 
+               fun.min = mean,
+               alpha = 0.3, 
+               size = 0.3, 
+               width = 0.7,
+               position = position_dodge(width = 0.9)) +
+  scale_fill_manual(name = "Treatment", values= met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_x_discrete(labels=c(newname)) +
+  scale_y_continuous(limits = c(100, 300)) +
+  theme_classic(base_size = 16) +
+  theme(
+        #panel.grid.major = element_line(colour = "grey"),
+        #panel.grid.minor = element_line(colour = "grey"),
+        #strip.background = element_rect(fill = "white"),
+        #strip.text.x = element_text(colour = "black", face = "bold"),
+        legend.title = element_text(face = "bold"),
+        panel.border = element_rect(linetype = "blank", fill = NA),
+        axis.text.x=element_text(face = "italic", hjust = 1, angle = 30),
+        legend.position="right", 
+        legend.text = element_text(size = 14)) +
+  labs(x="", y=expression(paste("ACI (% ", italic("A") [lambda]," at 931 nm / % ", italic("A") [lambda]," at 530 nm)"))) +
+  #theme(legend.position="right", 
+        #legend.text = element_text(size = 14)) +
+  #labs(caption = "*Outliers and singletons removed.") +
+  #annotate("text", x = 2.5, y = .65, label = "") +
+  stat_compare_means(label = "p.signif", method = "anova")
+
+ACIb
+
+# Figure S1a S1b
+suppfig_1 <- ggarrange(ACIa, ACIb, nrow = 1, ncol=2, common.legend = TRUE, legend="bottom", labels = c("(a)", "(b)"))
+suppfig_1
+
 
 # Leaf thickness by endophyte load and species
 
@@ -1506,8 +1588,7 @@ geom_violin() +
                      bracket.size = 0.8) 
 #LPSa
 
-# 
-#
+
 LPSb <- ggplot(data = master, aes( x = Species, y = Toughness, fill = E_load)) +
 geom_violin() +
   geom_point(position = position_jitterdodge(dodge.width = 0.9, jitter.width = 0.2),
@@ -1548,20 +1629,78 @@ suppfig_3
 #Previously named Aim3_LPS_Species_07062022.png
 
 
-
+# Figure S4a-b
 # Leaf mass per area (LMA) by  endophyte load and species
-ggplot(data = master, aes(x = E_load, y = LMA), group_by(Species)) +
-  geom_boxplot(aes(fill = E_load)) +
-  theme_bw(base_size = 18) + 
-  labs(x="", y="LMA (mg)")+
-  theme(legend.position="right", legend.title = element_blank(),
-        legend.text = element_text(face = "italic", size = 18),
-        axis.text.x=element_blank()) +
-  annotate("text", x = 2.5, y = 0.0024, label = "")+
-   scale_y_continuous(limits=c(0.0001,0.0025)) +
-  stat_compare_means(comparisons = mycomparisons ) +
-  stat_compare_means(method = "kruskal.test", label = "p.signif") +
-  facet_wrap(~Species)
+LMAa <- ggplot(data = master, aes(x = E_load, y = LMA, fill = E_load)) +
+  geom_violin() +
+  geom_point(position = position_jitterdodge(dodge.width = 0.9, jitter.width = 0.2),
+             alpha = 0.3, color = "grey30", size = 2) +
+  geom_crossbar(stat="summary", 
+               fun = mean, 
+               fun.max = mean, 
+               fun.min = mean,
+               alpha = 0.3, 
+               size = 0.3, 
+               width = 0.7,
+               position = position_dodge(width = 0.9)) +
+  scale_fill_manual(name = "Treatment ", values= met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_x_discrete(labels=c(newname)) +
+  theme_classic(base_size = 16) +
+  theme(
+        #panel.grid.major = element_line(colour = "grey"),
+        #panel.grid.minor = element_line(colour = "grey"),
+        #strip.background = element_rect(fill = "white"),
+        #strip.text.x = element_text(colour = "black", face = "bold"),
+        legend.title = element_text(face = "bold"),
+        panel.border = element_rect(linetype = "blank", fill = NA),
+        axis.text.x=element_blank(),
+        legend.position="right", 
+        legend.text = element_text(size = 14)) +
+  labs(x="", y= expression(paste("LMA (mg ",mm^-2, ")"))) +
+  stat_compare_means(label = "p.signif", 
+                     method = "t.test",
+                     comparisons =list(c("E-", "E+")),
+                     bracket.size = 0.8)
+LMAa
+
+LMAb <- ggplot(data = master, aes( x = Species, y = LMA, fill = E_load)) +
+geom_violin() +
+  geom_point(position = position_jitterdodge(dodge.width = 0.9, jitter.width = 0.2),
+             alpha = 0.3, color = "grey30", size = 2) +
+  geom_crossbar(stat="summary", 
+               fun = mean, 
+               fun.max = mean, 
+               fun.min = mean,
+               alpha = 0.3, 
+               size = 0.3, 
+               width = 0.7,
+               position = position_dodge(width = 0.9)) +
+  scale_fill_manual(name = "Treatment ", values= met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_x_discrete(labels=c(newname)) +
+  theme_classic(base_size = 16) +
+  theme(
+        #panel.grid.major = element_line(colour = "grey"),
+        #panel.grid.minor = element_line(colour = "grey"),
+        #strip.background = element_rect(fill = "white"),
+        #strip.text.x = element_text(colour = "black", face = "bold"),
+        legend.title = element_text(face = "bold"),
+        panel.border = element_rect(linetype = "blank", fill = NA),
+        axis.text.x=element_text(face = "italic", hjust = 1, angle = 30),
+        legend.position="right", 
+        legend.text = element_text(size = 14)) +
+  labs(x="", y= expression(paste("LMA (mg ",mm^-2, ")"))) +
+  #labs(caption = "*Outliers and singletons removed.") +
+  stat_compare_means(label = "p.signif", method = "anova")
+
+LMAb
+
+suppfig_4 <- ggarrange(LMAa, LMAb, nrow = 1, ncol=2, common.legend = TRUE, legend="bottom", labels = c("(a)", "(b)"))
+suppfig_4
+
+ggsave(filename="./plots/Aim3_FigS4_04JAN2024.png", plot = suppfig_4, dpi=600, units=c("mm"), width = 250, height = 200, bg ="white")
+
 
 # Diversity
 DVI <- ggplot(data= master, aes(x = E_load, y = Shannon)) +
