@@ -1527,6 +1527,7 @@ summa_t1
 # Supplementary Materials
 
 ## Table S1
+<<<<<<< HEAD
 ```{r, supptable_S1}
 #| echo: false
 #| eval: true
@@ -1617,7 +1618,6 @@ supptable_S1<-  gt(aci_comparisons %>%
 supptable_S1
 #gtsave(supptable_S1, file = "Aim3_supptable_S1_05JAN2024.docx", path = "./tables")
 ```
-
 
 ## Table S2
 ```{r, supptable_S2}
@@ -1895,6 +1895,7 @@ supptable_S4
 #gtsave(supptable_S4, file = "Aim3_supptable_S4_05JAN2024.docx", path = "./tables")
 
 ```
+
 
 ## Figure S1a- S1b
 ```{r}
