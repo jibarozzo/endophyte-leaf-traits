@@ -1245,9 +1245,15 @@ References
 # Leaf traits and relative abundance and total reads of OTUs
 
 ```{r, Total reads boxplot, tidy = TRUE}
-mycomparisons <- list(c("APEIME", "DYPTE", "CORDAL", "THEOCA","LACPA", "HEISCO", "CHRYCA")) 
+mycomparisons <- list(c("APEIME", "CHRYCA"), c("APEIME", "CORDAL"), c("APEIME", "DYPTE"), c("APEIME", "HEISCO"),c("APEIME", "LACPA"), c("APEIME","THEOCA"),
+                      c("CHRYCA","CORDAL"), c("CHRYCA","DYPTE"),c("CHRYCA","HEISCO"), c("CHRYCA","LACPA"), c("CHRYCA", "THEOCA"),
+                      c("CORDAL","DYPTE"), c("CORDAL","HEISCO"), c("CORDAL","LACPA"), c("CORDAL","THEOCA"), 
+                      c("DYPTE","HEISCO"), c("DYPTE","LACPA"), c("DYPTE","THEOCA"), 
+                      c("HEISCO","LACPA"), c("HEISCO","THEOCA"), c("LACPA","THEOCA"))
 
+newname <- c("A. membranacea", "C. cainito", "C. alliodora", "Dypterix .sp", "H. concinna", "L. panamensis", "T. cacao")
 
+names(newname) <- c("APEIME", "CHRYCA", "CORDAL", "DYPTE", "HEISCO", "LACPA", "THEOCA")
 ecomparisons <- list(c(master$E_load))
 
 #Total reads
@@ -1300,11 +1306,6 @@ RA
 
 ```{r, RA per E_load bar and violin plot, tidy = TRUE}
 # RA per E_load
-
-newname <- c("A. membranacea", "C. cainito", "C. alliodora", "Dypterix .sp", "H. concinna", "L. panamensis", "T. cacao")
-
-names(newname) <- c("APEIME", "CHRYCA", "CORDAL", "DYPTE", "HEISCO", "LACPA", "THEOCA")
-
 RAE <- ggplot(data= master, aes(x = E_load, y = Relative_Abundance)) +
   geom_violin(aes(fill = E_load)) 
   #geom_boxplot(width=0.1, color="grey30", alpha=0.2) +
@@ -1364,8 +1365,100 @@ fig1
 #Previously saved as Aim3_RA_Eload_SEPT182023.png
 ```
 
+## Figure S1
+```{r, suppfig_1}
+Abun7a <- ggplot(data= data2 %>%
+                      group_by(Species, Sample_name, E_load, Leaf_ID) %>%
+                      summarise(Abun_7 = mean(Abun_7)),
+                     aes(x = E_load, y = Abun_7)) +
+  geom_violin(aes(fill = E_load)) +
+  #geom_boxplot(width=0.1, color="grey30", alpha=0.2) +
+  geom_crossbar(stat="summary", 
+                fun = mean, 
+                fun.max = mean,
+                fun.min = mean,  
+                fatten = 2, 
+                width = 0.5) +
+  geom_point(color="grey15", 
+             alpha = 0.4,
+             size = 2, 
+             position = position_jitter(w=0.05)) +
+  scale_fill_manual(name = "Treatment ", values= met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_y_continuous(labels = scales::percent) +
+theme_classic(base_size = 14)+
+  theme(
+        #panel.grid.major = element_line(colour = "grey"),
+        #panel.grid.minor = element_line(colour = "grey"),
+        #strip.background = element_rect(fill = "white"),
+        #axis.line.x.bottom = element_blank(), 
+        strip.text.x = element_text(colour = "grey15", face = "italic"),
+        panel.border = element_rect(linetype = "blank", fill = NA)) +
+  labs(x="", y="Endophyte colonization (%)", face = "bold")+
+  theme(legend.position="right", 
+        legend.title = element_text(face = "bold"),
+        legend.text = element_text(size = 14),
+        plot.title = element_text(color="black", size = 14, face="bold"),
+        axis.text.x=element_blank()) +
+  stat_compare_means(comparisons = list(c("E-", "E+")),
+                     method = "t.test",
+                     label = "p.signif", bracket.size = 0.65) 
+  #facet_wrap(~Species, labeller = as_labeller(newname))
+ Abun7a  
+ 
+Abun7b <- ggplot(data= data2 %>%
+                      group_by(Species, Sample_name, E_load, Leaf_ID) %>%
+                      summarise(Abun_7 = mean(Abun_7)),
+                     aes(x = E_load, y = Abun_7)) +
+  geom_violin(aes(fill = E_load)) +
+  #geom_boxplot(width=0.1, color="grey30", alpha=0.2) +
+  geom_crossbar(stat="summary", 
+                fun = mean, 
+                fun.max = mean,
+                fun.min = mean,  
+                fatten = 2, 
+                width = 0.5) +
+  geom_point(color="grey15", 
+             alpha = 0.4,
+             size = 2, 
+             position = position_jitter(w=0.05)) +
+  scale_fill_manual(name = "Treatment ", values= met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_y_continuous(expand = expansion(mult = 0.1), 
+                     breaks = c(0, 0.25, 0.50, 0.75, 1),
+                     labels = scales::percent) +
+  #scale_y_continuous(labels = scales::percent) +
+theme_classic(base_size = 14)+
+  theme(
+        panel.grid.major = element_line(colour = "grey"),
+        panel.grid.minor = element_line(colour = "grey"),
+        strip.background = element_rect(fill = "white"),
+        axis.line.x.bottom = element_blank(),
+        strip.text.x = element_text(colour = "grey15", face = "italic"),
+        panel.border = element_rect(linetype = "blank", fill = NA)) +
+  labs(x="", y="Endophyte colonization (%)", face = "bold")+
+  theme(legend.position="right", 
+        legend.title = element_text(face = "bold"),
+        legend.text = element_text(size = 14),
+        plot.title = element_text(color="black", size = 14, face="bold"),
+        axis.text.x=element_blank()) +
+  stat_compare_means(comparisons = list(c("E-", "E+")),
+                     method = "t.test",
+                     label = "p.signif", label.y = 1.03, bracket.size = 0.65) +
+  facet_wrap(~Species, labeller = as_labeller(newname))
 
-## Figure S1-S4
+
+Abun7b  
+
+# Figure S1a-S1b
+suppfig_1 <- ggarrange(Abun7a, Abun7b, nrow = 1, ncol=2, common.legend = TRUE, legend="bottom", labels = c("(a)", "(b)"))
+suppfig_1
+
+
+#ggsave(filename="./plots/Aim3_FigS1_07JAN2024.png", plot = suppfig_1, dpi=600, units=c("mm"), width = 250, height = 200, bg ="white")
+```
+
+## Figure S2-S5
 ```{r, Functional traits violins, tidy = TRUE}
 mycomparisons <- list(c("APEIME", "CHRYCA"), c("APEIME", "CORDAL"), c("APEIME", "DYPTE"), c("APEIME", "HEISCO"),c("APEIME", "LACPA"), c("APEIME","THEOCA"),
                       c("CHRYCA","CORDAL"), c("CHRYCA","DYPTE"),c("CHRYCA","HEISCO"), c("CHRYCA","LACPA"), c("CHRYCA", "THEOCA"),

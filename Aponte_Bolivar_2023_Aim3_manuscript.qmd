@@ -92,43 +92,31 @@ Atta colombica, Calonectria, foliar fungal endophytes, herbivory, pathogen, trop
 
 # Introduction
 
-***Hypothesis 2***
-If FEF improves leaf defenses against plant pests, then generalist
-herbivores and pathogens will remove or damage less leaf tissue from
-plants with treated high FEF levels relative to those with low FEF
-loads.
+***Hypothesis 2*** If FEF improves leaf defenses against plant pests, then generalist herbivores and pathogens will remove or damage less leaf tissue from plants with treated high FEF levels relative to those with low FEF loads.
 
 **Predictions.**
 
-Leaf-cutter ants will remove less plant material from leaves with higher FEF
-abundance and richness, but this result will be modulated by leaf
-traits related to defenses. Leaves with longer lifespans will be less attractive to leaf-cutter ants. Alternatively, low FEF diversity in those leaves may outweigh this selection factor. Leaves treated with high FEF levels will have
-a smaller area of pathogen damage compared to those treated with low
-FEF levels. Endophyte-mediated defenses against pathogens will be
-most important in short-lived leaves since long-lived leaves are
-expected to rely more on constitutive defenses (e.g., leaf
-toughness).
+Leaf-cutter ants will remove less plant material from leaves with higher FEF abundance and richness, but this result will be modulated by leaf traits related to defenses. Leaves with longer lifespans will be less attractive to leaf-cutter ants. Alternatively, low FEF diversity in those leaves may outweigh this selection factor. Leaves treated with high FEF levels will have a smaller area of pathogen damage compared to those treated with low FEF levels. Endophyte-mediated defenses against pathogens will be most important in short-lived leaves since long-lived leaves are expected to rely more on constitutive defenses (e.g., leaf toughness).
 
 # Materials and Methods
 
 ## Field
 
-Growth and host plant inoculation seven tropical tree species was conducted at the greenhouses in the Gamboa Research Station, Smithsonian Tropical Research institute, Republic of Panama. The species, *Theobroma cacao*, *Dypterix* sp., *Lacmellea panamensis*, *Apeiba membranacea*, *Heisteria concinna*, *Chrysophyllum caimito*, and *Cordia alliodora* were chosen due to their variance in leaf traits (J.Wright unpublished data) and the availability of seeds in January- April 2019. Seeds of tree species were collected from the forest floor and grown in the greenhouse. Seedlings were kept in a chamber made out of PVC and clear plastic to prevent inoculation from spore fall inside the greenhouse. NEEDS INFORMATION ON THE SOIL MIXTURE AND AUTOCLAVING PROTOCOL. Seedlings reached a minimum of 4 true leaves before endophyte inoculation. Then 10 individual plants of each species were exposed to 10 nights of spore fall to achieve a high endophyte load (E+) and 10 homologous plants were kept inside the greenhouse plastic chamber to maintain a low endophyte load (*E-*) (Fig. ? MAKE A DIRAGRAM?). Plants exposed to spore fall were placed near (\~10 m) the forest edge at dusk (\~18:OO hours) and returned to the greenhouse at dawn (\~07:00 hours) [@bittleston2011].
+Growth and host plant inoculation seven tropical tree species was conducted at the greenhouses in the Gamboa Research Station, Smithsonian Tropical Research institute, Republic of Panama. The species, *Theobroma cacao*, *Dypterix* sp., *Lacmellea panamensis*, *Apeiba membranacea*, *Heisteria concinna*, *Chrysophyllum caimito*, and *Cordia alliodora* were chosen due to their variance in leaf traits (J.Wright unpublished data) and the availability of seeds in January- April 2019. Seeds of tree species were collected from the forest floor and grown in the greenhouse. Seedlings were kept in a chamber made out of PVC and clear plastic to prevent inoculation from spore fall inside the greenhouse. NEEDS INFORMATION ON THE SOIL MIXTURE AND AUTOCLAVING PROTOCOL. Seedlings reached a minimum of 4 true leaves before endophyte inoculation. Then 10 individual plants of each species were exposed to 10 nights of spore fall to achieve a high endophyte load (E+) and 10 homologous plants were kept inside the greenhouse plastic chamber to maintain a low endophyte load ($E-$) (Fig. ? MAKE A DIRAGRAM?). Plants exposed to spore fall were placed near (\~10 m) the forest edge at dusk (\~18:OO hours) and returned to the greenhouse at dawn (\~07:00 hours) [@bittleston2011].
 
 ### Leaf trait measurements
 
-Three mature leaves were haphazardly collected from each of the individual plants in each treatment (E+, E-) within 7-10 days after inoculation treatment. Anthocyanin (ACI) content and leaf thickness (LT) were measured while the leaf was still attached to the plant. We measured anthocyanin content with ACM-200plus (Opti-Sciences Inc. Hudson, New Hampshire, U.S.A.) on three haphazardly selected locations (working from the petiole out to the leaf tip) on the leaf surface of three haphazardly selected leaves for a total of nine measurements per plant [@tellezTraits2022]. To account for leaf thickness, the ACM-200 calculates an anthocyanin content index (ACI) value from the ratio of % transmittance at 931 nm/% transmittance at 525 nm [@tellezRedCol2016, @opti-sciencesinc.]. On compound leaves (i.e., *Dypterix* sp.) we measured at three different leaflets. Leaf thickness (μm) was measured with a Mitutoyo 7327 Micrometer Gauge (Mitutoyo, Takatsu-ku, Kawasaki, Japan) in sthe same manner as the anthocyanin measurements, taking care to avoid major and secondary veins. After anthocyanin and leaf thickness measurements were completed, we removed the leaves from their stems, placed them inside a plastic bag (i.e. ZiplocⓇ), place in an ice chest and moved them to the lab for further measurements. Leaf punch strength (LPS) was measured with an Imada DST-11a digital force gauge (Imada Inc., Northbrook, IL, United States) by conducting punch-and-die tests with a sharp-edged cylindrical steel punch (2.0 mm diameter) and a steel die with a sharp-edged aperture of small clearance (0.05 mm). The leaf punch measurements were taken by puncturing the leaf lamina at the base, mid-leaf and tip on both sides of the mid-vein, avoiding minor leaf veins when possible [@tellezTraits2022]. Once leaf toughness was measured, we used a 7 mm diameter punch hole to puncture disks for leaf mass per area (LMA) measurements. We collected one three disks per leaf (see Supplementary material for details). The disk punches dried at 60 °C for 48-72 hours. before being weighed.
+Three mature leaves were haphazardly collected from each of the individual plants in each treatment (E+, E-) within 7-10 days after inoculation treatment. Anthocyanin (ACI) content and leaf thickness (LT) were measured while the leaf was still attached to the plant. We measured anthocyanin content with ACM-200plus (Opti-Sciences Inc. Hudson, New Hampshire, U.S.A.) on three haphazardly selected locations (working from the petiole out to the leaf tip) on the leaf surface of three haphazardly selected leaves for a total of nine measurements per plant [@tellezTraits2022]. To account for leaf thickness, the ACM-200 calculates an anthocyanin content index (ACI) value from the ratio of % transmittance at 931 nm/% transmittance at 525 nm [@tellezRedCol2016, @opti-sciencesinc.]. On compound leaves (i.e., *Dypterix* sp.) we measured at three different leaflets. Leaf thickness (μm) was measured with a Mitutoyo 7327 Micrometer Gauge (Mitutoyo, Takatsu-ku, Kawasaki, Japan) at six different points on the leaf lamina; at the base, mid-leaf and tip on both sides of the mid-vein, taking care to avoid major and secondary veins. After ACI and leaf LT measurements were completed, we removed the leaves from their stems, placed them inside a plastic bag (i.e. ZiplocⓇ), place in an ice chest and moved them to the lab for further measurements. Leaf punch strength (LPS) was measured with an Imada DST-11a digital force gauge (Imada Inc., Northbrook, IL, United States) by conducting punch-and-die tests with a sharp-edged cylindrical steel punch (2.0 mm diameter) and a steel die with a sharp-edged aperture of small clearance (0.05 mm). The leaf punch measurements were taken at six diffrent points of the leaf by puncturing the lamina at the base, mid-leaf and tip on both sides of the mid-vein, avoiding minor leaf veins when possible [@tellezTraits2022]. Once LPS was measured, we used a 7 mm diameter punch hole to puncture disks for leaf mass per area (LMA) measurements. We collected three disks per leaf (see Supplementary material for details). The disk punches dried at 60 °C for 48-72 hours. before being weighed.
 
 ### Leaf tissue preparation for molecular work
 
-The selected leaves were also used to profile endophyte community composition, abundance, and richness via amplicon sequencing (Illumina MiSeq). The leaf tissue remaining after the leaf trait measurements had the main vein and margins excised so that only the lamina remained. The lamina was haphazardly cut into 2 x 2 mm segments, enough to obtain a total of 16, and surface sterilized by sequential rinsing in 95% ethanol (10 s), 0.5 NaOCl (2 mins) and 70% ethanol (2 mins), as per [@arnold2003; @higgins2014; @tellezTraits2022]. After, leaves were air-dried briefly under sterile conditions. Sixteen leaf segments per leaf, a total of forty-eight leaf segments per plant, were plated in 2% malt extract agar (MEA), sealed with Parafilm M (Bemis Company Inc., U.S.A.) and incubated at room temperature. The cultured leaf segments were used to estimate endophyte colonization of *E-* and *E+* leaves. The presence or absence of endophytic fungi in the leaf cuttings was assessed 7 days after plating. The remaining sterilized leaf lamina was preserved in sterile 15 mL tubes with \~ 10 mL CTAB solution (1 M Tris--HCl pH 8, 5 M NaCl, 0.5 M EDTA, and 20 g CTAB). Leaf tissue in CTAB solution was used for amplicon sequencing (described in detail below). All leaf tissue handling was performed in a biosafety cabinet with all surfaces sterilized by exposure to UV light for 30 minutes and cleaned sequentially in between samples with 95% ethanol, 0.5% NaOCl and 70% ethanol to prevent cross contamination.
+The selected leaves were also used to profile endophyte community composition, abundance, and richness via amplicon sequencing (Illumina MiSeq). The leaf tissue remaining after the leaf trait measurements had the main vein and margins excised so that only the lamina remained. The lamina was haphazardly cut into 2 x 2 mm segments, enough to obtain a total of 16, and surface sterilized by sequential rinsing in 95% ethanol (10 s), 0.5 NaOCl (2 mins) and 70% ethanol (2 mins), as per [@arnold2003; @higgins2014; @tellezTraits2022]. After, leaves were air-dried briefly under sterile conditions. Sixteen leaf segments per leaf, a total of forty-eight leaf segments per plant, were plated in 2% malt extract agar (MEA), sealed with Parafilm M (Bemis Company Inc., U.S.A.) and incubated at room temperature. The cultured leaf segments were used to estimate endophyte colonization of $E-$ and $E$ leaves. The presence or absence of endophytic fungi in the leaf cuttings was assessed 7 days after plating. The remaining sterilized leaf lamina was preserved in sterile 15 mL tubes with \~ 10 mL CTAB solution (1 M Tris--HCl pH 8, 5 M NaCl, 0.5 M EDTA, and 20 g CTAB). Leaf tissue in CTAB solution was used for amplicon sequencing (described in detail below). All leaf tissue handling was performed in a biosafety cabinet with all surfaces sterilized by exposure to UV light for 30 minutes and cleaned sequentially in between samples with 95% ethanol, 0.5% NaOCl and 70% ethanol to prevent cross contamination.
 
 ## Amplicon sequencing
 
 Leaf tissue in CTAB solution was stored for 2 months at room temperature prior to being placed at -80 C for 3 months before extracting DNA. In preparation for DNA extraction, we decontaminated all instruments, materials, and surfaces with DNAway (Molecular BioProducts Inc., San Diego, CA, United States), 95% Ethanol, 0.5 % NaOCl, and 70 % Ethanol, and subsequently treated with UV light for 30 minutes in biosafety cabinet. We then transferred 0.2 -- 0.3 g of leaf tissue into duplicate sterile 2mL tubes, resulting in 2 subsamples. Total genomic DNA from subsamples was extracted as described in U'Ren & Arnold [-@uren2017]. In brief, we added two sterile 3.2 mm stainless steel beads to each tube and proceeded to lyophilize samples for 72 hours to fully remove CTAB content from tissue. After this period, we submerged the sample tubes in liquid nitrogen for 30s and proceeded to homogenize samples to a fine powder for 45 s in FastPrep-24 Tissue and Cell Homogenizer (MP Biomedicals, Solon, OH, USA). Afterwards, we repeated the decontamination procedure described before and used QIAGEN DNeasy 96 PowerPlant Pro-HTP Kit [@uren2017] (QIAGEN, Valencia, CA, USA). After all genomic DNA was extracted, we pooled the subsamples for each individual sample before amplification. We used sterile equipment and pipettes with aerosol-resistant tips with filters in all steps before amplification. We followed a two-step amplification approach previously described by Sarmiento et al. [-@sarmiento2017] and U´Ren & Arnold [-@uren2017]. We used primers for the fungal ITSrDNA region, ITS1f (5'-CTTGGTCATTTAGAGGAAGTAA-3') and ITS4 (5'-TCCTCCGCTTATTGATATGC-3') with modified universal consensus sequences CS1 and CS2 and 0--5 bp for phase-shifting. Every sample was amplified in two parallel reactions containing 1-2 µL of DNA template [@uren2017; see also @tellezTraits2022]. We visualized PCR (PCR1) reactions with SYBR Green 1 (Invitrogen, Carlsbad, CA, USA) on 2% agarose gel [@oita2021]. Based on the electrophoresis band intensity, we combined parallel PCR1 reactions and diluted 5 µL of amplicon product with molecular grade water to standardize to a concentration of 1:15 [@tellezTraits2022; @sarmiento2017 for details]. We included DNA extraction blanks and PCR1 negatives in this step. We used a separate set of sterile pipettes, tips, and equipment to reduce contamination. We used a designated PCR area to restrict contact with pre-PCR materials [@oita2021].
 
 We used 1 µL of PCR1 product from samples and negative control for a second PCR (PCR2) with barcode adapters (IBEST Genomics Resource Core, Moscow, ID, USA). Each PCR2 reaction (total 15 µL) contained 1X Phusion Flash High Fidelity PCR Master Mix, 0.075 µM of barcoded primers (forward and reverse pooled at a concentration of 2 µM) and 0.24mg/mL of BSA following Sarmiento [-@sarmiento2017] and U'Ren & Arnold [-@uren2017]. Before final pooling for sequencing, we purified the amplicons using Agencourt AMPure XP Beads (Beckman Coulter Inc, Brea, CA USA) to a ratio of 1:1 following the manufacturer's instructions. The products were evaluated with Bio Analyzer 2100 (Agilent Technologies, Santa Clara, CA, USA) [@tellezTraits2022]. We quantified the samples through University of Arizona Genetics Core, and subsequently diluted them to the same concentration to prevent over representation of samples with higher concentration, see (CITATION). Amplicons were normalized to 1 ng/µL, then pooled 2 µL of each for sequencing. No contamination was detected visually or by fluorometric analysis. To provide robust controls we combined 5 µL of each PCR1 negative and the DNA extraction blanks and sequenced them as samples. Ultimately, we combined samples into a single tube with 20 ng/µL of amplified DNA with barcoded adapters for sequencing on the Illumina MiSeq platform with Reagent Kit v3 (2 × 300 bp) following protocols from the IBEST Genomics Resource Core at the University of Idaho, USA. Again, we included the DNA extraction blanks and two PCR1 negatives and sequenced with samples. Sequencing yielded 3,778,081 total ITS1 reads.
-
 
 ### Mock Communities
 
@@ -156,19 +144,19 @@ For the pathogen assays, we introduced an agar plug inoculated with hyphae of *C
 
 ### Statistical Analyses
 
-We explored how leaf functional traits and foliar fungal symbionts correlated to herbivory and pathogen damage on leaves. We present the analyses at the leaf and at the plant level. Leaf functional traits were measured and are presented in their raw form, at the leaf level, while FEF data was explored and is presented at the plant level. In analyses where leaf functional traits and FEF are combined we used averages of the leaf functional traits.
+We explored how leaf functional traits and foliar fungal symbionts correlated to herbivory and pathogen damage on leaves. We present the analyses for each tree species at the leaf and at the plant level. Leaf functional traits are presented at the leaf level, while FEF data was explored and is presented at the plant level. In analyses where leaf functional traits and FEF are combined we used averages of the leaf functional traits. We compared means of leaf functional traits for each species and treatment groups using two-sided Student's t-Test and analysis of variance (ANOVA) with the `compare_means` and `stat_compare_means` functions from the `ggpubr` package in R [@kassambara2023], which wrap an extend the `anova` and `t.test` functions from the `stats` package [@rcoreteam2023].
 
-Principal Component Analysis (PCA) was used to reduce dimensions among covariates and reveal underlying interactions that could influence fungal endophyte abundance, diversity and community composition in seedlings. The PCA was computed using the `prcomp` function in R statistical software [@rcoreteam2023]. A complete PCA was computed with variables ACI, LT, LPS, and LMA (Fig. 2a). We then proceeded to compute a PCA with the data from leaves of plants used in the ant ($n$ = 210) and pathogen assays ($n$ = 192). To further explore the interactions of herbivory and pathogen damage ACI, LT, LPS and LMA we computed simple linear regressions ( Fig. S6 - S7).
+Principal Component Analysis (PCA) was used to reduce dimensions among covariates and reveal underlying interactions that could influence fungal endophyte abundance, diversity and community composition in seedlings. The PCA was computed using the `prcomp` function in R statistical software [@rcoreteam2023]. A complete PCA was computed with variables ACI, LT, LPS, and LMA (Fig. 2a). We then proceeded to compute a PCA with the data from leaves of plants used in the ant ($n$ = 210) and pathogen assays ($n$ = 192). To further explore the interactions of herbivory and pathogen damage ACI, LT, LPS and LMA we computed simple linear regressions (Fig. S6 - S7).
 
 To test for H2, we used a general linear mixed model (GLM) with herbivory and pathogen damage percentage (logit transformed) as the response variable. To determine which fixed effects to include in the models we used the `vif` function in *R* to calculate the variance inflation factor for all explanatory variables (ACI, LT, LPS and LMA) [@rcoreteam2023]. We then created a correlation matrix with `cor` function to assess correlations among covariates (SUPPLEMENTARY FIGURE?). We opted to maintain explanatory variables pertaining to physical barriers (LT, LPS and LMA) and exclude ACI from subsequent general linear models due to high collinearity with LPS (*r* = 0.54) and LMA (*r* = 0.73). Every variable kept exhibits some degree of collinearity and this is well recorded in the literature (CITE HERE).
 
+To explore the correlations between tree species and treatment group combinations preferred by FEFs we used the `multipatt` function from the `indicspecies` package in R [@decaceres2009]. We calculated the the *point biserial correlation coefficient* for each OTU at all tree species [@decaceres2009] (CITE MORE) by applying the `multipatt` function with arguments `func`= "r.g" and `control` = "how(nperm=999)" to our OTU abundance matrix.
+
 # Results
 
-Seedlings exposed to forest spore fall, *E+*, had a significantly higher proportion of leaf segments colonized by fungal endophytes across all species (data from cultures, Fig. S1) Using our molecular data set we saw that seedlings with *E+* treatment had a significantly higher fungal endophyte relative abundance (*p*  \<0.05) for all tree species when compared to *E-* treatment with the exception of *C. cainito* and *H. concinna* (Fig. 1). Despite these significant differences, there is a high degree of variability in endophyte relative abundance within each treatment type (Fig. 1).
+Seedlings exposed to forest spore fall, $E+$, had a significantly higher proportion of leaf segments colonized by fungal endophytes across all species (data from cultures, Fig. S1). Using our molecular data set we saw that seedlings with $E+$ treatment had a significantly higher fungal endophyte relative abundance (*p* \<0.05) for all tree species when compared to $E-$ treatment with the exception of *C. cainito* and *H. concinna* (Fig. 1a). Despite these significant differences, there is a high degree of variability in endophyte relative abundance within each treatment type (Fig. 1).
 
-For individuals of all tree species, we observed general differences in leaf functional traits summarized in Table 1. For LT we observed significant differences for *A. membranacea* , *Dypteryx* sp., and *L. panamensis* despite treatment type. Anthocyanins (ACI) were all leaf functional traits across all tree species. We did not see (CONTINUE HERE)
-
-**THE PARAGRAPH ABOVE NEEDS A LOT OF WORK. I NEED THE PLOTS FOR THIS TO WRITE ABOUT IT.**
+For individuals of all tree species, we observed general differences in leaf functional traits (Table 1). For ACI, we did not observe statistically significant differences between treatments ($E-$ and $E+$) (Sig. S2a). At the species level we did observe statistically significant differences between treatment groups for *C. cainito*, *C. alliodora* and *L. panamensis* (*p* \< 0.05) (Fig. S2b). We found statistically significant differences in levels of ACI for all comparisons of species with the exception of: *C. cainito* compared to *H. concinna* and *Dypterix* sp. compared to *L panamensis* (Table S1). For LT, we did not observe satatistically significant differences between treatment groups (Fig. S3a). At the species level, we observed statistically significant differences between treatment groups for *C. cainito* and *C. alliodora* (*p* \< 0.001) (Fig. S3b). We found statistically significant differences in LT or all comparisons of species with the exception of: *A. mebranacea* compare to *L. panamensis*; *C. cainito* compared to *C. alliodora*, *H. concinna* and *T. cacao*; *C .alliodora* compared to *H. concinna* and *T. cacao*; and *H. concinna* compared to *T. cacao* (Table S2). For LPS, we did not observe statistically significant differences between treatment groups (Fig. S4a). At the species level, we observed statistically significant differences between treatment groups for *A. membranacea* and *C. alliodora* (*p* \< 0.001) (Fig. S4b). We found statistically significant differences in LPS for all comparisons of species with the exception of: *A. membranacea* compared to *C. alliodora* (Table S3). For LMA, we did not observe statistically significant differences between treatment groups (Fig. S5a). At the species level, we observed statistically significant differences between treatment groups for *C. alliodora* (*p* \< 0.001) (Fig. S5b). We found statistically significant differences in LMA for all comparisons of species with the exception of: *A. membranaces* compared to *C. alliodora* (Table S4).
 
 The PCA revealed how leaf traits (ACI, LT, LPS and LMA) were related. We plotted leaf trait data according to tree species groups on the PCA axes to show how the variance in the complete data set is explained by PC1 (60%) and PC2 (27%) (Fig. 2a). We observed that ACI, LPS and LMA loadings tracked along PC1 towards more negative values, showing correlation among these traits (Fig. 2a). Traits LT and LPS were orthogonal to each other in Fig. 2a, indicative of low correlation. We note distinct grouping of species along PC1 such as *C. alliodora* in the direction of positive values of PC1 and *C. cainito* towards negative values. Along PC1 we see distinct and tight clustering according to species for all except *H. concinna* and *A. membranacea* which overlap with various other species. We note that LT loading tracks towards negative values along PC2 (Fig.2a). Clear species groupings are detected, such as *Dypterix* sp. located towards positive values and *L. panamensis* towards negative values of the PC2 axis. We note a similar relationship between the leaf traits with respect to PC1 and PC2 in individual seedlings used for herbivory versus pathogen damage trials (Fig. 2b-2c). The PCA of leaf traits from seedlings used in herbivory trials has a PC1 explaining 57.5% of the variance and a PC2 explaining 28% of the variance in the subset data (Fig. 2b). We saw an inversion of the LT loading in direction of positive values, as well as the main tree species clustered (i.e. *Dypteryx* sp. and *A. membranacea*) along PC2 (Fig. 2b) with respect to Fig. 2a. The PCA of leaf traits from seedling used in pathogen damage trials has a PC1 explaining 64% of the variance and a PC2 explaining 25% of the variance in the subset data (Fig. 2c). We detected similar relationships among leaf traits and PC axes in the pathogen damage subset data (Fig. 2c) when compared to the complete data set (Fig. 2a).
 
@@ -1425,8 +1413,6 @@ rep_statement %>%
 
 ```
 
-
-
 ## Table 2
 
 ```{r, table1}
@@ -1527,7 +1513,9 @@ summa_t1
 # Supplementary Materials
 
 ## Table S1
-<<<<<<< HEAD
+
+\<\<\<\<\<\<\< HEAD
+
 ```{r, supptable_S1}
 #| echo: false
 #| eval: true
@@ -1620,6 +1608,7 @@ supptable_S1
 ```
 
 ## Table S2
+
 ```{r, supptable_S2}
 #| echo: false
 #| eval: true
@@ -1712,6 +1701,7 @@ supptable_S2
 ```
 
 ## Table S3
+
 ```{r, supptable_S3}
 #| echo: false
 #| eval: true
@@ -1804,6 +1794,7 @@ supptable_S3
 ```
 
 ## Table S4
+
 ```{r, supptable_S4}
 #| echo: false
 #| eval: true
@@ -1896,9 +1887,11 @@ supptable_S4
 
 ```
 
+## Figure S1- S1
 
-## Figure S1a- S1b
-```{r}
+## Figure S2a-S2b
+
+```{r, suppfig_2}
 #| echo: false
 #| eval: true
 #| tidy: true
@@ -1997,13 +1990,14 @@ ACIb <- ggplot(data = master, aes(x = Species, y = Anthocyanins, fill = E_load))
 #ACIb
 
 # Figure S1a S1b
-suppfig_1 <- ggarrange(ACIa, ACIb, nrow = 1, ncol=2, common.legend = TRUE, legend="bottom", labels = c("(a)", "(b)"))
-suppfig_1
-#ggsave(filename="./plots/Aim3_FigS1_04JAN2024.png", plot = suppfig_1, dpi=600, units=c("mm"), width = 250, height = 200, bg ="white")
+suppfig_2 <- ggarrange(ACIa, ACIb, nrow = 1, ncol=2, common.legend = TRUE, legend="bottom", labels = c("(a)", "(b)"))
+suppfig_2
+#ggsave(filename="./plots/Aim3_FigS2_04JAN2024.png", plot = suppfig_2, dpi=600, units=c("mm"), width = 250, height = 200, bg ="white")
 ```
 
-## Figure S2a-S2b
-```{r suppfig_2}
+## Figure S3a-S3b
+
+```{r suppfig_3}
 #| echo: false
 #| eval: true
 #| tidy: true
@@ -2092,18 +2086,18 @@ LTb <- ggplot(data = master, aes(x = Species, y = Thickness, fill = E_load)) +
 #LTb
 
 # Figure S2a S2b
-suppfig_2 <- ggarrange(LTa, LTb, nrow = 1, ncol=2, common.legend = TRUE, legend="bottom", labels = c("(a)", "(b)"))
-suppfig_2
+suppfig_3 <- ggarrange(LTa, LTb, nrow = 1, ncol=2, common.legend = TRUE, legend="bottom", labels = c("(a)", "(b)"))
+suppfig_3
 
-#ggsave(filename="./plots/Aim3_FigS2_03JAN2024.png", plot = suppfig_2, dpi=600, units=c("mm"), width = 250, height = 200, bg ="white")
+#ggsave(filename="./plots/Aim3_FigS3_03JAN2024.png", plot = suppfig_3, dpi=600, units=c("mm"), width = 250, height = 200, bg ="white")
 #Previously saved under name: Aim3_LT_Species_07062022.png
 #
 
 ```
 
-## Figure S3a-S3b
+## Figure S4a-S4b
 
-```{r, suppfig_3 }
+```{r, suppfig_4}
 #| echo: false
 #| eval: true
 #| tidy: true
@@ -2184,15 +2178,16 @@ geom_violin() +
 LPSb
 
 # Figure S3a S3b
-suppfig_3 <- ggarrange(LPSa, LPSb, nrow = 1, ncol=2, common.legend = TRUE, legend="bottom", labels = c("(a)", "(b)"))
-suppfig_3
-#ggsave(filename="./plots/Aim3_FigS3_03JAN2024.png", plot = suppfig_3, dpi=600, units=c("mm"), width = 250, height = 200, bg ="white")
+suppfig_4 <- ggarrange(LPSa, LPSb, nrow = 1, ncol=2, common.legend = TRUE, legend="bottom", labels = c("(a)", "(b)"))
+suppfig_4
+#ggsave(filename="./plots/Aim3_FigS4_03JAN2024.png", plot = suppfig_4, dpi=600, units=c("mm"), width = 250, height = 200, bg ="white")
 #Previously named Aim3_LPS_Species_07062022.png
 
 ```
 
-## Figure S4a-S4b
-```{r, suppfig_4}
+## Figure S5a-S5b
+
+```{r, suppfig_5}
 #| echo: false
 #| eval: true
 #| tidy: true
@@ -2269,9 +2264,28 @@ geom_violin() +
 
 #LMAb
 
-# Figure S4a-S4b
-suppfig_4 <- ggarrange(LMAa, LMAb, nrow = 1, ncol=2, common.legend = TRUE, legend="bottom", labels = c("(a)", "(b)"))
+# Figure S5a-S5b
+suppfig_5 <- ggarrange(LMAa, LMAb, nrow = 1, ncol=2, common.legend = TRUE, legend="bottom", labels = c("(a)", "(b)"))
 suppfig_4
 
-#ggsave(filename="./plots/Aim3_FigS4_04JAN2024.png", plot = suppfig_4, dpi=600, units=c("mm"), width = 250, height = 200, bg ="white")
+#ggsave(filename="./plots/Aim3_FigS5_04JAN2024.png", plot = suppfig_5, dpi=600, units=c("mm"), width = 250, height = 200, bg ="white")
+```
+
+
+## Figure S6
+
+```{r, suppfig_6}
+
+```
+
+## Figure S7
+
+```{r, suppfig_7}
+
+```
+
+## Figure S8
+
+```{r, suppfig_8}
+
 ```
