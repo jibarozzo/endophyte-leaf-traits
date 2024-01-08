@@ -67,15 +67,23 @@ format:
     sansfont: TeX Gyre Termes #Another option is Liberation Serif
     number-sections: true
     citation-package: biblatex
+    keep_tex: true
+    keep_md: true
   docx:
     reference-doc: custom-reference-doc.docx
     number-sections: true
     #linestretch: 2.0
     citation-package: biblatex
+
+filters:
+  - authors-block
+  
 editor: source
 execute:
   echo: false
 warning: false
+
+
 ---
 
 ```{r}
@@ -1517,8 +1525,6 @@ summa_t1
 
 ## Table S1
 
-\<\<\<\<\<\<\< HEAD
-
 ```{r, supptable_S1}
 #| echo: false
 #| eval: true
@@ -1602,7 +1608,7 @@ supptable_S1<-  gt(aci_comparisons %>%
     footnote = md("*n* = 156 individuals"),
     locations = cells_column_labels(columns = group2)
   ) %>%
-  opt_align_table_header(align = "left") %>%
+  opt_align_table_header(align = "center") %>%
     opt_table_font(
     font = list(
       google_font(name = "Tex Gyre Termes"),
@@ -1695,7 +1701,7 @@ supptable_S2<-  gt(thickness_comparisons %>%
     footnote = md("*n* = 156 individuals"),
     locations = cells_column_labels(columns = group2)
   ) %>%
-  opt_align_table_header(align = "left") %>%
+  opt_align_table_header(align = "center") %>%
     opt_table_font(
     font = list(
       google_font(name = "Tex Gyre Termes"),
@@ -1788,7 +1794,7 @@ supptable_S3<-  gt(lps_comparisons %>%
     footnote = md("*n* = 156 individuals"),
     locations = cells_column_labels(columns = group2)
   ) %>%
-  opt_align_table_header(align = "left") %>%
+  opt_align_table_header(align = "center") %>%
     opt_table_font(
     font = list(
       google_font(name = "Tex Gyre Termes"),
@@ -1881,7 +1887,7 @@ supptable_S4 <-  gt(lma_comparisons %>%
     footnote = md("*n* = 156 individuals"),
     locations = cells_column_labels(columns = group2)
   ) %>%
-  opt_align_table_header(align = "left") %>%
+  opt_align_table_header(align = "center") %>%
     opt_table_font(
     font = list(
       google_font(name = "Tex Gyre Termes"),
@@ -1904,8 +1910,8 @@ supptable_S4
 #| tidy: true
 #| warning: false
 ##| fig.align: 'center'
-#| fig.height: 5
-#| fig.width: 5
+#| fig.height: 6
+#| fig.width: 6
 #| fig.cap: "Distributions of values and means of anthocyanin content (ACI) in treatment groups (*E-* and *E+*) and tree species. a) Comparison of ACI means between treatment groups across indivuals of all species. Statistical significance was calculated using a two-sided Student's t-Test. b) Comparison of ACI means between treatment types of each species. Statistical significance was calulated with an analysis of variance (ANOVA). Significance levels are represented by *ns* (not significant) and asterisks [*p* = 0.05 (\\*), *p* = 0.01 (\\**), and *p* = 0.001 (\\***)]."
 
 
@@ -1936,7 +1942,7 @@ ACIa <- ggplot(data = master, aes(x = E_load, y = Anthocyanins, fill = E_load)) 
   scale_fill_manual(name = "Treatment ", values= met.brewer("Cross", n = 2, type = "discrete")) +
   scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
   scale_x_discrete(labels=c(newname)) +
-  theme_classic(base_size = 16) +
+  theme_classic(base_size = 12) +
   theme(
         #panel.grid.major = element_line(colour = "grey"),
         #panel.grid.minor = element_line(colour = "grey"),
@@ -1946,14 +1952,9 @@ ACIa <- ggplot(data = master, aes(x = E_load, y = Anthocyanins, fill = E_load)) 
         panel.border = element_rect(linetype = "blank", fill = NA),
         axis.text.x=element_blank(),
         legend.position="right", 
-        legend.text = element_text(size = 14)) +
-  labs(x="", y=expression(paste("ACI (% ", italic("A") [lambda]," at 931 nm / % ", italic("A") [lambda]," at 530 nm)"))) +
-  theme(legend.position="right", 
-        legend.text = element_text(size = 14)) +
-  #labs(caption = "*Outliers and singletons removed.") +
-  
-  #annotate("text", x = 2.5, y = .65, label = "") +
-  stat_compare_means(label = "p.signif", 
+        legend.text = element_text(size = 12)) +
+    labs(x="", y=expression(paste("ACI (% ", italic("A") [lambda]," at 931 nm / % ", italic("A") [lambda]," at 530 nm)"))) +
+    stat_compare_means(label = "p.signif", 
                      method = "t.test",
                      comparisons =list(c("E-", "E+")),
                      bracket.size = 0.8)
@@ -1976,7 +1977,7 @@ ACIb <- ggplot(data = master, aes(x = Species, y = Anthocyanins, fill = E_load))
   scale_fill_manual(name = "Treatment ", values= met.brewer("Cross", n = 2, type = "discrete")) +
   scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
   scale_x_discrete(labels=c(newname)) +
-  theme_classic(base_size = 16) +
+  theme_classic(base_size = 12) +
   theme(
         #panel.grid.major = element_line(colour = "grey"),
         #panel.grid.minor = element_line(colour = "grey"),
@@ -1986,18 +1987,20 @@ ACIb <- ggplot(data = master, aes(x = Species, y = Anthocyanins, fill = E_load))
         panel.border = element_rect(linetype = "blank", fill = NA),
         axis.text.x=element_text(face = "italic", hjust = 1, angle = 30),
         legend.position="right", 
-        legend.text = element_text(size = 14)) +
+        legend.text = element_text(size = 12)) +
   labs(x="", y=expression(paste("ACI (% ", italic("A") [lambda]," at 931 nm / % ", italic("A") [lambda]," at 530 nm)"))) +
-  #theme(legend.position="right", 
-        #legend.text = element_text(size = 14)) +
-  #labs(caption = "*Outliers and singletons removed.") +
-  #annotate("text", x = 2.5, y = .65, label = "") +
   stat_compare_means(label = "p.signif", method = "anova")
 
 #ACIb
 
 # Figure S1a S1b
-suppfig_2 <- ggarrange(ACIa, ACIb, nrow = 1, ncol=2, common.legend = TRUE, legend="bottom", labels = c("(a)", "(b)"))
+suppfig_2 <- ggarrange(ACIa, ACIb, 
+                       nrow = 1, 
+                       ncol=2, 
+                       label.x = -0.015, vjust = 1, 
+                       common.legend = TRUE,
+                       legend="bottom", 
+                       labels = c("(a)", "(b)"))
 suppfig_2
 #ggsave(filename="./plots/Aim3_FigS2_04JAN2024.png", plot = suppfig_2, dpi=600, units=c("mm"), width = 250, height = 200, bg ="white")
 ```
@@ -2010,8 +2013,8 @@ suppfig_2
 #| tidy: true
 #| warning: false
 ##| fig.align: 'center'
-#| fig.height: 5
-#| fig.width: 5
+#| fig.height: 6
+#| fig.width: 6
 #| fig.cap: "Distributions of values and means of leaf thickness (LT) (\mug) in treatment groups (*E-* and *E+*) and tree species. a) Comparison of LT means between treatment groups across indivuals of all species. Statistical significance was calculated using a two-sided Student's t-Test. b) Comparison of LT means between treatment types of each species. Statistical significance was calulated with an analysis of variance (ANOVA). Significance levels are represented by *ns* (not significant) and asterisks [*p* = 0.05 (\\*), *p* = 0.01 (\\**), and *p* = 0.001 (\\***)]."
 
 # Leaf thickness by endophyte load and species
@@ -2032,7 +2035,7 @@ LTa <- ggplot(data = master, aes(x = E_load, y = Thickness, fill = E_load)) +
   scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
   scale_x_discrete(labels=c(newname)) +
   scale_y_continuous(limits = c(100, 300)) +
-  theme_classic(base_size = 16) +
+  theme_classic(base_size = 12) +
   theme(
         #panel.grid.major = element_line(colour = "grey"),
         #panel.grid.minor = element_line(colour = "grey"),
@@ -2042,13 +2045,8 @@ LTa <- ggplot(data = master, aes(x = E_load, y = Thickness, fill = E_load)) +
         panel.border = element_rect(linetype = "blank", fill = NA),
         axis.text.x=element_blank(),
         legend.position="right", 
-        legend.text = element_text(size = 14)) +
+        legend.text = element_text(size = 12)) +
   labs(x="", y= expression(paste("Leaf thickness (",mu,"m)"))) +
-  theme(legend.position="right", 
-        legend.text = element_text(size = 14)) +
-  #labs(caption = "*Outliers and singletons removed.") +
-  
-  #annotate("text", x = 2.5, y = .65, label = "") +
   stat_compare_means(label = "p.signif", 
                      method = "t.test",
                      comparisons =list(c("E-", "E+")),
@@ -2073,7 +2071,7 @@ LTb <- ggplot(data = master, aes(x = Species, y = Thickness, fill = E_load)) +
   scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
   scale_x_discrete(labels=c(newname)) +
   scale_y_continuous(limits = c(100, 300)) +
-  theme_classic(base_size = 16) +
+  theme_classic(base_size = 12) +
   theme(
         #panel.grid.major = element_line(colour = "grey"),
         #panel.grid.minor = element_line(colour = "grey"),
@@ -2083,17 +2081,18 @@ LTb <- ggplot(data = master, aes(x = Species, y = Thickness, fill = E_load)) +
         panel.border = element_rect(linetype = "blank", fill = NA),
         axis.text.x=element_text(face = "italic", hjust = 1, angle = 30),
         legend.position="right", 
-        legend.text = element_text(size = 14)) +
+        legend.text = element_text(size = 12)) +
   labs(x="", y= expression(paste("Leaf thickness (",mu,"m)"))) +
-  #theme(legend.position="right", 
-        #legend.text = element_text(size = 14)) +
-  #labs(caption = "*Outliers and singletons removed.") +
-  #annotate("text", x = 2.5, y = .65, label = "") +
   stat_compare_means(label = "p.signif", method = "anova")
 #LTb
 
 # Figure S2a S2b
-suppfig_3 <- ggarrange(LTa, LTb, nrow = 1, ncol=2, common.legend = TRUE, legend="bottom", labels = c("(a)", "(b)"))
+suppfig_3 <- ggarrange(LTa, LTb, nrow = 1, 
+                       ncol=2, 
+                       label.x = -0.015, vjust = 1, 
+                       common.legend = TRUE,
+                       legend="bottom", 
+                       labels = c("(a)", "(b)"))
 suppfig_3
 
 #ggsave(filename="./plots/Aim3_FigS3_03JAN2024.png", plot = suppfig_3, dpi=600, units=c("mm"), width = 250, height = 200, bg ="white")
@@ -2110,8 +2109,8 @@ suppfig_3
 #| tidy: true
 #| warning: false
 ##| fig.align: 'center'
-#| fig.height: 5
-#| fig.width: 5
+#| fig.height: 6
+#| fig.width: 6
 #| fig.cap: "Distributions of values and means of leaf punch stength (LPS) (N mm^-1) in treatment groups (*E-* and *E+*) and tree species. a) Comparison of LPS means between treatment groups across indivuals of all species. Statistical significance was calculated using a two-sided Student's t-Test. b) Comparison of LPS means between treatment types of each species. Statistical significance was calulated with an analysis of variance (ANOVA). Significance levels are represented by *ns* (not significant) and asterisks [*p* = 0.05 (\\*), *p* = 0.01 (\\**), and *p* = 0.001 (\\***)]."
 #| 
 # Figure S3
@@ -2131,7 +2130,7 @@ geom_violin() +
   scale_fill_manual(name = "Treatment ", values= met.brewer("Cross", n = 2, type = "discrete")) +
   scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
   scale_x_discrete(labels=c(newname)) +
-  theme_classic(base_size = 16) +
+  theme_classic(base_size = 12) +
   theme(
         #panel.grid.major = element_line(colour = "grey"),
         #panel.grid.minor = element_line(colour = "grey"),
@@ -2141,9 +2140,8 @@ geom_violin() +
         panel.border = element_rect(linetype = "blank", fill = NA),
         axis.text.x=element_blank(),
         legend.position="right", 
-        legend.text = element_text(size = 14)) +
+        legend.text = element_text(size = 12)) +
   labs(x="", y= expression(paste("Leaf punch strength (N mm","^-1)"))) +
-  #labs(caption = "*Outliers and singletons removed.") +
   stat_compare_means(label = "p.signif", 
                      method = "t.test",
                      comparisons =list(c("E-", "E+")),
@@ -2167,7 +2165,7 @@ geom_violin() +
   scale_fill_manual(name = "Treatment ", values= met.brewer("Cross", n = 2, type = "discrete")) +
   scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
   scale_x_discrete(labels=c(newname)) +
-  theme_classic(base_size = 16) +
+  theme_classic(base_size = 12) +
   theme(
         #panel.grid.major = element_line(colour = "grey"),
         #panel.grid.minor = element_line(colour = "grey"),
@@ -2177,15 +2175,19 @@ geom_violin() +
         panel.border = element_rect(linetype = "blank", fill = NA),
         axis.text.x=element_text(face = "italic", hjust = 1, angle = 30),
         legend.position="right", 
-        legend.text = element_text(size = 14)) +
+        legend.text = element_text(size = 12)) +
   labs(x="", y= expression(paste("Leaf punch strength (N ", mm^-1,")"))) +
-  #labs(caption = "*Outliers and singletons removed.") +
   stat_compare_means(label = "p.signif", method = "anova") +
   ylim(0.10, 1) 
 LPSb
 
 # Figure S3a S3b
-suppfig_4 <- ggarrange(LPSa, LPSb, nrow = 1, ncol=2, common.legend = TRUE, legend="bottom", labels = c("(a)", "(b)"))
+suppfig_4 <- ggarrange(LPSa, LPSb, nrow = 1, 
+                       ncol=2, 
+                       label.x = -0.015, vjust = 1, 
+                       common.legend = TRUE,
+                       legend="bottom", 
+                       labels = c("(a)", "(b)"))
 suppfig_4
 #ggsave(filename="./plots/Aim3_FigS4_03JAN2024.png", plot = suppfig_4, dpi=600, units=c("mm"), width = 250, height = 200, bg ="white")
 #Previously named Aim3_LPS_Species_07062022.png
@@ -2200,8 +2202,8 @@ suppfig_4
 #| tidy: true
 #| warning: false
 ##| fig.align: 'center'
-#| fig.height: 5
-#| fig.width: 5
+#| fig.height: 6
+#| fig.width: 6
 #| fig.cap: "Distributions of values and means of leaf mass per area (LMA) (mg mm^2) in treatment groups (*E-* and *E+*) and tree species. a) Comparison of LMA means between treatment groups across indivuals of all species. Statistical significance was calculated using a two-sided Student's t-Test. b) Comparison of LMA means between treatment types of each species. Statistical significance was calulated with an analysis of variance (ANOVA). Significance levels are represented by *ns* (not significant) and asterisks [*p* = 0.05 (\\*), *p* = 0.01 (\\**), and *p* = 0.001 (\\***)]."
 
 # Figure S4
@@ -2221,7 +2223,7 @@ LMAa <- ggplot(data = master, aes(x = E_load, y = LMA, fill = E_load)) +
   scale_fill_manual(name = "Treatment ", values= met.brewer("Cross", n = 2, type = "discrete")) +
   scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
   scale_x_discrete(labels=c(newname)) +
-  theme_classic(base_size = 16) +
+  theme_classic(base_size = 12) +
   theme(
         #panel.grid.major = element_line(colour = "grey"),
         #panel.grid.minor = element_line(colour = "grey"),
@@ -2231,7 +2233,7 @@ LMAa <- ggplot(data = master, aes(x = E_load, y = LMA, fill = E_load)) +
         panel.border = element_rect(linetype = "blank", fill = NA),
         axis.text.x=element_blank(),
         legend.position="right", 
-        legend.text = element_text(size = 14)) +
+        legend.text = element_text(size = 12)) +
   labs(x="", y= expression(paste("LMA (mg ",mm^-2, ")"))) +
   stat_compare_means(label = "p.signif", 
                      method = "t.test",
@@ -2254,7 +2256,7 @@ geom_violin() +
   scale_fill_manual(name = "Treatment ", values= met.brewer("Cross", n = 2, type = "discrete")) +
   scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
   scale_x_discrete(labels=c(newname)) +
-  theme_classic(base_size = 16) +
+  theme_classic(base_size = 12) +
   theme(
         #panel.grid.major = element_line(colour = "grey"),
         #panel.grid.minor = element_line(colour = "grey"),
@@ -2264,7 +2266,7 @@ geom_violin() +
         panel.border = element_rect(linetype = "blank", fill = NA),
         axis.text.x=element_text(face = "italic", hjust = 1, angle = 30),
         legend.position="right", 
-        legend.text = element_text(size = 14)) +
+        legend.text = element_text(size = 12)) +
   labs(x="", y= expression(paste("LMA (mg ",mm^-2, ")"))) +
   #labs(caption = "*Outliers and singletons removed.") +
   stat_compare_means(label = "p.signif", method = "anova")
@@ -2272,9 +2274,13 @@ geom_violin() +
 #LMAb
 
 # Figure S5a-S5b
-suppfig_5 <- ggarrange(LMAa, LMAb, nrow = 1, ncol=2, common.legend = TRUE, legend="bottom", labels = c("(a)", "(b)"))
+suppfig_5 <- ggarrange(LMAa, LMAb, nrow = 1, 
+                       ncol=2, 
+                       label.x = -0.015, vjust = 1, 
+                       common.legend = TRUE,
+                       legend="bottom", 
+                       labels = c("(a)", "(b)"))
 suppfig_4
-
 #ggsave(filename="./plots/Aim3_FigS5_04JAN2024.png", plot = suppfig_5, dpi=600, units=c("mm"), width = 250, height = 200, bg ="white")
 ```
 
