@@ -146,11 +146,11 @@ For the pathogen assays, we introduced an agar plug inoculated with hyphae of *C
 
 We explored how leaf functional traits and foliar fungal symbionts correlated to herbivory and pathogen damage on leaves. We present the analyses for each tree species at the leaf and at the plant level. Leaf functional traits are presented at the leaf level, while FEF data was explored and is presented at the plant level. In analyses where leaf functional traits and FEF are combined we used averages of the leaf functional traits. We compared means of leaf functional traits for each species and treatment groups using two-sided Student's t-Test and analysis of variance (ANOVA) with the `compare_means` and `stat_compare_means` functions from the `ggpubr` package in R [@kassambara2023], which wrap an extend the `anova` and `t.test` functions from the `stats` package [@rcoreteam2023].
 
-Principal Component Analysis (PCA) was used to reduce dimensions among covariates and reveal underlying interactions that could influence fungal endophyte abundance, diversity and community composition in seedlings. The PCA was computed using the `prcomp` function in R statistical software [@rcoreteam2023]. A complete PCA was computed with variables ACI, LT, LPS, and LMA (Fig. 2a). We then proceeded to compute a PCA with the data from leaves of plants used in the ant ($n$ = 210) and pathogen assays ($n$ = 192). To further explore the interactions of herbivory and pathogen damage ACI, LT, LPS and LMA we computed simple linear regressions (Fig. S6 - S7).
+Principal Component Analysis (PCA) was used to reduce dimensions among covariates and reveal underlying interactions that could influence fungal endophyte abundance, diversity and community composition in seedlings. The PCA was computed using the `prcomp` function in R statistical software [@rcoreteam2023]. A complete PCA was computed with variables ACI, LT, LPS, and LMA (Fig. 2a). We then proceeded to compute a PCA with the data from leaves of plants used in the ant ($n$ = 210) and pathogen assays ($n$ = 192). To further explore the interactions of herbivory and pathogen damage with ACI, LT, LPS, LMA and Shannon's Diversity Index, we computed simple linear regressions (Fig. S6 - S7).
 
-To test for H2, we used a general linear mixed model (GLM) with herbivory and pathogen damage percentage (logit transformed) as the response variable. To determine which fixed effects to include in the models we used the `vif` function in *R* to calculate the variance inflation factor for all explanatory variables (ACI, LT, LPS and LMA) [@rcoreteam2023]. We then created a correlation matrix with `cor` function to assess correlations among covariates (SUPPLEMENTARY FIGURE?). We opted to maintain explanatory variables pertaining to physical barriers (LT, LPS and LMA) and exclude ACI from subsequent general linear models due to high collinearity with LPS (*r* = 0.54) and LMA (*r* = 0.73). Every variable kept exhibits some degree of collinearity and this is well recorded in the literature (CITE HERE).
+To test for H2, we used a general linear mixed model (GLM) with herbivory and pathogen damage percentage (logit transformed) as the response variable. To determine which fixed effects to include in the models we used the `vif` function in *R* to calculate the variance inflation factor for all explanatory variables (ACI, LT, LPS and LMA) [@rcoreteam2023]. We calculated Pearson's coefficient for each leaf functional traits with by creating a correlation matrix and applying the `cor` function to assess correlations among traits (SUPPLEMENTARY FIGURE?). We opted to maintain explanatory variables pertaining to physical barriers (LT, LPS and LMA) and exclude ACI from subsequent general linear models (GLMs) due to high collinearity with LPS (*r* = 0.54) and LMA (*r* = 0.73). Every variable kept exhibits some degree of collinearity and this is well recorded in the literature (CITE HERE).
 
-To explore the correlations between tree species and treatment group combinations preferred by FEFs we used the `multipatt` function from the `indicspecies` package in R [@decaceres2009]. We calculated the the *point biserial correlation coefficient* for each OTU at all tree species [@decaceres2009] (CITE MORE) by applying the `multipatt` function with arguments `func`= "r.g" and `control` = "how(nperm=999)" to our OTU abundance matrix.
+To explore the correlations between tree species and treatment group combinations preferred by FEFs we used the `multipatt` function from the `indicspecies` package in *R* [@decaceres2009]. We calculated the the *point biserial correlation coefficient* for each OTU at all tree species [@decaceres2009] (CITE MORE) by applying the `multipatt` function with arguments `func`= "r.g" and `control` = "how(nperm=999)" to our OTU abundance matrix.
 
 # Results
 
@@ -163,6 +163,9 @@ The PCA revealed how leaf traits (ACI, LT, LPS and LMA) were related. We plotted
 Simple linear regressions of herbivory (%) against PC1 and PC2 revealed a statistically significant positive relationship (*p* \<0.001) (Fig. 3a and 3b). Even though we note large spread in the data (Fig. 3a and 3b), we see a statistically significant positive trend of herbivory plotted against PC1, where positive values represent greater values of ACI, LPS and LMA. Herbivory plotted against PC2 shows a statistically significant positive trend, where positive values represent greater LT (Fig. 3b). Percent pathogen damage plotted against PC1 revealed a statistically significant positive relationship (*p* = \<0.001), in which positive values represent greater values of ACI, LPS and LMA (Fig. 3c). We did not see a statistically significant relationship (*p* = 0.223) between pathogen damage and PC2 (Fig. 3d).
 
 **TALK ABOUT SIMPLE LINEAR REGRESSIONS OF SUPPLEMENTARY FIGURES?**
+
+**`multipatt` results**
+
 
 # Discussion
 
@@ -1557,6 +1560,10 @@ supptable_S1<-  gt(aci_comparisons %>%
   cols_label(
     group2 = md("Comparison Species"),
   ) %>%
+  # tab_stub_indent(
+  #   rows = everything(),
+  #   indent = 1
+  # ) %>%
   tab_style(
     style = list(
       cell_text(style = "italic")
