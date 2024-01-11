@@ -508,26 +508,26 @@ ants3 <- ants %>%
 #| tidy: true
 #| warning: false
 
-# patho <- read.csv("field_data/Aim3_Bolivar_Summer_2019_Patho_Assay_datasheet.csv")
+#patho <- read.csv("./field_data/Aim3_Bolivar_Summer_2019_Patho_Assay_datasheet.csv")
 # 
-# patho <- patho %>%
-#   separate(Unique.ID, c("Trial_Code", "ELoad", "Species2", "Replicate")) %>%
-#   unite("Sample_name", Species2:Replicate, sep = "") %>%
-#   relocate(Species, Trial_Code,.after = Sample_name) %>%
-#   slice(-c(41:48, 97:100)) %>%
-#   select(!c(ELoad,
-#             Leaf_ID,
-#             Trial_start_time,
-#             Date, 
-#             ImageJ_link, 
-#             X, 
-#             Notes)) %>%
-#   rename(Treatment = Treatment_Ctrl_Pathogen) %>%
-#   mutate(Pathogen_percent_damage = (Damage_area/Leaf_area)) %>%
-#   mutate_if(is.character, as.factor)
+#patho <- patho %>%
+  # separate(Unique.ID, c("Trial_Code", "ELoad", "Species2", "Replicate")) %>%
+  # unite("Sample_name", Species2:Replicate, sep = "") %>%
+  # relocate(Species, Trial_Code,.after = Sample_name) %>%
+  # slice(-c(41:48, 97:100)) %>%
+  # select(!c(ELoad,
+  #           Leaf_ID,
+  #           Trial_start_time,
+  #           Date,
+  #           ImageJ_link,
+  #           X,
+  #           Notes)) %>%
+  # rename(Treatment = Treatment_Ctrl_Pathogen) %>%
+  # mutate(Pathogen_percent_damage = (Damage_area/Leaf_area)*100) %>%
+  # mutate_if(is.character, as.factor)
 
 # Saving
-# saveRDS(patho, file.path(save.path, "R_objects", "pathogen_data.rds"))
+#saveRDS(patho, file.path(save.path, "R_objects", "pathogen_data.rds"))
 
 # Reading
 patho <- readRDS(file.path(save.path, "R_objects", "pathogen_data.rds"))
@@ -537,9 +537,9 @@ patho <- readRDS(file.path(save.path, "R_objects", "pathogen_data.rds"))
 patho2 <- patho %>%
   select(c(1,3,4,8,9,12))
 
-
-patho3 <- patho %>%
-  select(c(1,3,4,6,7,8,9,12))
+# 
+# patho3 <- patho %>%
+#   select(c(1,3,4,6,7,8,9,12))
 ```
 
 ```{r, Objects and dataframes}
@@ -1960,6 +1960,72 @@ supptable_S4
 #gtsave(supptable_S4, file = "Aim3_supptable_S4_05JAN2024.docx", path = "./tables")
 
 ```
+
+## Table S5
+
+
+
+```{r, Indicator species, tidy = TRUE}
+
+#Subset data frame for indicator species analysis
+#Community Data
+cotu <- left_join(cOTU, ndata2, by = "Sample_name") %>%
+  select(!c(Trial_type, 
+            Trial_Code, 
+            Anthocyanins, 
+            Thickness,
+            Toughness, 
+            LMA)) %>%
+  relocate(Species, E_load, .after = Sample_name)
+```
+
+```{r, vector of groups, tidy = TRUE}
+#Making vector of groups for `multipatt` analysis
+species_corr_matrix <- cotu[, 4:ncol(cotu)]
+
+species <- cotu$Species
+eload <- cotu$E_load
+
+multipatt_analysis <- multipatt(species_corr_matrix, species, func = "r.g", control = how(nperm=999)) #By using abundance data and not presence-absence we are calculating the "point biserial correlation coefficient"
+multipatt_analysis
+summary(multipatt_analysis, indvalcomp = TRUE)
+
+#round(head(multipatt_analysis$str), 7)
+```
+
+```{r, Correcting for Type I errror, tidy = TRUE}
+#Correcting for type 1 error and multiple comparisons
+#code from this post
+#https://stats.stackexchange.com/questions/370724/indiscpecies-multipatt-and-overcoming-multi-comparrisons/401277#401277
+
+#Extract table of stats
+multipatt_analysis_sign <- as.data.table(multipatt_analysis$sign, keep.rownames=TRUE)
+
+#Add adjusted p-value
+multipatt_analysis_sign[ , p.value.bh :=   p.adjust(p.value, method="BH")] #This can also be calculated with `dplyr` and `tidyr`
+#indval.table <- indval.sign %>%
+  #mutate(p.value.bh = p.adjust(p.value, method = "BH"))
+
+#Now we can select only the indicators with adjusted significant p-values
+multipatt_analysis_sign[p.value.bh <= 0.05,]
+
+#Renaming the first column
+colnames(multipatt_analysis_sign)[1]  <- "OTU" 
+```
+
+```{r, supptable_S5, tidy = TRUE}
+#Table with taxonomic information
+multipatt_taxonomy <- left_join(newpqDF, multipatt_analysis_sign, by= c("OTU"))
+
+multipatt_taxonomy <- multipatt_taxonomy %>%
+  filter(p.value.bh <= 0.05) %>%
+  select(!c(9:164)) 
+
+#write.csv(multipatt_taxonomy, "./post_stat_analyses_data/Significant_OTUs.csv")
+
+supptable_S5 <- gt(multipatt_taxonomy)
+```
+
 
 ## Figure S1a- S1b
 ```{r, suppfig_1}

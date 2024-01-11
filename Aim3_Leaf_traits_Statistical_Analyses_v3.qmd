@@ -4943,59 +4943,63 @@ cotu <- left_join(cOTU, ndata2, by = "Sample_name") %>%
   relocate(Species, E_load, .after = Sample_name)
 ```
 
-```{r}
-#Making vector of groups for analysis
-indiabun <- cotu[, 4:ncol(cotu)]
+```{r, vector of groups, tidy = TRUE}
+#Making vector of groups for `multipatt` analysis
+species_corr_matrix <- cotu[, 4:ncol(cotu)]
 
 species <- cotu$Species
 eload <- cotu$E_load
 
-indval = multipatt(indiabun, species, func = "r.g", control = how(nperm=999)) #By using abundance data and not presence-absence we are calculating the "point biserial correlation coefficient"
-indval
-summary(indval, indvalcomp = TRUE)
+multipatt_analysis <- multipatt(species_corr_matrix, species, func = "r.g", control = how(nperm=999)) #By using abundance data and not presence-absence we are calculating the "point biserial correlation coefficient"
+multipatt_analysis
+summary(multipatt_analysis, indvalcomp = TRUE)
 
-#round(head(indval$str), 7)
+#round(head(multipatt_analysis$str), 7)
 ```
 
-```{r, Type I errror and data table, tidy = TRUE}
+```{r, Correcting for Type I errror, tidy = TRUE}
 #Correcting for type 1 error and multiple comparisons
 #code from this post
 #https://stats.stackexchange.com/questions/370724/indiscpecies-multipatt-and-overcoming-multi-comparrisons/401277#401277
 
+#Extract table of stats
+multipatt_analysis_sign <- as.data.table(multipatt_analysis$sign, keep.rownames=TRUE)
 
-#extract table of stats
-indval.sign <- as.data.table(indval$sign, keep.rownames=TRUE)
-
-#add adjusted p-value
-indval.sign[ , p.value.bh :=   p.adjust(p.value, method="BH")] #This can also be calculated with `dplyr` and `tidyr`
+#Add adjusted p-value
+multipatt_analysis_sign[ , p.value.bh :=   p.adjust(p.value, method="BH")] #This can also be calculated with `dplyr` and `tidyr`
 #indval.table <- indval.sign %>%
   #mutate(p.value.bh = p.adjust(p.value, method = "BH"))
 
-#now can select only the indicators with adjusted significant p-values
-indval.sign[p.value.bh <= 0.05,]
+#Now we can select only the indicators with adjusted significant p-values
+multipatt_analysis_sign[p.value.bh <= 0.05,]
 
-#renaming the first column
-colnames(indval.sign)[1]  <- "OTU" 
+#Renaming the first column
+colnames(multipatt_analysis_sign)[1]  <- "OTU" 
 ```
 
 P-value adjustments are computed with the "BH" method. Which "\[...\] control the false discovery rate, the expected proportion of false discoveries amongst the rejected hypotheses. The false discovery rate is a less stringent condition than the family-wise error rate, so these methods are more powerful than the others." Information for the R documentation page of `p.adjust()`.
 
 Table with taxonomic information. These are OTUs that are significantly correlated with tree species across the whole data set *n* = 156 (individuals that where used for ant and pathogen assay).
 
-```{r, Table of sigficantly correlated species, tidy = TRUE}
 
-indispp_table <- left_join(newpqDF, indval.sign, by= c("OTU"))
+### Table of significantly correlated species
+#### Table S5
+```{r, supptable_S5, tidy = TRUE}
+#Table with taxonomic information
+multipatt_taxonomy <- left_join(newpqDF, multipatt_analysis_sign, by= c("OTU"))
 
-indispp_table <- indispp_table %>%
+multipatt_taxonomy <- multipatt_taxonomy %>%
   filter(p.value.bh <= 0.05) %>%
   select(!c(9:164)) 
 
-#write.csv(indispp_table, "Significant_OTUs.csv")
+#write.csv(multipatt_taxonomy, "./post_stat_analyses_data/Significant_OTUs.csv")
 
-paged_table(indispp_table)
+supptable_S5 <- gt(multipatt_taxonomy)
 ```
 
-## Indicator species on samples with the **highest and lowest diversity**
+## Shannon's diversity index
+
+### "Indicator" species on samples with the **highest and lowest diversity**
 
 Sorting samples with the highest diversity per species (top 10% per species). If it is not done this way we end up with the top 10% of the whole data set and that turns out to be *Theobroma cacao*. Similar for the bottom 10%.
 
@@ -5242,85 +5246,81 @@ paged_table(botpatspp_table)
   
 ```
 
-## Indicator species analysis selected by **leaf damage**
+## Correlation of Species by leaf damage
+### "Indicator" species analysis selected by **leaf damage**
 
 Sorting samples with the highest/lowest leaf damage per species (upper 70% and lower 30% per species) then conducting indicator/correlation species analysis in subset of samples.
 
 ```{r, Ant data set upper/lower, tidy = TRUE}
  #n <- 0.1 * nrow(master)
 
+#Plants with more than 70% leaf damage by ant herbivory per tree Species.
 #Highest >70%
-lantop <- masterant %>%
+upper_herb_damage <- masterant %>%
   group_by(Species) %>%
   filter(Ant_percent_leafloss > 70) %>%
-  summarise(across(c(Sample_name, E_load, Ant_percent_leafloss))) #Plants with more than 70% leaf damage by ant herbivory per tree Species.
+  reframe(across(c(Sample_name, E_load, Ant_percent_leafloss))) 
 
+#Plants with less than 30% leaf damage by ant herbivory per tree Species.
 #Lowest < 30%
-lanbot <- masterant %>%
+lower_herb_damage <- masterant %>%
   group_by(Species) %>%
   filter(Ant_percent_leafloss < 30) %>%
-  summarise(across(c(Sample_name, E_load, Ant_percent_leafloss))) #Plants with less than 30% leaf damage by ant herbivory per tree Species.
+  reframe(across(c(Sample_name, E_load, Ant_percent_leafloss)))
 
-#This data frame is meant to be used as a filter to select samples from community data frame (cotu).
-
-```
-
-Some species had about half the individuals experience less that 30% leaf damage. For the highest 70% damaged, 5/13 are E+ plants.
-
-```{r, Pathogen upper/lower, tidy = TRUE}
-#n <- ,0.1 * nrow(masterpat)
-
-#I will not using `pat_simple` df here. Using `masterpat`.
-
-# Highest > 30%
-lpatop <- masterpat %>% #Now it's like the ant df.
-  group_by(Species) %>%
-  filter(Pathogen_percent_damage > 30) %>%
-  summarise(across(c(Sample_name, E_load, Treatment, Pathogen_percent_damage)))
-  
-#No plants experienced >70% leaf damage by pathogen.
-hist(masterpat$Pathogen_percent_damage) # Look at this histogram. All, except one, are below 40%. Change strategies.
-
-# Lowest < 30%
-lpabot <- masterpat %>%
-  group_by(Species) %>%
-  filter(Pathogen_percent_damage < 30) %>%
-  summarise(across(c(Sample_name,Treatment, Pathogen_percent_damage)))
 #This data frame is meant to be used as a filter to select samples from community data frame (cotu).
 ```
 
-The pathogen data set (`masterpat`) shows less than 40% leaf damage for almost all plants, controls and treatments ($114/128$). The focus here is comparing control and treatment leaf across E+ and E- treatments. The cut off here will be 30%. What is below? The E+ samples or the E-? It looks like 14 trees have more than 30% leaf damage and $5/14$ are E-. We expected the opposite: more damage on tree with less FEF abundance.
+
+## Recoding upper and lower 30% herbivory and pathogen damage as High and Low
+ 
+The idea is to use this data frame for a new `multipatt` analysis where we compare the groups. Point biserial correlation coefficient analysis require a discrete variable, hence the new High and Low categories. 
+
+```{r, Recoding upper/lower, tidy = TRUE}
+# 
+upper_lower_damage <- master %>%
+  mutate(
+    herbivory_level = case_when(Ant_percent_leafloss  >= 70 ~ "high", 
+                                 Ant_percent_leafloss <= 30 ~ "low"),
+    pathogen_level = case_when(Pathogen_percent_damage >= 30 ~ "high",
+                               Pathogen_percent_damage <= 29 ~ "low")) %>%
+  select(c(Sample_name, Species, E_load,Treatment, herbivory_level, pathogen_level)) #Droping Ant_percent_leafloss and Pathogen_percent_damage
+
+```
+
+Some species had about half the individuals experience less that 30% leaf damage. For the highest 70% damaged, 5/13 are E+ plants. <- Was this for ant herbivory damage?
+
+The pathogen data shows less than 40% leaf damage for almost all plants, controls and treatments (114/128). The focus here is comparing control and treatment leaf across E+ and E- treatments. The cut off here will be 30%. What is below? The E+ samples or the E-? It looks like 14 trees have more than 30% leaf damage and 5/14 are E-. We expected the opposite: more damage on tree with less FEF abundance.
 
 ### Filtering the community data frame with the highest/lowest leaf area damaged.
 
 ```{r, Ant and Pathogen filtering damage, tidy = TRUE}
-#Highest leaf damage ant
-lantop_filter <- semi_join(cotu, lantop, by= c("Sample_name"))
+#Some filtering and joining
+rownames(cotu) <- cotu$Sample_name #adding sample names as rownames
 
-#Filtering `cotu` with `antop3`
-filter_filter <- anti_join(lantop, lantop_filter, by = c("Sample_name")) #should turn 0
+sample_names <- rownames(cotu) #making vector of sample names
+
+leaf_damage_filter <- inner_join(upper_lower_damage,cotu, by= c("Sample_name", "Species", "E_load"))#Should result in 220 observations and 575 variables
+
+#Removing samples with NA values in all row
+  leaf_damage_filter <- leaf_damage_filter %>%
+    filter(Sample_name == sample_names)
+#Anti join
+filter_filter <- anti_join(leaf_damage_filter, cotu, by = c("Sample_name")) #should turn 0 observations and 8 variables
 
 #Lowest leaf damage ant
-lanbot_filter <- semi_join(cotu, lanbot, by= c("Sample_name")) 
+lower_herb_damage_filter <- semi_join(cotu, lower_herb_damage, by= c("Sample_name")) 
 filter_filter <- anti_join(lanbot, lanbot_filter, by = c("Sample_name")) 
-
-# Highest leaf damage pathogen
-lpatop_filter <- semi_join(cotu, lpatop, by= c("Sample_name")) 
-filter_filter <- anti_join(lpatop, lpatop_filter, by = c("Sample_name")) 
-
-#Lowest leaf damage pathogen
-lpabot_filter <- semi_join(cotu, lpabot, by= c("Sample_name")) 
-filter_filter <- anti_join(lpabot, lpabot_filter, by = c("Sample_name"))
 ```
 
-### Leaf damage: Ant Indicator Species
+### Leaf damage: Correlation of OTUs with High and Low leaf damage (herbivory and pathogenicity)
 
-```{r, Highest/lowest leaf damage ant indicator species, tidy = TRUE}
-#Ant assay data
+```{r, Highest/lowest leaf damage herbivore and pathogen indicator species, tidy = TRUE}
+# Recoded dataset for indicator species analysis
 #Making vector of groups for analysis
-ltop_ant <- lantop_filter[, 4:ncol(lantop_filter)]
+recoded_filtered <- leaf_damage_filter[, 4:ncol(leaf_damage_filter)]
 
-species7 <- lantop_filter$Species
+species <- leaf_damage_filter$Species
 
 lant_indi = multipatt(ltop_ant, species7, func = "r.g", control = how(nperm=999))
 
@@ -5402,21 +5402,21 @@ paged_table(lbotantspp_table)
 #Pathogen assay data
 #Highest leaf damage by pathogen
 #Making vector of groups for analysis
-ltop_pat <- lpatop_filter[, 4:ncol(lpatop_filter)]
+ltop_pat <- upper_patho_damage_filter[, 4:ncol(upper_patho_damage_filter)]
 
-species9 <- lpatop_filter$Species
+species9 <- upper_patho_damage_filter$Species
 
-lpatop_indi = multipatt(ltop_pat, species9, func = "r.g", control = how(nperm=999)) #By using abundance data and not presence-absence we are calculating the "point biserial correlation coefficient"
+upper_patho_damage_indi = multipatt(ltop_pat, species9, func = "r.g", control = how(nperm=999)) #By using abundance data and not presence-absence we are calculating the "point biserial correlation coefficient"
 
 summary(lpatop_indi, indvalcomp = TRUE)
  
 
 #Lowest leaf damage by pathogen
-lpabot <- lpabot_filter[,4:ncol(lpabot_filter)]
+lower_patho_damage <- lower_patho_damage_filter[,4:ncol(lower_patho_damage_filter)]
 
-species10 <- lpabot_filter$Species
+species10 <- lower_patho_damage_filter$Species
 
-lbotpat <- multipatt(lpabot, species10, func = "r.g", control = how(nperm = 999))
+lbotpat <- multipatt(lower_patho_damage, species10, func = "r.g", control = how(nperm = 999))
 
 summary(lbotpat, indvalcomp = TRUE)
 ```
