@@ -245,18 +245,18 @@ rep_statement <- hux(
                                                       "Treatment = 2 (E-, E+), Replicates per species = 5, Replicates per plant = 1"))
 
 
-table_1 <- rep_statement %>%
-  set_all_padding(4) %>% 
-      set_outer_padding(0) %>% 
-      set_bold(row = 1, col = everywhere) %>% 
-      set_bottom_border(row = 1, col = everywhere) %>% 
-      set_width(1.1) %>%
-  theme_article() %>%
-  huxtable::as_flextable(column_to_header=TRUE) %>%
-  hline_bottom(part = "body", border = thick) %>%
-  hline_top(part = "body", border = thick) %>%
-  flextable::align(j = 1:3, align = "center", part = "all") %>%
- # flextable::width(j = 1, width = 1.5, unit = "in") %>%
+table_1 <- rep_statement |>
+  set_all_padding(4) |> 
+      set_outer_padding(0) |> 
+      set_bold(row = 1, col = everywhere) |> 
+      set_bottom_border(row = 1, col = everywhere) |> 
+      set_width(1.1) |>
+  theme_article() |>
+  huxtable::as_flextable(column_to_header=TRUE) |>
+  hline_bottom(part = "body", border = thick) |>
+  hline_top(part = "body", border = thick) |>
+  flextable::align(j = 1:3, align = "center", part = "all") |>
+ # flextable::width(j = 1, width = 1.5, unit = "in") |>
   flextable::font(
     i = NULL,
     j = NULL,
@@ -332,11 +332,11 @@ set.seed(123)
 #csamp
 # csamp <- read.csv("clean_data/otu_data/all_cleaned_at_10_percent.csv")
 # csamp[,2:157] <- lapply(csamp[,2:157], as.integer)
-# csamp <- csamp %>%
-#   rename(OTU_ID = X) %>%
-#   column_to_rownames(var = "OTU_ID") %>%
-#   na.omit() %>%
-#   na.fail() %>%
+# csamp <- csamp |>
+#   rename(OTU_ID = X) |>
+#   column_to_rownames(var = "OTU_ID") |>
+#   na.omit() |>
+#   na.fail() |>
 #   as.matrix()
 
 # Saving
@@ -355,14 +355,14 @@ csamp <- readRDS(file.path(save.path, "R_objects", "clean_sequences.rds"))
 # T-BAS taxonomic assignment ####
 #tbas
 # tbas <- read.csv("unite_report2BSDHQZP.csv")
-# tbas <- tbas %>%
-#   dplyr::filter(phylum == "Ascomycota") %>%
-#   select(-match,-e.value, -percent, -coverage, -bitscore) %>% #eliminating some columns that I am not really using
-#   na.omit()%>%
-#   rename( OTU_ID = query) %>%
-#   column_to_rownames(var = "OTU_ID") %>%
-#   na.omit() %>%
-#   na.fail() %>%
+# tbas <- tbas |>
+#   dplyr::filter(phylum == "Ascomycota") |>
+#   select(-match,-e.value, -percent, -coverage, -bitscore) |> #eliminating some columns that I am not really using
+#   na.omit()|>
+#   rename( OTU_ID = query) |>
+#   column_to_rownames(var = "OTU_ID") |>
+#   na.omit() |>
+#   na.fail() |>
 #   as.matrix()
 
 # Saving
@@ -382,11 +382,11 @@ data <- read.csv("field_data/Aim3_Bolivar_Summer_2019_Leaf_Traits_datasheet.csv"
 
 # data2
 # Data set created on May 23, 2023 for analysis with raw data.
-# data2 <- data %>% 
-#   separate(Unique_ID, c("Trial_Code", "ELoad", "Species2", "Replicate")) %>%
-#   unite("Sample_name", Species2:Replicate, sep = "") %>%
-#   relocate(Sample_name, Trial_Code, E_load, .after = Species) %>%
-#   select(!c(5, 15:17, 20)) %>%
+# data2 <- data |> 
+#   separate(Unique_ID, c("Trial_Code", "ELoad", "Species2", "Replicate")) |>
+#   unite("Sample_name", Species2:Replicate, sep = "") |>
+#   relocate(Sample_name, Trial_Code, E_load, .after = Species) |>
+#   select(!c(5, 15:17, 20)) |>
 #   rename( Anthocyanins = Anthocyanins..aci., 
 #           Thickness = Thickness..micro.m.,  
 #           Toughness =Toughness..lbf., 
@@ -403,27 +403,27 @@ data2 <- readRDS(file.path(save.path, "R_objects", "leaf_data_raw_analyses.rds")
 # ndata (new_data)
 # This data set can also be used to conduct analysis with "raw" data . It is summarized by leaf.
 
-# ndata <- data %>%  
-#   group_by(Species, Unique_ID, Trial_type, E_load, Leaf_ID) %>%
+# ndata <- data |>  
+#   group_by(Species, Unique_ID, Trial_type, E_load, Leaf_ID) |>
 #   summarise(Anthocyanins..aci. = mean(Anthocyanins..aci., na.rm = TRUE), 
 #             Thickness..micro.m. = mean(Thickness..micro.m., na.rm = TRUE),
 #             Toughness..lbf. = mean(Toughness..lbf., na.rm = TRUE),
 #             LMA_dw = mean(LMA_dw, na.rm = TRUE),
 #             Abundance_Proportion_day3 = mean(Abundance_Proportion_day3, na.rm = TRUE),
-#             Abundance_Proportion_day7 = mean(Abundance_Proportion_day7, na.rm = TRUE)) %>%
-#    separate(Unique_ID, c("Trial_Code", "ELoad", "Species2", "Replicate")) %>%
-#   unite("Sample_name", Species2:Replicate, sep = "") %>%
-#   relocate(Species, Trial_Code,.after = Sample_name) %>%
+#             Abundance_Proportion_day7 = mean(Abundance_Proportion_day7, na.rm = TRUE)) |>
+#    separate(Unique_ID, c("Trial_Code", "ELoad", "Species2", "Replicate")) |>
+#   unite("Sample_name", Species2:Replicate, sep = "") |>
+#   relocate(Species, Trial_Code,.after = Sample_name) |>
 #   rename( Anthocyanins = Anthocyanins..aci., 
 #           Thickness = Thickness..micro.m.,  
 #           Toughness =Toughness..lbf., 
 #           LMA = LMA_dw, 
 #           Abun_3 = Abundance_Proportion_day3, 
-#           Abun_7 = Abundance_Proportion_day7) %>%
-#   select(!ELoad) %>%
-#   ungroup() %>%
-#    mutate_if(is.character, as.factor) %>%
-#   na.omit() %>% 
+#           Abun_7 = Abundance_Proportion_day7) |>
+#   select(!ELoad) |>
+#   ungroup() |>
+#    mutate_if(is.character, as.factor) |>
+#   na.omit() |> 
 #   na.fail()
 
 # Saving
@@ -438,10 +438,10 @@ ndata <- readRDS(file.path(save.path, "R_objects", "new_leaf_data.rds"))
 # ndata2 (new_data2)
 # Data frame is summarized by plant (n = 156)
 
-# ndata2 <- ndata %>% 
-#   select(!c(Abun_3, Abun_7)) %>%
-#   mutate_if(is.character, as.factor) %>%
-#   group_by(Sample_name, Species, Trial_type, Trial_Code, E_load) %>%
+# ndata2 <- ndata |> 
+#   select(!c(Abun_3, Abun_7)) |>
+#   mutate_if(is.character, as.factor) |>
+#   group_by(Sample_name, Species, Trial_type, Trial_Code, E_load) |>
 #   summarise(Anthocyanins = mean(Anthocyanins, na.rm = TRUE),
 #             Thickness = mean(Thickness, na.rm = TRUE),
 #             Toughness = mean(Toughness, na.rm =TRUE),
@@ -462,12 +462,12 @@ ndata2 <- readRDS(file.path(save.path, "R_objects", "new_leaf_data2.rds"))
 
 #ants <- read.csv("field_data/Aim3_Bolivar_Summer_2019_Ant_Assay_datasheet.csv")
 # 
-# ants <- ants %>%
-#   separate(Unique.ID, c("Trial_Code", "ELoad", "Species2", "Replicate")) %>%
-#   unite("Sample_name", Species2:Replicate, sep = "") %>%
-#   relocate(Species, Trial_Code,.after = Sample_name)%>%
-#   slice(-c(11,12)) %>%
-#   dplyr::filter(Trial_success!="0") %>%
+# ants <- ants |>
+#   separate(Unique.ID, c("Trial_Code", "ELoad", "Species2", "Replicate")) |>
+#   unite("Sample_name", Species2:Replicate, sep = "") |>
+#   relocate(Species, Trial_Code,.after = Sample_name)|>
+#   slice(-c(11,12)) |>
+#   dplyr::filter(Trial_success!="0") |>
 #   select(!c(Leaf_ID, 
 #             Colony_ID, 
 #             Picture_ID, 
@@ -483,8 +483,8 @@ ndata2 <- readRDS(file.path(save.path, "R_objects", "new_leaf_data2.rds"))
 #             Time_start_trial, 
 #             Time_first_contact, 
 #             Time_first_cut, 
-#             Time_end_elapsed_trial )) %>%
-#   mutate(Ant_percent_leafloss = -100*{(Leaf_area_final-Leaf_area_initial)/Leaf_area_initial}) %>%
+#             Time_end_elapsed_trial )) |>
+#   mutate(Ant_percent_leafloss = -100*{(Leaf_area_final-Leaf_area_initial)/Leaf_area_initial}) |>
 #   mutate_if(is.character, as.factor)
 
 # Saving
@@ -495,10 +495,10 @@ ants <- readRDS(file.path(save.path, "R_objects", "ants_data.rds"))
 
 
 # Just the area loss
-ants2 <- ants %>%
+ants2 <- ants |>
   select(c(1,3,4,9,10))
 
-ants3 <- ants %>%
+ants3 <- ants |>
   select(c(1,3,4,5,9,10))
 ```
 
@@ -510,20 +510,20 @@ ants3 <- ants %>%
 
 #patho <- read.csv("./field_data/Aim3_Bolivar_Summer_2019_Patho_Assay_datasheet.csv")
 # 
-#patho <- patho %>%
-  # separate(Unique.ID, c("Trial_Code", "ELoad", "Species2", "Replicate")) %>%
-  # unite("Sample_name", Species2:Replicate, sep = "") %>%
-  # relocate(Species, Trial_Code,.after = Sample_name) %>%
-  # slice(-c(41:48, 97:100)) %>%
+#patho <- patho |>
+  # separate(Unique.ID, c("Trial_Code", "ELoad", "Species2", "Replicate")) |>
+  # unite("Sample_name", Species2:Replicate, sep = "") |>
+  # relocate(Species, Trial_Code,.after = Sample_name) |>
+  # slice(-c(41:48, 97:100)) |>
   # select(!c(ELoad,
   #           Leaf_ID,
   #           Trial_start_time,
   #           Date,
   #           ImageJ_link,
   #           X,
-  #           Notes)) %>%
-  # rename(Treatment = Treatment_Ctrl_Pathogen) %>%
-  # mutate(Pathogen_percent_damage = (Damage_area/Leaf_area)*100) %>%
+  #           Notes)) |>
+  # rename(Treatment = Treatment_Ctrl_Pathogen) |>
+  # mutate(Pathogen_percent_damage = (Damage_area/Leaf_area)*100) |>
   # mutate_if(is.character, as.factor)
 
 # Saving
@@ -534,11 +534,11 @@ patho <- readRDS(file.path(save.path, "R_objects", "pathogen_data.rds"))
 
 
 #Just the area damaged
-patho2 <- patho %>%
+patho2 <- patho |>
   select(c(1,3,4,8,9,12))
 
 # 
-# patho3 <- patho %>%
+# patho3 <- patho |>
 #   select(c(1,3,4,6,7,8,9,12))
 ```
 
@@ -565,7 +565,7 @@ patho2 <- patho %>%
 
 # SAMP (sample metadata)
 
-# SAMP <- ndata2 %>%
+# SAMP <- ndata2 |>
 #   column_to_rownames(var = "Sample_name")
 # SAMP <- sample_data(SAMP)
 
@@ -669,8 +669,8 @@ newpq1 <- filter_taxa(newpq, function (x) {sum(x > 0) > 1}, prune=TRUE)
 # Richness data frame ####
 rich <- estimate_richness(newpq1, split = TRUE, measures = c("Observed","Shannon"))
 
-rich <- rich %>%
-  rownames_to_column() %>%
+rich <- rich |>
+  rownames_to_column() |>
   rename(Sample_name = rowname)
 
 # Phyloseq object to data frames ####
@@ -690,7 +690,7 @@ newpqDF <- phyloseq_to_df(newpq1, addtax = T, addtot = F, addmaxrank = F, sortin
 
 #The 569 OTUs and 156 samples (total abundances)
 newpqDF <- read.csv("clean_data/otu_data/Aim3_OTUs_assigned_nonsingletons.csv")
-newpqDF <- newpqDF %>%  # Code from the Taxonomical assginment section dopes the same. This is just calling it directly from the /csv to avoid running all the code. 
+newpqDF <- newpqDF |>  # Code from the Taxonomical assginment section dopes the same. This is just calling it directly from the /csv to avoid running all the code. 
   select(!c(1))
 
 # OTUs 959 and 156 samples (total abundances)
@@ -698,12 +698,12 @@ newpqDF <- newpqDF %>%  # Code from the Taxonomical assginment section dopes the
 # eOTU <- read.csv("clean_data/Aim3_OTU_phyloseq_trimmed.csv") 
 # Can upload as data frame. Use for distance matrices.
 # 
-# eOTU2 <- eOTU %>%
-#   rename(OTU_ID = X) %>%
-#   column_to_rownames(var = "OTU_ID") %>%
-#   t() %>%
-#   as.data.frame() %>%
-#   rownames_to_column() %>%
+# eOTU2 <- eOTU |>
+#   rename(OTU_ID = X) |>
+#   column_to_rownames(var = "OTU_ID") |>
+#   t() |>
+#   as.data.frame() |>
+#   rownames_to_column() |>
 #   rename(Sample_name = rowname)
 
 # Saving
@@ -714,13 +714,13 @@ eOTU2 <- readRDS(file.path(save.path, "R_objects", "eOTU2.rds"))
 
 
 # Just 569 OTUs and 156 samples (total abundances)
-# cOTU <- newpqDF %>%
-#   select(-kingdom, -phylum, -class, -order, -family, -genus, -species) %>%
-#   column_to_rownames(var = "OTU") %>%
-#   as.matrix() %>%
-#   t() %>%
-#   as.data.frame() %>%
-#   rownames_to_column() %>%
+# cOTU <- newpqDF |>
+#   select(-kingdom, -phylum, -class, -order, -family, -genus, -species) |>
+#   column_to_rownames(var = "OTU") |>
+#   as.matrix() |>
+#   t() |>
+#   as.data.frame() |>
+#   rownames_to_column() |>
 #   rename(Sample_name = rowname)
 
 # Saving
@@ -731,11 +731,11 @@ cOTU <- readRDS(file.path(save.path, "R_objects", "clean_OTU.rds"))
 
 # Relative Abundance matrix (trimmed to 569 OTUs)
 # rabun <- read.csv("clean_data/otu_data/Aim3_OTU_Relative_Abundance_singletons_trimmed.csv")
-# rabun <- rabun %>%
-#   rename(OTU_ID = X) %>%
-#   column_to_rownames(var = "OTU_ID") %>%
-#   na.omit() %>%
-#   na.fail() %>%
+# rabun <- rabun |>
+#   rename(OTU_ID = X) |>
+#   column_to_rownames(var = "OTU_ID") |>
+#   na.omit() |>
+#   na.fail() |>
 #   as.matrix()
 
 # Saving
@@ -746,11 +746,11 @@ rabun <- readRDS(file.path(save.path, "R_objects", "rabun_tidy.rds"))
 
 # Relative Abundance matrix (singletons untrimmed Ascomycota 959 OTUs)
 # rawra <- read.csv("clean_data/otu_data/Aim3_OTU_Relative_Abundance_singletons_untrimmed.csv")
-# rawra <- rawra %>%
-#   rename(OTU_ID = X) %>%
-#   column_to_rownames(var = "OTU_ID") %>%
-#   na.omit() %>%
-#   na.fail() %>%
+# rawra <- rawra |>
+#   rename(OTU_ID = X) |>
+#   column_to_rownames(var = "OTU_ID") |>
+#   na.omit() |>
+#   na.fail() |>
 #   as.matrix()
 
 # Saving
@@ -776,17 +776,17 @@ rawra <- readRDS(file.path(save.path, "R_objects", "rawra_tidy.rds"))
 df_list_ant <- list(ndata2, cOTU, ants2, patho2, rich)    
 
 #merge all data frames together
-master <- df_list_ant %>% 
-  reduce(left_join, by= "Sample_name", "E_load") %>%
-  mutate(Total_reads = sum(across(starts_with("OTU")))) %>%
-  group_by(Species) %>%
-  mutate(Relative_Abundance = Total_reads/sum(Total_reads)*100) %>%
-  select(c(1:9, 579:591)) %>%
+master <- df_list_ant |> 
+  reduce(left_join, by= "Sample_name", "E_load") |>
+  mutate(Total_reads = sum(across(starts_with("OTU")))) |>
+  group_by(Species) |>
+  mutate(Relative_Abundance = Total_reads/sum(Total_reads)*100) |>
+  select(c(1:9, 579:591)) |>
   select(!c(E_load,
             E_load.y,
             Trial_Code,
-            Trial_Code.y)) %>%
-  relocate(Treatment, E_load.x, .after = Trial_type) %>%
+            Trial_Code.y)) |>
+  relocate(Treatment, E_load.x, .after = Trial_type) |>
   rename(Pathogen_Damage_area = Damage_area, 
          E_load = E_load.x, 
          Trial_Code = Trial_Code.x)
@@ -799,31 +799,31 @@ master <- df_list_ant %>%
 #| warning: false
 
 # Masterant on a per plant level
-masterant <- master %>%
-  subset(Trial_type == "Ant") %>%
-  drop_na(Trial_Code) %>%
-  select(!c(4, 13:14)) %>%
+masterant <- master |>
+  subset(Trial_type == "Ant") |>
+  drop_na(Trial_Code) |>
+  select(!c(4, 13:14)) |>
   na.omit()
 
 # Masterant on a per leaf level (70 plants, 3 leaves per plant = 210 leaves measured)
 df_list_ant2 <- list(ndata, cOTU, ants2, patho2, rich)
 
-masterant2 <- df_list_ant2 %>%
-  reduce(left_join, by= "Sample_name", "E_load") %>%
- mutate(Total_reads = sum(across(starts_with("OTU")))) %>%
-  group_by(Species) %>%
-  mutate(Relative_Abundance = Total_reads/sum(Total_reads)) %>%
-  select(c(1:10, 584:594)) %>%
+masterant2 <- df_list_ant2 |>
+  reduce(left_join, by= "Sample_name", "E_load") |>
+ mutate(Total_reads = sum(across(starts_with("OTU")))) |>
+  group_by(Species) |>
+  mutate(Relative_Abundance = Total_reads/sum(Total_reads)) |>
+  select(c(1:10, 584:594)) |>
   select(!c(E_load,
-            Trial_Code)) %>%
-  relocate(Treatment, E_load.x, .after = Trial_type) %>%
+            Trial_Code)) |>
+  relocate(Treatment, E_load.x, .after = Trial_type) |>
   rename(Pathogen_Damage_area = Damage_area, 
          E_load = E_load.x, 
-         Trial_Code = Trial_Code.x) %>%
-  subset(Trial_type == "Ant") %>%
-  drop_na(Trial_Code) %>%
-  select(!c(5, 14:15)) %>%
-  na.omit() %>%
+         Trial_Code = Trial_Code.x) |>
+  subset(Trial_type == "Ant") |>
+  drop_na(Trial_Code) |>
+  select(!c(5, 14:15)) |>
+  na.omit() |>
   mutate(logit_herbivory = logit(Ant_percent_leafloss))
 ```
 
@@ -835,32 +835,32 @@ masterant2 <- df_list_ant2 %>%
 
 
 # Pathogen Observations per plant level
-masterpat <- master %>%
-  subset(Trial_type == "Pathogen") %>%
-  select(!c(11,12)) %>%
+masterpat <- master |>
+  subset(Trial_type == "Pathogen") |>
+  select(!c(11,12)) |>
   na.omit()
 
 # Pathogen Observations per leaf level (64 plants, 3 leaves per plant = 192 leaves measured)
 # masterpat2
 
-masterpat2 <- df_list_ant2 %>%
-  reduce(left_join, by= "Sample_name", "E_load") %>%
- mutate(Total_reads = sum(across(starts_with("OTU")))) %>%
-  group_by(Species) %>%
-  mutate(Relative_Abundance = Total_reads/sum(Total_reads)) %>% 
-  select(c(1:10, 584:594)) %>%
+masterpat2 <- df_list_ant2 |>
+  reduce(left_join, by= "Sample_name", "E_load") |>
+ mutate(Total_reads = sum(across(starts_with("OTU")))) |>
+  group_by(Species) |>
+  mutate(Relative_Abundance = Total_reads/sum(Total_reads)) |> 
+  select(c(1:10, 584:594)) |>
   select(!c(E_load,
-            Trial_Code)) %>%
-  relocate(Treatment, .after = Trial_type) %>%
+            Trial_Code)) |>
+  relocate(Treatment, .after = Trial_type) |>
   rename(Pathogen_Damage_area = Damage_area, 
          E_load = E_load.x, 
-         Trial_Code = Trial_Code.x) %>%
-  subset(Trial_type == "Pathogen") %>%
-  select(!c(12:13)) %>%
-  na.omit() %>%
+         Trial_Code = Trial_Code.x) |>
+  subset(Trial_type == "Pathogen") |>
+  select(!c(12:13)) |>
+  na.omit() |>
   mutate(logit_pathogenicity = logit(Pathogen_percent_damage)) 
 
-#mutate(Pathogen_percent_damage = pmin(pmax(Pathogen_percent_damage, 0), 1)) %>%  # Rescale values between 0 and 1
+#mutate(Pathogen_percent_damage = pmin(pmax(Pathogen_percent_damage, 0), 1)) |>  # Rescale values between 0 and 1
   #mutate(logit_damage = logit(Pathogen_percent_damage))
 #masterpat2$log_damage <- log(masterpat2$Pathogen_percent_damage)
 ```
@@ -948,7 +948,7 @@ fig1
 
 # PCA using covariates to explain species richness/abundance ####
 data.pca <- ndata[c(7,8,9,10)]
-data.pca <- data.pca %>%
+data.pca <- data.pca |>
   rename(ACI = Anthocyanins, LT = Thickness, LPS = Toughness) #Renaming columns for plotting purposes.
 
 ###Run this to create pca with prcomp function
@@ -1012,7 +1012,7 @@ auto <- auto +
 
 # PCA using covariates to explain species richness/abundance ####
 ant_pcadata <- masterant2[c(7,8,9,10)]
-ant_pcadata <- ant_pcadata %>%
+ant_pcadata <- ant_pcadata |>
   rename(ACI = Anthocyanins, LT = Thickness, LPS = Toughness) #Renaming columns for plotting purposes.
 
 
@@ -1061,7 +1061,7 @@ auto_ant <- auto_ant +
 #
 # PCA using covariates to explain species richness/abundance ####
 pat_pcadata <- masterpat2[c(8,9,10,11)]
-pat_pcadata <- pat_pcadata %>%
+pat_pcadata <- pat_pcadata |>
   rename(ACI = Anthocyanins, LT = Thickness, LPS = Toughness) #Renaming columns for plotting purposes.
 
 
@@ -1459,18 +1459,18 @@ rep_statement <- hux(
                                                       "Treatment = 2 (E-, E+), Replicates per species = 5, Replicates per plant = 1"))
 
 
-rep_statement %>%
-  set_all_padding(4) %>% 
-      set_outer_padding(0) %>% 
-      set_bold(row = 1, col = everywhere) %>% 
-      set_bottom_border(row = 1, col = everywhere) %>% 
-      set_width(1.1) %>%
-  theme_article() %>%
-  huxtable::as_flextable(column_to_header=TRUE) %>%
-  hline_bottom(part = "body", border = thick) %>%
-  hline_top(part = "body", border = thick) %>%
-  flextable::align(j = 1:3, align = "center", part = "all") %>%
- # flextable::width(j = 1, width = 1.5, unit = "in") %>%
+rep_statement |>
+  set_all_padding(4) |> 
+      set_outer_padding(0) |> 
+      set_bold(row = 1, col = everywhere) |> 
+      set_bottom_border(row = 1, col = everywhere) |> 
+      set_width(1.1) |>
+  theme_article() |>
+  huxtable::as_flextable(column_to_header=TRUE) |>
+  hline_bottom(part = "body", border = thick) |>
+  hline_top(part = "body", border = thick) |>
+  flextable::align(j = 1:3, align = "center", part = "all") |>
+ # flextable::width(j = 1, width = 1.5, unit = "in") |>
   flextable::font(
     i = NULL,
     j = NULL,
@@ -1494,29 +1494,29 @@ rep_statement %>%
 #| warning: false
 #| tbl-cap: "Summary statistics for the leaf functional traits"
  # Using `gtsummary` and 'flextable' packages
-summa_t2 <- tbl_summary(data2 %>%
-  group_by(Species, E_load) %>%
-  select(c(10:13)) %>%
-  rename(Treatment = E_load) %>%
+summa_t2 <- tbl_summary(data2 |>
+  group_by(Species, E_load) |>
+  select(c(10:13)) |>
+  rename(Treatment = E_load) |>
   mutate(Species = case_match(Species, "APEIME" ~ "A. membranacea", 
                             "CHRYCA" ~ "C. cainito", 
                             "CORDAL" ~ "C. alliodora",
                             "DYPTE" ~ "Dypterix .sp",
                             "HEISCO" ~ "H. concinna",
                             "LACPA" ~ "L. panamensis",
-                            "THEOCA" ~ "T. cacao")) %>%
+                            "THEOCA" ~ "T. cacao")) |>
   rename('Anthocyanins (ACI)' = Anthocyanins, 
            'Leaf Thickness (LT) (\U00B5m)'=Thickness, 
            'Leaf Punch Strength (LPS) (N mm/1)'= Toughness, 
-           'Leaf Mass per Area (LMA) (mg/mm)' = LMA) %>%
+           'Leaf Mass per Area (LMA) (mg/mm)' = LMA) |>
   mutate(Treatment= case_match(Treatment, "E-" ~ "E- (n = 570)", 
-                        "E+" ~ "E+ (n = 544)")) %>% # The sum of E- and E+ was added after iterations of tbl_summary().
+                        "E+" ~ "E+ (n = 544)")) |> # The sum of E- and E+ was added after iterations of tbl_summary().
     na.omit(),
   by = Species,
   missing = "no",
   statistic = list(
     all_continuous() ~ "{mean} \u00B1 {sd}", 
-    all_categorical() ~ "{n}")) %>%
+    all_categorical() ~ "{n}")) |>
   modify_header(label = "",
                 stat_1 = 'A. membranacea, n = 83',
                 stat_2 = 'C. alliodora, n = 100',
@@ -1533,8 +1533,8 @@ summa_t2 <- tbl_summary(data2 %>%
   #modify_caption("**Table 1: Summary statistics for the leaf functional traits**")
 
 #Turning it into a flextable object for further manipulation.
-summa_t2 <- summa_t2 %>%
-  as_flex_table() %>%
+summa_t2 <- summa_t2 |>
+  as_flex_table() |>
   # set_caption(
   #   as_paragraph(
   #     as_b(
@@ -1543,15 +1543,15 @@ summa_t2 <- summa_t2 %>%
   #              )
   #     )
   #   ),
-  # align_with_table = F) %>%
-  flextable::align(j = 1, align = "right", part = "all") %>%
-  flextable::align(j = 2:8, align = "center", part = "all") %>%
-  flextable::italic(j = c(2:8), italic = TRUE, part = "header") %>%
-  flextable::bold(i = 1, bold = TRUE, part = "header") %>%
-  flextable::italic(i = 1, italic = TRUE, part = "body") %>%
-  #padding(j = 1, padding.right= 40) %>%
-  flextable::width(j = 1, width = 1.25, unit = "in") %>%
-  flextable::width(j = 2:8, width = 0.75, unit = "in") %>%
+  # align_with_table = F) |>
+  flextable::align(j = 1, align = "right", part = "all") |>
+  flextable::align(j = 2:8, align = "center", part = "all") |>
+  flextable::italic(j = c(2:8), italic = TRUE, part = "header") |>
+  flextable::bold(i = 1, bold = TRUE, part = "header") |>
+  flextable::italic(i = 1, italic = TRUE, part = "body") |>
+  #padding(j = 1, padding.right= 40) |>
+  flextable::width(j = 1, width = 1.25, unit = "in") |>
+  flextable::width(j = 2:8, width = 0.75, unit = "in") |>
   flextable::font(
     i = NULL,
     j = NULL,
@@ -1564,8 +1564,8 @@ summa_t2 <- summa_t2 %>%
 # Adding some thicker borders to the table
 thick <- fp_border(color = "black", style = "solid", width = 2)
 
-summa_t2 <- summa_t2 %>%
-  hline_bottom(part = "body", border = thick) %>%
+summa_t2 <- summa_t2 |>
+  hline_bottom(part = "body", border = thick) |>
   hline_top(part = "body", border = thick)
 
 
@@ -1601,7 +1601,7 @@ summa_t2
 aci_comparisons <- compare_means(Anthocyanins ~ Species, data = master, method = "t.test")
 
 #Table of results
-supptable_S1<-  gt(aci_comparisons %>%
+supptable_S1<-  gt(aci_comparisons |>
                             
                       mutate(group1 = case_match(group1, "APEIME" ~ "A. membranacea", 
                             "CHRYCA" ~ "C. cainito", 
@@ -1609,39 +1609,39 @@ supptable_S1<-  gt(aci_comparisons %>%
                             "DYPTE" ~ "Dypterix .sp",
                             "HEISCO" ~ "H. concinna",
                             "LACPA" ~ "L. panamensis",
-                            "THEOCA" ~ "T. cacao")) %>%
+                            "THEOCA" ~ "T. cacao")) |>
                         mutate(group2 = case_match(group2, "APEIME" ~ "A. membranacea", 
                             "CHRYCA" ~ "C. cainito", 
                             "CORDAL" ~ "C. alliodora",
                             "DYPTE" ~ "Dypterix .sp",
                             "HEISCO" ~ "H. concinna",
                             "LACPA" ~ "L. panamensis",
-                            "THEOCA" ~ "T. cacao")) %>%
+                            "THEOCA" ~ "T. cacao")) |>
                         select(!c(1,8)), 
                       rowname_col = ".y.", 
-                      groupname_col = "group1") %>% 
+                      groupname_col = "group1") |> 
   tab_header(
     title = md("**Student's t-Tests of means anthocyanins (ACI)**"),
-    subtitle = md("Pairwise comparisons of ACI between species.")) %>%
-  tab_stubhead(label = "") %>%
+    subtitle = md("Pairwise comparisons of ACI between species.")) |>
+  tab_stubhead(label = "") |>
   cols_label(
     group2 = md("Comparison Species"),
-  ) %>%
+  ) |>
   # tab_stub_indent(
   #   rows = everything(),
   #   indent = 1
-  # ) %>%
+  # ) |>
   tab_style(
     style = list(
       cell_text(style = "italic")
       ),
     locations = cells_body(
-      columns = group2)) %>%
+      columns = group2)) |>
   tab_style(
     style = cell_text(
       weight = "bold",
       style ="italic"),
-    locations = cells_row_groups()) %>%
+    locations = cells_row_groups()) |>
   tab_style(
     style = list(
       cell_text(weight = "bold")
@@ -1650,26 +1650,26 @@ supptable_S1<-  gt(aci_comparisons %>%
       columns = p:p.signif,
       rows = p< 0.05
       )
-    ) %>%
+    ) |>
   fmt_scientific(
     columns = p:p.signif,
     decimals = 3,
-  ) %>%
+  ) |>
   tab_spanner(
     label = md("*p* - values"),
     columns = c(
       p, p.adj, p.format, p.signif
     )
-  ) %>%
+  ) |>
   tab_footnote(
     footnote = md("Significance levels are represented by *ns* (not significant) and asterisks [*p* = 0.05 (\\*), *p* = 0.01 (\\**), *p* = 0.001 (\\***), and *p* < 0.0001 (\\****)]."),
     locations = cells_column_labels(columns = p.signif)
-  ) %>%
+  ) |>
   tab_footnote(
     footnote = md("*n* = 156 individuals"),
     locations = cells_column_labels(columns = group2)
-  ) %>%
-  opt_align_table_header(align = "center") %>%
+  ) |>
+  opt_align_table_header(align = "center") |>
     opt_table_font(
     font = list(
       google_font(name = "Tex Gyre Termes"),
@@ -1698,7 +1698,7 @@ supptable_S1
 thickness_comparisons <- compare_means(Thickness ~ Species, data = master, method = "t.test")
 
 #Table of results
-supptable_S2<-  gt(thickness_comparisons %>%
+supptable_S2<-  gt(thickness_comparisons |>
                             
                       mutate(group1 = case_match(group1, "APEIME" ~ "A. membranacea", 
                             "CHRYCA" ~ "C. cainito", 
@@ -1706,35 +1706,35 @@ supptable_S2<-  gt(thickness_comparisons %>%
                             "DYPTE" ~ "Dypterix .sp",
                             "HEISCO" ~ "H. concinna",
                             "LACPA" ~ "L. panamensis",
-                            "THEOCA" ~ "T. cacao")) %>%
+                            "THEOCA" ~ "T. cacao")) |>
                         mutate(group2 = case_match(group2, "APEIME" ~ "A. membranacea", 
                             "CHRYCA" ~ "C. cainito", 
                             "CORDAL" ~ "C. alliodora",
                             "DYPTE" ~ "Dypterix .sp",
                             "HEISCO" ~ "H. concinna",
                             "LACPA" ~ "L. panamensis",
-                            "THEOCA" ~ "T. cacao")) %>%
+                            "THEOCA" ~ "T. cacao")) |>
                         select(!c(1,8)), 
                       rowname_col = ".y.", 
-                      groupname_col = "group1") %>% 
+                      groupname_col = "group1") |> 
   tab_header(
     title = md("**Student's t-Tests of means leaf thickness (LT) (\u03BCm)**"),
-    subtitle = md("Pairwise comparisons of LT between species.")) %>%
-  tab_stubhead(label = "") %>%
+    subtitle = md("Pairwise comparisons of LT between species.")) |>
+  tab_stubhead(label = "") |>
   cols_label(
     group2 = md("Comparison Species"),
-  ) %>%
+  ) |>
   tab_style(
     style = list(
       cell_text(style = "italic")
       ),
     locations = cells_body(
-      columns = group2)) %>%
+      columns = group2)) |>
   tab_style(
     style = cell_text(
       weight = "bold",
       style ="italic"),
-    locations = cells_row_groups()) %>%
+    locations = cells_row_groups()) |>
   tab_style(
     style = list(
       cell_text(weight = "bold")
@@ -1743,26 +1743,26 @@ supptable_S2<-  gt(thickness_comparisons %>%
       columns = p:p.signif,
       rows = p< 0.05
       )
-    ) %>%
+    ) |>
   fmt_scientific(
     columns = p:p.signif,
     decimals = 3,
-  ) %>%
+  ) |>
   tab_spanner(
     label = md("*p* - values"),
     columns = c(
       p, p.adj, p.format, p.signif
     )
-  ) %>%
+  ) |>
   tab_footnote(
     footnote = md("Significance levels are represented by *ns* (not significant) and asterisks [*p* = 0.05 (\\*), *p* = 0.01 (\\**), *p* = 0.001 (\\***), and *p* < 0.0001 (\\****)]."),
     locations = cells_column_labels(columns = p.signif)
-  ) %>%
+  ) |>
   tab_footnote(
     footnote = md("*n* = 156 individuals"),
     locations = cells_column_labels(columns = group2)
-  ) %>%
-  opt_align_table_header(align = "center") %>%
+  ) |>
+  opt_align_table_header(align = "center") |>
     opt_table_font(
     font = list(
       google_font(name = "Tex Gyre Termes"),
@@ -1791,7 +1791,7 @@ supptable_S2
 lps_comparisons <- compare_means(Toughness ~ Species, data = master, method = "t.test")
 
 #Table of results
-supptable_S3<-  gt(lps_comparisons %>%
+supptable_S3<-  gt(lps_comparisons |>
                             
                       mutate(group1 = case_match(group1, "APEIME" ~ "A. membranacea", 
                             "CHRYCA" ~ "C. cainito", 
@@ -1799,35 +1799,35 @@ supptable_S3<-  gt(lps_comparisons %>%
                             "DYPTE" ~ "Dypterix .sp",
                             "HEISCO" ~ "H. concinna",
                             "LACPA" ~ "L. panamensis",
-                            "THEOCA" ~ "T. cacao")) %>%
+                            "THEOCA" ~ "T. cacao")) |>
                         mutate(group2 = case_match(group2, "APEIME" ~ "A. membranacea", 
                             "CHRYCA" ~ "C. cainito", 
                             "CORDAL" ~ "C. alliodora",
                             "DYPTE" ~ "Dypterix .sp",
                             "HEISCO" ~ "H. concinna",
                             "LACPA" ~ "L. panamensis",
-                            "THEOCA" ~ "T. cacao")) %>%
+                            "THEOCA" ~ "T. cacao")) |>
                         select(!c(1,8)), 
                       rowname_col = ".y.", 
-                      groupname_col = "group1") %>% 
+                      groupname_col = "group1") |> 
   tab_header(
     title = md("**Student's t-Tests of means leaf punch strength (LPS) (N mm<sup>-1</sup>)**"),
-    subtitle = md("Pairwise comparisons of LPS between species.")) %>%
-  tab_stubhead(label = "") %>%
+    subtitle = md("Pairwise comparisons of LPS between species.")) |>
+  tab_stubhead(label = "") |>
   cols_label(
     group2 = md("Comparison Species"),
-  ) %>%
+  ) |>
   tab_style(
     style = list(
       cell_text(style = "italic")
       ),
     locations = cells_body(
-      columns = group2)) %>%
+      columns = group2)) |>
   tab_style(
     style = cell_text(
       weight = "bold",
       style ="italic"),
-    locations = cells_row_groups()) %>%
+    locations = cells_row_groups()) |>
   tab_style(
     style = list(
       cell_text(weight = "bold")
@@ -1836,26 +1836,26 @@ supptable_S3<-  gt(lps_comparisons %>%
       columns = p:p.signif,
       rows = p< 0.05
       )
-    ) %>%
+    ) |>
   fmt_scientific(
     columns = p:p.signif,
     decimals = 3,
-  ) %>%
+  ) |>
   tab_spanner(
     label = md("*p* - values"),
     columns = c(
       p, p.adj, p.format, p.signif
     )
-  ) %>%
+  ) |>
   tab_footnote(
     footnote = md("Significance levels are represented by *ns* (not significant) and asterisks [*p* = 0.05 (\\*), *p* = 0.01 (\\**), *p* = 0.001 (\\***), and *p* < 0.0001 (\\****)]."),
     locations = cells_column_labels(columns = p.signif)
-  ) %>%
+  ) |>
   tab_footnote(
     footnote = md("*n* = 156 individuals"),
     locations = cells_column_labels(columns = group2)
-  ) %>%
-  opt_align_table_header(align = "center") %>%
+  ) |>
+  opt_align_table_header(align = "center") |>
     opt_table_font(
     font = list(
       google_font(name = "Tex Gyre Termes"),
@@ -1884,7 +1884,7 @@ supptable_S3
 lma_comparisons <- compare_means(Toughness ~ Species, data = master, method = "t.test")
 
 #Table of results
-supptable_S4 <-  gt(lma_comparisons %>%
+supptable_S4 <-  gt(lma_comparisons |>
                             
                       mutate(group1 = case_match(group1, "APEIME" ~ "A. membranacea", 
                             "CHRYCA" ~ "C. cainito", 
@@ -1892,35 +1892,35 @@ supptable_S4 <-  gt(lma_comparisons %>%
                             "DYPTE" ~ "Dypterix .sp",
                             "HEISCO" ~ "H. concinna",
                             "LACPA" ~ "L. panamensis",
-                            "THEOCA" ~ "T. cacao")) %>%
+                            "THEOCA" ~ "T. cacao")) |>
                         mutate(group2 = case_match(group2, "APEIME" ~ "A. membranacea", 
                             "CHRYCA" ~ "C. cainito", 
                             "CORDAL" ~ "C. alliodora",
                             "DYPTE" ~ "Dypterix .sp",
                             "HEISCO" ~ "H. concinna",
                             "LACPA" ~ "L. panamensis",
-                            "THEOCA" ~ "T. cacao")) %>%
+                            "THEOCA" ~ "T. cacao")) |>
                         select(!c(1,8)), 
                       rowname_col = ".y.", 
-                      groupname_col = "group1") %>% 
+                      groupname_col = "group1") |> 
   tab_header(
     title = md("**Student's t-Tests of means leaf mass per area (LMA) (mg mm<sup>-2</sup>)**"),
-    subtitle = md("Pairwise comparisons of LMA between species.")) %>%
-  tab_stubhead(label = "") %>%
+    subtitle = md("Pairwise comparisons of LMA between species.")) |>
+  tab_stubhead(label = "") |>
   cols_label(
     group2 = md("Comparison Species"),
-  ) %>%
+  ) |>
   tab_style(
     style = list(
       cell_text(style = "italic")
       ),
     locations = cells_body(
-      columns = group2)) %>%
+      columns = group2)) |>
   tab_style(
     style = cell_text(
       weight = "bold",
       style ="italic"),
-    locations = cells_row_groups()) %>%
+    locations = cells_row_groups()) |>
   tab_style(
     style = list(
       cell_text(weight = "bold")
@@ -1929,26 +1929,26 @@ supptable_S4 <-  gt(lma_comparisons %>%
       columns = p:p.signif,
       rows = p< 0.05
       )
-    ) %>%
+    ) |>
   fmt_scientific(
     columns = p:p.signif,
     decimals = 3,
-  ) %>%
+  ) |>
   tab_spanner(
     label = md("*p* - values"),
     columns = c(
       p, p.adj, p.format, p.signif
     )
-  ) %>%
+  ) |>
   tab_footnote(
     footnote = md("Significance levels are represented by *ns* (not significant) and asterisks: *p* = 0.05 (\\*), *p* = 0.01 (\\**), p = 0.001 (\\***), and *p* < 0.0001 (\\****)]."),
     locations = cells_column_labels(columns = p.signif)
-  ) %>%
+  ) |>
   tab_footnote(
     footnote = md("*n* = 156 individuals"),
     locations = cells_column_labels(columns = group2)
-  ) %>%
-  opt_align_table_header(align = "center") %>%
+  ) |>
+  opt_align_table_header(align = "center") |>
     opt_table_font(
     font = list(
       google_font(name = "Tex Gyre Termes"),
@@ -1969,13 +1969,13 @@ supptable_S4
 
 #Subset data frame for indicator species analysis
 #Community Data
-cotu <- left_join(cOTU, ndata2, by = "Sample_name") %>%
+cotu <- left_join(cOTU, ndata2, by = "Sample_name") |>
   select(!c(Trial_type, 
             Trial_Code, 
             Anthocyanins, 
             Thickness,
             Toughness, 
-            LMA)) %>%
+            LMA)) |>
   relocate(Species, E_load, .after = Sample_name)
 ```
 
@@ -2003,7 +2003,7 @@ multipatt_analysis_sign <- as.data.table(multipatt_analysis$sign, keep.rownames=
 
 #Add adjusted p-value
 multipatt_analysis_sign[ , p.value.bh :=   p.adjust(p.value, method="BH")] #This can also be calculated with `dplyr` and `tidyr`
-#indval.table <- indval.sign %>%
+#indval.table <- indval.sign |>
   #mutate(p.value.bh = p.adjust(p.value, method = "BH"))
 
 #Now we can select only the indicators with adjusted significant p-values
@@ -2017,8 +2017,8 @@ colnames(multipatt_analysis_sign)[1]  <- "OTU"
 #Table with taxonomic information
 multipatt_taxonomy <- left_join(newpqDF, multipatt_analysis_sign, by= c("OTU"))
 
-multipatt_taxonomy <- multipatt_taxonomy %>%
-  filter(p.value.bh <= 0.05) %>%
+multipatt_taxonomy <- multipatt_taxonomy |>
+  filter(p.value.bh <= 0.05) |>
   select(!c(9:164)) 
 
 #write.csv(multipatt_taxonomy, "./post_stat_analyses_data/Significant_OTUs.csv")
@@ -2036,8 +2036,8 @@ supptable_S5 <- gt(multipatt_taxonomy)
 #| fig.height: 6
 #| fig.width: 6
 #| fig.cap: "Foliar endophytic fungi (FEF) colonization of seven tropical tree species in malt agar extract (MAE 2%). a) Comparison of mean percent colonization of leaves by FEFs measured 7 days after culture. Statistical significance was calculated with an Student's t-Test. Violin plots show the distribution of colonization values for all tree species within treatment groups (*E-* and *E+*). b) Comparison of mean percent colonization of leaves by FEFs measured 7 days after culture. Violin plots show the distribution of percent colonization values for each species per treatment group. Pink filled violins represent low FEF group (*E-*) and yellow filed violins represent high FEF group (*E+*). Significance levels are represented by *ns* (not significant) and asterisks [*p* = 0.05 (\\*), *p* = 0.01 (\\**), and *p* = 0.001 (\\***)]. "
-Abun7a <- ggplot(data= data2 %>%
-                      group_by(Species, Sample_name, E_load, Leaf_ID) %>%
+Abun7a <- ggplot(data= data2 |>
+                      group_by(Species, Sample_name, E_load, Leaf_ID) |>
                       summarise(Abun_7 = mean(Abun_7)),
                      aes(x = E_load, y = Abun_7)) +
   geom_violin(aes(fill = E_load)) +
@@ -2075,8 +2075,8 @@ theme_classic(base_size = 14)+
   #facet_wrap(~Species, labeller = as_labeller(newname))
  Abun7a  
  
-Abun7b <- ggplot(data= data2 %>%
-                      group_by(Species, Sample_name, E_load, Leaf_ID) %>%
+Abun7b <- ggplot(data= data2 |>
+                      group_by(Species, Sample_name, E_load, Leaf_ID) |>
                       summarise(Abun_7 = mean(Abun_7)),
                      aes(x = E_load, y = Abun_7)) +
   geom_violin(aes(fill = E_load)) +
