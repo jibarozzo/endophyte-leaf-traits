@@ -2494,7 +2494,7 @@ m3.forsel <- ordistep(m0, scope = formula(m3), Pin = 0.5, Pout = 0.1, trace = T,
 #anova(m3.forsel, by = "axis")
 #anova(m3.forsel, by="axis", perm.max=500) 
 
-## Model 3 and 5 keep species and trial type as the most significant explanatory variables. Yes, the community composition will be different across spcies but this is due to the inherent leaf traits of each species. Not "species" itself. 
+## Model 3 and 5 keep species and trial type as the most significant explanatory variables. Yes, the community composition will be different across species but this is due to the inherent leaf traits of each species. Not "species" itself. 
 ```
 
 ## dbRDA Results
@@ -2541,7 +2541,7 @@ A.4
 p_m3 <- ggplot(data = A.3, aes(x = CAP1, y = CAP2))
 p_m3
 p_m3dbrda <- p_m3 +
-  geom_point(data = A.3, aes(color = Species), size = rel(3), alpha = 0.8, stroke = 1) +
+  geom_point(data = A.3, aes(color = Species, shape = E_load), size = rel(3), alpha = 0.8, stroke = 1) +
   geom_segment(arrow_map, size = rel(.8), data = A.4, color = "black", arrow = arrowhead) +
   geom_vline(xintercept = 0, color = "grey30", linetype = "dashed") + # plot vertical line
   geom_hline(yintercept = 0, color = "grey30", linetype = "dashed") + # plot horizontal line
@@ -2551,19 +2551,29 @@ p_m3dbrda <- p_m3 +
   geom_text(label_map, size = rel(4), data = A4.sub4, fontface = "bold", show.legend = FALSE, hjust = 0.9, label = c("LPS"), nudge_y = -0.17) +
   xlab(label = paste("CAP1 (", round(B$concont$importance[2,1]*100, digits = 1), "%)", sep="")) +
   ylab(label = paste("CAP2 (", round(B$concont$importance[2,2]*100, digits = 1), "%)", sep="")) +
-  scale_color_manual(values = met.brewer(name = "Cross", n = 8, type="discrete")) +
+  scale_color_manual(labels=c("A. membranacea", 
+                              "C. cainito", 
+                              "C. alliodora", 
+                              "Dypterix sp.", 
+                              "H. concinna", 
+                              "L. panamensis", 
+                              "T. cacao"),
+                     values = met.brewer(name = "Cross", n = 8, type="discrete")) +
+  scale_shape_manual(name = "Treatment", labels = c("E-", "E+"), values = c(16, 17)) +
   stat_ellipse(aes(color=Species), geom = "path", size = 1.3, position = "identity", type = "t", linetype = 1,
                level = 0.95, segments = 51, na.rm = FALSE, show.legend = NA, inherit.aes = TRUE) +
-  labs(caption = "ACI = anthocyanins, LPS = leaf punch strength, LMA = leaf mass per area, LT = leaf thickness")+
-     theme_bw(base_size = 16)
+  #labs(caption = "ACI = anthocyanins, LPS = leaf punch strength, LMA = leaf mass per area, LT = leaf thickness")+
+  theme_classic(base_size = 12) +
+  theme(plot.title = element_text(color="black", size = 12, face="bold"),
+        legend.title = element_text(face = "bold"),
+        legend.text = element_text(color="black", size = 12, face="italic"))
 # Rearranging the order of layers so arrows are above the points.
 p_m3dbrda$layers
 p_m3dbrda$layers <- c(p_m3dbrda$layers, p_m3dbrda$layers[[2]], p_m3dbrda$layers[[5]], p_m3dbrda$layers[[6]], p_m3dbrda$layers[[7]], p_m3dbrda$layers[[8]])
 p_m3dbrda
 
-MetBrewer::colorblind_palettes
-MetBrewer::colorblind.friendly("Cross")
-#ggsave(filename="Aim3_m3dbRDA_07062022.svg", plot=p_m3dbrda, dpi=600, units=c("mm"), width=300, height=300)
+
+#ggsave(filename="./plots/Aim3_m3dbRDA_12JAN2024.svg", plot=p_m3dbrda, dpi=600, units=c("mm"), width=300, height=300)
 ```
 
 ## NMDS: Non-Metric Multidimensional Scaling
@@ -4966,12 +4976,12 @@ summary(multipatt_analysis, indvalcomp = TRUE)
 multipatt_analysis_sign <- as.data.table(multipatt_analysis$sign, keep.rownames=TRUE)
 
 #Add adjusted p-value
-multipatt_analysis_sign[ , p.value.bh :=   p.adjust(p.value, method="BH")] #This can also be calculated with `dplyr` and `tidyr`
+multipatt_analysis_sign[ , p.adj :=   p.adjust(p.value, method="BH")] #This can also be calculated with `dplyr` and `tidyr`
 #indval.table <- indval.sign |>
   #mutate(p.value.bh = p.adjust(p.value, method = "BH"))
 
 #Now we can select only the indicators with adjusted significant p-values
-multipatt_analysis_sign[p.value.bh <= 0.05,]
+multipatt_analysis_sign[p.adj <= 0.05,]
 
 #Renaming the first column
 colnames(multipatt_analysis_sign)[1]  <- "OTU" 
@@ -4989,12 +4999,100 @@ Table with taxonomic information. These are OTUs that are significantly correlat
 multipatt_taxonomy <- left_join(newpqDF, multipatt_analysis_sign, by= c("OTU"))
 
 multipatt_taxonomy <- multipatt_taxonomy |>
-  filter(p.value.bh <= 0.05) |>
+  filter(p.adj <= 0.05) |>
   select(!c(9:164)) 
 
 #write.csv(multipatt_taxonomy, "./post_stat_analyses_data/Significant_OTUs.csv")
 
-supptable_S5 <- gt(multipatt_taxonomy)
+#Let's clean up the table a bit
+#Some Stackoverflow magic
+makeStars <- function(x){
+  stars <- c("****", "***", "**", "*", "ns")
+  vec <- c(0, 0.0001, 0.001, 0.01, 0.05, 1)
+  i <- findInterval(x, vec)
+  stars[i]
+}
+
+supptable_S5 <- gt(multipatt_taxonomy |>
+  mutate(across(s.APEIME:s.THEOCA, na_if, 0), Host =
+           case_when(s.APEIME  == 1 ~ "A. membranacea",
+                     s.CHRYCA == 1 ~ "C. cainito",
+                     s.CORDAL == 1 ~ "C. alliodora",
+                     s.DYPTE == 1 ~ "Dypterix .sp",
+                     s.HEISCO ==1 ~ "H. concinna",
+                     s.LACPA == 1 ~ "L. panamensis",
+                     s.THEOCA == 1 ~ "T. cacao"),
+         p.value = makeStars(p.value)) |>
+  select(!c(s.APEIME:s.THEOCA)) |>
+  relocate(OTU, Host, .after = species) |>
+  rename_with(str_to_title, !OTU), 
+  groupname_col = "Host")|>
+  tab_options(row_group.as_column = TRUE) |>
+  tab_stubhead(label = "Host species") |>
+  tab_stub_indent(
+   rows = tidyr::starts_with("Fungi"),
+   indent = 2
+  ) |>
+  tab_spanner(
+    label = md("Multilevel pattern analysis"),
+    columns = c(
+      Index:P.adj
+    )
+  ) |>
+  cols_label(
+    P.value = md("*p*"),
+    P.adj = md("*p*<sub>adj<sub>")
+  ) |>
+  fmt_number(
+    columns = c(Stat:P.adj),
+    decimals = 3
+  ) |>
+  tab_style(
+   style = list(
+      cell_text(style = "italic")
+      ),
+    locations = cells_row_groups()
+   )|>
+  tab_style(
+    style = list(
+      cell_text(weight = "bold")
+      ),
+    locations = list(cells_column_labels(), cells_stubhead())
+    ) |>
+    text_replace(
+    locations = cells_body(columns = OTU),
+    pattern = "_",
+    replacement = " "
+  ) |>
+     text_replace(
+    locations = cells_body(columns = Species),
+    pattern = "_",
+    replacement = " "
+  ) |>
+    tab_style(
+      style =  cell_text(style = "italic"),
+    locations = cells_body(columns = Species)
+  ) |>
+  tab_header(
+    title = md("Taxonomy of significantly correlated OTUs tropical tree host species")) |>
+  tab_footnote(
+    footnote = md("Significance levels are represented by *ns* (not significant) and asterisks [*p* = 0.05 (\\*), *p* = 0.01 (\\**), *p* = 0.001 (\\***), and *p* < 0.0001 (\\****)]."),
+    locations = cells_column_labels(columns = P.value)
+  ) |>
+  tab_footnote(
+    footnote = md("Benjamini & Hochberg method adjustment for multiple comparisons"),
+    locations = cells_column_labels(columns = P.adj)
+  ) |>
+  opt_align_table_header(align = "center") |>
+    opt_table_font(
+    font = list(
+      google_font(name = "Tex Gyre Termes"),
+       "serif"
+    )
+  )
+supptable_S5 
+
+#gtsave(supptable_S5, file = "Aim3_supptable_S5_12JAN2024.docx", path = "./tables")
 ```
 
 ## Shannon's diversity index
@@ -5122,7 +5220,7 @@ Zero OTUs significantly correlated with the leaves that were damaged \<30% by pa
 herb_multipatt_sign <- as.data.table(herb_multipatt$sign, keep.rownames=TRUE)
 
 #Add adjusted p-value
-herb_multipatt_sign[ , p.value.bh :=   p.adjust(p.value, method="BH")] #This can also be calculated with `dplyr` and `tidyr`
+herb_multipatt_sign[ , p.adj :=   p.adjust(p.value, method="BH")] #This can also be calculated with `dplyr` and `tidyr`
 # It doesn't make much sense here to adjust the p-value because the groups(herb_levels) are small. 
 
 #Now can select only the indicators with significant p-values
@@ -5147,34 +5245,98 @@ herb_multipatt_taxonomy <- herb_multipatt_taxonomy |>
 # gt table
 
 #Let's clean up the table a bit
+#Some Stackoverflow magic
+makeStars <- function(x){
+  stars <- c("****", "***", "**", "*", "ns")
+  vec <- c(0, 0.0001, 0.001, 0.01, 0.05, 1)
+  i <- findInterval(x, vec)
+  stars[i]
+}
 
 supptable_S6 <- gt(herb_multipatt_taxonomy |>
   mutate(across(s.high:s.medium, na_if, 0), Herbivory =
            case_when(s.high  == 1 ~ "High",
                                 s.medium == 1 ~ "Medium",
-                                 s.low == 1 ~ "Low")) |>
+                                 s.low == 1 ~ "Low"),
+         p.value = makeStars(p.value)) |>
   select(!c(s.high:s.medium)) |>
-  relocate(OTU, Herbivory, .after = species), 
+  relocate(OTU, Herbivory, .after = species) |>
+  rename_with(str_to_title, !OTU), 
   groupname_col = "Herbivory")|>
   tab_options(row_group.as_column = TRUE) |>
-  tab_stubhead(label = "Herbivory level") |>
+  tab_stubhead(label = "Herbivory damage") |>
   tab_stub_indent(
     rows = tidyr::starts_with("Fungi"),
     indent = 2
   ) |>
+  tab_spanner(
+    label = md("Multilevel pattern analysis"),
+    columns = c(
+      Index:P.adj
+    )
+  ) |>
+  cols_label(
+    P.value = md("*p*"),
+    P.adj = md("*p*<sub>adj<sub>")
+  ) |>
+  fmt_number(
+    columns = c(Stat:P.adj),
+    decimals = 3
+  ) |>
+  tab_style(
+    style = list(
+      cell_text(weight = "bold")
+      ),
+    locations = list(cells_column_labels(), cells_stubhead())
+    ) |>
+    text_replace(
+    locations = cells_body(columns = OTU),
+    pattern = "_",
+    replacement = " "
+  ) |>
+     text_replace(
+    locations = cells_body(columns = Species),
+    pattern = "_",
+    replacement = " "
+  ) |>
+    tab_style(
+      style =  cell_text(style = "italic"),
+    locations = cells_body(columns = Species)
+  ) |>
   tab_header(
-    title = md("Taxonomy of significantly correlated OTUs with *Atta colombica* herbivory levels")) 
+    title = md("Taxonomy of significantly correlated OTUs with *Atta colombica* herbivory levels")) |>
+  tab_footnote(
+    footnote = md("High = >70% leaf area damage, Medium = 31-69% leaf area damage, Low = <30% leaf area damage"),
+    locations = cells_stubhead()
+  ) |>
+  tab_footnote(
+    footnote = md("Significance levels are represented by *ns* (not significant) and asterisks [*p* = 0.05 (\\*), *p* = 0.01 (\\**), *p* = 0.001 (\\***), and *p* < 0.0001 (\\****)]."),
+    locations = cells_column_labels(columns = P.value)
+  ) |>
+  tab_footnote(
+    footnote = md("Benjamini & Hochberg method adjustment for multiple comparisons"),
+    locations = cells_column_labels(columns = P.adj)
+  ) |>
+  opt_align_table_header(align = "center") |>
+    opt_table_font(
+    font = list(
+      google_font(name = "Tex Gyre Termes"),
+       "serif"
+    )
+  )
 supptable_S6 
+
+#gtsave(supptable_S6, file = "Aim3_supptable_S6_12JAN2024.docx", path = "./tables")
 ```
 
 #### Pathogen damage
-```{r, Type I error and data table for herbivory damage, tidy = TRUE}
+```{r, Type I error and data table for pathogen damage, tidy = TRUE}
 #Pathogen damage results
 #Extract table of stats
 patho_multipatt_sign <- as.data.table(patho_multipatt$sign, keep.rownames=TRUE)
 
 #Add adjusted p-value
-patho_multipatt_sign[ , p.value.bh :=   p.adjust(p.value, method="BH")] #This can also be calculated with `dplyr` and `tidyr`
+patho_multipatt_sign[ , p.adj :=   p.adjust(p.value, method="BH")] #This can also be calculated with `dplyr` and `tidyr`
 # It doesn't make much sense here to adjust the p-value because the groups(patho_levels) are small. 
 
 #Now can select only the indicators with significant p-values
@@ -5196,7 +5358,88 @@ patho_multipatt_taxonomy <- patho_multipatt_taxonomy |>
 #Saving table
 #write.csv(patho_multipatt_taxonomy, "./post_stat_analyses_data/high_low_pathogen_OTUs.csv")
 # gt table
-gt(patho_multipatt_taxonomy)
+#Let's clean up the table a bit
+#Some Stackoverflow magic
+makeStars <- function(x){
+  stars <- c("****", "***", "**", "*", "ns")
+  vec <- c(0, 0.0001, 0.001, 0.01, 0.05, 1)
+  i <- findInterval(x, vec)
+  stars[i]
+}
+
+supptable_S7 <- gt(patho_multipatt_taxonomy |>
+  mutate(across(s.high:s.low, na_if, 0), Pathogen =
+           case_when(s.high  == 1 ~ "High",
+                                 s.low == 1 ~ "Low"),
+         p.value = makeStars(p.value)) |>
+  select(!c(s.high:s.low)) |>
+  relocate(OTU, Pathogen, .after = species) |>
+  rename_with(str_to_title, !OTU), 
+  groupname_col = "Pathogen")|>
+  tab_options(row_group.as_column = TRUE) |>
+  tab_stubhead(label = "Pathogen damage") |>
+  tab_stub_indent(
+    rows = tidyr::starts_with("Fungi"),
+    indent = 2
+  ) |>
+  tab_spanner(
+    label = md("Multilevel pattern analysis"),
+    columns = c(
+      Index:P.adj
+    )
+  ) |>
+  cols_label(
+    P.value = md("*p*"),
+    P.adj = md("*p*<sub>adj<sub>")
+  ) |>
+  tab_style(
+    style = list(
+      cell_text(weight = "bold")
+      ),
+    locations = list(cells_column_labels(), cells_stubhead())
+    ) |>
+    text_replace(
+    locations = cells_body(columns = OTU),
+    pattern = "_",
+    replacement = " "
+  ) |>
+     text_replace(
+    locations = cells_body(columns = Species),
+    pattern = "_",
+    replacement = " "
+  ) |>
+    tab_style(
+      style =  cell_text(style = "italic"),
+    locations = cells_body(columns = Species)
+  ) |>
+    fmt_number(
+    columns = c(Stat:P.adj),
+    decimals = 3
+  ) |>
+  tab_header(
+    title = md("Taxonomy of significantly correlated OTUs with *Calonectria* sp. pathogen dasmge levels")) |>
+  tab_footnote(
+    footnote = md("High = >30% leaf area damage, Low = <29% leaf area damage"),
+    locations = cells_stubhead()
+  ) |>
+  tab_footnote(
+    footnote = md("Significance levels are represented by *ns* (not significant) and asterisks [*p* = 0.05 (\\*), *p* = 0.01 (\\**), *p* = 0.001 (\\***), and *p* < 0.0001 (\\****)]."),
+    locations = cells_column_labels(columns = P.value)
+  ) |>
+  tab_footnote(
+    footnote = md("Benjamini & Hochberg method adjustment for multiple comparisons"),
+    locations = cells_column_labels(columns = P.adj)
+  ) |>
+  opt_align_table_header(align = "center") |>
+    opt_table_font(
+    font = list(
+      google_font(name = "Tex Gyre Termes"),
+       "serif"
+    )
+  )
+supptable_S7 
+
+#gtsave(supptable_S7, file = "Aim3_supptable_S7_12JAN2024.docx", path = "./tables")
 ```
 The plants least damaged by pathogen have 92 OTUs significantly correlated with them (*p-value* \< 0.05). When adjusted for multiples comparison ("bh") the result is 20 OTUs.
 
