@@ -278,28 +278,29 @@ table_1
 
 ### Statistical Analyses
 
-We explored how leaf functional traits and FEF correlated to herbivory and pathogen damage on leaves. We present the analyses for each tree species at the leaf and at the plant level. Leaf functional traits are presented at the leaf level, while FEF data was explored and is presented at the plant level. In analyses where leaf functional traits and FEF are combined we used averages of the leaf functional traits. We compared means of leaf functional traits for each species and treatment groups using two-sided Student's t-Test and analysis of variance (ANOVA) with the `compare_means` and `stat_compare_means` functions from the `ggpubr` package in R [@kassambara2023], which wrap and extend the `anova` and `t.test` functions from the `stats` package [@rcoreteam2023].
+We explored how leaf functional traits and FEF correlated to herbivory and pathogen damage on leaves. We present the analyses for each tree species at the leaf and at the plant level. Leaf functional traits are presented at the leaf level, while FEF data was explored and is presented at the plant level. In analyses where leaf functional traits and FEF are combined we used averages of the leaf functional traits. We compared means of leaf functional traits for each species and treatment groups using paired two-sided Student's t-Test and analysis of variance (ANOVA) with the `compare_means` and `stat_compare_means` functions from the `ggpubr` package in R [@kassambara2023], which wrap and extend the `anova` and `t.test` functions from the `stats` package [@rcoreteam2023].
 
-We calculated a Bray-Curtis dissimilarity matrix with our OTU relative abundance data and computed a distance based redundancy analysis (dbRDA) by applying the `dbRDA` function in the `vegan` package to our dissimilarity matrix  [@oksanen2022]. The dbRDA is considered analogous to a permutational analysis of variance with non-Euclidean distance (PERMANOVA) [@anderson2017; @mcardle2001]. Its corresponding visualizations appropriately illustrate underlying patterns of compositional differences [@anderson2017; @legendre1999; @mcardle2001]. Applied here to visualize associations between leaf functional traits and FEF communities in host tree species and treatment groups. **MEYBE something abiour PERMDISP like PETER.**
-We arbitrarily designated percent leaf damage in herbivore assays as high (>70%), medium (31-69%) and low (<30%) and in pathogen assays as high (>30%) and low (<29%). These categories allowed us to explore the correlations between host tree species and treatment group combinations preferred by FEF OTUs. To achieve this we used the `multipatt` function from the `indicspecies` package in *R* [@decaceres2009]. We calculated the the *point biserial correlation coefficient* for each OTU at all tree species by applying the `multipatt` function with arguments `func`= "r.g" and `control` = "how(nperm=999)" to our OTU abundance matrix [@decaceres2009] (CITE MORE).
+We calculated a Bray-Curtis dissimilarity matrix with our OTU relative abundance data and computed a distance based redundancy analysis (dbRDA) by applying the `dbRDA` function in the `vegan` package to our dissimilarity matrix [@oksanen2022]. The dbRDA is considered analogous to a permutational analysis of variance with non-Euclidean distance (PERMANOVA) [@anderson2017; @mcardle2001]. Its corresponding visualizations appropriately illustrate underlying patterns of compositional differences [@anderson2017; @legendre1999; @mcardle2001]. Applied here to visualize associations between leaf functional traits and FEF communities in host tree species and treatment groups. We computed forward model selection for dbRDA analysis  With the `ordistep` function which selects terms based on *p* values [@blanchet2008; @oksanen2022]. We started with our inital model containing only the intercept (dissimilarity_matrix ~ 1) and setting the functions arguments to the following: `scope` = formula(*m*), where *m* is the defined range including leaf functional traits, tree species and treatment groups; `Pin` = 0.5, `Pout` = 0.05, `trace` = T, `permutations` = how(nperm = 999), `steps` = 50.  
+We arbitrarily designated percent leaf damage in herbivore assays as high (\>70%), medium (31-69%) and low (\<30%) and in pathogen assays as high (\>30%) and low (\<29%). These categories allowed us to explore the correlations between host tree species and treatment group combinations preferred by FEF OTUs. To achieve this we used the `multipatt` function from the `indicspecies` package in *R* [@decaceres2009]. We calculated the the *point biserial correlation coefficient* for each OTU at all tree species and treatment group combinations by applying the `multipatt` function with arguments `func`= "r.g" and `control` = how(nperm=999) to our OTU abundance matrix [@decaceres2009] (CITE MORE). We adjusted *p* values to account false discovery rates in multiple comparison by using "BH" method [@benjamini1995] in the `p.adjust` function from the `stats` package [@rcoreteam2023]. We then filtered the adjusted a *p* value with a cutoff of \<0.05. 
 
-Principal Component Analysis (PCA) was used to reduce dimensions among covariates and reveal underlying interactions that could influence FEF abundance, diversity and community composition in host tree species. The PCA was computed using the `prcomp` function in R statistical software [@rcoreteam2023]. A complete PCA was computed with variables ACI, LT, LPS, and LMA. We then proceeded to compute a PCA with the data from leaves of plants used in the herbivory (*n* = 210) and pathogen assays (*n* = 192). We then took from the herbivory and pathogen PCA the principal components that explained the most variance (PC1 and PC2) and regressed them to herbivory (%) and pathogen damage (%). We also regressed ACI, LT, LPS, LMA and Shannon's Diversity Index to logit transformed herbivory (%) and pathogen damage (%). We used the `logit` function form the `car` package for logit transformation of variables and the `lm` function from the `stat` package for simple linear regressions [@fox2019; @rcoreteam2023].
-
+Principal Component Analysis (PCA) was used to reduce dimensions among covariates and reveal underlying interactions that could influence FEF abundance, diversity and community composition in host tree species. The PCA was computed using the `prcomp` function in R statistical software [@rcoreteam2023]. A complete PCA was computed with variables ACI, LT, LPS, and LMA. We then proceeded to compute a PCA with the data from leaves of plants used in the herbivory (*n* = 210) and pathogen assays (*n* = 192). We then took from the herbivory and pathogen PCA the principal components that explained the most variance (PC1 and PC2) and regressed them to herbivory (%) and pathogen damage (%). We also regressed ACI, LT, LPS, LMA and Shannon's Diversity Index to logit transformed herbivory (%) and pathogen damage (%). We used the `logit` function from the `car` package for logit transformation of variables and the `lm` function from the `stat` package for simple linear regressions [@fox2019; @rcoreteam2023].
 
 To test for our hypothesis and predictions, we used a general linear mixed model (GLM) with herbivory and pathogen damage percentage (logit transformed) as the response variable. To determine which fixed effects to include in the models we used the `vif` function from the `car` package in *R* to calculate the variance inflation factor for all explanatory variables (ACI, LT, LPS and LMA) [@fox2019; @rcoreteam2023]. Complementary to this, we calculated Pearson's coefficient for each leaf functional traits with by creating a correlation matrix and applying the `cor` function from the `stats` package to assess correlations among traits [@rcoreteam2023] (SUPPLEMENTARY FIGURE?). We opted to maintain explanatory variables pertaining to physical barriers (LT, LPS and LMA) and exclude ACI from subsequent general linear models (GLMs) due to high collinearity with LPS (*r* = 0.54) and LMA (*r* = 0.73). Every variable kept exhibits some degree of collinearity and this is well recorded in the literature (CITE HERE).
 
-
 # Results
 
-Seedlings exposed to forest spore fall, *E+*, had a significantly higher proportion of leaf segments colonized by fungal endophytes across all species (data from cultures, Fig. S1). Using our molecular data set we saw that seedlings with *E+* treatment had a significantly higher fungal endophyte relative abundance (*p* \<0.05) for all tree species when compared to *E-* treatment with the exception of *C. cainito* and *H. concinna* (Fig. 1a). Despite these significant differences, there was a high degree of variability in endophyte relative abundance within each treatment type (Fig. 1). 
+Seedlings exposed to forest spore fall, *E+*, had a significantly higher proportion of leaf segments colonized by fungal endophytes across all species (data from cultures, Fig. S1). Using our molecular data set we saw that seedlings with *E+* treatment had a significantly higher FEF relative abundance (*p* \<0.05) for all tree species when compared to *E-* treatment with the exception of *C. cainito* and *H. concinna* (Fig. 1a). Despite these significant differences, there was a high degree of variability in endophyte relative abundance within each treatment type (Fig. 1).
 
-**Some more about endophyte community composition dbRDA ? NMDS? Table about indicator species. Start answering some of the predictions here.  This could be the GLM paragraph showing that the trials – the result was not significant. A table?.**
-The dbRDA analyses revealed that  6.34% of the variance is accounted for by the leaf functional traits, the constraining variables. 
+**Some more about endophyte community composition dbRDA ? NMDS? Table about indicator species. Start answering some of the predictions here. This could be the GLM paragraph showing that the trials – the result was not significant. A table?.** 
+
+*If FEF improves leaf defenses against plant pests, then generalist herbivores and pathogens will remove or damage less leaf tissue from plants with treated high FEF levels relative to those with low FEF loads.*
+
+*Leaf-cutter ants will remove less plant material from leaves with higher FEF abundance and richness, but this result will be modulated by leaf traits related to defenses. Leaves with longer lifespans will be less attractive to leaf-cutter ants. Alternatively, low FEF diversity in those leaves may outweigh this selection factor. Leaves treated with high FEF levels will have a smaller area of pathogen damage compared to those treated with low FEF levels. Endophyte-mediated defenses against pathogens will be most important in short-lived leaves since long-lived leaves are expected to rely more on constitutive defenses (e.g., leaf toughness).*
 
 
+The dbRDA analyses revealed that 6.34% of the variance is accounted for by the leaf functional traits, the constraining variables. The first axis (dbRDA1) explains 49% and the second axis (dbRDA2) explains 21.3% of the constrained variance (Fig. 2). We observe a high degree of overlap between the FEF communities (Fig. 2) indicating that the communities are similar in composition across host species and treatment groups (Fig. 2). We see tight clustering of FEF communities in *C. cainito* and *L. panamensis* although these are overlapped by *A. membranacea* pointing to a distinct subset composition of FEF OTUs within the latter (Fig. 2). All leaf functional traits significantly correlated with FEF community composition (Fig.2). Multilevel pattern analysis revealed the OTUs significantly correlated with host trees species (Table S5). In summary, 72 out of 569 Ascomycota OTUs are significantly correlated to our host trees species (Table S5). Seedlings used in herbivory assays had 13 OTUs significantly correlated with high herbivory damage (>70%) and 3 and 1 OTUs significantly correlated with medium (31-69%) and low (<30%) herbivory damage, respectively (Table S6). Seedlings used in pathogen damage assays had 11 OTUs significantly  correlated with high (>30%) pathogen damage (Table S7). Because the genomic data scale is at the plant level we cannot tease apart what OTUs are correlated with leaves treated with control and  *Calonectria* sp. inoculated agar plugs treatments in the pathogen assays. We found 30 OTUs significantly correlated with *E+* treatment (Table S8).
 
-We observed general differences in leaf functional traits among species (Table 2). For most leaf traits we did not find significant differences between treatments (E- and E+) when we combined all host species (Fig S2a, - S5a) but at the individual species level there were differences (Fig. S2b – S5b). 
-**IS There something we can say here that relates directly back to the hypothesis? Like, what are the short lived leaves. Did their traits differ? What are the long lived leaves, did their traits differ with endophytes?**
+We observed general differences in leaf functional traits among species (Table 2). For LT and LMA we saw statistically significant differences between *E-* and *E+* treatment groups  when we combined all host species (Fig S3a and Fig. S5a, respectively). For ACI and LPS we did not find significant differences between treatments (*E-* and *E+*) when we combined all host species (Fig. S2a and Fig.S4a respectively). HEREEEEEE  but at the individual species level there were differences (Fig. S2b – S5b). **IS There something we can say here that relates directly back to the hypothesis? Like, what are the short lived leaves.  Did their traits differ? What are the long lived leaves, did their traits differ with endophytes?**
 
 The PCA revealed how leaf traits (ACI, LT, LPS and LMA) were related. We plotted leaf trait data according to tree species groups on the PCA axes to show how the variance in the complete data set is explained by PC1 (60%) and PC2 (27%) (Fig. 2a). We observed that ACI, LPS and LMA loadings tracked along PC1 towards more negative values, showing correlation among these traits (Fig. 2a). Traits LT and LPS were orthogonal to each other in Fig. 2a, indicative of low correlation. We note distinct grouping of species along PC1 such as *C. alliodora* in the direction of positive values of PC1 and *C. cainito* towards negative values. Along PC1 we see distinct and tight clustering according to species for all except *H. concinna* and *A. membranacea* which overlap with various other species. We note that LT loading tracks towards negative values along PC2 (Fig.2a). Clear species groupings are detected, such as *Dypterix* sp. located towards positive values and *L. panamensis* towards negative values of the PC2 axis. We note a similar relationship between the leaf traits with respect to PC1 and PC2 in individual seedlings used for herbivory versus pathogen damage trials (Fig. 2b-2c). The PCA of leaf traits from seedlings used in herbivory trials has a PC1 explaining 57.5% of the variance and a PC2 explaining 28% of the variance in the subset data (Fig. 2b). We saw an inversion of the LT loading in direction of positive values, as well as the main tree species clustered (i.e. *Dypteryx* sp. and *A. membranacea*) along PC2 (Fig. 2b) with respect to Fig. 2a. The PCA of leaf traits from seedling used in pathogen damage trials has a PC1 explaining 64% of the variance and a PC2 explaining 25% of the variance in the subset data (Fig. 2c). We detected similar relationships among leaf traits and PC axes in the pathogen damage subset data (Fig. 2c) when compared to the complete data set (Fig. 2a).
 
@@ -949,8 +950,8 @@ fig1
 #
 
 ```
-## Figure 2
 
+## Figure 2
 
 ```{r, Distance Matrix}
 #| echo: false
@@ -970,13 +971,17 @@ otu_e.dist <- vegdist(t(rabun), method="bray", binary=FALSE)
 #| fig.width: 6 
 #| fig.height: 6
 
-#dbRDa with `dbrda` function. it can be calculated with `capscale` function too. VERY similar. 
-# Terms: otu_e.dist ~ Thickness + Toughness + Anthocyanins + LMA
+#dbRDa with `dbrda` function. it can be calculated with `capscale` function too. VERY similar.
+#Best model selected with `ordistep` function 
+#Terms: otu_e.dist ~ Thickness + Toughness + Anthocyanins + LMA
 m3dbRDA <- dbrda(otu_e.dist ~ Anthocyanins + Toughness + Thickness + LMA, data= ndata2, dist="bray", na.action = na.omit)
-#summary(m3dbRDA)
-#plot(m3cap)
+m3dbrda_summary <- summary(m3dbRDA)
+plot(m3dbRDA)
+#Correlation of constrained and unconstrained axes
+cor(m3dbrda_summary$constraints) |>
+  round(2)
 
-#GRAPHING dbRDA  with color by continous leaf lifespan
+#Plotting dbRDA  with color by continous leaf lifespan
 #plot using ggplot2
 names(m3dbRDA)
 B <- summary(m3dbRDA)
@@ -995,7 +1000,7 @@ arrowhead = arrow(length = unit(0.02, "npc"))
 
 #subset A4 for labeling
 A.4 <- A.4[sort(rownames(A.4)),]
-A.4
+
 A4.sub1 <- A.4[3,] #Thickness
 A4.sub2 <- A.4[1,] #Anthocyanins
 A4.sub3 <- A.4[2,] #LMA
@@ -1011,11 +1016,11 @@ p_m3dbrda <- p_m3 +
   geom_vline(xintercept = 0, color = "grey30", linetype = "dashed") + # plot vertical line
   geom_hline(yintercept = 0, color = "grey30", linetype = "dashed") + # plot horizontal line
   geom_text(label_map, size = rel(4), data = A4.sub1, fontface = "bold", show.legend = FALSE, hjust = 1, label = c("LT"), nudge_y = -0.15) +
-  geom_text(label_map, size = rel(4), data = A4.sub2, fontface = "bold", show.legend = FALSE, hjust = -0.1, label = c("ACI"), nudge_y = 0.2) +
-  geom_text(label_map, size = rel(4), data = A4.sub3, fontface = "bold", show.legend = FALSE, hjust = 0.8, label = c("LMA"), nudge_y = -0.2) +
-  geom_text(label_map, size = rel(4), data = A4.sub4, fontface = "bold", show.legend = FALSE, hjust = 0.9, label = c("LPS"), nudge_y = -0.17) +
-  xlab(label = paste("CAP1 (", round(B$concont$importance[2,1]*100, digits = 1), "%)", sep="")) +
-  ylab(label = paste("CAP2 (", round(B$concont$importance[2,2]*100, digits = 1), "%)", sep="")) +
+  geom_text(label_map, size = rel(4), data = A4.sub2, fontface = "bold", show.legend = FALSE, hjust = 0.2, label = c("ACI"), nudge_y = -0.2) +
+  geom_text(label_map, size = rel(4), data = A4.sub3, fontface = "bold", show.legend = FALSE, hjust = 1.2, label = c("LMA"), nudge_y = -0.05) +
+  geom_text(label_map, size = rel(4), data = A4.sub4, fontface = "bold", show.legend = FALSE, hjust = 1.2, label = c("LPS"), nudge_y = 0.05) +
+  xlab(label = paste("dbRDA1 (", round(B$concont$importance[2,1]*100, digits = 1), "%)", sep="")) +
+  ylab(label = paste("dbRDA2 (", round(B$concont$importance[2,2]*100, digits = 1), "%)", sep="")) +
   scale_color_manual(labels=c("A. membranacea", 
                               "C. cainito", 
                               "C. alliodora", 
@@ -1037,12 +1042,8 @@ p_m3dbrda$layers
 p_m3dbrda$layers <- c(p_m3dbrda$layers, p_m3dbrda$layers[[2]], p_m3dbrda$layers[[5]], p_m3dbrda$layers[[6]], p_m3dbrda$layers[[7]], p_m3dbrda$layers[[8]])
 p_m3dbrda
 
-
 #ggsave(filename="./plots/Aim3_Fig2_12JAN2024.png", plot=p_m3dbrda, dpi=600, units=c("mm"), width=200, height=200)
 ```
-
-
-
 
 ## Figure 3
 
@@ -1237,8 +1238,6 @@ grid_pca
 #Previously called Aim3_GridPCA_SEPT182023.png
 
 ```
-
-
 
 ## Figure 4
 
@@ -1477,7 +1476,6 @@ figure4
 #Previously named Aim3_AntPCS_SEPT252023.png
 ```
 
-
 # Tables
 
 ## Table 1
@@ -1703,21 +1701,20 @@ View(table3)
 View(M3REM)
 broom.mixed::glance(M3REM, conf.int = TRUE, effects = "fixed") 
 
-tidy_table <-
-  M3REM %>%
-  # perform initial tidying of the model
-  tidy_and_attach(exponentiate = TRUE, conf.int = TRUE) %>%
-  # adding in the reference row for categorical variables
-  tidy_add_reference_rows() %>%
-  # adding the variable labels
-  tidy_add_term_labels() %>%
-  # add header row
-  tidy_add_header_rows() %>%
-  # removing intercept estimate from model
-  tidy_remove_intercept()
+# tidy_table <-
+#   M3REM %>%
+#   # perform initial tidying of the model
+#   tidy_and_attach(exponentiate = TRUE, conf.int = TRUE) %>%
+#   # adding in the reference row for categorical variables
+#   tidy_add_reference_rows() %>%
+#   # adding the variable labels
+#   tidy_add_term_labels() %>%
+#   # add header row
+#   tidy_add_header_rows() %>%
+#   # removing intercept estimate from model
+#   tidy_remove_intercept()
 
 ```
-
 
 # Supplementary Materials
 
@@ -2130,7 +2127,8 @@ eload <- cotu$E_load
 
 multipatt_analysis <- multipatt(species_corr_matrix, species, func = "r.g", control = how(nperm=999)) #By using abundance data and not presence-absence we are calculating the "point biserial correlation coefficient"
 #multipatt_analysis
-#summary(multipatt_analysis, indvalcomp = TRUE)
+
+summary(multipatt_analysis, indvalcomp = TRUE)
 
 #round(head(multipatt_analysis$str), 7)
 ```
@@ -2462,12 +2460,12 @@ supptable_S6
 ```
 
 ## Table S7
+
 ```{r, Type I error and data table for patthogen damage}
 #| echo: false
 #| eval: true
 #| tidy: true
 #| warning: false
-#| tbl-cap: "Taxonomic information of OTUs that are significantly correlated to high and low levels leaf pathogen damage"
 #Pathogen damage results
 #Extract table of stats
 patho_multipatt_sign <- as.data.table(patho_multipatt$sign, keep.rownames=TRUE)
@@ -2488,6 +2486,7 @@ colnames(patho_multipatt_corrected)[1]  <- "OTU"
 #| eval: true
 #| tidy: true
 #| warning: false
+#| tbl-cap: "Taxonomic information of OTUs that are significantly correlated to high and low levels leaf pathogen damage"
 #Table of OTUs and respective taxonomic information that are significantly correlated to high and low leaf pathoivory damage
 patho_multipatt_taxonomy <- left_join(newpqDF, patho_multipatt_corrected, join_by(OTU))
 
@@ -2557,7 +2556,7 @@ supptable_S7 <- gt(patho_multipatt_taxonomy |>
     decimals = 3
   ) |>
   tab_header(
-    title = md("Taxonomy of significantly correlated OTUs with *Calonectria* sp. pathogen dasmge levels")) |>
+    title = md("Taxonomy of significantly correlated OTUs with *Calonectria* sp. pathogen damage levels")) |>
   tab_footnote(
     footnote = md("High = >30% leaf area damage, Low = <29% leaf area damage"),
     locations = cells_stubhead()
@@ -2582,8 +2581,151 @@ supptable_S7
 #gtsave(supptable_S7, file = "Aim3_supptable_S7_12JAN2024.docx", path = "./tables")
 ```
 
+## Table S8
 
+```{r, Eload multipatt analysis}
+#| echo: false
+#| eval: true
+#| tidy: true
+#| warning: false
+species_corr_matrix <- cotu[, 4:ncol(cotu)]
+
+eload <- cotu$E_load
+
+eload_multipatt_analysis <- multipatt(species_corr_matrix, eload, func = "r.g", control = how(nperm=999)) #By using abundance data and not presence-absence we are calculating the "point biserial correlation coefficient"
+#multipatt_analysis
+
+summary(eload_multipatt_analysis, indvalcomp = TRUE)
+
+```
+
+```{r, Correcting for Type I errror E_load grouping}
+#| echo: false
+#| eval: true
+#| tidy: true
+#| warning: false
+#Correcting for type 1 error and multiple comparisons
+#code from this post
+#https://stats.stackexchange.com/questions/370724/indiscpecies-multipatt-and-overcoming-multi-comparrisons/401277#401277
+
+#Extract table of stats
+eload_multipatt_analysis_sign <- as.data.table(multipatt_analysis$sign, keep.rownames=TRUE)
+
+#Add adjusted p-value
+eload_multipatt_analysis_sign[ , p.adj :=   p.adjust(p.value, method="BH")] #This can also be calculated with `dplyr` and `tidyr`
+#indval.table <- indval.sign |>
+  #mutate(p.value.bh = p.adjust(p.value, method = "BH"))
+
+#Now we can select only the indicators with adjusted significant p-values
+eload_multipatt_corrected <- eload_multipatt_analysis_sign[p.adj <= 0.05,]
+
+#Renaming the first column
+colnames(eload_multipatt_corrected)[1]  <- "OTU" 
+```
+
+```{r, supptable_S8}
+#| echo: false
+#| eval: true
+#| tidy: true
+#| warning: false
+#| tbl-cap: "Taxonomic information of OTUs significantly correlated with FEF inoculation levels"
+#Table of OTUs and respective taxonomic information that are significantly correlated to high and low leaf pathoivory damage
+eload_multipatt_taxonomy <- left_join(newpqDF, eload_multipatt_corrected, join_by(OTU))
+
+eload_multipatt_taxonomy <- eload_multipatt_taxonomy |>
+  filter(p.value <= 0.05) |>
+  select(!c(9:164)) 
+
+#Saving table
+#write.csv(eload_multipatt_taxonomy, "./post_stat_analyses_data/eload_levels_OTUs.csv")
+# gt table
+#Let's clean up the table a bit
+#Some Stackoverflow magic
+makeStars <- function(x){
+  stars <- c("****", "***", "**", "*", "ns")
+  vec <- c(0, 0.0001, 0.001, 0.01, 0.05, 1)
+  i <- findInterval(x, vec)
+  stars[i]
+}
+supptable_S8 <- gt(eload_multipatt_taxonomy |>
+  mutate(across(`s.E-`:`s.E+`, na_if, 0), Treatment =
+           case_when(`s.E-`  == 1 ~ "E-",
+                                 `s.E+` == 1 ~ "E+"),
+         p.value = makeStars(p.value)) |>
+  select(!c(`s.E-`:`s.E+`)) |>
+  relocate(OTU, Treatment, .after = species) |>
+  rename_with(str_to_title, !OTU), 
+  groupname_col = "Treatment")|>
+  tab_options(row_group.as_column = TRUE) |>
+  tab_stubhead(label = "Treatment level") |>
+  tab_stub_indent(
+    rows = tidyr::starts_with("Fungi"),
+    indent = 2
+  ) |>
+  tab_spanner(
+    label = md("Multilevel pattern analysis"),
+    columns = c(
+      Index:P.adj
+    )
+  ) |>
+  cols_label(
+    P.value = md("*p*"),
+    P.adj = md("*p*<sub>adj<sub>")
+  ) |>
+  tab_style(
+    style = list(
+      cell_text(weight = "bold")
+      ),
+    locations = list(cells_column_labels(), cells_stubhead())
+    ) |>
+    text_replace(
+    locations = cells_body(columns = OTU),
+    pattern = "_",
+    replacement = " "
+  ) |>
+     text_replace(
+    locations = cells_body(columns = Species),
+    pattern = "_",
+    replacement = " "
+  ) |>
+    tab_style(
+      style =  cell_text(style = "italic"),
+    locations = cells_body(columns = Species)
+  ) |>
+    fmt_number(
+    columns = c(Stat:P.adj),
+    decimals = 3
+  ) |>
+  tab_header(
+    title = md("Taxonomy of significantly correlated OTUs with FEF inoculation levels")) |>
+  # tab_footnote(
+  #   footnote = md("High = >30% leaf area damage, Low = <29% leaf area damage"),
+  #   locations = cells_stubhead()
+  # ) |>
+  tab_footnote(
+    footnote = md("Significance levels are represented by *ns* (not significant) and asterisks [*p* = 0.05 (\\*), *p* = 0.01 (\\**), *p* = 0.001 (\\***), and *p* < 0.0001 (\\****)]."),
+    locations = cells_column_labels(columns = P.value)
+  ) |>
+  tab_footnote(
+    footnote = md("Benjamini & Hochberg method adjustment for multiple comparisons"),
+    locations = cells_column_labels(columns = P.adj)
+  ) |>
+  opt_align_table_header(align = "center") |>
+    opt_table_font(
+    font = list(
+      google_font(name = "Tex Gyre Termes"),
+       "serif"
+    )
+  )
+supptable_S8 
+
+#
+#gtsave(supptable_S8, file = "Aim3_supptable_S8_14JAN2024.docx", path = "./tables")
+
+
+```
 ## Figure S1a- S1b
+
 ```{r, suppfig_1}
 #| echo: false
 #| eval: true
@@ -2627,9 +2769,11 @@ theme_classic(base_size = 14)+
         axis.text.x=element_blank()) +
   stat_compare_means(comparisons = list(c("E-", "E+")),
                      method = "t.test",
-                     label = "p.signif", bracket.size = 0.65) 
+                     paired = T,
+                     label = "p.signif", 
+                     bracket.size = 0.65) 
   #facet_wrap(~Species, labeller = as_labeller(newname))
- Abun7a  
+#Abun7a  
  
 Abun7b <- ggplot(data= data2 |>
                       group_by(Species, Sample_name, E_load, Leaf_ID) |>
@@ -2669,11 +2813,14 @@ theme_classic(base_size = 14)+
         axis.text.x=element_blank()) +
   stat_compare_means(comparisons = list(c("E-", "E+")),
                      method = "t.test",
-                     label = "p.signif", label.y = 1.03, bracket.size = 0.65) +
+                     label = "p.signif",
+                     paired = T,
+                     label.y = 1.03, 
+                     bracket.size = 0.65) +
   facet_wrap(~Species, labeller = as_labeller(newname))
 
 
-Abun7b  
+#Abun7b  
 
 # Figure S1a-S1b
 suppfig_1 <- ggarrange(Abun7a, Abun7b, nrow = 1, ncol=2, common.legend = TRUE, legend="bottom", labels = c("(a)", "(b)"))
@@ -2736,6 +2883,7 @@ ACIa <- ggplot(data = master, aes(x = E_load, y = Anthocyanins, fill = E_load)) 
     labs(x="", y=expression(paste("ACI (% ", italic("A") [lambda]," at 931 nm / % ", italic("A") [lambda]," at 530 nm)"))) +
     stat_compare_means(label = "p.signif", 
                      method = "t.test",
+                     paired = T,
                      comparisons =list(c("E-", "E+")),
                      bracket.size = 0.8)
 
@@ -2769,7 +2917,9 @@ ACIb <- ggplot(data = master, aes(x = Species, y = Anthocyanins, fill = E_load))
         legend.position="right", 
         legend.text = element_text(size = 12)) +
   labs(x="", y=expression(paste("ACI (% ", italic("A") [lambda]," at 931 nm / % ", italic("A") [lambda]," at 530 nm)"))) +
-  stat_compare_means(label = "p.signif", method = "anova")
+  stat_compare_means(label = "p.signif", 
+                     method = "anova",
+                     paired = T,)
 
 #ACIb
 
@@ -2828,6 +2978,7 @@ LTa <- ggplot(data = master, aes(x = E_load, y = Thickness, fill = E_load)) +
   labs(x="", y= expression(paste("Leaf thickness (",mu,"m)"))) +
   stat_compare_means(label = "p.signif", 
                      method = "t.test",
+                     paired = T,
                      comparisons =list(c("E-", "E+")),
                      bracket.size = 0.8)
 
@@ -2862,10 +3013,12 @@ LTb <- ggplot(data = master, aes(x = Species, y = Thickness, fill = E_load)) +
         legend.position="right", 
         legend.text = element_text(size = 12)) +
   labs(x="", y= expression(paste("Leaf thickness (",mu,"m)"))) +
-  stat_compare_means(label = "p.signif", method = "anova")
+  stat_compare_means(label = "p.signif", 
+                     method = "anova",
+                     paired = T,)
 #LTb
 
-# Figure S2a S2b
+# Figure S3a S3b
 suppfig_3 <- ggarrange(LTa, LTb, nrow = 1, 
                        ncol=2, 
                        label.x = -0.015, vjust = 1, 
@@ -2920,6 +3073,7 @@ geom_violin() +
   labs(x="", y= expression(paste("Leaf punch strength (N mm","^-1)"))) +
   stat_compare_means(label = "p.signif", 
                      method = "t.test",
+                     paired = T,
                      comparisons =list(c("E-", "E+")),
                      bracket.size = 0.8) 
 #LPSa
@@ -2953,11 +3107,13 @@ geom_violin() +
         legend.position="right", 
         legend.text = element_text(size = 12)) +
   labs(x="", y= expression(paste("Leaf punch strength (N ", mm^-1,")"))) +
-  stat_compare_means(label = "p.signif", method = "anova") +
+  stat_compare_means(label = "p.signif",
+                     method = "anova",
+                     paired = T,) +
   ylim(0.10, 1) 
 #LPSb
 
-# Figure S3a S3b
+# Figure S4a S4b
 suppfig_4 <- ggarrange(LPSa, LPSb, nrow = 1, 
                        ncol=2, 
                        label.x = -0.015, vjust = 1, 
@@ -3012,6 +3168,7 @@ LMAa <- ggplot(data = master, aes(x = E_load, y = LMA, fill = E_load)) +
   labs(x="", y= expression(paste("LMA (mg ",mm^-2, ")"))) +
   stat_compare_means(label = "p.signif", 
                      method = "t.test",
+                     paired = T,
                      comparisons =list(c("E-", "E+")),
                      bracket.size = 0.8)
 #LMAa
@@ -3044,9 +3201,11 @@ geom_violin() +
         legend.text = element_text(size = 12)) +
   labs(x="", y= expression(paste("LMA (mg ",mm^-2, ")"))) +
   #labs(caption = "*Outliers and singletons removed.") +
-  stat_compare_means(label = "p.signif", method = "anova")
+  stat_compare_means(label = "p.signif", 
+                     method = "anova",
+                     paired = T,)
 
-#LMAb
+LMAb
 
 # Figure S5a-S5b
 suppfig_5 <- ggarrange(LMAa, LMAb, nrow = 1, 
@@ -3055,13 +3214,57 @@ suppfig_5 <- ggarrange(LMAa, LMAb, nrow = 1,
                        common.legend = TRUE,
                        legend="bottom", 
                        labels = c("(a)", "(b)"))
-suppfig_4
+suppfig_5
 #ggsave(filename="./plots/Aim3_FigS5_04JAN2024.png", plot = suppfig_5, dpi=600, units=c("mm"), width = 250, height = 200, bg ="white")
 ```
 
 ## Figure S6
 
 ```{r, suppfig_6}
+herb_violin <- ggplot(data = master, aes(x = E_load, y = Ant_percent_leafloss, fill = E_load)) +
+  geom_boxplot() +
+  geom_point(position = position_jitterdodge(dodge.width = 0.9, jitter.width = 0.2),
+             alpha = 0.3, color = "grey30", size = 2) +
+  # geom_crossbar(stat="summary", 
+  #              fun = mean, 
+  #              fun.max = mean, 
+  #              fun.min = mean,
+  #              alpha = 0.3, 
+  #              size = 0.3, 
+  #              width = 0.7,
+  #              position = position_dodge(width = 0.9)) +
+  scale_fill_manual(name = "Treatment ", values= met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_x_discrete(labels=c(newname)) +
+#  scale_y_continuous(limits = c(100, 300)) +
+  theme_classic(base_size = 12) +
+  theme(
+        #panel.grid.major = element_line(colour = "grey"),
+        #panel.grid.minor = element_line(colour = "grey"),
+        #strip.background = element_rect(fill = "white"),
+        #strip.text.x = element_text(colour = "black", face = "bold"),
+        legend.title = element_text(face = "bold"),
+        panel.border = element_rect(linetype = "blank", fill = NA),
+        axis.text.x=element_blank(),
+        legend.position="right", 
+        legend.text = element_text(size = 12)) +
+  labs(x="", y= expression(paste("Herbivory (%)"))) +
+  stat_compare_means(label = "p.signif", 
+                     method = "t.test",
+                     paired = T,
+                     comparisons =list(c("E-", "E+")),
+                     bracket.size = 0.8)
+
+
+t.test(formula = Ant_percent_leafloss ~ E_load,
+  alternative = "two.sided",
+       mu = 0, 
+       paired = T,   
+       var.equal = TRUE,
+       na.rm = FALSE,
+       conf.level = 0.95, data = master)
+
+herb_violin
 
 ```
 

@@ -1831,7 +1831,7 @@ DVI
 
 The idea here is to see which leaf functional trait and community diversity traits (relative abundance, richness and diversity) impact herbivory and pathogenicity. Only using LMA, thickness and toughness, as these covariates are orthagonal to each other in PCA analysis. Reminder that de `ndata`'s experimental unit is the leaf, not the plant.
 
-## Fig. 2: Grid PCA plot
+## Fig. 3: Grid PCA plot
 ## Full PCA
 
 ```{r, Full PCA, tidy = FALSE}
@@ -2247,7 +2247,7 @@ pat_pc2 <- ggplot(pat_pcalm, aes(PC2, Pathogen_percent_damage)) +
 #ggsave(filename="./plots/Aim3_PatPC2_AUG282023.png", plot = pat_pc2, dpi=600, units=c("mm"), width = 180, height = 180, bg = "white")
 ```
 
-## Fig 3
+## Fig 4
 Ant and Pathogen PC-LMs Grid plot
 
 ```{r, Ant & Pathogen PC1-2, tidy=TRUE}
@@ -2442,74 +2442,76 @@ otu_e.dist <- vegdist(t(rabun), method="bray", binary=FALSE)
 #Bray-Curtis dissimilarity matrix
 ```
 
-## Hill numbers, INEXT and the new diversity world order
-
-```{r}
-
-
-```
-
 ## Leaf trait selection
 
 ### Choosing traits for dbRDA model
 `capscale` and `dbrda` function are very similar [see here](https://uw.pressbooks.pub/appliedmultivariatestatistics/chapter/rda-and-dbrda/#distance-based%20ReDundancy%20Analysis%20(dbRDA)). 
 ```{r}
 # Model with intercept only ####
-m0 <- capscale(otu_e.dist ~ 1, data = ndata2, na.action = na.omit) #Model with intercept only.
+m0 <- dbrda(otu_e.dist ~ 1, data = ndata2, na.action = na.omit) #Model with intercept only.
 m0
-m1 <- capscale(otu_e.dist ~ ., data = ndata2, na.action = na.omit) # Model with all explanatory variables.
+m1 <- dbrda(otu_e.dist ~ ., data = ndata2, na.action = na.omit) # Model with all explanatory variables.
 m1
 
 # Model with species, eload and leaf traits. ####
-m2 <- capscale(otu_e.dist ~ Species + E_load + Anthocyanins + Thickness + Toughness + LMA, data = ndata2, na.action = na.omit)
+m2<- dbrda(otu_e.dist ~ Species + E_load + Anthocyanins + Thickness + Toughness + LMA, data = ndata2, na.action = na.omit)
 m2
+#anova(m2, by = "margin") # test for sign. environ. variables
+#anova(m2, by = "axis")# test axes for significance
+#anova(m2, by="axis", perm.max=500)#tests for sign. variables, but adds them sequentially.
 
 # Model with just traits ####
 # No species, Trial_type and E_load
-m3 <- capscale(otu_e.dist ~ Anthocyanins + Thickness + Toughness + LMA, data = ndata2, na.action = na.omit)
+m3 <- dbrda(otu_e.dist ~ Anthocyanins + Thickness + Toughness + LMA, data = ndata2, na.action = na.omit)
 m3
-Anova(m3)
 ```
 
-### Forward and backward selection with ordistep - just leaf traits
+### Forward and backward selection with `ordistep` - just leaf traits
+ 
+ I used m2 as the "scope" because it does not contain Trial_type and Trial_Code. This is a factor that is only relevant for the details of the herbivory and pathogen assays. Differences detected between the trial types and trial_code are not important or unrealistic for the question at hand. 
 
 ```{r}
 #Both, forward and backward selection. This way I can see the step by step.
-#m3
-m2.forsel <- ordistep(m0, scope = formula(m2), Pin = 0.5, Pout =.1 ,trace = T, pstep = 1000, direction = "forward")
-#m2.forsel$anova # I used m2 as the "scope" because it does not contain Trial_type. This is a factor that is only relevant for the ant an pathogen trial. Differences detected between the trial types not important or unrealistic for the question at hand. 
+#Selection starting from m2 model
+dbrda_selection <- ordistep(m0, scope = formula(m2), Pin = 0.5, Pout =0.05 ,trace = T, permutations = how(nperm = 999), steps = 50, direction = "forward")
 
-#summary(m2.forsel)
-#m2.forsel$anova
-#anova(m2.forsel, by = "margin") # test for sign. environ. variables 
-#anova(m2.forsel, by = "axis") # test axes for significance
-#anova(m2.forsel, by="axis", perm.max=500) #tests for sign. variables, but adds them sequentially.
+summary(dbrda_selection)
+plot(dbrda_selection)
+dbrda_selection$anova
 
-#m3 taking E_load out. Again not relevant. What I want to know is the influence the leaf traits have on the fungal community. 
-m3.forsel <- ordistep(m0, scope = formula(m3), Pin = 0.5, Pout = 0.1, trace = T, pstep = 1000, direction = "forward")
-#m3.forsel$terms
-#summary(m3.forsel)
+#anova(dbrda_selection, by = "margin") # test for sign. environ. variables 
+#anova(dbrda_selection, by = "axis") # test axes for significance
+#anova(dbrda_selection, by="axis", perm.max=500) #tests for sign. variables, but adds them sequentially.
 
-#anova(m3.forsel, by = "margin") 
-#anova(m3.forsel, by = "axis")
-#anova(m3.forsel, by="axis", perm.max=500) 
+#Selection stating from m3 model
+#Taking Species and E_load out. Again not relevant. What I want to know is the influence the leaf traits have on the fungal community. 
+m3_dbrda_selection <- ordistep(m0, scope = formula(m3), Pin = 0.5, Pout =0.05 ,trace = T, permutations = how(nperm = 999), steps = 50, direction = "forward")
+summary(m3_dbrda_selection)
 
-## Model 3 and 5 keep species and trial type as the most significant explanatory variables. Yes, the community composition will be different across species but this is due to the inherent leaf traits of each species. Not "species" itself. 
+anova(m3_dbrda_selection, by = "margin") 
+anova(m3_dbrda_selection, by = "axis")
+anova(m3_dbrda_selection, by="axis", perm.max=500) 
+
+## Model 3 and 5 keep species and trial type as the most significant explanatory variables. Yes, the community composition will be different across species due to the combinantion of species traits and leaf functional trait values. 
 ```
 
-## dbRDA Results
+## Figure 2: dbRDA Results
 
 ### Plotting m3 model dbRDA
 
 ```{r, m3 dbRDA, tidy = TRUE}
  
-#dbRDa with `dbrda` function. it can be calculated with `capscale` function too. VERY similar. 
-# Terms: otu_e.dist ~ Thickness + Toughness + Anthocyanins + LMA
+#dbRDa with `dbrda` function. it can be calculated with `capscale` function too. VERY similar.
+#Best model selected with `ordistep` function 
+#Terms: otu_e.dist ~ Thickness + Toughness + Anthocyanins + LMA
 m3dbRDA <- dbrda(otu_e.dist ~ Anthocyanins + Toughness + Thickness + LMA, data= ndata2, dist="bray", na.action = na.omit)
-summary(m3dbRDA)
+m3dbrda_summary <- summary(m3dbRDA)
 plot(m3dbRDA)
+#Correlation of constrained and unconstrained axes
+cor(m3dbrda_summary$constraints) |>
+  round(2)
 
-#GRAPHING dbRDA - m4.forsel -- with color by continous leaf lifespan
+#Plotting dbRDA  with color by continous leaf lifespan
 #plot using ggplot2
 names(m3dbRDA)
 B <- summary(m3dbRDA)
@@ -2520,38 +2522,35 @@ A.3 <- cbind(A.2, ndata2)
 
 #scores for arrows
 A.4 <- data.frame(vegan::scores(m3dbRDA, display = "bp"))
-A.4
 
 # Define the arrow aesthetic mapping
-arrow_map <- aes(xend = (CAP1*2), yend = (CAP2*2), x = 0, y = 0, shape = NULL, color = NULL, fill = NULL)
-label_map <- aes(x = 2*CAP1, y = 2*CAP2, label = row.names(A.4), shape = NULL, color = NULL, fill = NULL)
+arrow_map <- aes(xend = (dbRDA1*2), yend = (dbRDA2*2), x = 0, y = 0, shape = NULL, color = NULL, fill = NULL)
+label_map <- aes(x = 2*dbRDA1, y = 2*dbRDA2, label = row.names(A.4), shape = NULL, color = NULL, fill = NULL)
 arrowhead = arrow(length = unit(0.02, "npc"))
 
 #subset A4 for labeling
 A.4 <- A.4[sort(rownames(A.4)),]
-A.4
+
 A4.sub1 <- A.4[3,] #Thickness
 A4.sub2 <- A.4[1,] #Anthocyanins
 A4.sub3 <- A.4[2,] #LMA
 A4.sub4 <- A.4[4,] #Toughness
 
-A.4
 #A4.sub4
 
 # Make plot
-p_m3 <- ggplot(data = A.3, aes(x = CAP1, y = CAP2))
-p_m3
+p_m3 <- ggplot(data = A.3, aes(x = dbRDA1, y = dbRDA2))
 p_m3dbrda <- p_m3 +
   geom_point(data = A.3, aes(color = Species, shape = E_load), size = rel(3), alpha = 0.8, stroke = 1) +
   geom_segment(arrow_map, size = rel(.8), data = A.4, color = "black", arrow = arrowhead) +
   geom_vline(xintercept = 0, color = "grey30", linetype = "dashed") + # plot vertical line
   geom_hline(yintercept = 0, color = "grey30", linetype = "dashed") + # plot horizontal line
   geom_text(label_map, size = rel(4), data = A4.sub1, fontface = "bold", show.legend = FALSE, hjust = 1, label = c("LT"), nudge_y = -0.15) +
-  geom_text(label_map, size = rel(4), data = A4.sub2, fontface = "bold", show.legend = FALSE, hjust = -0.1, label = c("ACI"), nudge_y = 0.2) +
-  geom_text(label_map, size = rel(4), data = A4.sub3, fontface = "bold", show.legend = FALSE, hjust = 0.8, label = c("LMA"), nudge_y = -0.2) +
-  geom_text(label_map, size = rel(4), data = A4.sub4, fontface = "bold", show.legend = FALSE, hjust = 0.9, label = c("LPS"), nudge_y = -0.17) +
-  xlab(label = paste("CAP1 (", round(B$concont$importance[2,1]*100, digits = 1), "%)", sep="")) +
-  ylab(label = paste("CAP2 (", round(B$concont$importance[2,2]*100, digits = 1), "%)", sep="")) +
+  geom_text(label_map, size = rel(4), data = A4.sub2, fontface = "bold", show.legend = FALSE, hjust = 0.2, label = c("ACI"), nudge_y = -0.2) +
+  geom_text(label_map, size = rel(4), data = A4.sub3, fontface = "bold", show.legend = FALSE, hjust = 1.2, label = c("LMA"), nudge_y = -0.05) +
+  geom_text(label_map, size = rel(4), data = A4.sub4, fontface = "bold", show.legend = FALSE, hjust = 1.2, label = c("LPS"), nudge_y = 0.05) +
+  xlab(label = paste("dbRDA1 (", round(B$concont$importance[2,1]*100, digits = 1), "%)", sep="")) +
+  ylab(label = paste("dbRDA2 (", round(B$concont$importance[2,2]*100, digits = 1), "%)", sep="")) +
   scale_color_manual(labels=c("A. membranacea", 
                               "C. cainito", 
                               "C. alliodora", 
@@ -2572,7 +2571,6 @@ p_m3dbrda <- p_m3 +
 p_m3dbrda$layers
 p_m3dbrda$layers <- c(p_m3dbrda$layers, p_m3dbrda$layers[[2]], p_m3dbrda$layers[[5]], p_m3dbrda$layers[[6]], p_m3dbrda$layers[[7]], p_m3dbrda$layers[[8]])
 p_m3dbrda
-
 
 #ggsave(filename="./plots/Aim3_m3dbRDA_12JAN2024.svg", plot=p_m3dbrda, dpi=600, units=c("mm"), width=300, height=300)
 ```
