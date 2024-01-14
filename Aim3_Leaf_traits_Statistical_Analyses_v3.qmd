@@ -2452,7 +2452,7 @@ otu_e.dist <- vegdist(t(rabun), method="bray", binary=FALSE)
 ## Leaf trait selection
 
 ### Choosing traits for dbRDA model
-
+`capscale` and `dbrda` function are very similar [see here](https://uw.pressbooks.pub/appliedmultivariatestatistics/chapter/rda-and-dbrda/#distance-based%20ReDundancy%20Analysis%20(dbRDA)). 
 ```{r}
 # Model with intercept only ####
 m0 <- capscale(otu_e.dist ~ 1, data = ndata2, na.action = na.omit) #Model with intercept only.
@@ -2502,9 +2502,10 @@ m3.forsel <- ordistep(m0, scope = formula(m3), Pin = 0.5, Pout = 0.1, trace = T,
 ### Plotting m3 model dbRDA
 
 ```{r, m3 dbRDA, tidy = TRUE}
-#m3.forsel 
+ 
+#dbRDa with `dbrda` function. it can be calculated with `capscale` function too. VERY similar. 
 # Terms: otu_e.dist ~ Thickness + Toughness + Anthocyanins + LMA
-m3dbRDA <- capscale(otu_e.dist ~ Anthocyanins + Toughness + Thickness + LMA, data= ndata2, dist="bray", na.action = na.omit)
+m3dbRDA <- dbrda(otu_e.dist ~ Anthocyanins + Toughness + Thickness + LMA, data= ndata2, dist="bray", na.action = na.omit)
 summary(m3dbRDA)
 plot(m3dbRDA)
 
