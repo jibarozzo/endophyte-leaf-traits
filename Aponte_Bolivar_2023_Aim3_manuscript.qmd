@@ -305,7 +305,6 @@ Simple linear regressions of herbivory (%) against PC1 and PC2 revealed a statis
 
 **TALK ABOUT SIMPLE LINEAR REGRESSIONS OF SUPPLEMENTARY FIGURES?**
 
-**`multipatt` results**
 
 # Discussion
 
@@ -967,16 +966,17 @@ otu_e.dist <- vegdist(t(rabun), method="bray", binary=FALSE)
 #| warning: false
 #| fig.width: 6 
 #| fig.height: 6
+#| fig.cap: "No caption yet"
 
 #dbRDa with `dbrda` function. it can be calculated with `capscale` function too. VERY similar.
 #Best model selected with `ordistep` function 
 #Terms: otu_e.dist ~ Thickness + Toughness + Anthocyanins + LMA
 m3dbRDA <- dbrda(otu_e.dist ~ Anthocyanins + Toughness + Thickness + LMA, data= ndata2, dist="bray", na.action = na.omit)
 m3dbrda_summary <- summary(m3dbRDA)
-plot(m3dbRDA)
+
 #Correlation of constrained and unconstrained axes
-cor(m3dbrda_summary$constraints) |>
-  round(2)
+# cor(m3dbrda_summary$constraints) |>
+#  round(2)
 
 #Plotting dbRDA  with color by continous leaf lifespan
 #plot using ggplot2
@@ -1513,7 +1513,7 @@ rep_statement <- hux(
                                                       "Treatment = 2 (E-, E+), sub-treatment = 2 (control and pathogen) for pathogen trials, Tropical tree species = 7, Replicates per species = 5, Replicates per plant = 1"))
 
 
-rep_statement |>
+rep_statement <- rep_statement |>
   set_all_padding(4) |> 
       set_outer_padding(0) |> 
       set_bold(row = 1, col = everywhere) |> 
@@ -1534,6 +1534,7 @@ rep_statement |>
     hansi.family = fontname,
     eastasia.family = fontname) 
 
+rep_statement
 #quick_docx(rep_statement, file = "./tables/replication_statement.docx")
 
 
@@ -1792,7 +1793,7 @@ supptable_S1<-  gt(aci_comparisons |>
     )
   ) |>
   tab_footnote(
-    footnote = md("Significance levels are represented by *ns* (not significant) and asterisks [*p* = 0.05 (\\*), *p* = 0.01 (\\**), *p* = 0.001 (\\***), and *p* < 0.0001 (\\****)]."),
+    footnote = md("Significance levels are represented by *ns* (not significant) and asterisks [*p* <= 0.05 (\\*), *p* <= 0.01 (\\**), *p* <= 0.001 (\\***), and *p* < 0.0001 (\\****)]."),
     locations = cells_column_labels(columns = p.signif)
   ) |>
   tab_footnote(
@@ -1885,7 +1886,7 @@ supptable_S2<-  gt(thickness_comparisons |>
     )
   ) |>
   tab_footnote(
-    footnote = md("Significance levels are represented by *ns* (not significant) and asterisks [*p* = 0.05 (\\*), *p* = 0.01 (\\**), *p* = 0.001 (\\***), and *p* < 0.0001 (\\****)]."),
+    footnote = md("Significance levels are represented by *ns* (not significant) and asterisks [*p* <= 0.05 (\\*), *p* <= 0.01 (\\**), *p* <= 0.001 (\\***), and *p* < 0.0001 (\\****)]."),
     locations = cells_column_labels(columns = p.signif)
   ) |>
   tab_footnote(
@@ -1978,7 +1979,7 @@ supptable_S3<-  gt(lps_comparisons |>
     )
   ) |>
   tab_footnote(
-    footnote = md("Significance levels are represented by *ns* (not significant) and asterisks [*p* = 0.05 (\\*), *p* = 0.01 (\\**), *p* = 0.001 (\\***), and *p* < 0.0001 (\\****)]."),
+    footnote = md("Significance levels are represented by *ns* (not significant) and asterisks [*p* <= 0.05 (\\*), *p* <= 0.01 (\\**), *p* <= 0.001 (\\***), and *p* < 0.0001 (\\****)]."),
     locations = cells_column_labels(columns = p.signif)
   ) |>
   tab_footnote(
@@ -2092,7 +2093,6 @@ supptable_S4
 ```
 
 ## Table S5
-
 ```{r, Indicator_species}
 #| echo: false
 #| eval: true
@@ -2211,7 +2211,8 @@ supptable_S5 <- gt(multipatt_taxonomy |>
   ) |>
   tab_style(
    style = list(
-      cell_text(style = "italic")
+      cell_text(weight = "bold",
+                style = "italic")
       ),
     locations = cells_row_groups()
    )|>
@@ -2238,7 +2239,7 @@ supptable_S5 <- gt(multipatt_taxonomy |>
   tab_header(
     title = md("Taxonomy of OTUs significantly correlated OTUs with tree host species")) |>
   tab_footnote(
-    footnote = md("Significance levels are represented by *ns* (not significant) and asterisks [*p* = 0.05 (\\*), *p* = 0.01 (\\**), *p* = 0.001 (\\***), and *p* < 0.0001 (\\****)]."),
+    footnote = md("Significance levels are represented by *ns* (not significant) and asterisks [*p* <= 0.05 (\\*), *p* <= 0.01 (\\**), *p* <= 0.001 (\\***), and *p* < 0.0001 (\\****)]."),
     locations = cells_column_labels(columns = P.value)
   ) |>
   tab_footnote(
@@ -2254,7 +2255,7 @@ supptable_S5 <- gt(multipatt_taxonomy |>
   )
 supptable_S5 
 
-#gtsave(supptable_S5, file = "Aim3_supptable_S5_12JAN2024.docx", path = "./tables")
+gtsave(supptable_S5, file = "Aim3_supptable_S5_12JAN2024.docx", path = "./tables")
 ```
 
 ## Table S6
@@ -2358,7 +2359,7 @@ herb_multipatt_taxonomy <- left_join(newpqDF, herb_multipatt_corrected, join_by(
 herb_multipatt_taxonomy <- herb_multipatt_taxonomy |>
   filter(p.value <= 0.05) |>
   select(!c(9:164)) |>
-  as_tibble()
+  as.tibble()
 
 #Saving table
 #write.csv(herb_multipatt_taxonomy, "./post_stat_analyses_data/high_low_herbivory_OTUs.csv")
@@ -2406,6 +2407,12 @@ supptable_S6 <- gt(herb_multipatt_taxonomy |>
     columns = c(Stat:P.adj),
     decimals = 3
   ) |>
+   tab_style(
+   style = list(
+      cell_text(weight = "bold")
+      ),
+    locations = cells_row_groups()
+   ) |>
   tab_style(
     style = list(
       cell_text(weight = "bold")
@@ -2433,7 +2440,7 @@ supptable_S6 <- gt(herb_multipatt_taxonomy |>
     locations = cells_stubhead()
   ) |>
   tab_footnote(
-    footnote = md("Significance levels are represented by *ns* (not significant) and asterisks [*p* = 0.05 (\\*), *p* = 0.01 (\\**), *p* = 0.001 (\\***), and *p* < 0.0001 (\\****)]."),
+    footnote = md("Significance levels are represented by *ns* (not significant) and asterisks [*p* <= 0.05 (\\*), *p* <= 0.01 (\\**), *p* <= 0.001 (\\***), and *p* < 0.0001 (\\****)]."),
     locations = cells_column_labels(columns = P.value)
   ) |>
   tab_footnote(
@@ -2520,6 +2527,12 @@ supptable_S7 <- gt(patho_multipatt_taxonomy |>
     P.value = md("*p*"),
     P.adj = md("*p*<sub>adj<sub>")
   ) |>
+     tab_style(
+   style = list(
+      cell_text(weight = "bold")
+      ),
+    locations = cells_row_groups()
+   ) |>
   tab_style(
     style = list(
       cell_text(weight = "bold")
@@ -2551,7 +2564,7 @@ supptable_S7 <- gt(patho_multipatt_taxonomy |>
     locations = cells_stubhead()
   ) |>
   tab_footnote(
-    footnote = md("Significance levels are represented by *ns* (not significant) and asterisks [*p* = 0.05 (\\*), *p* = 0.01 (\\**), *p* = 0.001 (\\***), and *p* < 0.0001 (\\****)]."),
+    footnote = md("Significance levels are represented by *ns* (not significant) and asterisks [*p* <= 0.05 (\\*), *p* <= 0.01 (\\**), *p* <= 0.001 (\\***), and *p* < 0.0001 (\\****)]."),
     locations = cells_column_labels(columns = P.value)
   ) |>
   tab_footnote(
@@ -2658,6 +2671,12 @@ supptable_S8 <- gt(eload_multipatt_taxonomy |>
     style = list(
       cell_text(weight = "bold")
       ),
+    locations = cells_row_groups()
+    ) |>
+  tab_style(
+    style = list(
+      cell_text(weight = "bold")
+      ),
     locations = list(cells_column_labels(), cells_stubhead())
     ) |>
     text_replace(
@@ -2681,7 +2700,7 @@ supptable_S8 <- gt(eload_multipatt_taxonomy |>
   tab_header(
     title = md("Taxonomy of significantly correlated OTUs with FEF inoculation levels")) |>
   tab_footnote(
-    footnote = md("Significance levels are represented by *ns* (not significant) and asterisks [*p* = 0.05 (\\*), *p* = 0.01 (\\**), *p* = 0.001 (\\***), and *p* < 0.0001 (\\****)]."),
+    footnote = md("Significance levels are represented by *ns* (not significant) and asterisks [*p* <= 0.05 (\\*), *p* <= 0.01 (\\**), *p* <= 0.001 (\\***), and *p* < 0.0001 (\\****)]."),
     locations = cells_column_labels(columns = P.value)
   ) |>
   tab_footnote(
@@ -2710,7 +2729,7 @@ supptable_S8
 #| warning: false
 #| fig.height: 6
 #| fig.width: 6
-#| fig.cap: "Foliar endophytic fungi (FEF) colonization of seven tropical tree species in malt extract agar (MEA 2%). a) Comparison of mean percent colonization of leaves by FEF measured 7 days after placing leaf pieces on plates. Statistical significance was calculated with a Student's t-Test. Violin plots show the distribution of colonization values for all tree species within treatment groups (*E-* and *E+*). b) Comparison of mean percent colonization of leaves by FEF measured 7 days after culture. Violin plots show the distribution of percent colonization values for each species per treatment group. Pink filled violins represent low FEF group (*E-*) and yellow filed violins represent high FEF group (*E+*). Significance levels are represented by *ns* (not significant) and asterisks [*p* = 0.05 (\\*), *p* = 0.01 (\\**), and *p* = 0.001 (\\***)]. "
+#| fig.cap: "Foliar endophytic fungi (FEF) colonization of seven tropical tree species in malt extract agar (MEA 2%). a) Comparison of mean percent colonization of leaves by FEF measured 7 days after placing leaf pieces on plates. Statistical significance was calculated with a Student's t-Test. Violin plots show the distribution of colonization values for all tree species within treatment groups (*E-* and *E+*). b) Comparison of mean percent colonization of leaves by FEF measured 7 days after culture. Violin plots show the distribution of percent colonization values for each species per treatment group. Pink filled violins represent low FEF group (*E-*) and yellow filled violins represent high FEF group (*E+*).Significance levels are represented by *ns* (not significant) and asterisks [*p* <= 0.05 (\\*), *p* <= 0.01 (\\**), *p* <= 0.001 (\\***), and *p* < 0.0001 (\\****)]. "
 Abun7a <- ggplot(data= data2 |>
                       group_by(Species, Sample_name, E_load, Leaf_ID) |>
                       summarise(Abun_7 = mean(Abun_7)),
@@ -2817,7 +2836,7 @@ suppfig_1
 #| warning: false
 #| fig.height: 6
 #| fig.width: 6
-#| fig.cap: "Distributions of values and means of anthocyanin content (ACI) in treatment groups (*E-* and *E+*) and tree species. a) Comparison of ACI means between treatment groups across individuals of all species. Statistical significance was calculated using a two-sided Student's t-Test. b) Comparison of ACI means between treatment types of each species. Statistical significance was calculated with an analysis of variance (ANOVA). Pink filled violins represent low FEF group (*E-*) and yellow filed violins represent high FEF group (*E+*). Significance levels are represented by *ns* (not significant) and asterisks [*p* = 0.05 (\\*), *p* = 0.01 (\\**), and *p* = 0.001 (\\***)]."
+#| fig.cap: "Distributions of values and means of anthocyanin content (ACI) in treatment groups (*E-* and *E+*) and tree species. a) Comparison of ACI means between treatment groups across individuals of all species. Statistical significance was calculated using a two-sided Student's t-Test. b) Comparison of ACI means between treatment types of each species. Statistical significance was calculated with an analysis of variance (ANOVA). Pink filled violins represent low FEF group (*E-*) and yellow filed violins represent high FEF group (*E+*).Significance levels are represented by *ns* (not significant) and asterisks [*p* <= 0.05 (\\*), *p* <= 0.01 (\\**), *p* <= 0.001 (\\***), and *p* < 0.0001 (\\****)]."
 
 
 # Comparisons
@@ -2922,7 +2941,7 @@ suppfig_2
 #| warning: false
 #| fig.height: 6
 #| fig.width: 6
-#| fig.cap: "Distributions of values and means of leaf thickness (LT) (\u03Bcg) in treatment groups (*E-* and *E+*) and tree species. a) Comparison of LT means between treatment groups across individuals of all species. Statistical significance was calculated using a two-sided Student's t-Test. b) Comparison of LT means between treatment types of each species. Statistical significance was calculated with an analysis of variance (ANOVA). Pink filled violins represent low FEF group (*E-*) and yellow filed violins represent high FEF group (*E+*). Significance levels are represented by *ns* (not significant) and asterisks [*p* = 0.05 (\\*), *p* = 0.01 (\\**), and *p* = 0.001 (\\***)]."
+#| fig.cap: "Distributions of values and means of leaf thickness (LT) (\u03Bcg) in treatment groups (*E-* and *E+*) and tree species. a) Comparison of LT means between treatment groups across individuals of all species. Statistical significance was calculated using a two-sided Student's t-Test. b) Comparison of LT means between treatment types of each species. Statistical significance was calculated with an analysis of variance (ANOVA). Pink filled violins represent low FEF group (*E-*) and yellow filed violins represent high FEF group (*E+*). Significance levels are represented by *ns* (not significant) and asterisks [*p* <= 0.05 (\\*), *p* <= 0.01 (\\**), *p* <= 0.001 (\\***), and *p* < 0.0001 (\\****)]."
 #| 
 # Leaf thickness by endophyte load and species
 
@@ -3018,7 +3037,7 @@ suppfig_3
 #| warning: false
 #| fig.height: 6
 #| fig.width: 6
-#| fig.cap: "Distributions of values and means of leaf punch stength (LPS) (N mm^-1) in treatment groups (*E-* and *E+*) and tree species. a) Comparison of LPS means between treatment groups across individuals of all species. Statistical significance was calculated using a two-sided Student's t-Test. b) Comparison of LPS means between treatment types of each species. Statistical significance was calculated with an analysis of variance (ANOVA). Pink filled violins represent low FEF group (*E-*) and yellow filed violins represent high FEF group (*E+*). Significance levels are represented by *ns* (not significant) and asterisks [*p* = 0.05 (\\*), *p* = 0.01 (\\**), and *p* = 0.001 (\\***)]."
+#| fig.cap: "Distributions of values and means of leaf punch stength (LPS) (N mm^-1) in treatment groups (*E-* and *E+*) and tree species. a) Comparison of LPS means between treatment groups across individuals of all species. Statistical significance was calculated using a two-sided Student's t-Test. b) Comparison of LPS means between treatment types of each species. Statistical significance was calculated with an analysis of variance (ANOVA). Pink filled violins represent low FEF group (*E-*) and yellow filed violins represent high FEF group (*E+*). Significance levels are represented by *ns* (not significant) and asterisks [*p* <= 0.05 (\\*), *p* <= 0.01 (\\**), *p* <= 0.001 (\\***), and *p* < 0.0001 (\\****)]."
 #| 
 # Figure S3
 # Leaf toughness (lbf) by  endophyte load and species with data (data) ####
