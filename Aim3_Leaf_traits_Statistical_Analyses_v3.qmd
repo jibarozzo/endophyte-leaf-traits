@@ -1505,6 +1505,7 @@ ACIa <- ggplot(data = master, aes(x = E_load, y = Anthocyanins, fill = E_load)) 
   #annotate("text", x = 2.5, y = .65, label = "") +
   stat_compare_means(label = "p.signif", 
                      method = "t.test",
+                     paired = T,
                      comparisons =list(c("E-", "E+")),
                      bracket.size = 0.8)
 
@@ -1543,7 +1544,9 @@ ACIb <- ggplot(data = master, aes(x = Species, y = Anthocyanins, fill = E_load))
         #legend.text = element_text(size = 14)) +
   #labs(caption = "*Outliers and singletons removed.") +
   #annotate("text", x = 2.5, y = .65, label = "") +
-  stat_compare_means(label = "p.signif", method = "anova")
+  stat_compare_means(label = "p.signif", 
+                     method = "anova", 
+                     paired = T)
 
 ACIb
 
@@ -1589,6 +1592,7 @@ LTa <- ggplot(data = master, aes(x = E_load, y = Thickness, fill = E_load)) +
   #annotate("text", x = 2.5, y = .65, label = "") +
   stat_compare_means(label = "p.signif", 
                      method = "t.test",
+                     paired = T,
                      comparisons =list(c("E-", "E+")),
                      bracket.size = 0.8)
 
@@ -1627,7 +1631,9 @@ LTb <- ggplot(data = master, aes(x = Species, y = Thickness, fill = E_load)) +
         #legend.text = element_text(size = 14)) +
   #labs(caption = "*Outliers and singletons removed.") +
   #annotate("text", x = 2.5, y = .65, label = "") +
-  stat_compare_means(label = "p.signif", method = "anova")
+  stat_compare_means(label = "p.signif", 
+                     method = "anova",
+                     paired = T)
 LTb
 
 # Figure S2a S2b
@@ -1677,6 +1683,7 @@ geom_violin() +
   #labs(caption = "*Outliers and singletons removed.") +
   stat_compare_means(label = "p.signif", 
                      method = "t.test",
+                     paired = T,
                      comparisons =list(c("E-", "E+")),
                      bracket.size = 0.8) 
 #LPSa
@@ -1710,7 +1717,9 @@ geom_violin() +
         legend.text = element_text(size = 14)) +
   labs(x="", y= expression(paste("Leaf punch strength(N mm","^-1)"))) +
   #labs(caption = "*Outliers and singletons removed.") +
-  stat_compare_means(label = "p.signif", method = "anova") +
+  stat_compare_means(label = "p.signif",
+                     method = "anova",
+                     paired = T) +
   ylim(0.10, 1) 
 #LPSb
 
@@ -1753,6 +1762,7 @@ LMAa <- ggplot(data = master, aes(x = E_load, y = LMA, fill = E_load)) +
   labs(x="", y= expression(paste("LMA (mg ",mm^-2, ")"))) +
   stat_compare_means(label = "p.signif", 
                      method = "t.test",
+                     paired = T,
                      comparisons =list(c("E-", "E+")),
                      bracket.size = 0.8)
 LMAa
@@ -1785,7 +1795,9 @@ geom_violin() +
         legend.text = element_text(size = 14)) +
   labs(x="", y= expression(paste("LMA (mg ",mm^-2, ")"))) +
   #labs(caption = "*Outliers and singletons removed.") +
-  stat_compare_means(label = "p.signif", method = "anova")
+  stat_compare_means(label = "p.signif", 
+                     method = "anova",
+                     paired = T)
 
 LMAb
 
@@ -2456,6 +2468,8 @@ m1
 # Model with species, eload and leaf traits. ####
 m2<- dbrda(otu_e.dist ~ Species + E_load + Anthocyanins + Thickness + Toughness + LMA, data = ndata2, na.action = na.omit)
 m2
+
+#Assessing marginal significance of constraining variables 
 #anova(m2, by = "margin") # test for sign. environ. variables
 #anova(m2, by = "axis")# test axes for significance
 #anova(m2, by="axis", perm.max=500)#tests for sign. variables, but adds them sequentially.
@@ -2463,7 +2477,11 @@ m2
 # Model with just traits ####
 # No species, Trial_type and E_load
 m3 <- dbrda(otu_e.dist ~ Anthocyanins + Thickness + Toughness + LMA, data = ndata2, na.action = na.omit)
-m3
+
+#Assessing marginal significance of constraining variables 
+anova(m3, by = "margin")
+anova(m3, by = "axis")
+anova(m3, by="axis", perm.max=500) 
 ```
 
 ### Forward and backward selection with `ordistep` - just leaf traits
@@ -2479,6 +2497,7 @@ summary(dbrda_selection)
 plot(dbrda_selection)
 dbrda_selection$anova
 
+#Assessing marginal significance of constraining variables 
 #anova(dbrda_selection, by = "margin") # test for sign. environ. variables 
 #anova(dbrda_selection, by = "axis") # test axes for significance
 #anova(dbrda_selection, by="axis", perm.max=500) #tests for sign. variables, but adds them sequentially.
@@ -2488,7 +2507,8 @@ dbrda_selection$anova
 m3_dbrda_selection <- ordistep(m0, scope = formula(m3), Pin = 0.5, Pout =0.05 ,trace = T, permutations = how(nperm = 999), steps = 50, direction = "forward")
 summary(m3_dbrda_selection)
 
-anova(m3_dbrda_selection, by = "margin") 
+#Assessing marginal significance of constraining variables 
+anova(m3_dbrda_selection, by = "margin")
 anova(m3_dbrda_selection, by = "axis")
 anova(m3_dbrda_selection, by="axis", perm.max=500) 
 
