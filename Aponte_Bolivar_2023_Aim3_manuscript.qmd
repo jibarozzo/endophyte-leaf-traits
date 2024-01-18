@@ -1,5 +1,5 @@
 ---
-title: "[Working title]: Evaluating the Role of Endophyte-Rich Leaves in Protecting Tropical Trees Against Generalist Herbivores and Pathogens"
+title: "[Working title]: Evaluating the Role of Endophyte-Rich Leaves in Protecting Tropical Trees Against a Generalist Herbivore and a Pathogen"
 date: today
 bibliography: VBL_library.bib
 csl: functional-ecology.csl
@@ -188,9 +188,13 @@ Leaf-cutter ants will remove less plant material from leaves with higher FEF abu
 
 # Materials and Methods
 
-## Field
+## Seed collection and sterilization
 
-Growth and host plant inoculation seven tropical tree species was conducted at the greenhouses in the Gamboa Research Station, Smithsonian Tropical Research institute, Republic of Panama. The species, *Theobroma cacao*, *Dypterix* sp., *Lacmellea panamensis*, *Apeiba membranacea*, *Heisteria concinna*, *Chrysophyllum caimito*, and *Cordia alliodora* were chosen due to their variance in leaf traits (J.Wright unpublished data) and the availability of seeds in January- April 2019. Seeds of tree species were collected from the forest floor and grown in the greenhouse. Seedlings were kept in a chamber made out of PVC and clear plastic to prevent inoculation from spore fall inside the greenhouse. NEEDS INFORMATION ON THE SOIL MIXTURE AND AUTOCLAVING PROTOCOL. Seedlings reached a minimum of 4 true leaves before endophyte inoculation. Then 10 individual plants of each species were exposed to 10 nights of spore fall to achieve a high endophyte load (E+) and 10 homologous plants were kept inside the greenhouse plastic chamber to maintain a low endophyte load (*E-*) (Fig. ? MAKE A DIRAGRAM?). Plants exposed to spore fall were placed near (\~10 m) the forest edge at dusk (\~18:OO hours) and returned to the greenhouse at dawn (\~07:00 hours) [@bittleston2011].
+INFORMATION ABOUT SEED SETreECTION AND STERILIZATION
+The species, *Theobroma cacao*, *Dypterix* sp., *Lacmellea panamensis*, *Apeiba membranacea*, *Heisteria concinna*, *Chrysophyllum caimito*, and *Cordia alliodora* were chosen due to their variance in leaf traits (J.Wright *unpublished data*) and the availability of seeds in January- April 2019. Seeds were collected from the forest floor and grown in the greenhouse. Germination ocurred in sterilized trays containing a 3:1 mix of soil and river sand that was autoclaved for two one-hour cycles at 121°C prior to planting. Individual seedlings were transferred from germination trays to a 24 cell tray (each cell ~380 mL) containing the same autoclaved soil and sand mixture. We took precaution to extract complete root systems from the seedling trays. *We kept 24-cell trays separate by treatment group * Seedlings were kept in a chamber made out of PVC and clear plastic to prevent inoculation from spore fall inside the greenhouse. NEEDS INFORMATION ON THE SOIL MIXTURE AND AUTOCLAVING PROTOCOL.
+
+
+Growth and host plant inoculation seven tropical tree species was conducted at the greenhouses in the Gamboa Research Station, Smithsonian Tropical Research institute, Republic of Panama.  Seedlings reached a minimum of 4 true leaves before endophyte inoculation. Then 10 individual plants of each species were exposed to 10 nights of spore fall to achieve a high endophyte load (E+) and 10 homologous plants were kept inside the greenhouse plastic chamber to maintain a low endophyte load (*E-*) (Fig. ? MAKE A DIRAGRAM?). Plants exposed to spore fall were placed near (\~10 m) the forest edge at dusk (\~18:OO hours) and returned to the greenhouse at dawn (\~07:00 hours) [@bittleston2011].
 
 ### Leaf trait measurements
 
