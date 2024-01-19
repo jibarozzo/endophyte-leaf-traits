@@ -178,23 +178,39 @@ Atta colombica, Calonectria, foliar fungal endophytes, herbivory, pathogen, symb
 
 # Introduction
 
+Vascular plants have encountered multiple biotic and abiotic selective pressures throughout their evolutionary history (CITE). As plants expanded inland they encountered new climates, substrates, and stressors. Plants have developed  and been successful with an array of strategies to combat enemies, especially those that damage their leaf tissue, from alkaloids and secondary metabolites (e.g. jasmonic acid) to structures that deter potential pests (e.g., thorns/modified leaves). Specific leaf functional traits such as shape, leaf thickness, leaf toughness, leaf mass per area (LMA), and anthocyanins are a plant’s first line of defense against herbivores and pathogens, key selective evolutionary pressures (CITE).
+
+Leaf functional traits are expressed differentially across species and are influenced by their life history and the environment they occupy. The optimal defense theory (ODT) is useful to understand plants’ allocation of resources to leaf traits, more specifically to leaf defenses. Three main predictions stem from ODT [@stamp2003]. First, a plant’s investment in defenses is positively related to attack rate (e.g., herbivory rate or pathogen intensity) and inversely related to resource allocation or ecological costs (Holeski, Chase-Alone, & Kelly, 2010). Second, where the cost of defense is low, plants will allocate resources differentially to specific parts and tissues, resulting in greater investment in tissues with high fitness value (e.g., investment flower/seed production). Third, in response to attacks (stimuli), plants will increase their defenses (an induced plastic response). Broadly, ODT predicts that a plant’s capacity to increase induced defenses after an attack is negatively correlated to its constitutive defenses (e.g., leaf functional traits) [@holeski2010]. Leaf defenses fall within an economic spectrum of functional traits that, on one end has leaves with high nutrient content (e.g., nitrogen), low leaf mass per area (LMA), thin leaves blades and thin celled walls are associated with shorter leaf lifespans on the other end, leaves with low nutrient content, high LMA, thick leaf blades and cell walls associated with longer lifespans (e.g., non-N-fixing species) [@mason2015; @wright2004]. The investment in baseline constitutive defenses results in leaves with longer lifespans [@kitajima2012; kitajima2013]. Plants that invest little in leaf nutrient content and have low LMA are potentially more capable of having greater induced defense levels [@kitajima2013; @poorter2006; @wright2004]. Leaf functional traits, whether constitutive or induced, represent an environmental filter for associated leaf microbial communities that have been shown to contribute to leaf defenses (CITE Mejia and Van Bael cacao and cucumber papers).
+Leaf microbial communities, especially foliar endophytic fungi (FEF), are found inside the leaf tissue of all vascular land plants (Currie et al., 2014; Rodriguez, White, Arnold, & Redman, 2009). They are generally asymptomatic but have been found to behave as pathogens under certain environmental conditions [Porras-Alfaro and Bayaman 2011]. Fungal endophytes are a unique study system to ask community ecology questions because they have a delimited area—the leaf—and are naturally replicated. Multiple leaves of the same plant or multiple individuals of the same species can be compared depending on the hypotheses being tested. In tropical forests, FEF transmit horizontally through ambient spore fall [@arnold2000]. Newly flushed leaves are free of FEF presenting fungal spores with challenges to colonization that will ultimately determine FEF communities.
+
+ a growing understanding of trade-offs in defenses
+themselves (e.g., as a function of antagonism in the jasmonic acid/salicylic acid pathways, relevant to
+defenses against herbivores and pathogens; Thaler et al. 1999, Felton & Korth 2000, Caarls et al. 2015)
+provide a context for understanding differential impacts of endophytes on anti-herbivore and anti-
+pathogen defenses, as yet an open question.
+ 
+
+
+
+
 ### Hypothesis
 
 If FEF improves leaf defenses against plant pests, then generalist herbivores and pathogens will remove or damage less leaf tissue from plants with treated high FEF levels relative to those with low FEF loads.
 
 ### Predictions
 
-Leaf-cutter ants will remove less plant material from leaves with higher FEF abundance and richness, but this result will be modulated by leaf traits related to defenses. Leaves with longer lifespans will be less attractive to leaf-cutter ants. Alternatively, low FEF diversity in those leaves may outweigh this selection factor. Leaves treated with high FEF levels will have a smaller area of pathogen damage compared to those treated with low FEF levels. Endophyte-mediated defenses against pathogens will be most important in short-lived leaves since long-lived leaves are expected to rely more on constitutive defenses (e.g., leaf toughness).
+Leaf-cutter ants will remove less plant material from leaves with higher FEF abundance and richness, but this result will be modulated by leaf traits related to defenses. Leaves with longer lifespans will be less attractive to leaf-cutter ants. Alternatively, low FEF diversity in those leaves may outweigh this selection factor. Leaves treated with high FEF levels will have a smaller area of pathogen damage compared to those treated with low FEF levels. FEF-mediated defenses against pathogens will be most important in short-lived leaves since long-lived leaves are expected to rely more on constitutive defenses (e.g., leaf toughness).
 
 # Materials and Methods
 
-## Seed collection and sterilization
+### Study site and seedling rearing
 
-INFORMATION ABOUT SEED SETreECTION AND STERILIZATION
-The species, *Theobroma cacao*, *Dypterix* sp., *Lacmellea panamensis*, *Apeiba membranacea*, *Heisteria concinna*, *Chrysophyllum caimito*, and *Cordia alliodora* were chosen due to their variance in leaf traits (J.Wright *unpublished data*) and the availability of seeds in January- April 2019. Seeds were collected from the forest floor and grown in the greenhouse. Germination ocurred in sterilized trays containing a 3:1 mix of soil and river sand that was autoclaved for two one-hour cycles at 121°C prior to planting. Individual seedlings were transferred from germination trays to a 24 cell tray (each cell ~380 mL) containing the same autoclaved soil and sand mixture. We took precaution to extract complete root systems from the seedling trays. *We kept 24-cell trays separate by treatment group * Seedlings were kept in a chamber made out of PVC and clear plastic to prevent inoculation from spore fall inside the greenhouse. NEEDS INFORMATION ON THE SOIL MIXTURE AND AUTOCLAVING PROTOCOL.
+The species, *Theobroma cacao*, *Dypterix* sp., *Lacmellea panamensis*, *Apeiba membranacea*, *Heisteria concinna*, *Chrysophyllum caimito*, and *Cordia alliodora* were chosen due to their variance in leaf functional traits (J.Wright *unpublished data*). Seeds were collected from the forest floor WHAT FOREST during January - April 2019. grown in the greenhouse. In preparation for the experiment, seeds were surface sterilized by soaking in water and rinsing in sodium hypochlorite (NaClO) and ethanol (EtOH). Seed from each species had a specific sterilization protocol (see Supplementary Materials). Seed germination and the experiment was carried out at the Santa Cruz Field Facility of the Smithsonian Tropical Research Institute in Gamboa, Panama (9°070N, 79°420W). We germinated and reared seedlings in a clean and shaded greenhouse were we enclosed four tables with a PVC pipe frame and covered it in 3 mil clear plastic sheet; two plastic enclosure with two tables each. The enclosures allowed us to grow plants at ambient temperature and moderate light while providing protection from rain and most fungal spores. Which allowed us to rear seedlings with yielding zero to low endophyte densities [@bittleston2011]. To ensure sterile conditions throughout the experiment, we cleaned table surfaces and walls of the enclosures on a weekly basis with 70% EtOH and 0.5 % NaClO. We germinated seedlings in sterilized trays containing a 3:1 mix of soil and river sand that was autoclaved for two one-hour cycles at 121°C prior to planting. Individual seedlings were transferred from germination trays to a 24 cell tray (each cell \~380 mL) containing the same autoclaved soil and sand mixture. We took precaution to extract complete root systems from the seedlings. See Supplementary Materials for further details on plastic tray and pot sterilizations protocols.
 
+Seedlings reached a minimum of 3-4 true leaves before endophyte inoculation. We placed seedlings on separate tables designated for spore fall inoculation and non-inoculated treatment groups within the enclosures. Seedling of the same species but different treatment groups were in the same enclosure. We watered seedlings at the soil level to minimize endophyte spore germination in the enclosures [@arnold2003]. 
 
-Growth and host plant inoculation seven tropical tree species was conducted at the greenhouses in the Gamboa Research Station, Smithsonian Tropical Research institute, Republic of Panama.  Seedlings reached a minimum of 4 true leaves before endophyte inoculation. Then 10 individual plants of each species were exposed to 10 nights of spore fall to achieve a high endophyte load (E+) and 10 homologous plants were kept inside the greenhouse plastic chamber to maintain a low endophyte load (*E-*) (Fig. ? MAKE A DIRAGRAM?). Plants exposed to spore fall were placed near (\~10 m) the forest edge at dusk (\~18:OO hours) and returned to the greenhouse at dawn (\~07:00 hours) [@bittleston2011].
+### Fungal endophyte inoculation
+To inoculate seedlings with FEF, we took 10 individual seedlings of each species and exposed them to 10 nights of spore fall to achieve a high FEF load (*E+*) and 10 homologous plants were kept inside the greenhouse plastic enclosure to maintain a low FEF load (*E-*). Plants exposed to spore fall were placed on a table near (\~10 m) the forest edge at dusk (\~18:OO hours) and returned to the greenhouse at dawn (\~07:00 hours) [@bittleston2011]. We sprayed the *E+* seedlings with water to simulate rain and to promote endophyte spore germination and infection of leaves. We repeated this process for 10 consecutive nights. Low FEF plants (*E-*) were watered only at the soil level and shuffled and and moved inside the greenhouse to simulate similar treatment as *E+* seedlings.
 
 ### Leaf trait measurements
 
@@ -308,7 +324,6 @@ The PCA revealed how leaf traits (ACI, LT, LPS and LMA) were related. We plotted
 Simple linear regressions of herbivory (%) against PC1 and PC2 revealed a statistically significant positive relationship (*p* \<0.001) (Fig. 4a and 3b). Even though we note large spread in the data (Fig. 4a and 3b), we see a statistically significant positive trend of herbivory plotted against PC1, where positive values represent greater values of ACI, LPS and LMA. Herbivory plotted against PC2 shows a statistically significant positive trend, where positive values represent greater LT (Fig. 4b). Percent pathogen damage plotted against PC1 revealed a statistically significant positive relationship (*p* = \<0.001), in which positive values represent greater values of ACI, LPS and LMA (Fig. 4c). We did not see a statistically significant relationship (*p* = 0.223) between pathogen damage and PC2 (Fig. 4d).
 
 **TALK ABOUT SIMPLE LINEAR REGRESSIONS OF SUPPLEMENTARY FIGURES?**
-
 
 # Discussion
 
@@ -2102,6 +2117,7 @@ supptable_S4
 ```
 
 ## Table S5
+
 ```{r, Indicator_species}
 #| echo: false
 #| eval: true
@@ -3423,8 +3439,17 @@ suppfig_7
 #ggsave(filename="./plots/Aim3_FigS7_15JAN2024.png", plot = suppfig_7, dpi=600, units=c("mm"), width = 250, height = 200, bg ="white")
 ```
 
-## Figure S8
+## Supplementary Material - Methods
 
-```{r, suppfig_8}
+#### Seed collection and sterilization
+Seeds were prepared for germination within 24 hours of fruit collection on BCI, January - April 2019. Fruits were peeled to extract seeds, cleaned, put in water to swell embryo, sterilized, and planted in sterile soil germination trays (75% soil; 25% sand). Soil was autoclaved at 121 °C in two, one hour cycles. Seeds were surface sterilized using 10% bleach for 3 minutes followed by 70% ethanol for 3 minutes.
 
-```
+#### Germination Tray and 24-pot tray sterilization
+Plastic germination trays and 24-cell trays were sterilized in a 10% bleach bath for 20 minutes, sprayed with 70% ethanol, and paper towel dried right before adding soil/planting.
+
+#### Planting in germination trays
+The sterile soil is added to an sterilized plastic germination tray, combined with water well until it is wet and has a cookie dough-like consistency. Seeds were then added to moist soil. A sprinkle of dry soil is added to as a top layer to discourage pathogen spores from landing in the wet surface soil.
+
+#### Seedling transfer into pots
+Once seeds germinated, seedlings were transferred to pots by wetting the soil and extracting intact root system. Seedling were immediately placed in pot with sterile soil using a small shovel after uprooting from germination tray. Hands were sprayed with 70% ethanol when switching from handling one species to handling another. Plants were watered as needed at the soil level and 25mL of MiracleGro all-purpose plant food was added to every seedling once a month throughout entirety of experiment. 
+
