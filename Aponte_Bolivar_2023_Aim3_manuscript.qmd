@@ -186,6 +186,7 @@ Leaf microbial communities, especially foliar endophytic fungi (FEF), are found 
 
 a growing understanding of trade-offs in defenses themselves (e.g., as a function of antagonism in the jasmonic acid/salicylic acid pathways, relevant to defenses against herbivores and pathogens; Thaler et al. 1999, Felton & Korth 2000, Caarls et al. 2015) provide a context for understanding differential impacts of endophytes on anti-herbivore and anti- pathogen defenses, as yet an open question.
 
+
 ### Hypothesis
 
 If FEF improves leaf defenses against plant pests, then generalist herbivores and pathogens will remove or damage less leaf tissue from plants with treated high FEF levels relative to those with low FEF loads.
@@ -199,6 +200,7 @@ Leaf-cutter ants will remove less plant material from leaves with higher FEF abu
 ### Study site and seedling rearing
 
 The species, *Theobroma cacao*, *Dypterix* sp., *Lacmellea panamensis*, *Apeiba membranacea*, *Heisteria concinna*, *Chrysophyllum caimito*, and *Cordia alliodora* were chosen due to their variance in leaf functional traits (J.Wright *unpublished data*). Seeds were collected from the forest floor WHAT FOREST during January - April 2019. grown in the greenhouse. In preparation for the experiment, seeds were surface sterilized by soaking in water and rinsing in sodium hypochlorite (NaClO) and ethanol (EtOH). Seed from each species had a specific sterilization protocol (see Supplementary Materials). Seed germination and the experiment was carried out at the Santa Cruz Field Facility of the Smithsonian Tropical Research Institute in Gamboa, Panama (9°070N, 79°420W). We germinated and reared seedlings in a clean and shaded greenhouse were we enclosed four tables with a PVC pipe frame and covered it in 3 mil clear plastic sheet; two plastic enclosure with two tables each. The enclosures allowed us to grow plants at ambient temperature and moderate light while providing protection from rain and most fungal spores. Which allowed us to rear seedlings with yielding zero to low endophyte densities [@bittleston2011]. To ensure sterile conditions throughout the experiment, we cleaned table surfaces and walls of the enclosures on a weekly basis with 70% EtOH and 0.5 % NaClO. We germinated seedlings in sterilized trays containing a 3:1 mix of soil and river sand that was autoclaved for two one-hour cycles at 121°C prior to planting. Individual seedlings were transferred from germination trays to a 24 cell tray (each cell \~380 mL) containing the same autoclaved soil and sand mixture. We took precaution to extract complete root systems from the seedlings. See Supplementary Materials for further details on plastic tray and pot sterilizations protocols.
+
 
 Seedlings reached a minimum of 3-4 true leaves before endophyte inoculation. We placed seedlings on separate tables designated for spore fall inoculation and non-inoculated treatment groups within the enclosures. Seedling of the same species but different treatment groups were in the same enclosure. We watered seedlings at the soil level to minimize endophyte spore germination in the enclosures [@arnold2003].
 
@@ -3450,3 +3452,4 @@ The sterile soil is added to an sterilized plastic germination tray, combined wi
 #### Seedling transfer into pots
 
 Once seeds germinated, seedlings were transferred to pots by wetting the soil and extracting intact root system. Seedling were immediately placed in pot with sterile soil using a small shovel after uprooting from germination tray. Hands were sprayed with 70% ethanol when switching from handling one species to handling another. Plants were watered as needed at the soil level and 25mL of MiracleGro all-purpose plant food was added to every seedling once a month throughout entirety of experiment.
+
