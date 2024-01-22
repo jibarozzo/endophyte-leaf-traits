@@ -152,6 +152,7 @@ library("lme4")
 library("sjPlot")
 library("glmmTMB")
 library("indicspecies")
+library("rstatix")
 
 # Phylogenetic analyses #source("https://raw.githubusercontent.com/joey711/phyloseq/master/inst/scripts/installer.R",local = TRUE)
 library("mgcv")
@@ -185,7 +186,7 @@ Leaf defenses fall within the leaf economic spectrum (LES) which on one end has 
 
 Leaf microbial communities, such as foliar endophytic fungi (FEF), are found inside the leaf tissue of all vascular land plants [@currie2014; @rodriguez2009]. In tropical forests, FEF transmit horizontally through ambient spore fall [@arnold2000]. Newly flushed leaves are free of FEF presenting fungal spores with challenges to colonization that will ultimately determine FEF communities. They generally grow asymptomatically within leaves [@porras-alfaro2011]. Nevertheless, FEF have been found to modulate leaf functional traits, especially with regard to the expression of secondary metabolites, sensitivity to drought, photosyntheic rates an efficiency, and defense against natural enemies [@arnold2003; @arnold2007a; @friesen2011; @bittleston2011; @estrada2013; @mejia2014]. Such effects have not been examined systematically and quantitatively, but are critical to understanding the species interactions in tropical forests relevant to plant survival, performance, and productivity and downstream ecosystem services [@mcgill2006; CITE mORE]. Tellez et al. [-@tellezTraits2022] highlighted how FEF communities in tropical trees structure along specific leaf functional traits, thus extending the LES framework by including diverse and ecologically important FEF. The potential FEF have to alter where plants fall in the LES offers a useful lens to ask: what is the role of FEF in plant defenses against herbivores and pathogens and what are the trade-offs. Our grasp of the role of FEF in plant defenses is critical to our understanding of plant-enemy interactions and the maintenance of plant diversity in tropical forests.
 
-In this study, we set out to investigate the role of FEF abundance, diversity and species composition in the modulation of leaf functional traits with the objective of integrating FEF role into a conceptual framework that includes trade-offs to plants' constitutive and induced defenses in response to natural enemies. This work builds upon experiments that used single plant species to plant enemies [@estrada2013; @mejia2009; @mejia2014] by incorporating seven phylogenitically distinct tropical tree species to increase and We hypothesized that FEF improve leaf defenses against generalist herbivores and pathogens, especially in plants that invest less in constitutive defenses (e.g. thin leaves and short-lived). Alternatively, plants that invest more in constitute defenses rely less in induced FEF acquisition. To test our hypothesis we designed an experiment that manipulated tropical tree seedlings and measured leaf damage (herbivory and pathogen infection) and a subset of leaf functional traits: leaf mass per area (LMA) , leaf thickness (LT), leaf punch strength (LPS), and anthocyanins (ACI), in response to high and low FEF density treatments. As plant enemies, we used as model systems leaf-cutter ants, *Atta colombica* (Formicidae), for a generalist herbivore and *Calonectria* sp. (Nectriaceae) for a generalist pathogen. We predicted the following: 1) Leaf-cutter ants and *Calonectria* sp. would cause less leaf damage (herbivory through leaf tissue removal and leaf necrosis through pathogen infection, respectively) from leaves with higher FEF abundance, richness and diversity composition; 2) Tree species with leaf functional traits on the low end of the economic spectrum (e.g. lower leaf mass per area) would have less herbivory and pathogen damage when treated with high FEF densities compared to their low FEF density counterparts; 3) Conversely, tree species with leaf functional traits of the high side of the economic spectrum (e.g. greater leaf mass per area) treated with high FEF density would have no differences in herbivory and pathogen damage compared to their low FEF counterparts; 4) We anticipated that leaves with leaf functional traits on the high end of the economic spectrum would be less attractive to leaf-cutter ants, but low FEF density in them may outweigh this selection factor. To test our predictions, we addressed the following questions:
+In this study, we set out to investigate the role of FEF abundance, diversity and species composition in the modulation of leaf functional traits with the objective of integrating FEF role into a conceptual framework that includes trade-offs to plants' constitutive and induced defenses in response to natural enemies. This work builds upon experiments that used single plant species to plant enemies [@estrada2013; @mejia2009; @mejia2014] by incorporating seven phylogenitically distinct tropical tree species to increase and We hypothesized that FEF improve leaf defenses against generalist herbivores and pathogens, especially in plants that invest less in constitutive defenses (e.g. thin leaves and short-lived). Alternatively, plants that invest more in constitute defenses rely less in induced FEF acquisition. To test our hypothesis we designed an experiment that manipulated tropical tree seedlings and measured leaf damage (herbivory and pathogen infection) and a subset of leaf functional traits: leaf mass per area (LMA) , leaf thickness (LT), leaf punch strength (LPS), and anthocyanins (ACI), in response to high and low FEF density treatments. As plant enemies, we used as model systems leaf-cutter ants, *Atta colombica* (Formicidae), for a generalist herbivore and *Calonectria* sp. (Nectriaceae) for a generalist pathogen. We predicted the following: 1) Leaf-cutter ants and *Calonectria* sp. would cause less leaf damage (herbivory through leaf tissue removal and leaf necrosis through pathogen infection, respectively) on leaves with higher FEF abundance, richness and diversity composition; 2) Tree species with leaf functional traits on the low end of the economic spectrum (e.g. lower leaf mass per area) would have less herbivory and pathogen damage when treated with high FEF densities compared to their low FEF density counterparts; 3) Conversely, tree species with leaf functional traits of the high side of the economic spectrum (e.g. greater leaf mass per area) treated with high FEF density would have no differences in herbivory and pathogen damage compared to their low FEF counterparts; 4) We anticipated that leaves with leaf functional traits on the high end of the economic spectrum would be less attractive to leaf-cutter ants, but low FEF density in them may outweigh this selection factor. To test our predictions, we addressed the following questions:
 
 1.  How do FEF high and low treatment differs in terms of abundance, richness, diversity, and species composition?
 
@@ -199,7 +200,8 @@ In this study, we set out to investigate the role of FEF abundance, diversity an
 
 ### Study site and seedling rearing
 
-The species, *Theobroma cacao*, *Dypterix* sp., *Lacmellea panamensis*, *Apeiba membranacea*, *Heisteria concinna*, *Chrysophyllum caimito*, and *Cordia alliodora* were chosen due to their variance in leaf functional traits (J.Wright *unpublished data*). Seeds were collected from the forest floor WHAT FOREST during January - April 2019. grown in the greenhouse. In preparation for the experiment, seeds were surface sterilized by soaking in water and rinsing in sodium hypochlorite (NaClO) and ethanol (EtOH). Seed from each species had a specific sterilization protocol (see Supplementary Materials). Seed germination and the experiment was carried out at the Santa Cruz Field Facility of the Smithsonian Tropical Research Institute in Gamboa, Panama (9°070N, 79°420W). We germinated and reared seedlings in a clean and shaded greenhouse were we enclosed four tables with a PVC pipe frame and covered it in 3 mil clear plastic sheet; two plastic enclosure with two tables each. The enclosures allowed us to grow plants at ambient temperature and moderate light while providing protection from rain and most fungal spores. Which allowed us to rear seedlings with yielding zero to low endophyte densities [@bittleston2011]. To ensure sterile conditions throughout the experiment, we cleaned table surfaces and walls of the enclosures on a weekly basis with 70% EtOH and 0.5 % NaClO. We germinated seedlings in sterilized trays containing a 3:1 mix of soil and river sand that was autoclaved for two one-hour cycles at 121°C prior to planting. Individual seedlings were transferred from germination trays to a 24 cell tray (each cell \~380 mL) containing the same autoclaved soil and sand mixture. We took precaution to extract complete root systems from the seedlings. See Supplementary Materials for further details on plastic tray and pot sterilizations protocols.
+The species, *Theobroma cacao*, *Dypterix* sp., *Lacmellea panamensis*, *Apeiba membranacea*, *Heisteria concinna*, *Chrysophyllum caimito*, and *Cordia alliodora* were chosen due to their variance in leaf functional traits (J.Wright *unpublished data*). Seeds from at least to maternal sources were collected from the forest floor at Barro Colorado Island (BCI) in central Panama (9°050N, 79°450W) during January - April 2019.  The average annual precipitation at BCI is 2,600 mm and the pronounced wet season ranges from May to December [@leigh1996]. In preparation for the experiment, seeds were surface sterilized by soaking in water and rinsing in sodium hypochlorite (NaClO) and ethanol (EtOH). Seed from each species had a species-specific sterilization protocol (see Supplementary Materials). 
+Seed germination and the experiment was carried out at the Santa Cruz Field Facility of the Smithsonian Tropical Research Institute in Gamboa, Panama (9°070N, 79°420W). We germinated and reared seedlings in a clean and shaded greenhouse were we enclosed four tables with a PVC pipe frame and covered it in 3 mil clear plastic sheet; two plastic enclosure with two tables each. The enclosures allowed us to grow plants at ambient temperature and moderate light while providing protection from rain and most fungal spores. Which allowed us to rear seedlings with yielding zero to low endophyte densities [@bittleston2011]. To ensure sterile conditions throughout the experiment, we cleaned table surfaces and walls of the enclosures on a weekly basis with 70% EtOH and 0.5 % NaClO. We germinated seedlings in sterilized trays containing a 3:1 mix of soil and river sand that was autoclaved for two one-hour cycles at 121°C prior to planting. Individual seedlings were transferred from germination trays to a 24 cell tray (each cell \~380 mL) containing the same autoclaved soil and sand mixture. We took precaution to extract complete root systems from the seedlings. See Supplementary Materials for further details on plastic tray and pot sterilizations protocols.
 
 Seedlings reached a minimum of 3-4 true leaves before endophyte inoculation. We placed seedlings on separate tables designated for spore fall inoculation and non-inoculated treatment groups within the enclosures. Seedling of the same species but different treatment groups were in the same enclosure. We watered seedlings at the soil level to minimize endophyte spore germination in the enclosures [@arnold2003].
 
@@ -237,14 +239,22 @@ For the pathogen assays, we introduced an agar plug inoculated with hyphae of *C
 
 ### Replication Statement
 
-```{r, table1}
+```{r, replication_statement}
 #| echo: false
 #| eval: true
 #| tidy: true
 #| warning: false
 #| tbl-cap: "Replication statement of the statistical analysis in this study."
 
-## Table 1
+
+# sect_properties <- prop_section(
+#   page_size = page_size(
+#     orient = "portrait",
+#     width = 8.25, height = 11.7
+#   ),
+#   type = "continuous",
+#   page_margins = page_mar()
+# )
 
 #Thick borders for table
 thick <- fp_border(color = "black", style = "solid", width = 2)
@@ -252,17 +262,20 @@ thick <- fp_border(color = "black", style = "solid", width = 2)
 rep_statement <- hux(
   "Scale of inference" = c("Leaf functional traits",
                            "Genomic data",
-                           "Herbivore and Pathogen trials"),
+                           "Herbivore assays",
+                           "Pathogen assays"),
   
   "Scale at which the factor of interest is applied" = c("Species",
                                                         "Species",
+                                                        "Species/individual",
                                                         "Species/individual"),
-  "Number of replicates at the appropriate scale" = c("Treatment = 2 (E-, E+), Tropical tree species = 7. Replicates per species = 5. Replicate leaves per plant = 3",
-                                                      "Treatment = 2 (E-, E+), Replicates per species = 5",
-                                                      "Treatment = 2 (E-, E+), Replicates per species = 5, Replicates per plant = 1"))
+  "Number of replicates at the appropriate scale" = c("Treatment = 2 (E-, E+), Tropical tree species = 7, Replicates per species = 5. Replicate leaves per plant = 3",
+                                                      "Treatment = 2 (E-, E+), Tropical tree species = 7, Replicates per species = 5",
+                                                      "Treatment = 2 (E-, E+), Tropical tree species = 7, Replicates per species = 5, Replicates per plant = 1",
+                                                      "Treatment = 2 (E-, E+), sub-treatment = 2 (control and pathogen) for pathogen trials, Tropical tree species = 7, Replicates per species = 5, Replicates per plant = 1"))
 
 
-table_1 <- rep_statement |>
+rep_statement <- rep_statement |>
   set_all_padding(4) |> 
       set_outer_padding(0) |> 
       set_bold(row = 1, col = everywhere) |> 
@@ -281,42 +294,40 @@ table_1 <- rep_statement |>
     part = "all",
     cs.family = fontname,
     hansi.family = fontname,
-    eastasia.family = fontname)
+    eastasia.family = fontname) 
 
-table_1
-
+rep_statement
 #quick_docx(rep_statement, file = "./tables/replication_statement.docx")
-
-
 ```
 
 ### Statistical Analyses
 
 We explored how leaf functional traits and FEF correlated to herbivory and pathogen damage on leaves. We present the analyses for each tree species at the leaf and at the plant level. Leaf functional traits are presented at the leaf level, while FEF data was explored and is presented at the plant level. In analyses where leaf functional traits and FEF are combined we used averages of the leaf functional traits.
 
-First, we compared the means of herbivory (%) and pathogen (%) damage, and leaf functional traits for each species and treatment groups using paired two-sided Student's t-Test and analysis of variance (ANOVA) with the `compare_means` and `stat_compare_means` functions from the `ggpubr` package in R [@kassambara2023], which wrap and extend the `anova` and `t.test` functions from the `stats` package [@rcoreteam2023].
+First, we compared the means of herbivory (%) damage, and leaf functional traits for each species and treatment groups using paired two-sided Student's t-Test and analysis of variance (ANOVA) with the `compare_means` and `stat_compare_means` functions from the `ggpubr` package in R [@kassambara2023], which wrap and extend the `anova` and `t.test` functions from the `stats` package [@rcoreteam2023] and facilitate plotting.
+Additionally, to facilitate comparison between group levels we used the `pairwise_t_test` function from the `rstatix`  package [@kassambra2023a] when we compared pathogen (%) damage means. This function also wraps and extends base *R* functions. We adjusted *p* values to account for false discovery rates in multiple comparisons by using "BH" method [@benjamini1995].
 
-Secondly, we calculated a Bray-Curtis dissimilarity matrix with our OTU relative abundance data and computed a distance based redundancy analysis (dbRDA) by applying the `dbRDA` function in the `vegan` package to our dissimilarity matrix [@oksanen2022]. We computed forward model selection for dbRDA analysis With the `ordistep` function which selects terms based on *p* values [@blanchet2008; @oksanen2022]. We started with our initial model containing only the intercept (dissimilarity_matrix \~ 1) and setting the functions arguments to the following: `scope` = formula(*m*), where *m* is the formula with a defined range including leaf functional traits, tree species and treatment groups; `Pin` = 0.5, `Pout` = 0.05, `trace` = T, `permutations` = how(nperm = 999), `steps` = 50.The dbRDA is considered analogous to a permutational analysis of variance (PERMANOVA) with non-Euclidean distance [@anderson2017; @mcardle2001]. Its corresponding visualizations appropriately illustrate underlying patterns of compositional differences [@anderson2017; @legendre1999; @mcardle2001]. We used the `anova.cca` function to assess the marinal significance of contraining variables [@oksanen2022; @legendre2012; @legendre2011] Applied here to visualize associations between leaf functional traits and FEF communities in host tree species and treatment groups.
+Secondly, we calculated a Bray-Curtis dissimilarity matrix with our OTU relative abundance data and computed a distance-based redundancy analysis (dbRDA) by applying the `dbRDA` function in the `vegan` package to our dissimilarity matrix [@oksanen2022]. We computed forward model selection for dbRDA analysis with the `ordistep` function which selects terms based on *p* values [@blanchet2008; @oksanen2022]. We started with our initial model containing only the intercept (dissimilarity_matrix \~ 1) and setting the functions arguments to the following: `scope` = formula(*m*), where *m* is the formula with a defined range including leaf functional traits, tree species and treatment groups; `Pin` = 0.5, `Pout` = 0.05, `trace` = T, `permutations` = how(nperm = 999), `steps` = 50.The dbRDA is considered analogous to a permutational analysis of variance (PERMANOVA) with non-Euclidean distance [@anderson2017; @mcardle2001]. Its corresponding visualizations appropriately illustrate underlying patterns of compositional differences [@anderson2017; @legendre1999; @mcardle2001]. We used the `anova.cca` function to assess the marinal significance of contraining variables [@oksanen2022; @legendre2012; @legendre2011] Applied here to visualize associations between leaf functional traits and FEF communities in host tree species and treatment groups.
 
-Thirdly, We arbitrarily designated percent leaf damage in herbivore assays as high (\>70%), medium (31-69%) and low (\<30%) and in pathogen assays as high (\>30%) and low (\<29%). These categories allowed us to explore the correlations between host tree species and treatment group combinations preferred by FEF OTUs. To achieve this we used the `multipatt` function from the `indicspecies` package in *R* [@decaceres2009]. We calculated the the *point biserial correlation coefficient* for each OTU at all tree species and treatment group combinations by applying the `multipatt` function with arguments `func`= "r.g" and `control` = how(nperm=999) to our OTU abundance matrix [@decaceres2009] (CITE MORE). We adjusted *p* values to account false discovery rates in multiple comparison by using "BH" method [@benjamini1995] in the `p.adjust` function from the `stats` package [@rcoreteam2023]. We then filtered the adjusted a *p* value with a cutoff of \<0.05.
+Thirdly, we arbitrarily designated percent leaf damage in herbivore assays as high (\>70%), medium (31-69%) and low (\<30%) and in pathogen assays as high (\>30%) and low (\<29%). These categories allowed us to explore the correlations between host tree species and specific FEF OTUs. To achieve this we used the `multipatt` function from the `indicspecies` package in *R* [@decaceres2009]. We calculated the *point biserial correlation coefficient* for each OTU at all tree species and treatment group combinations by applying the `multipatt` function with arguments `func`= "r.g" and `control` = how(nperm=999) to our OTU abundance matrix [@decaceres2009] (CITE MORE). Like with other statistical tests performed, we adjusted *p* values to account for false discovery rates in multiple comparisons by using "BH" method [@benjamini1995] in the `p.adjust` function from the `stats` package [@rcoreteam2023]. We then filtered the adjusted a *p* value with a cutoff of \<0.05.
 
-Fourthly, Principal Component Analysis (PCA) was used to reduce dimensions among covariates and reveal underlying interactions that could influence FEF abundance, diversity and community composition in host tree species. The PCA was computed using the `prcomp` function in R statistical software [@rcoreteam2023]. A complete PCA was computed with variables ACI, LT, LPS, and LMA. We then proceeded to compute a PCA with the data from leaves of plants used in the herbivory (*n* = 210) and pathogen assays (*n* = 192). We then took from the herbivory and pathogen PCA the principal components that explained the most variance (PC1 and PC2) and regressed them to herbivory (%) and pathogen damage (%). We also regressed ACI, LT, LPS, LMA and Shannon's Diversity Index to logit transformed herbivory (%) and pathogen damage (%). We used the `logit` function from the `car` package for logit transformation of variables and the `lm` function from the `stat` package for simple linear regressions [@fox2019; @rcoreteam2023].
+Fourthly, Principal Component Analysis (PCA) was used to reduce dimensions among covariates and reveal underlying interactions between covariates that could influence herbivory and pathogen damage. The PCA was computed using the `prcomp` function in R statistical software [@rcoreteam2023]. A complete PCA was computed with variables ACI, LT, LPS, and LMA. We then proceeded to compute a PCA with the data from leaves of plants used in the herbivory (*n* = 210) and pathogen assays (*n* = 192). We then took from the herbivory and pathogen PCA the principal components that explained the most variance (PC1 and PC2) and regressed them to herbivory (%) and pathogen damage (%). We also regressed ACI, LT, LPS, LMA and Shannon's Diversity Index to logit transformed herbivory (%) and pathogen damage (%). We used the `logit` function from the `car` package for logit transformation of variables and the `lm` function from the `stat` package for simple linear regressions [@fox2019; @rcoreteam2023].
 
-Lastly, to test for our hypothesis and predictions, we used a general linear mixed model (GLM) with herbivory and pathogen damage percentage (logit transformed) as the response variable. To determine which fixed effects to include in the models we used the `vif` function from the `car` package in *R* to calculate the variance inflation factor for all explanatory variables (ACI, LT, LPS and LMA) [@fox2019; @rcoreteam2023]. Complementary to this, we calculated Pearson's coefficient for each leaf functional traits with by creating a correlation matrix and applying the `cor` function from the `stats` package to assess correlations among traits [@rcoreteam2023] (SUPPLEMENTARY FIGURE?). We opted to maintain explanatory variables pertaining to physical barriers (LT, LPS and LMA) and exclude ACI from subsequent general linear models (GLMs) due to high collinearity with LPS (*r* = 0.54) and LMA (*r* = 0.73). Every variable kept exhibits some degree of collinearity and this is well recorded in the literature (CITE HERE).
+Lastly, to test for our hypothesis and predictions, we used a general linear mixed model (GLM) with herbivory and pathogen damage percentage (logit transformed) as the response variable. To determine which fixed effects to include in the models we used the `vif` function from the `car` package in *R* to calculate the variance inflation factor for all explanatory variables (ACI, LT, LPS and LMA) [@fox2019; @rcoreteam2023]. Complementary to this, we calculated Pearson's coefficient for each pair of leaf functional traits with by creating a correlation matrix and applying the `cor` function from the `stats` package to assess correlations among traits [@rcoreteam2023] (SUPPLEMENTARY FIGURE?). We opted to maintain explanatory variables pertaining to physical barriers (LT, LPS and LMA) and exclude ACI from subsequent general linear models (GLMs) due to high collinearity with LPS (*r* = 0.54) and LMA (*r* = 0.73). 
 
 # Results
 
-Seedlings exposed to forest spore fall, *E+*, had a significantly higher proportion of leaf segments colonized by fungal endophytes across all species (data from cultures, Fig. S1). Using our molecular data set we saw that seedlings with *E+* treatment had a significantly higher FEF relative abundance (*p* \<0.05) for all tree species when compared to the *E-* treatment with the exception of *C. cainito* and *H. concinna* (Fig. 1a). Despite these significant differences, there was a high degree of variability in endophyte relative abundance within each treatment type (Fig. 1).
+Seedlings exposed to forest spore fall, *E+*, had a significantly higher proportion of leaf segments colonized by fungal endophytes across all species (data from cultures, Fig. S1). Using our molecular data set we saw that seedlings with *E+* treatment had a significantly higher FEF relative abundance (paired, two-sided t-Tests, *p* \<0.05) for all tree species when compared to the *E-* treatment (Fig. 1a). Despite these significant differences, there was a high degree of variability in endophyte relative abundance within each treatment type (Fig. 1).
 
-We observed general differences in leaf functional traits among species (Table 2). For ACI and LPS we did not find significant differences between treatments (*E-* and *E+*) when we combined all host species (Fig. S2a and Fig. S4a respectively). For LT and LMA we saw statistically significant differences between *E-* and *E+* treatment groups when we combined all host species (Fig S3a and Fig. S5a, respectively). As predicted, we did observe statistically significant lower herbivory in the *E+* treatment compared to the *E-* treatment when we combined all host species (ADD STAT *p* \<= 0.05) (Fig. S6a). We did not observe statistically significant differences in pathogen damage between *E-* and *E+* treatments when we combined all host species (Fig. S7a). Although, we did see significant differences between control and pathogen exposed leaves in the *E-* treatment group (ADD STAT TEST *p* \< 0.0001) (Fig. S7a). As well as, control and and pathogen exposed leaves in the *E+* treatment group (ADD STAT TEST *p* \< 0.01) (Fig. S7a).
+We observed general differences in leaf functional traits among species (Table 2). For ACI and LPS we did not find significant differences between treatments (*E-* and *E+*) when we combined all host species (Fig. S2a and Fig. S4a respectively). For LT and LMA we saw statistically significant differences between *E-* and *E+* treatment groups when we combined all host species (Fig S3a and Fig. S5a, respectively). As predicted, we did observe statistically significant lower herbivory in the *E+* treatment compared to the *E-* treatment when we combined all host species (*t* = 2.23, *df* = 34, *p*-value = 0.033) (Fig. 2a). We did not observe statistically significant differences in pathogen damage between *E-* and *E+* treatments when we combined all host species (Fig. 2b). However, we did see significant differences between exposed (M = 17.37, SD = 12.57) and non-exposed (M = 3.49, SD = 5.42) pathogen leaves within the *E-* treatment group (*t*(32) = -7.19,  *p* \< 0.0001) (Fig. 2b) and within the *E+* treatment group: exposed (M = 20.04, SD = 15.72), non-exposed (M = 7.17, SD = 17.48)(*t*(32) = -3.260, *p* \< 0.01) (Fig. 2b). We did not observe signiifcant differences between treatment groups  for herbivory and pathogen damage (5) at the species level (Fig. S6a-S6b).
 
-The dbRDA analyses revealed that 6.34% of the variance is accounted for by the leaf functional traits, the constraining variables. The first axis (dbRDA1) explains 49% and the second axis (dbRDA2) explains 21.3% of the constrained variance (Fig. 2). We observe a high degree of overlap between the FEF communities (Fig. 2) indicating that the communities are similar in composition across host species and treatment groups (Fig. 2). We see tight clustering of FEF communities in *C. cainito* and *L. panamensis* although these are overlapped by *A. membranacea* pointing to a distinct subset composition of FEF OTUs within the latter (Fig. 2). All leaf functional traits significantly correlated with FEF community composition (Fig.2).
+The dbRDA analyses revealed that 6.34% of the overall variance inf FEF communities was accounted for by the leaf functional traits, the constraining variables. The first axis (dbRDA1) explained 49% and the second axis (dbRDA2) explained 21.3% of the constrained variance (Fig. 3). We observed a high degree of overlap between the FEF communities (Fig. 3) indicating that the communities are similar in composition across host species and treatment groups (Fig. 3). We see tight clustering of FEF communities in *C. cainito* and *L. panamensis* although these are overlapped by *A. membranacea* pointing to a distinct subset composition of FEF OTUs within the latter (Fig. 3). All leaf functional traits significantly correlated with FEF community composition (Fig.3).
 
-Multilevel pattern analysis revealed the OTUs significantly correlated with host trees species (Table S5). In summary, 72 out of 569 Ascomycota OTUs are significantly correlated to our host trees species (Table S5). Seedlings used in herbivory assays had 13 OTUs significantly correlated with high herbivory damage (\>70%) and 3 and 1 OTUs significantly correlated with medium (31-69%) and low (\<30%) herbivory damage, respectively (Table S6). Seedlings used in pathogen damage assays had 11 OTUs significantly correlated with high (\>30%) pathogen damage (Table S7). Because the genomic data scale is at the plant level we cannot tease apart what OTUs are correlated with leaves treated with control and *Calonectria* sp. inoculated agar plugs treatments in the pathogen assays. We found 30 OTUs significantly correlated with *E+* treatment (Table S8).
+There was a core set of OTUs that significantly correlated with host trees species or paticular treatments. In summary, 72 out of 569 Ascomycota OTUs are significantly correlated to our host trees species (Table S5). Seedlings used in herbivory assays had 13 OTUs significantly correlated with high herbivory damage (\>70%) and 3 and 1 OTUs significantly correlated with medium (31-69%) and low (\<30%) herbivory damage, respectively (Table S6). Seedlings used in pathogen damage assays had 11 OTUs significantly correlated with high (\>30%) pathogen damage (Table S7). Because the genomic data scale is at the plant level we could not tease apart what OTUs were correlated with leaves treated with control and *Calonectria* sp. inoculated agar plugs treatments in the pathogen assays. We found 30 OTUs significantly correlated with *E+* treatment (Table S8).
 
-The PCA revealed how leaf traits (ACI, LT, LPS and LMA) were related. We plotted leaf trait data according to tree species groups on the PCA axes to show how the variance in the complete data set is explained by PC1 (60%) and PC2 (27%) (Fig. 2a). We observed that ACI, LPS and LMA loadings tracked along PC1 towards more negative values, showing correlation among these traits (Fig. 2a). Traits LT and LPS were orthogonal to each other in Fig. 2a, indicative of low correlation. We note distinct grouping of species along PC1 such as *C. alliodora* in the direction of positive values of PC1 and *C. cainito* towards negative values. Along PC1 we see distinct and tight clustering according to species for all except *H. concinna* and *A. membranacea* which overlap with various other species. We note that LT loading tracks towards negative values along PC2 (Fig.2a). Clear species groupings are detected, such as *Dypterix* sp. located towards positive values and *L. panamensis* towards negative values of the PC2 axis. We note a similar relationship between the leaf traits with respect to PC1 and PC2 in individual seedlings used for herbivory versus pathogen damage trials (Fig. 2b-2c). The PCA of leaf traits from seedlings used in herbivory trials has a PC1 explaining 57.5% of the variance and a PC2 explaining 28% of the variance in the subset data (Fig. 2b). We saw an inversion of the LT loading in direction of positive values, as well as the main tree species clustered (i.e. *Dypteryx* sp. and *A. membranacea*) along PC2 (Fig. 2b) with respect to Fig. 2a. The PCA of leaf traits from seedling used in pathogen damage trials has a PC1 explaining 64% of the variance and a PC2 explaining 25% of the variance in the subset data (Fig. 2c). We detected similar relationships among leaf traits and PC axes in the pathogen damage subset data (Fig. 2c) when compared to the complete data set (Fig. 2a).
+The PCA revealed how leaf traits (ACI, LT, LPS and LMA) were related. We plotted leaf trait data according to tree species groups on the PCA axes to show how the variance in the complete data set is explained by PC1 (60%) and PC2 (27%) (Fig. 4a). We observed that ACI, LPS and LMA loadings tracked along PC1 towards more negative values, showing correlation among these traits (Fig. 4a). Traits LT and LPS were orthogonal to each other in Fig. 4a, indicative of low correlation. We note distinct grouping of species along PC1 such as *C. alliodora* in the direction of positive values of PC1 and *C. cainito* towards negative values. Along PC1 we see distinct and tight clustering according to species for all except *H. concinna* and *A. membranacea* which overlap with various other species. We note that LT loading tracks towards negative values along PC2 (Fig. 4a). Clear species groupings are detected, such as *Dypterix* sp. located towards positive values and *L. panamensis* towards negative values of the PC2 axis. We note a similar relationship between the leaf traits with respect to PC1 and PC2 in individual seedlings used for herbivory versus pathogen damage trials (Fig. 4b-4c). The PCA of leaf traits from seedlings used in herbivory trials has a PC1 explaining 57.5% of the variance and a PC2 explaining 28% of the variance in the subset data (Fig. 4b). We saw an inversion of the LT loading in direction of positive values, as well as the main tree species clustered (i.e. *Dypteryx* sp. and *A. membranacea*) along PC2 (Fig. 4b) with respect to Fig. 4a. The PCA of leaf traits from seedling used in pathogen damage trials has a PC1 explaining 64% of the variance and a PC2 explaining 25% of the variance in the subset data (Fig. 4c). We detected similar relationships among leaf traits and PC axes in the pathogen damage subset data (Fig. 4c) when compared to the complete data set (Fig. 4a).
 
-Simple linear regressions of herbivory (%) against PC1 and PC2 revealed a statistically significant positive relationship (*p* \<0.001) (Fig. 4a and 3b). Even though we note large spread in the data (Fig. 4a and 3b), we see a statistically significant positive trend of herbivory plotted against PC1, where positive values represent greater values of ACI, LPS and LMA. Herbivory plotted against PC2 shows a statistically significant positive trend, where positive values represent greater LT (Fig. 4b). Percent pathogen damage plotted against PC1 revealed a statistically significant positive relationship (*p* = \<0.001), in which positive values represent greater values of ACI, LPS and LMA (Fig. 4c). We did not see a statistically significant relationship (*p* = 0.223) between pathogen damage and PC2 (Fig. 4d).
+Simple linear regressions of herbivory (%) against PC1 and PC2 revealed a statistically significant positive relationship (*p* \<0.001) (Fig. 5a and 5b). Even though we note large spread in the data (Fig. 5a and 5b), we see a statistically significant positive trend of herbivory plotted against PC1, where positive values represent greater values of ACI, LPS and LMA. Herbivory plotted against PC2 shows a statistically significant positive trend, where positive values represent greater LT (Fig. 5b). Percent pathogen damage plotted against PC1 revealed a statistically significant positive relationship (*p* = \<0.001), in which positive values represent greater values of ACI, LPS and LMA (Fig. 5c). We did not see a statistically significant relationship (*p* = 0.223) between pathogen damage and PC2 (Fig. 5d).
 
 **TALK ABOUT SIMPLE LINEAR REGRESSIONS OF SUPPLEMENTARY FIGURES?**
 
@@ -896,7 +907,46 @@ masterpat2 <- df_list_ant2 |>
 #| fig.height: 4.5
 #| fig.cap: "Relative abundance (RA) of Ascomycota OTUs of seven tree species used in the study. (a) Violin plots show individuals' RA and and its distribution by species. The horizontal line within the violins represents the mean RA per species. (b) The RA of OTU's by treatment withing each tree species. Pink filled violin plots represent low endophyte (*E-*) treatment and yellow filled represent high endophyte (*E+*) treatment. Relative abundance is the percentage of endophyte colonization within individuals of the same species. Significance levels are represented by asterisks [*p* = 0.05 (\\*), *p* = 0.01 (\\**), and *p* = 0.001 (\\***)]."
 
-# RA per E_load
+
+#Comparison of means of LMA between E+ and E- samples per tree species
+#rstatix package used for pairwise t-test
+fig1_pairwise_t_test <- master |>
+  group_by(Species) |>
+  pairwise_t_test(Relative_Abundance ~ E_load,
+         p.adjust.method = "BH",
+  paired = TRUE,
+  #var.equal = F,
+  alternative = "two.sided",
+  mu = 0,
+  conf.level = 0.95, 
+  detailed = TRUE) 
+
+#ggpubr package used for t.tests and plotting t-test comparisons
+#E+ vs E- for all specie. To compare means of pathogen damage (%) between E+ and E- samples per species un-comment `group.by = "Species"` and change method to  "anova" in compare_means.
+fig1_compare_means <- compare_means(Relative_Abundance ~ E_load,
+         data = master,
+         #group.by = "Species",
+         method = "t.test",
+         p.adjust.method = "BH",
+  paired = TRUE,
+  alternative = "two.sided", 
+  mu = 0, 
+  var.equal = FALSE,
+  conf.level = 0.95)
+#Roughly the same outcome as pairwise_t_test.
+fir_compare_means <- compare_means(Relative_Abundance ~ E_load,
+         data = master,
+         group.by = "Species",
+         method = "anova",
+         p.adjust.method = "BH",
+  paired = TRUE,
+  alternative = "two.sided", 
+  mu = 0, 
+  var.equal = FALSE,
+  conf.level = 0.95)
+
+#Plotting t-test comparisons  
+# RA per E_load per species
 
 newname <- c("A. membranacea", "C. cainito", "C. alliodora", "Dypterix sp.", "H. concinna", "L. panamensis", "T. cacao")
 
@@ -926,11 +976,13 @@ RAE <- ggplot(data= master, aes(x = E_load, y = Relative_Abundance)) +
   #labs(caption = "*Outliers and singletons removed.") +
   stat_compare_means(comparisons = list(c("E-", "E+")),
                      method = "t.test",
-                     label = "p.signif", label.y = 25, bracket.size = 0.65) +
+                     label = "p.signif",
+                     paired = T,
+                     label.y = 25, 
+                     bracket.size = 0.65) +
   facet_wrap(~Species, labeller = as_labeller(newname))
   
 #RAE
-
 
 RAE_bar <- ggplot(data= master, aes(x = Species, y = Relative_Abundance)) +
   geom_bar(stat="identity", aes(fill = E_load), position = "stack") +
@@ -958,10 +1010,152 @@ fig1
 # Saving
 #ggsave(filename="./plots/Aim3_Fig1.png", plot = fig1, dpi=600, units=c("mm"), width = 210, height = 180, bg ="white")
 #
+```
+## Figure 2
 
+```{r}
+#| echo: false
+#| eval: true
+#| tidy: true
+#| warning: false
+#| fig.height: 6
+#| fig.width: 6
+#| fig.cap: "Distributions of values and means of herbivory (%) damage caused by *Atta colombica* in treatment groups (*E-* and *E+*) and tree species. a) Comparison of herbivory (%) means between treatment groups across individuals of all species. Statistical significance was calculated using a two-sided Student's t-Test. b) Comparison of herbivory (%) means between treatment types of each species. Statistical significance was calculated with an analysis of variance (ANOVA). Pink filled violins represent low FEF group (*E-*) and yellow filed violins represent high FEF group (*E+*). Significance levels are represented by *ns* (not significant) and asterisks [*p* = 0.05 (\\*), *p* = 0.01 (\\**), and *p* = 0.001 (\\***)]."
+
+#Comparison of means of Herbivory(%) between E+ and E- samples per tree species
+#rstatix package used for pairwise t-test
+fig2_pairwise_t_test <- master |>
+  group_by(Species) |>
+  pairwise_t_test(Ant_percent_leafloss ~ E_load,
+         p.adjust.method = "BH",
+  paired = TRUE,
+  #var.equal = F,
+  alternative = "two.sided",
+  mu = 0,
+  conf.level = 0.95, 
+  detailed = TRUE)
+
+#ggpubr package used for t.tests and plotting t-test comparisons
+#E+ vs E- for all specie. To compare means of pathogen damage (%) between E+ and E- samples per species un-comment `group.by = "Species"` and change method to  "anova" in compare_means.
+fig2a_compare_means <- compare_means(Ant_percent_leafloss ~ E_load,
+         data = master,
+         #group.by = "Species",
+         method = "t.test",
+         p.adjust.method = "BH",
+  paired = TRUE,
+  alternative = "two.sided", 
+  mu = 0, 
+  var.equal = FALSE,
+  conf.level = 0.95)
+#Roughly the same outcome as pairwise_t_test.
+
+#Report with `compare_means` because it is easier to plot with `ggpubr` package.
+
+#Since `compare_means` does not provide a test statistic, I will use `t.test` to report the test statistic.
+fig2a_t_test <-t.test(Ant_percent_leafloss ~ E_load,
+         data = master,
+         #group.by = "Species",
+         method = "t.test",
+         p.adjust.method = "BH",
+  paired = TRUE,
+  alternative = "two.sided", 
+  mu = 0, 
+  var.equal = FALSE,
+  conf.level = 0.95)
+
+
+# Fig. 2a
+herb_violin <- ggplot(data = master, aes(x = E_load, y = Ant_percent_leafloss, fill = E_load)) +
+  geom_violin() +
+  geom_point(position = position_jitterdodge(dodge.width = 0.9, jitter.width = 0.2),
+             alpha = 0.3, color = "grey30", size = 2) +
+  geom_crossbar(stat="summary",
+               fun = mean,
+               fun.max = mean,
+               fun.min = mean,
+               alpha = 0.3,
+               size = 0.3,
+               width = 0.7,
+               position = position_dodge(width = 0.9)) +
+  scale_fill_manual(name = "Treatment ", values= met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
+  theme_classic(base_size = 12) +
+  theme(
+        #panel.grid.major = element_line(colour = "grey"),
+        #panel.grid.minor = element_line(colour = "grey"),
+        #strip.background = element_rect(fill = "white"),
+        #strip.text.x = element_text(colour = "black", face = "bold"),
+        legend.title = element_text(face = "bold"),
+        panel.border = element_rect(linetype = "blank", fill = NA),
+        axis.text.x=element_blank(),
+        legend.position="right", 
+        legend.text = element_text(size = 12)) +
+  labs(x="", y= expression(paste("Herbivory (%)"))) +
+  stat_compare_means(label = "p.signif", 
+                     method = "t.test",
+                     paired = T,
+                     comparisons =list(c("E-", "E+")),
+                     bracket.size = 0.8)
+
+herb_violin
+
+# Fig. 2b
+patho_violin <- ggplot(data = master, aes(x = E_load, y = Pathogen_percent_damage, fill = Treatment)) +
+  geom_violin() +
+  geom_point(aes(color = E_load),position = position_jitterdodge(dodge.width = 0, jitter.width = 0.2),
+             alpha = 0.5, size = 2) +
+  geom_crossbar(stat="summary",
+               fun = mean,
+               fun.max = mean,
+               fun.min = mean,
+               alpha = 0.3,
+               size = 0.3,
+               width = 0.7,
+               position = position_dodge(width = 0.9)) +
+  scale_fill_manual(name = "Pathogen treatment ", values= met.brewer("Egypt", n = 2, type = "discrete")) +
+  #scale_color_manual(name = "Treatment ", values= met.brewer("Cross", n = 2, type = "discrete")) +
+  #scale_shape_manual(name = "Treatment", labels = c("E-", "E+"), values = c(16, 17)) +
+  theme_classic(base_size = 12) +
+  theme(
+        #panel.grid.major = element_line(colour = "grey"),
+        #panel.grid.minor = element_line(colour = "grey"),
+        #strip.background = element_rect(fill = "white"),
+        #strip.text.x = element_text(colour = "black", face = "bold"),
+        legend.title = element_text(face = "bold"),
+        panel.border = element_rect(linetype = "blank", fill = NA),
+        #axis.text.x=element_blank(),
+        legend.position="right", 
+        legend.text = element_text(size = 12)) +
+  labs(x="", y= expression(paste("Pathogen damage (%)"))) +
+  stat_compare_means(label = "p.signif", 
+                     method = "t.test",
+                     paired = T,
+                     label.y = 80) +
+  stat_compare_means(label = "p.signif",
+                     method = "t.test",
+                     paired = T,
+                     comparisons =list(c("E-", "E+")),
+                     bracket.size = 0.8) +
+   guides(color = "none") 
+patho_violin
+
+
+
+# Figure 2a-2b
+figure2 <- ggarrange(herb_violin, patho_violin, nrow = 1, 
+                       ncol=2, 
+                       label.x = -0.015, vjust = 1,
+                       widths = c(1.2, 1),
+                       common.legend = FALSE,
+                       legend="bottom", 
+                       labels = c("(a)", "(b)"))
+
+figure2
+ggsave(filename="./plots/Aim3_Fig2_21JAN2024.png", plot = figure2, dpi=600, units=c("mm"), width = 250, height = 200, bg ="white")
 ```
 
-## Figure 2
+
+## Figure 3
 
 ```{r, Distance Matrix}
 #| echo: false
@@ -980,7 +1174,7 @@ otu_e.dist <- vegdist(t(rabun), method="bray", binary=FALSE)
 #| warning: false
 #| fig.width: 6 
 #| fig.height: 6
-#| fig.cap: "No caption yet"
+#| fig.cap: "FEF community composition was associated with leaf functional traits from the leaf economic spectrum (genomic data set). variation in FEF community composition within and between host species (*n* = 7) and treatment groups (*E*-, *E*+) from distanmce-based redundancy analyses (dbRDA). Solid arrows represent statistically sisgnificant associations (*p* < 0.05). Each point represent a FEF community samples from one host tree species per treatment group; colors represent host tree species. Circles and filled triangles represent low (*E*-) and high (*E*+) FEF treatment groups, respectively"
 
 #dbRDa with `dbrda` function. it can be calculated with `capscale` function too. VERY similar.
 #Best model selected with `ordistep` function 
@@ -1057,11 +1251,11 @@ p_m3dbrda <- p_m3 +
 p_m3dbrda$layers
 p_m3dbrda$layers <- c(p_m3dbrda$layers, p_m3dbrda$layers[[2]], p_m3dbrda$layers[[5]], p_m3dbrda$layers[[6]], p_m3dbrda$layers[[7]], p_m3dbrda$layers[[8]])
 p_m3dbrda
-
-#ggsave(filename="./plots/Aim3_Fig2_12JAN2024.png", plot=p_m3dbrda, dpi=600, units=c("mm"), width=200, height=200)
+figure3 <- p_m3dbrda
+#ggsave(filename="./plots/Aim3_Fig3_12JAN2024.png", plot=figure3, dpi=600, units=c("mm"), width=200, height=200)
 ```
 
-## Figure 3
+## Figure 4
 
 ```{r, Full PCA}
 #| echo: false
@@ -1224,15 +1418,15 @@ auto_pat <- auto_pat +
 #ggsave(filename="./plots/Aim3_Pathogen_PCA_08162023.png", plot = auto_pat, dpi=600, units=c("mm"), width = 180, height = 180, bg = "white")
 ```
 
-```{r, Fig3 Grid PCA}
+```{r, Fig4 Grid PCA}
 #| echo: false
 #| eval: true
 #| tidy: true
 #| warning: false
 #| fig.width: 6 
 #| fig.height: 6
-#| fig.cap: "Leaf Functional traits are conserved within tree species regardless of endophyte load treatment. (a) Principal Component Analysis (PCA) of leaf functional traits from all tree species separated by *E-* and *E+* treatment. (b) PCA of leaf functional traits of plants solely used in ant herbivory assays. (c) PCA leaf functional traits of plants used solely in pathogen damage assays. Colors represent individual species. Circle and triangles represent low (*E-*) and high (*E+*) endophyte treatments, respectively. Colored ellipses correspond to tree species and represent 95% confidence intervals."
-grid_pca <- ggarrange(auto, 
+#| fig.cap: "Leaf Functional traits are conserved within tree species regardless of endophyte load treatment. (a) Principal Component Analysis (PCA) of leaf functional traits from all tree species separated by *E-* and *E+* treatment. (b) PCA of leaf functional traits of plants solely used in ant herbivory assays. (c) PCA leaf functional traits of plants used solely in pathogen damage assays. Colors represent tree species. Circle and triangles represent low (*E-*) and high (*E+*) FEF treatment groups, respectively. Colored ellipses correspond to tree species and represent 95% confidence intervals."
+figure4 <- ggarrange(auto, 
                       ggarrange(auto_ant, auto_pat, 
                                 nrow = 1, ncol=2, 
                                 label.x = -0.015, vjust = 1, 
@@ -1243,19 +1437,19 @@ grid_pca <- ggarrange(auto,
                       label.x = -0.01, vjust = 1, 
                       labels = "(a)")
 
-grid_pca
+figure4
 # Adding caption
 # ant_caption <- expression("*All individual leaves per individual per tree species included ("~ italic("n") ~ "= 210).")
 # ant_pca_with_caption <- annotate_figure(antpca_arranged, bottom = text_grob(ant_caption), fig.lab.pos = "bottom.right", fig.lab.size = 6)
 # 
 # ant_pca_with_caption
 
-#ggsave(filename = "./plots/Aim3_Fig3_02JAN2024.png", plot = grid_pca, dpi=600, units=c("mm"), width = 275, height = 300, bg = "white")
+#ggsave(filename = "./plots/Aim3_Fig4_02JAN2024.png", plot = figure4, dpi=600, units=c("mm"), width = 275, height = 300, bg = "white")
 #Previously called Aim3_GridPCA_SEPT182023.png
 
 ```
 
-## Figure 4
+## Figure 5
 
 ```{r, Ant LM PCA data}
 #| echo: false
@@ -1470,7 +1664,7 @@ pat_pc2 <- ggplot(pat_pcalm, aes(PC2, Pathogen_percent_damage)) +
 #ggsave(filename="./plots/Aim3_PatPC2_AUG282023.png", plot = pat_pc2, dpi=600, units=c("mm"), width = 180, height = 180, bg = "white")
 ```
 
-```{r, Figure 4}
+```{r, Figure 5}
 #| echo: false
 #| eval: true
 #| tidy: true
@@ -1478,7 +1672,7 @@ pat_pc2 <- ggplot(pat_pcalm, aes(PC2, Pathogen_percent_damage)) +
 #| fig.width: 9
 #| fig.height: 9
 #| fig.cap: "Simple linear regressions of herbivory and pathogen damage on PC1 and PC2 axes from PCAs of leaf traits for ant herbivory and pathogen damage assays. Linear regression of a) percent herbivory damage and PC1 axis (R^2^-adjusted= -0.0024, *p* = 0.447); b) percent herbivory damage and PC2 axis (R^2^-adjusted = 0.079, *p* = <0.001); c) percent pathogen damage and PC1 axis (R^2^-adjusted = 0.064, *p* = <0.001); and d) percent pathogen damage and PC2 axis (R^2^-adjusted  = 0.0016, *p* = 0.207). Colors represent individual species. Circle and triangles represent *E-* and *E+* treatments, respectively."
-figure4<- ggarrange(ant_pc1, ant_pc2, pat_pc1, pat_pc2,
+figure5<- ggarrange(ant_pc1, ant_pc2, pat_pc1, pat_pc2,
                     nrow = 2, 
                     ncol=2, 
                     label.x = -0.015, vjust = 1, 
@@ -1486,9 +1680,9 @@ figure4<- ggarrange(ant_pc1, ant_pc2, pat_pc1, pat_pc2,
                     common.legend = TRUE, 
                     legend="bottom")
 
-figure4
+figure5
 
-#ggsave(filename = "./plots/Aim3_Fig4_04JAN2024.png", plot = figure3, dpi=600, units=c("mm"), width = 300, height = 225, bg = "white")
+#ggsave(filename = "./plots/Aim3_Fig5_04JAN2024.png", plot = figure5, dpi=600, units=c("mm"), width = 300, height = 225, bg = "white")
 #Previously named Aim3_AntPCS_SEPT252023.png
 ```
 
@@ -1496,9 +1690,9 @@ figure4
 
 ## Table 1
 
-```{r, replication_statement2}
+```{r, table1}
 #| echo: false
-#| eval: false
+#| eval: true
 #| tidy: true
 #| warning: false
 #| tbl-cap: "Replication statement of the statistical analysis in this study."
@@ -1518,17 +1712,17 @@ thick <- fp_border(color = "black", style = "solid", width = 2)
 
 rep_statement <- hux(
   "Scale of inference" = c("Leaf functional traits",
-                           "Leaf lifespan",
                            "Genomic data",
-                           "Herbivore and Pathogen trials"),
+                           "Herbivore assays",
+                           "Pathogen assays"),
   
   "Scale at which the factor of interest is applied" = c("Species",
-                                                         "Species",
                                                         "Species",
+                                                        "Species/individual",
                                                         "Species/individual"),
   "Number of replicates at the appropriate scale" = c("Treatment = 2 (E-, E+), Tropical tree species = 7, Replicates per species = 5. Replicate leaves per plant = 3",
-                                                      "LIFE SPAN LEVEL HERE",
                                                       "Treatment = 2 (E-, E+), Tropical tree species = 7, Replicates per species = 5",
+                                                      "Treatment = 2 (E-, E+), Tropical tree species = 7, Replicates per species = 5, Replicates per plant = 1",
                                                       "Treatment = 2 (E-, E+), sub-treatment = 2 (control and pathogen) for pathogen trials, Tropical tree species = 7, Replicates per species = 5, Replicates per plant = 1"))
 
 
@@ -1555,8 +1749,6 @@ rep_statement <- rep_statement |>
 
 rep_statement
 #quick_docx(rep_statement, file = "./tables/replication_statement.docx")
-
-
 ```
 
 ## Table 2
@@ -2769,7 +2961,7 @@ Abun7a <- ggplot(data= data2 |>
   scale_fill_manual(name = "Treatment ", values= met.brewer("Cross", n = 2, type = "discrete")) +
   scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
   scale_y_continuous(labels = scales::percent) +
-theme_classic(base_size = 14)+
+theme_classic(base_size = 12)+
   theme(
         #panel.grid.major = element_line(colour = "grey"),
         #panel.grid.minor = element_line(colour = "grey"),
@@ -2813,7 +3005,7 @@ Abun7b <- ggplot(data= data2 |>
                      breaks = c(0, 0.25, 0.50, 0.75, 1),
                      labels = scales::percent) +
   #scale_y_continuous(labels = scales::percent) +
-theme_classic(base_size = 14)+
+theme_classic(base_size = 12)+
   theme(
         panel.grid.major = element_line(colour = "grey"),
         panel.grid.minor = element_line(colour = "grey"),
@@ -2858,7 +3050,6 @@ suppfig_1
 #| fig.width: 6
 #| fig.cap: "Distributions of values and means of anthocyanin content (ACI) in treatment groups (*E-* and *E+*) and tree species. a) Comparison of ACI means between treatment groups across individuals of all species. Statistical significance was calculated using a two-sided Student's t-Test. b) Comparison of ACI means between treatment types of each species. Statistical significance was calculated with an analysis of variance (ANOVA). Pink filled violins represent low FEF group (*E-*) and yellow filed violins represent high FEF group (*E+*).Significance levels are represented by *ns* (not significant) and asterisks [*p* <= 0.05 (\\*), *p* <= 0.01 (\\**), *p* <= 0.001 (\\***), and *p* < 0.0001 (\\****)]."
 
-
 # Comparisons
 mycomparisons <- list(c("APEIME", "CHRYCA"), c("APEIME", "CORDAL"), c("APEIME", "DYPTE"), c("APEIME", "HEISCO"),c("APEIME", "LACPA"), c("APEIME","THEOCA"),
                       c("CHRYCA","CORDAL"), c("CHRYCA","DYPTE"),c("CHRYCA","HEISCO"), c("CHRYCA","LACPA"), c("CHRYCA", "THEOCA"),
@@ -2869,6 +3060,44 @@ mycomparisons <- list(c("APEIME", "CHRYCA"), c("APEIME", "CORDAL"), c("APEIME", 
 newname <- c("A. membranacea", "C. cainito", "C. alliodora", "Dypterix sp.", "H. concinna", "L. panamensis", "T. cacao")
 
 names(newname) <- c("APEIME", "CHRYCA", "CORDAL", "DYPTE", "HEISCO", "LACPA", "THEOCA")
+
+
+#Comparison of means of ACI between E+ and E- samples per tree species
+#rstatix package used for pairwise t-test
+suppfig2_pairwise_t_test <- master |>
+  group_by(Species) |>
+  pairwise_t_test(Anthocyanins ~ E_load,
+         p.adjust.method = "BH",
+  paired = TRUE,
+  #var.equal = F,
+  alternative = "two.sided",
+  mu = 0,
+  conf.level = 0.95, 
+  detailed = TRUE) 
+
+#ggpubr package used for t.tests and plotting t-test comparisons
+#E+ vs E- for all specie. To compare means of pathogen damage (%) between E+ and E- samples per species un-comment `group.by = "Species"` and change method to  "anova" in compare_means.
+suppfig2a_compare_means <- compare_means(Anthocyanins ~ E_load,
+         data = master,
+         #group.by = "Species",
+         method = "t.test",
+         p.adjust.method = "BH",
+  paired = TRUE,
+  alternative = "two.sided", 
+  mu = 0, 
+  var.equal = FALSE,
+  conf.level = 0.95)
+#Roughly the same outcome as pairwise_t_test.
+suppfig2b_compare_means <- compare_means(Anthocyanins ~ E_load,
+         data = master,
+         group.by = "Species",
+         method = "anova",
+         p.adjust.method = "BH",
+  paired = TRUE,
+  alternative = "two.sided", 
+  mu = 0, 
+  var.equal = FALSE,
+  conf.level = 0.95)
 
 # Anthocyanins by endophyte load an species
 ACIa <- ggplot(data = master, aes(x = E_load, y = Anthocyanins, fill = E_load)) +
@@ -2962,7 +3191,45 @@ suppfig_2
 #| fig.height: 6
 #| fig.width: 6
 #| fig.cap: "Distributions of values and means of leaf thickness (LT) (\u03Bcg) in treatment groups (*E-* and *E+*) and tree species. a) Comparison of LT means between treatment groups across individuals of all species. Statistical significance was calculated using a two-sided Student's t-Test. b) Comparison of LT means between treatment types of each species. Statistical significance was calculated with an analysis of variance (ANOVA). Pink filled violins represent low FEF group (*E-*) and yellow filed violins represent high FEF group (*E+*). Significance levels are represented by *ns* (not significant) and asterisks [*p* <= 0.05 (\\*), *p* <= 0.01 (\\**), *p* <= 0.001 (\\***), and *p* < 0.0001 (\\****)]."
-#| 
+
+#Comparison of means of LT between E+ and E- samples per tree species
+#rstatix package used for pairwise t-test
+suppfig3_pairwise_t_test <- master |>
+  group_by(Species) |>
+  pairwise_t_test(Thickness ~ E_load,
+         p.adjust.method = "BH",
+  paired = TRUE,
+  #var.equal = F,
+  alternative = "two.sided",
+  mu = 0,
+  conf.level = 0.95, 
+  detailed = TRUE) 
+
+#ggpubr package used for t.tests and plotting t-test comparisons
+#E+ vs E- for all specie. To compare means of pathogen damage (%) between E+ and E- samples per species un-comment `group.by = "Species"` and change method to  "anova" in compare_means.
+suppfig3a_compare_means <- compare_means(Thickness ~ E_load,
+         data = master,
+         #group.by = "Species",
+         method = "t.test",
+         p.adjust.method = "BH",
+  paired = TRUE,
+  alternative = "two.sided", 
+  mu = 0, 
+  var.equal = FALSE,
+  conf.level = 0.95)
+#Roughly the same outcome as pairwise_t_test.
+suppfig3b_compare_means <- compare_means(Thickness ~ E_load,
+         data = master,
+         group.by = "Species",
+         method = "anova",
+         p.adjust.method = "BH",
+  paired = TRUE,
+  alternative = "two.sided", 
+  mu = 0, 
+  var.equal = FALSE,
+  conf.level = 0.95)
+
+
 # Leaf thickness by endophyte load and species
 
 LTa <- ggplot(data = master, aes(x = E_load, y = Thickness, fill = E_load)) +
@@ -3058,7 +3325,46 @@ suppfig_3
 #| fig.height: 6
 #| fig.width: 6
 #| fig.cap: "Distributions of values and means of leaf punch stength (LPS) (N mm^-1) in treatment groups (*E-* and *E+*) and tree species. a) Comparison of LPS means between treatment groups across individuals of all species. Statistical significance was calculated using a two-sided Student's t-Test. b) Comparison of LPS means between treatment types of each species. Statistical significance was calculated with an analysis of variance (ANOVA). Pink filled violins represent low FEF group (*E-*) and yellow filed violins represent high FEF group (*E+*). Significance levels are represented by *ns* (not significant) and asterisks [*p* <= 0.05 (\\*), *p* <= 0.01 (\\**), *p* <= 0.001 (\\***), and *p* < 0.0001 (\\****)]."
-#| 
+
+
+#Comparison of means of LPS between E+ and E- samples per tree species
+#rstatix package used for pairwise t-test
+suppfig4_pairwise_t_test <- master |>
+  group_by(Species) |>
+  pairwise_t_test(Toughness ~ E_load,
+         p.adjust.method = "BH",
+  paired = TRUE,
+  #var.equal = F,
+  alternative = "two.sided",
+  mu = 0,
+  conf.level = 0.95, 
+  detailed = TRUE) 
+
+#ggpubr package used for t.tests and plotting t-test comparisons
+#E+ vs E- for all species. To compare means of pathogen damage (%) between E+ and E- samples per species un-comment `group.by = "Species"` and change method to  "anova" in compare_means.
+suppfig4a_compare_means <- compare_means(Toughness ~ E_load,
+         data = master,
+         #group.by = "Species",
+         method = "t.test",
+         p.adjust.method = "BH",
+  paired = TRUE,
+  alternative = "two.sided", 
+  mu = 0, 
+  var.equal = FALSE,
+  conf.level = 0.95)
+#Roughly the same outcome as pairwise_t_test.
+suppfig4b_compare_means <- compare_means(Toughness ~ E_load,
+         data = master,
+         group.by = "Species",
+         method = "anova",
+         p.adjust.method = "BH",
+  paired = TRUE,
+  alternative = "two.sided", 
+  mu = 0, 
+  var.equal = FALSE,
+  conf.level = 0.95)
+
+
 # Figure S3
 # Leaf toughness (lbf) by  endophyte load and species with data (data) ####
 LPSa <- ggplot(data = master, aes( x = E_load, y = Toughness, fill = E_load)) +
@@ -3154,6 +3460,44 @@ suppfig_4
 #| fig.width: 6
 #| fig.cap: "Distributions of values and means of leaf mass per area (LMA) (mg mm^2) in treatment groups (*E-* and *E+*) and tree species. a) Comparison of LMA means between treatment groups across individuals of all species. Statistical significance was calculated using a two-sided Student's t-Test. b) Comparison of LMA means between treatment types of each species. Statistical significance was calculated with an analysis of variance (ANOVA). Pink filled violins represent low FEF group (*E-*) and yellow filed violins represent high FEF group (*E+*). Significance levels are represented by *ns* (not significant) and asterisks [*p* = 0.05 (\\*), *p* = 0.01 (\\**), and *p* = 0.001 (\\***)]."
 
+#Comparison of means of LMA between E+ and E- samples per tree species
+#rstatix package used for pairwise t-test
+suppfig5_pairwise_t_test <- master |>
+  group_by(Species) |>
+  pairwise_t_test(LMA~ E_load,
+         p.adjust.method = "BH",
+  paired = TRUE,
+  #var.equal = F,
+  alternative = "two.sided",
+  mu = 0,
+  conf.level = 0.95, 
+  detailed = TRUE) 
+
+#ggpubr package used for t.tests and plotting t-test comparisons
+#E+ vs E- for all specie. To compare means of pathogen damage (%) between E+ and E- samples per species un-comment `group.by = "Species"` and change method to  "anova" in compare_means.
+suppfig5a_compare_means <- compare_means(LMA ~ E_load,
+         data = master,
+         #group.by = "Species",
+         method = "t.test",
+         p.adjust.method = "BH",
+  paired = TRUE,
+  alternative = "two.sided", 
+  mu = 0, 
+  var.equal = FALSE,
+  conf.level = 0.95)
+#Roughly the same outcome as pairwise_t_test.
+suppfig5b_compare_means <- compare_means(LMA ~ E_load,
+         data = master,
+         group.by = "Species",
+         method = "anova",
+         p.adjust.method = "BH",
+  paired = TRUE,
+  alternative = "two.sided", 
+  mu = 0, 
+  var.equal = FALSE,
+  conf.level = 0.95)
+
+
 # Figure S5
 # Leaf mass per area (LMA) by  endophyte load and species
 LMAa <- ggplot(data = master, aes(x = E_load, y = LMA, fill = E_load)) +
@@ -3244,47 +3588,10 @@ suppfig_5
 #| warning: false
 #| fig.height: 6
 #| fig.width: 6
-#| fig.cap: "Distributions of values and means of herbivory (%) damage caused by *Atta colombica* in treatment groups (*E-* and *E+*) and tree species. a) Comparison of herbivory (%) means between treatment groups across individuals of all species. Statistical significance was calculated using a two-sided Student's t-Test. b) Comparison of herbivory (%) means between treatment types of each species. Statistical significance was calculated with an analysis of variance (ANOVA). Pink filled violins represent low FEF group (*E-*) and yellow filed violins represent high FEF group (*E+*). Significance levels are represented by *ns* (not significant) and asterisks [*p* = 0.05 (\\*), *p* = 0.01 (\\**), and *p* = 0.001 (\\***)]."
+#| fig.cap: "Distributions of values and means of herbivory (%) and pathogen damage caused by *Atta colombica* and *Calonectria* sp. , respectively, in treatment groups (*E-* and *E+*) per tree species. a) Comparison of herbivory (%) means between treatment groups across individuals of all species. Pink filled violins represent low FEF group (*E-*) and yellow filed violins represent high FEF group (*E+*). b) Comparison of pathogen (%) means between treatment groups across individuals of all species.  Marron filled violins represent control leaves and blue filled violins represent pathogen treated leaves. Statistical significance was calculated with an analysis of variance (ANOVA). Significance levels are represented by *ns* (not significant) and asterisks [*p* = 0.05 (\\*), *p* = 0.01 (\\**), and *p* = 0.001 (\\***)]."
 
-# Fig. S6a
-herb_violin_a <- ggplot(data = master, aes(x = E_load, y = Ant_percent_leafloss, fill = E_load)) +
-  geom_violin() +
-  geom_point(position = position_jitterdodge(dodge.width = 0.9, jitter.width = 0.2),
-             alpha = 0.3, color = "grey30", size = 2) +
-  geom_crossbar(stat="summary",
-               fun = mean,
-               fun.max = mean,
-               fun.min = mean,
-               alpha = 0.3,
-               size = 0.3,
-               width = 0.7,
-               position = position_dodge(width = 0.9)) +
-  scale_fill_manual(name = "Treatment ", values= met.brewer("Cross", n = 2, type = "discrete")) +
-  scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
-  scale_x_discrete(labels=c(newname)) +
-#  scale_y_continuous(limits = c(100, 300)) +
-  theme_classic(base_size = 12) +
-  theme(
-        #panel.grid.major = element_line(colour = "grey"),
-        #panel.grid.minor = element_line(colour = "grey"),
-        #strip.background = element_rect(fill = "white"),
-        #strip.text.x = element_text(colour = "black", face = "bold"),
-        legend.title = element_text(face = "bold"),
-        panel.border = element_rect(linetype = "blank", fill = NA),
-        axis.text.x=element_blank(),
-        legend.position="right", 
-        legend.text = element_text(size = 12)) +
-  labs(x="", y= expression(paste("Herbivory (%)"))) +
-  stat_compare_means(label = "p.signif", 
-                     method = "t.test",
-                     paired = T,
-                     comparisons =list(c("E-", "E+")),
-                     bracket.size = 0.8)
-
-#herb_violin_a
-
-#Fig. S6b
-herb_violin_b <-  ggplot(data = master, aes( x = Species, y = Ant_percent_leafloss, fill = E_load)) +
+#Fig. S6a
+herb_violin_a <-  ggplot(data = master, aes( x = Species, y = Ant_percent_leafloss, fill = E_load)) +
 geom_violin() +
   geom_point(position = position_jitterdodge(dodge.width = 0.9, jitter.width = 0.2),
              alpha = 0.3, color = "grey30", size = 2) +
@@ -3317,74 +3624,7 @@ geom_violin() +
                      paired = T)
 #herb_violin_b
 
-aov(Ant_percent_leafloss ~ Species, data = master)
-
-# Figure S6a-S6b
-suppfig_6 <- ggarrange(herb_violin_a, herb_violin_b, nrow = 1, 
-                       ncol=2, 
-                       label.x = -0.015, vjust = 1, 
-                       common.legend = TRUE,
-                       legend="bottom", 
-                       labels = c("(a)", "(b)"))
-
-suppfig_6
-#ggsave(filename="./plots/Aim3_FigS6_15JAN2024.png", plot = suppfig_6, dpi=600, units=c("mm"), width = 250, height = 200, bg ="white")
-```
-
-## Figure S7a-S7b
-
-```{r, suppfig_7}
-
-#| echo: false
-#| eval: true
-#| tidy: true
-#| warning: false
-#| fig.height: 6
-#| fig.width: 6
-#| fig.cap: "Distributions of values and means of pathogen (%) damage caused by *Calonectria* sp. in treatment groups (*E-* and *E+*) and tree species. a) Comparison of pathogen (%) means between treatment groups across individuals of all species. Statistical significance was calculated using a two-sided Student's t-Test. b) Comparison of pathogen (%) means between treatment types of each species. Statistical significance was calculated with an analysis of variance (ANOVA). Pink filled violins and points represent low FEF group (*E-*) and yellow filed violins represent high FEF group (*E+*). Marron filled violins represent control leaves and blue filled violins represent pathogen treated leaveds. Significance levels are represented by *ns* (not significant) and asterisks [*p* = 0.05 (\\*), *p* = 0.01 (\\**), and *p* = 0.001 (\\***)]."
-
-# Fig. S7a
-patho_violin_a <- ggplot(data = master, aes(x = E_load, y = Pathogen_percent_damage, fill = Treatment)) +
-  geom_violin() +
-  geom_point(aes(color = E_load),position = position_jitterdodge(dodge.width = 0, jitter.width = 0.2),
-             alpha = 0.5, size = 2) +
-  geom_crossbar(stat="summary",
-               fun = mean,
-               fun.max = mean,
-               fun.min = mean,
-               alpha = 0.3,
-               size = 0.3,
-               width = 0.7,
-               position = position_dodge(width = 0.9)) +
-  scale_fill_manual(name = "Pathogen treatment ", values= met.brewer("Egypt", n = 2, type = "discrete")) +
-  scale_color_manual(name = "Treatment ", values= met.brewer("Cross", n = 2, type = "discrete")) +
-  #scale_shape_manual(name = "Treatment", labels = c("E-", "E+"), values = c(16, 17)) +
-  scale_x_discrete(labels=c(newname)) +
-  theme_classic(base_size = 12) +
-  theme(
-        #panel.grid.major = element_line(colour = "grey"),
-        #panel.grid.minor = element_line(colour = "grey"),
-        #strip.background = element_rect(fill = "white"),
-        #strip.text.x = element_text(colour = "black", face = "bold"),
-        legend.title = element_text(face = "bold"),
-        panel.border = element_rect(linetype = "blank", fill = NA),
-        #axis.text.x=element_blank(),
-        legend.position="right", 
-        legend.text = element_text(size = 12)) +
-  labs(x="", y= expression(paste("Pathogen damage (%)"))) +
-  stat_compare_means(label = "p.signif", 
-                     method = "t.test",
-                     paired = T,
-                     label.y = 80) +
-  stat_compare_means(label = "p.signif",
-                     method = "t.test",
-                     paired = T,
-                     comparisons =list(c("E-", "E+")),
-                     bracket.size = 0.8)
-
-#patho_violin_a
-
-#Fig. S7b
+#Fig. S6b
 patho_violin_b <-  ggplot(data = master, aes( x = Species, y = Pathogen_percent_damage, fill = E_load)) +
 geom_violin() +
   geom_point(position = position_jitterdodge(dodge.width = 0.9, jitter.width = 0.2),
@@ -3415,23 +3655,525 @@ geom_violin() +
 
   stat_compare_means(label = "p.signif", 
                      method = "anova",
-                     paired = T)
+                     paired = T) +
+   guides(color = "none")
+
 #patho_violin_b
 
 
-
-
-# Figure S7a-S7b
-suppfig_7 <- ggarrange(patho_violin_a, patho_violin_b, nrow = 1, 
-                       ncol=2, 
-                       label.x = -0.015, vjust = 1,
-                       widths = c(1.2, 1),
-                       common.legend = FALSE,
+# Figure S6a-S6b
+suppfig_6 <- ggarrange(herb_violin_a, patho_violin_b, nrow = 2, 
+                       ncol=1, 
+                       label.x = -0.015, vjust = 1, 
+                       common.legend = TRUE,
                        legend="bottom", 
                        labels = c("(a)", "(b)"))
 
-suppfig_7
-#ggsave(filename="./plots/Aim3_FigS7_15JAN2024.png", plot = suppfig_7, dpi=600, units=c("mm"), width = 250, height = 200, bg ="white")
+suppfig_6
+ggsave(filename="./plots/Aim3_FigS6_21JAN2024.png", plot = suppfig_6, dpi=600, units=c("mm"), width = 250, height = 200, bg ="white")
+```
+
+## Figure S7
+```{r, suppfig_7}
+#| echo: false
+#| eval: true
+#| tidy: true
+#| warning: false
+#| fig.height: 6
+#| fig.width: 6
+# Herbivory and Toughness
+#summary(lm(logit_herbivory ~ Toughness, data = masterant2))
+ 
+herb_lps <- ggplot(data = masterant2, aes(y= logit_herbivory, x = Toughness, color = E_load)) +
+  geom_jitter(aes(color = E_load, shape = Species), 
+               size = 3, 
+               alpha = 0.7) +
+  geom_smooth(method = lm, 
+              se = T , 
+              level = 0.95, 
+              na.rm = F, 
+              color = "black", 
+              size = 0.75) +
+  scale_shape_manual(labels=c("A. membranacea", 
+                              "C. cainito", 
+                              "C. alliodora", 
+                              "Dypterix sp.", 
+                              "H. concinna", 
+                              "L. panamensis", 
+                              "T. cacao"),
+                     values = c(15:22)) +
+  scale_color_manual(name = "Treatment",
+                     labels=c("E-", "E+"),
+                     values = met.brewer(name = "Cross", n = 2, type="discrete")) +
+  geom_smooth(method=lm, se = F) +
+  geom_smooth(method = lm, se = T , level = 0.95, na.rm = F, color = "black") +
+  stat_regline_equation(label.y.npc = "top", 
+                        label.x.npc = "left",
+                        size = 5,
+                        aes(label = ..eq.label..), 
+                        color= "black") +
+  labs(x=expression(paste("Leaf punch strength (N mm","^-1)")), y = "logit[Herbivory (%)]") +
+  theme_classic(base_size = 10) +
+  theme(legend.position="right", 
+        legend.title = element_text(face = "bold"),
+        legend.text = element_text(face = "italic",
+                                   size = 12),
+        axis.text.x=element_text(size = 7),
+        axis.text.y=element_text(size = 7))  +
+  guides(color = "none")  +      #To turn off color legend
+  guides(fill = "none") + #To turn off fill legend
+  guides(shape = "none") #To turn off shape legend
+herb_lps
+
+# fit <- lm(logit_herbivory ~ Thickness, data = masterant2)
+# 
+# rSquared <- summary(fit)$r.squared
+# rSquared
+# anova(fit)
+# pVal <- anova(fit)$'Pr(>F)'[1]
+# pVal
+
+# Herbivory and Anthocyanins
+#summary(lm(logit_herbivory ~ Anthocyanins, data = masterant2))
+
+herb_aci <- ggplot(data = masterant2, aes(y= logit_herbivory, x = Anthocyanins, color = E_load)) +
+  geom_jitter(aes(color = E_load, shape = Species), 
+               size = 3, 
+               alpha = 0.7) +
+  geom_smooth(method = lm, 
+              se = T , 
+              level = 0.95, 
+              na.rm = F, 
+              color = "black", 
+              size = 0.75) +
+  scale_shape_manual(labels=c("A. membranacea", 
+                              "C. cainito", 
+                              "C. alliodora", 
+                              "Dypterix sp.", 
+                              "H. concinna", 
+                              "L. panamensis", 
+                              "T. cacao"),
+                     values = c(15:22)) +
+  scale_color_manual(name = "Treatment",
+                     labels=c("E-", "E+"),
+                     values = met.brewer(name = "Cross", n = 2, type="discrete")) +
+  geom_smooth(method=lm, se = F) +
+  geom_smooth(method = lm, se = T , level = 0.95, na.rm = F, color = "black") +
+  stat_regline_equation(label.y.npc = "top", 
+                        label.x.npc = "left",
+                        size = 5,
+                        aes(label = ..eq.label..), 
+                        color= "black") +
+  labs(x=expression(paste("ACI (% ", italic("A") [lambda]," at 931 nm / % ", italic("A") [lambda]," at 530 nm)")), y = "logit[Herbivory (%)]") +
+  theme_classic(base_size = 10) +
+  theme(legend.position="right", 
+        legend.title = element_text(face = "bold"),
+        legend.text = element_text(face = "italic",
+                                   size = 12),
+        axis.text.x=element_text(size = 7),
+        axis.text.y=element_text(size = 7))  +
+  guides(color = "none")  +      #To turn off color legend
+  guides(fill = "none") + #To turn off fill legend
+  guides(shape = "none") #To turn off shape legend
+herb_aci
+#scale_shape_manual(values = c(1:7))
+
+# Herbivory and leaf thickness
+#summary(lm(logit_herbivory ~ Thickness, data = masterant2))
+
+herb_lt <- ggplot(data = masterant2, aes(y= logit_herbivory, x = Thickness, color = E_load)) +
+  geom_jitter(aes(color = E_load, shape = Species), 
+               size = 3, 
+               alpha = 0.7) +
+  geom_smooth(method = lm, 
+              se = T , 
+              level = 0.95, 
+              na.rm = F, 
+              color = "black", 
+              size = 0.75) +
+  scale_shape_manual(labels=c("A. membranacea", 
+                              "C. cainito", 
+                              "C. alliodora", 
+                              "Dypterix sp.", 
+                              "H. concinna", 
+                              "L. panamensis", 
+                              "T. cacao"),
+                     values = c(15:22)) +
+  scale_color_manual(name = "Treatment",
+                     labels=c("E-", "E+"),
+                     values = met.brewer(name = "Cross", n = 2, type="discrete")) +
+  geom_smooth(method=lm, se = F) +
+  geom_smooth(method = lm, se = T , level = 0.95, na.rm = F, color = "black") +
+  stat_regline_equation(label.y.npc = "top", 
+                        label.x.npc = "left",
+                        size = 5,
+                        aes(label = ..eq.label..), 
+                        color= "black") +
+  labs(x=expression(paste("Leaf thickness (",mu,"m)")), y = "logit[Herbivory (%)]") +
+  theme_classic(base_size = 10) +
+  theme(legend.position="right", 
+        legend.title = element_text(face = "bold"),
+        legend.text = element_text(face = "italic",
+                                   size = 12),
+        axis.text.x=element_text(size = 7),
+        axis.text.y=element_text(size = 7))  +
+  guides(color = "none")  +      #To turn off color legend
+  guides(fill = "none") + #To turn off fill legend
+  guides(shape = "none") #To turn off shape legend
+
+herb_lt
+
+# Herbivory and LMA
+#summary(lm(logit_herbivory ~ LMA, data = masterant2))
+
+herb_lma <- ggplot(data = masterant2, aes(y= logit_herbivory, x = LMA, color = E_load)) +
+  geom_jitter(aes(color = E_load, shape = Species), 
+               size = 3, 
+               alpha = 0.7) +
+  geom_smooth(method = lm, 
+              se = T , 
+              level = 0.95, 
+              na.rm = F, 
+              color = "black", 
+              size = 0.75) +
+  scale_shape_manual(labels=c("A. membranacea", 
+                              "C. cainito", 
+                              "C. alliodora", 
+                              "Dypterix sp.", 
+                              "H. concinna", 
+                              "L. panamensis", 
+                              "T. cacao"),
+                     values = c(15:22)) +
+  scale_color_manual(name = "Treatment",
+                     labels=c("E-", "E+"),
+                     values = met.brewer(name = "Cross", n = 2, type="discrete")) +
+  geom_smooth(method=lm, se = F) +
+  geom_smooth(method = lm, se = T , level = 0.95, na.rm = F, color = "black") +
+  stat_regline_equation(label.y.npc = "top", 
+                        label.x.npc = "left",
+                        size = 5,
+                        aes(label = ..eq.label..), 
+                        color= "black") +
+  labs(x= expression(paste("LMA (mg ",mm^-2, ")")), y = "logit[Herbivory (%)]") +
+  theme_classic(base_size = 10) +
+  theme(legend.position="right", 
+        legend.title = element_text(face = "bold"),
+        legend.text = element_text(face = "italic",
+                                   size = 12),
+        axis.text.x=element_text(size = 7),
+        axis.text.y=element_text(size = 7)) 
+herb_lma
+
+# Herbivory and FEF Shannon Diversity
+# summary(lm(logit_herbivory ~ Shannon, data = masterant2))
+
+# Extracting effect size of model to plot
+herb_shannon <- ggplot(data = masterant2, aes(y= logit_herbivory, x = Shannon, color = E_load)) +
+  geom_jitter(aes(color = E_load, shape = Species), 
+               size = 3, 
+               alpha = 0.7) +
+  geom_smooth(method = lm, 
+              se = T , 
+              level = 0.95, 
+              na.rm = F, 
+              color = "black", 
+              size = 0.75) +
+  scale_shape_manual(labels=c("A. membranacea", 
+                              "C. cainito", 
+                              "C. alliodora", 
+                              "Dypterix sp.", 
+                              "H. concinna", 
+                              "L. panamensis", 
+                              "T. cacao"),
+                     values = c(15:22)) +
+  scale_color_manual(name = "Treatment",
+                     labels=c("E-", "E+"),
+                     values = met.brewer(name = "Cross", n = 2, type="discrete")) +
+  geom_smooth(method=lm, se = F) +
+  geom_smooth(method = lm, se = T , level = 0.95, na.rm = F, color = "black") +
+  stat_regline_equation(label.y.npc = "top", 
+                        label.x.npc = "left",
+                        size = 5,
+                        aes(label = ..eq.label..), 
+                        color= "black") +
+  labs(x= "Shannon's Diversity Index", y = "logit[Herbivory (%)]") +
+  theme_classic(base_size = 10) +
+  theme(legend.position="right", 
+        legend.title = element_text(face = "bold"),
+        legend.text = element_text(face = "italic",
+                                   size = 12),
+        axis.text.x=element_text(size = 7),
+        axis.text.y=element_text(size = 7)) 
+ 
+
+
+
+ # Multiples plots together
+
+suppfig_S7 <- ggarrange(herb_lt, herb_lps, herb_aci, herb_lma, herb_shannon, 
+                          nrow = 2, 
+                          ncol=3, 
+                          common.legend = TRUE, 
+                          labels = c("(a)", "(b)", "(c)", "(d)", "(e)"),
+                          legend="bottom")
+
+suppfig_S7
+
+
+#ggsave(filename = "./plots/Aim3_FigS7_21JAN024.jpg", plot = suppfig_S7, dpi=600, units=c("mm"), width=250, height=200, bg = "white")
+
+```
+
+
+## Figure S8
+```{r}
+#| echo: false
+#| eval: true
+#| tidy: true
+#| warning: false
+#| fig.height: 6
+#| fig.width: 6
+# Pathogen
+# Regressions
+# Pathogen damage and Toughness
+#summary(lm(logit_pathogenicity ~ Toughness, data = masterpat2)) 
+
+patho_lps <- ggplot(data = masterpat2, aes(y= logit_pathogenicity, x = Toughness, color = E_load)) +
+  geom_jitter(aes(color = E_load, shape = Species), 
+               size = 3, 
+               alpha = 0.7) +
+  geom_smooth(method = lm, 
+              se = T , 
+              level = 0.95, 
+              na.rm = F, 
+              color = "black", 
+              size = 0.75) +
+  scale_shape_manual(labels=c("A. membranacea", 
+                              "C. cainito", 
+                              "C. alliodora", 
+                              "Dypterix sp.", 
+                              "H. concinna", 
+                              "L. panamensis", 
+                              "T. cacao"),
+                     values = c(15:22)) +
+  scale_color_manual(name = "Treatment",
+                     labels=c("E-", "E+"),
+                     values = met.brewer(name = "Cross", n = 2, type="discrete")) +
+  geom_smooth(method=lm, se = F) +
+  geom_smooth(method = lm, se = T , level = 0.95, na.rm = F, color = "black") +
+  stat_regline_equation(label.y.npc = "top", 
+                        label.x.npc = "left",
+                        size = 5,
+                        aes(label = ..eq.label..), 
+                        color= "black") +
+  labs(x=expression(paste("Leaf punch strength (N mm","^-1)")), y = "logit[Pathogen damage (%)]") +
+  theme_classic(base_size = 10) +
+  theme(legend.position="right", 
+        legend.title = element_text(face = "bold"),
+        legend.text = element_text(face = "italic",
+                                   size = 12),
+        axis.text.x=element_text(size = 7),
+        axis.text.y=element_text(size = 7))  +
+  guides(color = "none")  +      #To turn off color legend
+  guides(fill = "none") + #To turn off fill legend
+  guides(shape = "none") #To turn off shape legend
+patho_lps
+
+# fit <- lm(logit_pathogenicity ~ Thickness, data = masterant2)
+# 
+# rSquared <- summary(fit)$r.squared
+# rSquared
+# anova(fit)
+# pVal <- anova(fit)$'Pr(>F)'[1]
+# pVal
+
+# Pathogen damage and Anthocyanins
+#summary(lm(logit_pathogenicity ~ Anthocyanins, data = masterpat2))
+
+patho_aci <- ggplot(data = masterpat2, aes(y= logit_pathogenicity, x = Anthocyanins, color = E_load)) +
+  geom_jitter(aes(color = E_load, shape = Species), 
+               size = 3, 
+               alpha = 0.7) +
+  geom_smooth(method = lm, 
+              se = T , 
+              level = 0.95, 
+              na.rm = F, 
+              color = "black", 
+              size = 0.75) +
+  scale_shape_manual(labels=c("A. membranacea", 
+                              "C. cainito", 
+                              "C. alliodora", 
+                              "Dypterix sp.", 
+                              "H. concinna", 
+                              "L. panamensis", 
+                              "T. cacao"),
+                     values = c(15:22)) +
+  scale_color_manual(name = "Treatment",
+                     labels=c("E-", "E+"),
+                     values = met.brewer(name = "Cross", n = 2, type="discrete")) +
+  geom_smooth(method=lm, se = F) +
+  geom_smooth(method = lm, se = T , level = 0.95, na.rm = F, color = "black") +
+  stat_regline_equation(label.y.npc = "top", 
+                        label.x.npc = "left",
+                        size = 5,
+                        aes(label = ..eq.label..), 
+                        color= "black") +
+  labs(x=expression(paste("ACI (% ", italic("A") [lambda]," at 931 nm / % ", italic("A") [lambda]," at 530 nm)")), y = "logit[Pathogen damage (%)]") +
+  theme_classic(base_size = 10) +
+  theme(legend.position="right", 
+        legend.title = element_text(face = "bold"),
+        legend.text = element_text(face = "italic",
+                                   size = 12),
+        axis.text.x=element_text(size = 7),
+        axis.text.y=element_text(size = 7))  +
+  guides(color = "none")  +      #To turn off color legend
+  guides(fill = "none") + #To turn off fill legend
+  guides(shape = "none") #To turn off shape legend
+patho_aci
+#scale_shape_manual(values = c(1:7))
+
+# Pathogen damage and leaf thickness
+#summary(lm(logit_pathogenicity ~ Thickness, data = masterpat2))
+
+patho_lt <- ggplot(data = masterpat2, aes(y= logit_pathogenicity, x = Thickness, color = E_load)) +
+  geom_jitter(aes(color = E_load, shape = Species), 
+               size = 3, 
+               alpha = 0.7) +
+  geom_smooth(method = lm, 
+              se = T , 
+              level = 0.95, 
+              na.rm = F, 
+              color = "black", 
+              size = 0.75) +
+  scale_shape_manual(labels=c("A. membranacea", 
+                              "C. cainito", 
+                              "C. alliodora", 
+                              "Dypterix sp.", 
+                              "H. concinna", 
+                              "L. panamensis", 
+                              "T. cacao"),
+                     values = c(15:22)) +
+  scale_color_manual(name = "Treatment",
+                     labels=c("E-", "E+"),
+                     values = met.brewer(name = "Cross", n = 2, type="discrete")) +
+  geom_smooth(method=lm, se = F) +
+  geom_smooth(method = lm, se = T , level = 0.95, na.rm = F, color = "black") +
+  stat_regline_equation(label.y.npc = "top", 
+                        label.x.npc = "left",
+                        size = 5,
+                        aes(label = ..eq.label..), 
+                        color= "black") +
+  labs(x=expression(paste("Leaf thickness (",mu,"m)")), y = "logit[Pathogen damage (%)]") +
+  theme_classic(base_size = 10) +
+  theme(legend.position="right", 
+        legend.title = element_text(face = "bold"),
+        legend.text = element_text(face = "italic",
+                                   size = 12),
+        axis.text.x=element_text(size = 7),
+        axis.text.y=element_text(size = 7))  +
+  guides(color = "none")  +      #To turn off color legend
+  guides(fill = "none") + #To turn off fill legend
+  guides(shape = "none") #To turn off shape legend
+
+patho_lt
+
+# Pathogen damage and LMA
+#summary(lm(logit_pathogenicity ~ LMA, data = masterpat2))
+
+patho_lma <- ggplot(data = masterpat2, aes(y= logit_pathogenicity, x = LMA, color = E_load)) +
+  geom_jitter(aes(color = E_load, shape = Species), 
+               size = 3, 
+               alpha = 0.7) +
+  geom_smooth(method = lm, 
+              se = T , 
+              level = 0.95, 
+              na.rm = F, 
+              color = "black", 
+              size = 0.75) +
+  scale_shape_manual(labels=c("A. membranacea", 
+                              "C. cainito", 
+                              "C. alliodora", 
+                              "Dypterix sp.", 
+                              "H. concinna", 
+                              "L. panamensis", 
+                              "T. cacao"),
+                     values = c(15:22)) +
+  scale_color_manual(name = "Treatment",
+                     labels=c("E-", "E+"),
+                     values = met.brewer(name = "Cross", n = 2, type="discrete")) +
+  geom_smooth(method=lm, se = F) +
+  geom_smooth(method = lm, se = T , level = 0.95, na.rm = F, color = "black") +
+  stat_regline_equation(label.y.npc = "top", 
+                        label.x.npc = "left",
+                        size = 5,
+                        aes(label = ..eq.label..), 
+                        color= "black") +
+  labs(x= expression(paste("LMA (mg ",mm^-2, ")")), y = "logit[Pathogen damage (%)]") +
+  theme_classic(base_size = 10) +
+  theme(legend.position="right", 
+        legend.title = element_text(face = "bold"),
+        legend.text = element_text(face = "italic",
+                                   size = 12),
+        axis.text.x=element_text(size = 7),
+        axis.text.y=element_text(size = 7)) 
+patho_lma
+
+# Pathogen damage and FEF Shannon Diversity
+#summary(lm(logit_pathogenicity ~ Shannon, data = masterpat2))
+
+# Extracting effect size of model to plot
+patho_shannon <- ggplot(data = masterpat2, aes(y= logit_pathogenicity, x = Shannon, color = E_load)) +
+  geom_jitter(aes(color = E_load, shape = Species), 
+               size = 3, 
+               alpha = 0.7) +
+  geom_smooth(method = lm, 
+              se = T , 
+              level = 0.95, 
+              na.rm = F, 
+              color = "black", 
+              size = 0.75) +
+  scale_shape_manual(labels=c("A. membranacea", 
+                              "C. cainito", 
+                              "C. alliodora", 
+                              "Dypterix sp.", 
+                              "H. concinna", 
+                              "L. panamensis", 
+                              "T. cacao"),
+                     values = c(15:22)) +
+  scale_color_manual(name = "Treatment",
+                     labels=c("E-", "E+"),
+                     values = met.brewer(name = "Cross", n = 2, type="discrete")) +
+  geom_smooth(method=lm, se = F) +
+  geom_smooth(method = lm, se = T , level = 0.95, na.rm = F, color = "black") +
+  stat_regline_equation(label.y.npc = "top", 
+                        label.x.npc = "left",
+                        size = 5,
+                        aes(label = ..eq.label..), 
+                        color= "black") +
+  labs(x= "Shannon's Diversity Index", y = "logit[Pathogen damage (%)]") +
+  theme_classic(base_size = 10) +
+  theme(legend.position="right", 
+        legend.title = element_text(face = "bold"),
+        legend.text = element_text(face = "italic",
+                                   size = 12),
+        axis.text.x=element_text(size = 7),
+        axis.text.y=element_text(size = 7)) 
+ 
+
+
+
+ # Multiples plots together
+
+suppfig_S8 <- ggarrange(patho_lt, patho_lps, patho_aci, patho_lma, patho_shannon, 
+                          nrow = 2, 
+                          ncol=3, 
+                          common.legend = TRUE, 
+                          labels = c("(a)", "(b)", "(c)", "(d)", "(e)"),
+                          legend="bottom")
+
+suppfig_S8
+#Saving
+#ggsave(filename ="./plots/Aim3_FigS8_21JAN2024.jpg", plot = suppfig_S8, dpi= 600, units=c("mm"), width=250, height=200, bg = "white")
 ```
 
 ## Supplementary Material - Methods

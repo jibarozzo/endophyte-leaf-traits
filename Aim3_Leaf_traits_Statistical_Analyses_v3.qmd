@@ -1304,35 +1304,65 @@ RA
 
 ## Figure 1a-b
 
-```{r, RA per E_load bar and violin plot, tidy = TRUE}
+```{r, RA per E_load bar and violin plot}
+#| tidy: true
+#Comparison of means of Relative Abundance between E+ and E- samples per tree species
+#rstatix package used for pairwise t-test
+master |>
+  group_by(Species) |>
+  pairwise_t_test(Relative_Abundance ~ E_load,
+         p.adjust.method = "BH",
+  paired = TRUE,
+  #var.equal = F,
+  alternative = "two.sided",
+  mu = 0,
+  conf.level = 0.95, 
+  detailed = TRUE)
+
+#ggpubr package used for t.tests and plotting t-test comparisons
+compare_means(Relative_Abundance ~ E_load,
+         data = master,
+         method = "t.test",
+         p.adjust.method = "BH",
+  paired = TRUE,
+  group.by = "Species")
+  #var.equal = F,
+#Roughly the same outcome as pairwise_t_test.
+#Report with `compare_means` because it is easier to plot with `ggpubr` package.
+
+
 # RA per E_load
 RAE <- ggplot(data= master, aes(x = E_load, y = Relative_Abundance)) +
-  geom_violin(aes(fill = E_load)) 
+  geom_violin(aes(fill = E_load)) +
   #geom_boxplot(width=0.1, color="grey30", alpha=0.2) +
   geom_crossbar(stat="summary", fun = mean, fun.max = mean, fun.min = mean,  fatten = 2, width = 0.5) +
   geom_point(color="grey15", alpha = 0.4,size = 2, position = position_jitter(w=0.05)) +
   scale_fill_manual(name = "Treatment ", values= met.brewer("Cross", n = 2, type = "discrete")) +
   scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
-  theme_classic(base_size = 14)+
+  theme_classic(base_size = 12)+
   theme(panel.grid.major = element_line(colour = "grey"),
         panel.grid.minor = element_line(colour = "grey"),
         strip.background = element_rect(fill = "white"),
         axis.line.x.bottom = element_blank(), 
         strip.text.x = element_text(colour = "grey15", face = "italic"),
-        panel.border = element_rect(linetype = "blank", fill = NA)) +
-  labs(x="", y="Relative Abundance of Ascomycota", face = "bold")+
-  theme(legend.position="right", 
+        panel.border = element_rect(linetype = "blank", fill = NA),
+        legend.position="right", 
         legend.title = element_text(face = "bold"),
         legend.text = element_text(size = 14),
         plot.title = element_text(color="black", size = 14, face="bold"),
         axis.text.x=element_blank()) +
+  labs(x="", y="Relative Abundance of Ascomycota", face = "bold")+
+  theme() +
   #labs(caption = "*Outliers and singletons removed.") +
   stat_compare_means(comparisons = list(c("E-", "E+")),
                      method = "t.test",
-                     label = "p.signif", label.y = 25, bracket.size = 0.65) +
+                     label = "p.signif",
+                     paired = T,
+                     label.y = 25, 
+                     bracket.size = 0.65) +
   facet_wrap(~Species, labeller = as_labeller(newname))
   
-RAE
+#RAE
 
 
 RAE_bar <- ggplot(data= master, aes(x = Species, y = Relative_Abundance)) +
@@ -1458,7 +1488,7 @@ suppfig_1
 #ggsave(filename="./plots/Aim3_FigS1_07JAN2024.png", plot = suppfig_1, dpi=600, units=c("mm"), width = 250, height = 200, bg ="white")
 ```
 
-## Figure S2-S5
+## Figure S2-S7
 ```{r, Functional traits violins, tidy = TRUE}
 mycomparisons <- list(c("APEIME", "CHRYCA"), c("APEIME", "CORDAL"), c("APEIME", "DYPTE"), c("APEIME", "HEISCO"),c("APEIME", "LACPA"), c("APEIME","THEOCA"),
                       c("CHRYCA","CORDAL"), c("CHRYCA","DYPTE"),c("CHRYCA","HEISCO"), c("CHRYCA","LACPA"), c("CHRYCA", "THEOCA"),
@@ -1837,6 +1867,296 @@ DVI
 ####I HAVE TO INVESTIGATE FURTHER AS TO WHY THIS LAST GGPLOT FOR LMA GIVE THIS OUTPUT: Warning messages:1: Removed 34 rows containing non-finite values (stat_boxplot). 2: Removed 7 rows containing missing values (geom_text).
 ####
 ####This problem was due to having values out of the ylab.
+```
+
+```{r, suppfig_6}
+#| echo: false
+#| eval: true
+#| tidy: true
+#| warning: false
+#| fig.height: 6
+#| fig.width: 6
+#| fig.cap: "Distributions of values and means of herbivory (%) damage caused by *Atta colombica* in treatment groups (*E-* and *E+*) and tree species. a) Comparison of herbivory (%) means between treatment groups across individuals of all species. Statistical significance was calculated using a two-sided Student's t-Test. b) Comparison of herbivory (%) means between treatment types of each species. Statistical significance was calculated with an analysis of variance (ANOVA). Pink filled violins represent low FEF group (*E-*) and yellow filed violins represent high FEF group (*E+*). Significance levels are represented by *ns* (not significant) and asterisks [*p* = 0.05 (\\*), *p* = 0.01 (\\**), and *p* = 0.001 (\\***)]."
+
+#Comparison of means of Herbivory(%) between E+ and E- samples per tree species
+#rstatix package used for pairwise t-test
+suppfig6_pairwise_t_test <- master |>
+  group_by(Species) |>
+  pairwise_t_test(Ant_percent_leafloss ~ E_load,
+         p.adjust.method = "BH",
+  paired = TRUE,
+  #var.equal = F,
+  alternative = "two.sided",
+  mu = 0,
+  conf.level = 0.95, 
+  detailed = TRUE)
+
+#ggpubr package used for t.tests and plotting t-test comparisons
+#E+ vs E- for all specie. To compare means of pathogen damage (%) between E+ and E- samples per species un-comment `group.by = "Species"` and change method to  "anova" in compare_means.
+suppfig6a_compare_means <- compare_means(Ant_percent_leafloss ~ E_load,
+         data = master,
+         #group.by = "Species",
+         method = "t.test",
+         p.adjust.method = "BH",
+  paired = TRUE,
+  alternative = "two.sided", 
+  mu = 0, 
+  var.equal = FALSE,
+  conf.level = 0.95)
+#Roughly the same outcome as pairwise_t_test.
+suppfig6b_compare_means <- compare_means(Ant_percent_leafloss ~ E_load,
+         data = master,
+         group.by = "Species",
+         method = "anova",
+         p.adjust.method = "BH",
+  paired = TRUE,
+  alternative = "two.sided", 
+  mu = 0, 
+  var.equal = FALSE,
+  conf.level = 0.95)
+#Report with `compare_means` because it is easier to plot with `ggpubr` package.
+
+#Since `compare_means` does not provide a test statistic, I will use `t.test` to report the test statistic.
+suppfig6_t_test <-t.test(Ant_percent_leafloss ~ E_load,
+         data = master,
+         #group.by = "Species",
+         method = "t.test",
+         p.adjust.method = "BH",
+  paired = TRUE,
+  alternative = "two.sided", 
+  mu = 0, 
+  var.equal = FALSE,
+  conf.level = 0.95)
+
+
+# Fig. S6a
+herb_violin_a <- ggplot(data = master, aes(x = E_load, y = Ant_percent_leafloss, fill = E_load)) +
+  geom_violin() +
+  geom_point(position = position_jitterdodge(dodge.width = 0.9, jitter.width = 0.2),
+             alpha = 0.3, color = "grey30", size = 2) +
+  geom_crossbar(stat="summary",
+               fun = mean,
+               fun.max = mean,
+               fun.min = mean,
+               alpha = 0.3,
+               size = 0.3,
+               width = 0.7,
+               position = position_dodge(width = 0.9)) +
+  scale_fill_manual(name = "Treatment ", values= met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_x_discrete(labels=c(newname)) +
+#  scale_y_continuous(limits = c(100, 300)) +
+  theme_classic(base_size = 12) +
+  theme(
+        #panel.grid.major = element_line(colour = "grey"),
+        #panel.grid.minor = element_line(colour = "grey"),
+        #strip.background = element_rect(fill = "white"),
+        #strip.text.x = element_text(colour = "black", face = "bold"),
+        legend.title = element_text(face = "bold"),
+        panel.border = element_rect(linetype = "blank", fill = NA),
+        axis.text.x=element_blank(),
+        legend.position="right", 
+        legend.text = element_text(size = 12)) +
+  labs(x="", y= expression(paste("Herbivory (%)"))) +
+  stat_compare_means(label = "p.signif", 
+                     method = "t.test",
+                     paired = T,
+                     comparisons =list(c("E-", "E+")),
+                     bracket.size = 0.8)
+
+#herb_violin_a
+
+#Fig. S6b
+herb_violin_b <-  ggplot(data = master, aes( x = Species, y = Ant_percent_leafloss, fill = E_load)) +
+geom_violin() +
+  geom_point(position = position_jitterdodge(dodge.width = 0.9, jitter.width = 0.2),
+             alpha = 0.3, color = "grey30", size = 2) +
+  geom_crossbar(stat="summary", 
+               fun = mean, 
+               fun.max = mean, 
+               fun.min = mean,
+               alpha = 0.3, 
+               size = 0.3, 
+               width = 0.7,
+               position = position_dodge(width = 0.9)) +
+  scale_fill_manual(name = "Treatment ", values= met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_x_discrete(labels=c(newname)) +
+  theme_classic(base_size = 12) +
+  theme(
+        #panel.grid.major = element_line(colour = "grey"),
+        #panel.grid.minor = element_line(colour = "grey"),
+        #strip.background = element_rect(fill = "white"),
+        #strip.text.x = element_text(colour = "black", face = "bold"),
+        legend.title = element_text(face = "bold"),
+        panel.border = element_rect(linetype = "blank", fill = NA),
+        axis.text.x=element_text(face = "italic", hjust = 1, angle = 30),
+        legend.position="right", 
+        legend.text = element_text(size = 12)) +
+  labs(x="", y= expression(paste("Herbivory (%)"))) +
+
+  stat_compare_means(label = "p.signif", 
+                     method = "anova",
+                     paired = T)
+#herb_violin_b
+
+aov(Ant_percent_leafloss ~ Species, data = master)
+
+# Figure S6a-S6b
+suppfig_6 <- ggarrange(herb_violin_a, herb_violin_b, nrow = 1, 
+                       ncol=2, 
+                       label.x = -0.015, vjust = 1, 
+                       common.legend = TRUE,
+                       legend="bottom", 
+                       labels = c("(a)", "(b)"))
+
+suppfig_6
+#ggsave(filename="./plots/Aim3_FigS6_15JAN2024.png", plot = suppfig_6, dpi=600, units=c("mm"), width = 250, height = 200, bg ="white")
+```
+
+
+```{r, suppfig_7}
+
+#| echo: false
+#| eval: true
+#| tidy: true
+#| warning: false
+#| fig.height: 6
+#| fig.width: 6
+#| fig.cap: "Distributions of values and means of pathogen (%) damage caused by *Calonectria* sp. in treatment groups (*E-* and *E+*) and tree species. a) Comparison of pathogen (%) means between treatment groups across individuals of all species. Statistical significance was calculated using a two-sided Student's t-Test. b) Comparison of pathogen (%) means between treatment types of each species. Statistical significance was calculated with an analysis of variance (ANOVA). Pink filled violins and points represent low FEF group (*E-*) and yellow filed violins represent high FEF group (*E+*). Marron filled violins represent control leaves and blue filled violins represent pathogen treated leaveds. Significance levels are represented by *ns* (not significant) and asterisks [*p* = 0.05 (\\*), *p* = 0.01 (\\**), and *p* = 0.001 (\\***)]."
+
+#Comparison of means of Pathogen damage (%) between E+ and E- samples per tree species
+#rstatix package used for pairwise t-test
+suppfig7_pairwise_t_test <- master |>
+  group_by(Species) |>
+  pairwise_t_test(Pathogen_percent_damage ~ E_load,
+         p.adjust.method = "BH",
+  paired = TRUE,
+  #var.equal = F,
+  alternative = "two.sided",
+  mu = 0,
+  conf.level = 0.95, 
+  detailed = TRUE) 
+
+#ggpubr package used for t.tests and plotting t-test comparisons
+#E+ vs E- for all specie. To compare means of pathogen damage (%) between E+ and E- samples per species un-comment `group.by = "Species"` and change method to  "anova" in compare_means.
+suppfig7a_compare_means <- compare_means(Pathogen_percent_damage ~ E_load,
+         data = master,
+         #group.by = "Species",
+         method = "t.test",
+         p.adjust.method = "BH",
+  paired = TRUE,
+  alternative = "two.sided", 
+  mu = 0, 
+  var.equal = FALSE,
+  conf.level = 0.95)
+#Roughly the same outcome as pairwise_t_test.
+suppfig7b_compare_means <- compare_means(Pathogen_percent_damage ~ E_load,
+         data = master,
+         group.by = "Species",
+         method = "anova",
+         p.adjust.method = "BH",
+  paired = TRUE,
+  alternative = "two.sided", 
+  mu = 0, 
+  var.equal = FALSE,
+  conf.level = 0.95)
+
+suppfig7_summ_stats <- master |>
+  group_by(E_load, Treatment) |>
+  get_summary_stats(Pathogen_percent_damage, type = "common")
+#Report with `compare_means` because it is easier to plot with `ggpubr` package.
+#Since `compare_means` does not provide a test statistic, I will use `pairwise_t_test` to report the test statistic.
+
+# Fig. S7a
+patho_violin_a <- ggplot(data = master, aes(x = E_load, y = Pathogen_percent_damage, fill = Treatment)) +
+  geom_violin() +
+  geom_point(aes(color = E_load),position = position_jitterdodge(dodge.width = 0, jitter.width = 0.2),
+             alpha = 0.5, size = 2) +
+  geom_crossbar(stat="summary",
+               fun = mean,
+               fun.max = mean,
+               fun.min = mean,
+               alpha = 0.3,
+               size = 0.3,
+               width = 0.7,
+               position = position_dodge(width = 0.9)) +
+  scale_fill_manual(name = "Pathogen treatment ", values= met.brewer("Egypt", n = 2, type = "discrete")) +
+  scale_color_manual(name = "Treatment ", values= met.brewer("Cross", n = 2, type = "discrete")) +
+  #scale_shape_manual(name = "Treatment", labels = c("E-", "E+"), values = c(16, 17)) +
+  scale_x_discrete(labels=c(newname)) +
+  theme_classic(base_size = 12) +
+  theme(
+        #panel.grid.major = element_line(colour = "grey"),
+        #panel.grid.minor = element_line(colour = "grey"),
+        #strip.background = element_rect(fill = "white"),
+        #strip.text.x = element_text(colour = "black", face = "bold"),
+        legend.title = element_text(face = "bold"),
+        panel.border = element_rect(linetype = "blank", fill = NA),
+        #axis.text.x=element_blank(),
+        legend.position="right", 
+        legend.text = element_text(size = 12)) +
+  labs(x="", y= expression(paste("Pathogen damage (%)"))) +
+  stat_compare_means(label = "p.signif", 
+                     method = "t.test",
+                     paired = T,
+                     label.y = 80) +
+  stat_compare_means(label = "p.signif",
+                     method = "t.test",
+                     paired = T,
+                     comparisons =list(c("E-", "E+")),
+                     bracket.size = 0.8)
+
+#patho_violin_a
+
+#Fig. S7b
+patho_violin_b <-  ggplot(data = master, aes( x = Species, y = Pathogen_percent_damage, fill = E_load)) +
+geom_violin() +
+  geom_point(position = position_jitterdodge(dodge.width = 0.9, jitter.width = 0.2),
+             alpha = 0.3, color = "grey30", size = 2) +
+  geom_crossbar(stat="summary", 
+               fun = mean, 
+               fun.max = mean, 
+               fun.min = mean,
+               alpha = 0.3, 
+               size = 0.3, 
+               width = 0.7,
+               position = position_dodge(width = 0.9)) +
+  scale_fill_manual(name = "Treatment ", values= met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_x_discrete(labels=c(newname)) +
+  theme_classic(base_size = 12) +
+  theme(
+        #panel.grid.major = element_line(colour = "grey"),
+        #panel.grid.minor = element_line(colour = "grey"),
+        #strip.background = element_rect(fill = "white"),
+        #strip.text.x = element_text(colour = "black", face = "bold"),
+        legend.title = element_text(face = "bold"),
+        panel.border = element_rect(linetype = "blank", fill = NA),
+        axis.text.x=element_text(face = "italic", hjust = 1, angle = 30),
+        legend.position="right", 
+        legend.text = element_text(size = 12)) +
+  labs(x="", y= expression(paste("Pathogen damage (%)"))) +
+
+  stat_compare_means(label = "p.signif", 
+                     method = "anova",
+                     paired = T)
+#patho_violin_b
+
+
+
+
+# Figure S7a-S7b
+suppfig_7 <- ggarrange(patho_violin_a, patho_violin_b, nrow = 1, 
+                       ncol=2, 
+                       label.x = -0.015, vjust = 1,
+                       widths = c(1.2, 1),
+                       common.legend = FALSE,
+                       legend="bottom", 
+                       labels = c("(a)", "(b)"))
+
+suppfig_7
+#ggsave(filename="./plots/Aim3_FigS7_15JAN2024.png", plot = suppfig_7, dpi=600, units=c("mm"), width = 250, height = 200, bg ="white")
 ```
 
 # Principal Component Analysis (PCA) of leaf functional traits
@@ -2958,7 +3278,7 @@ The best fit model, considering the elimination of Anthocyanins and Toughness du
 
 The interaction between `lme(logit_herbivory ~ Thickness  + LMA + E_load, weights = varIdent(form = ~ 1|Species),  random = ~ 1 | Species, method = "REML", control = ctrl, data = masterant2, na.action = na.exclude)` is the best fit model with random effect (Species). We are trying to understand how FEF diversity influences herbivory on an per species/plant basis. The variance structure seems to not be nested. Nesting it increases AIC score. Hence, no need to nest Species/E_load.
 
-# Figure S1?
+# Figure S7
 
 ## Plots: Ants
 
@@ -2987,28 +3307,50 @@ hbox
 
 # Ant
 # Regressions
+
 # Herbivory and Toughness
-  
-t <-ggplot(data = masterant2, aes(y= logit_herbivory, x = Toughness, color = E_load)) +
-   geom_jitter(aes(color = E_load, shape = Species), size = 1.5, alpha = 0.7) +
-  scale_shape_manual(values=c(15:22)) +
-  scale_color_manual(values = wes_paleta2)+
+summary(lm(logit_herbivory ~ Toughness, data = masterant2))
+ 
+herb_lps <- ggplot(data = masterant2, aes(y= logit_herbivory, x = Toughness, color = E_load)) +
+  geom_jitter(aes(color = E_load, shape = Species), 
+               size = 3, 
+               alpha = 0.7) +
+  geom_smooth(method = lm, 
+              se = T , 
+              level = 0.95, 
+              na.rm = F, 
+              color = "black", 
+              size = 0.75) +
+  scale_shape_manual(labels=c("A. membranacea", 
+                              "C. cainito", 
+                              "C. alliodora", 
+                              "Dypterix sp.", 
+                              "H. concinna", 
+                              "L. panamensis", 
+                              "T. cacao"),
+                     values = c(15:22)) +
+  scale_color_manual(name = "Treatment",
+                     labels=c("E-", "E+"),
+                     values = met.brewer(name = "Cross", n = 2, type="discrete")) +
   geom_smooth(method=lm, se = F) +
- # stat_regline_equation(aes(label = paste(..eq.label.., ..adj.rr.label.., sep = "~~~~"))) +
   geom_smooth(method = lm, se = T , level = 0.95, na.rm = F, color = "black") +
-  stat_regline_equation(label.y = 2.5, label.x = 0.45, aes(label = ..eq.label..), sep = "~~~~", size = rel(3), color= "black") +
-  stat_regline_equation(label.y = 2 , label.x = 0.45, aes(label = ..adj.rr.label..), size = rel(3),color = "black") +
-  labs(x="Leaf Toughness (lbf)", y = "logit[Leaf herbivory (%)]") +
-  theme_minimal(base_size = 10) +
-  theme(legend.position="right", legend.title = element_blank(),
-        legend.text = element_text(size = 8),
+  stat_regline_equation(label.y.npc = "top", 
+                        label.x.npc = "left",
+                        size = 5,
+                        aes(label = ..eq.label..), 
+                        color= "black") +
+  labs(x=expression(paste("Leaf punch strength (N mm","^-1)")), y = "logit[Herbivory (%)]") +
+  theme_classic(base_size = 10) +
+  theme(legend.position="right", 
+        legend.title = element_text(face = "bold"),
+        legend.text = element_text(face = "italic",
+                                   size = 12),
         axis.text.x=element_text(size = 7),
-        axis.text.y=element_text(size = 7)) +
+        axis.text.y=element_text(size = 7))  +
   guides(color = "none")  +      #To turn off color legend
   guides(fill = "none") + #To turn off fill legend
   guides(shape = "none") #To turn off shape legend
-#caption = "**All replicate leaves from tree species included  (n = 210)", col = "Treatment"
-t
+herb_lps
 
 # fit <- lm(logit_herbivory ~ Thickness, data = masterant2)
 # 
@@ -3017,108 +3359,200 @@ t
 # anova(fit)
 # pVal <- anova(fit)$'Pr(>F)'[1]
 # pVal
-# Herbivory and Anthocyanins
 
-a <- ggplot(data = masterant2, aes(y= logit_herbivory, x= Anthocyanins, color = E_load))+
-   geom_jitter(aes(color = E_load, shape = Species), size = 1.5, alpha = 0.7) +
-  scale_shape_manual(values=c(15:22)) +
-  scale_color_manual(values = wes_paleta2)+
-  geom_smooth(method=lm, se=F) +
-  #stat_regline_equation(aes(label = paste(..eq.label.., ..adj.rr.label.., sep = "~~~~"))) +
+# Herbivory and Anthocyanins
+summary(lm(logit_herbivory ~ Anthocyanins, data = masterant2))
+
+herb_aci <- ggplot(data = masterant2, aes(y= logit_herbivory, x = Anthocyanins, color = E_load)) +
+  geom_jitter(aes(color = E_load, shape = Species), 
+               size = 3, 
+               alpha = 0.7) +
+  geom_smooth(method = lm, 
+              se = T , 
+              level = 0.95, 
+              na.rm = F, 
+              color = "black", 
+              size = 0.75) +
+  scale_shape_manual(labels=c("A. membranacea", 
+                              "C. cainito", 
+                              "C. alliodora", 
+                              "Dypterix sp.", 
+                              "H. concinna", 
+                              "L. panamensis", 
+                              "T. cacao"),
+                     values = c(15:22)) +
+  scale_color_manual(name = "Treatment",
+                     labels=c("E-", "E+"),
+                     values = met.brewer(name = "Cross", n = 2, type="discrete")) +
+  geom_smooth(method=lm, se = F) +
   geom_smooth(method = lm, se = T , level = 0.95, na.rm = F, color = "black") +
-  stat_regline_equation(label.y = 2.5, label.x = 5, aes(label = ..eq.label..), size = rel(3), color= "black") +
-  stat_regline_equation(label.y = 2 , label.x = 5, aes(label = ..adj.rr.label..), size = rel(3), color = "black") +
-  labs(x="Anthocyanins (ACI)", y="logit[Leaf herbivory (%)]") +
-  theme_minimal(base_size = 10) +
-  theme(legend.position="right", legend.title =element_blank(),
-        legend.text = element_text(size = 8),
+  stat_regline_equation(label.y.npc = "top", 
+                        label.x.npc = "left",
+                        size = 5,
+                        aes(label = ..eq.label..), 
+                        color= "black") +
+  labs(x=expression(paste("ACI (% ", italic("A") [lambda]," at 931 nm / % ", italic("A") [lambda]," at 530 nm)")), y = "logit[Herbivory (%)]") +
+  theme_classic(base_size = 10) +
+  theme(legend.position="right", 
+        legend.title = element_text(face = "bold"),
+        legend.text = element_text(face = "italic",
+                                   size = 12),
         axis.text.x=element_text(size = 7),
-        axis.text.y=element_text(size = 7)) +
+        axis.text.y=element_text(size = 7))  +
   guides(color = "none")  +      #To turn off color legend
   guides(fill = "none") + #To turn off fill legend
   guides(shape = "none") #To turn off shape legend
- 
-a
+herb_aci
 #scale_shape_manual(values = c(1:7))
 
 # Herbivory and leaf thickness
+summary(lm(logit_herbivory ~ Thickness, data = masterant2))
 
-tt <- ggplot(data = masterant2, aes(y= logit_herbivory, x= Thickness, color = E_load))+
-   geom_jitter(aes(color = E_load, shape = Species), size = 1.5, alpha = 0.7) +
-  scale_shape_manual(values=c(15:22)) +
-  scale_color_manual(values = wes_paleta2) +
-  geom_smooth(method=lm, se=F) +
-  #stat_regline_equation(aes(label = paste(..eq.label.., ..adj.rr.label.., sep = "~~~~"))) +
+herb_lt <- ggplot(data = masterant2, aes(y= logit_herbivory, x = Thickness, color = E_load)) +
+  geom_jitter(aes(color = E_load, shape = Species), 
+               size = 3, 
+               alpha = 0.7) +
+  geom_smooth(method = lm, 
+              se = T , 
+              level = 0.95, 
+              na.rm = F, 
+              color = "black", 
+              size = 0.75) +
+  scale_shape_manual(labels=c("A. membranacea", 
+                              "C. cainito", 
+                              "C. alliodora", 
+                              "Dypterix sp.", 
+                              "H. concinna", 
+                              "L. panamensis", 
+                              "T. cacao"),
+                     values = c(15:22)) +
+  scale_color_manual(name = "Treatment",
+                     labels=c("E-", "E+"),
+                     values = met.brewer(name = "Cross", n = 2, type="discrete")) +
+  geom_smooth(method=lm, se = F) +
   geom_smooth(method = lm, se = T , level = 0.95, na.rm = F, color = "black") +
-  stat_regline_equation(label.y = 2.5, label.x = 200, aes(label = ..eq.label..), size = rel(3), color= "black") +
-  stat_regline_equation(label.y = 2 , label.x = 200, aes(label = ..adj.rr.label..), size = rel(3), color = "black") +
-  labs(x="Leaf thickness (\u03BCm)", y = "logit[Leaf herbivory (%)]") +
- theme_minimal(base_size = 10) +
-  theme(legend.position="right", legend.title = element_blank(),
-        legend.text = element_text(size = 8),
+  stat_regline_equation(label.y.npc = "top", 
+                        label.x.npc = "left",
+                        size = 5,
+                        aes(label = ..eq.label..), 
+                        color= "black") +
+  labs(x=expression(paste("Leaf thickness (",mu,"m)")), y = "logit[Herbivory (%)]") +
+  theme_classic(base_size = 10) +
+  theme(legend.position="right", 
+        legend.title = element_text(face = "bold"),
+        legend.text = element_text(face = "italic",
+                                   size = 12),
         axis.text.x=element_text(size = 7),
-        axis.text.y=element_text(size = 7)) +
-  guides(color = "none")  +      #To turn off color legend
-  guides(fill = "none") + #To turn off fill legend
-  guides(shape = "none")
-tt
-
-# Herbivory and LMA
-
-lma <- ggplot(data = masterant2, aes(y= logit_herbivory, x= LMA, color = E_load))+
-  geom_jitter(aes(color = E_load, shape = Species), size = 1.5, alpha = 0.7) +
-  scale_shape_manual(values=c(15:22)) +
-  scale_color_manual(values = wes_paleta2)+
-  geom_smooth(method=lm, se=F) +
-  #stat_regline_equation(aes(label = paste(..eq.label.., ..adj.rr.label.., sep = "~~~~"))) +
-  geom_smooth(method = lm, se = T , level = 0.95, na.rm = F, color = "black") +
-  stat_regline_equation(label.y = 2.5, label.x = 0.001, aes(label = ..eq.label..), size = rel(3), color= "black") +
-  stat_regline_equation(label.y = 2 , label.x = 0.001, aes(label = ..adj.rr.label..), size = rel(3), color = "black") +
-  labs(x="Leaf mass per area (LMA)", y = "logit[Leaf herbivory (%)]") +
-  theme_minimal(base_size = 10) +
-  theme(legend.position="right", legend.title = element_blank(),
-        legend.text = element_text(size = 8),
-        axis.text.x=element_text(size = 7),
-        axis.text.y=element_text(size = 7)) +
+        axis.text.y=element_text(size = 7))  +
   guides(color = "none")  +      #To turn off color legend
   guides(fill = "none") + #To turn off fill legend
   guides(shape = "none") #To turn off shape legend
- 
-lma
+
+herb_lt
+
+# Herbivory and LMA
+summary(lm(logit_herbivory ~ LMA, data = masterant2))
+
+herb_lma <- ggplot(data = masterant2, aes(y= logit_herbivory, x = LMA, color = E_load)) +
+  geom_jitter(aes(color = E_load, shape = Species), 
+               size = 3, 
+               alpha = 0.7) +
+  geom_smooth(method = lm, 
+              se = T , 
+              level = 0.95, 
+              na.rm = F, 
+              color = "black", 
+              size = 0.75) +
+  scale_shape_manual(labels=c("A. membranacea", 
+                              "C. cainito", 
+                              "C. alliodora", 
+                              "Dypterix sp.", 
+                              "H. concinna", 
+                              "L. panamensis", 
+                              "T. cacao"),
+                     values = c(15:22)) +
+  scale_color_manual(name = "Treatment",
+                     labels=c("E-", "E+"),
+                     values = met.brewer(name = "Cross", n = 2, type="discrete")) +
+  geom_smooth(method=lm, se = F) +
+  geom_smooth(method = lm, se = T , level = 0.95, na.rm = F, color = "black") +
+  stat_regline_equation(label.y.npc = "top", 
+                        label.x.npc = "left",
+                        size = 5,
+                        aes(label = ..eq.label..), 
+                        color= "black") +
+  labs(x= expression(paste("LMA (mg ",mm^-2, ")")), y = "logit[Herbivory (%)]") +
+  theme_classic(base_size = 10) +
+  theme(legend.position="right", 
+        legend.title = element_text(face = "bold"),
+        legend.text = element_text(face = "italic",
+                                   size = 12),
+        axis.text.x=element_text(size = 7),
+        axis.text.y=element_text(size = 7)) 
+herb_lma
 
 # Herbivory and FEF Shannon Diversity
-# Extracting effect size of model to plot
- dv <- ggplot(data = masterant2, aes(y= logit_herbivory, x= Shannon, color = E_load))+
-  geom_jitter(aes(color = E_load, shape = Species), size = 1.5, alpha = 0.7) +
-  scale_color_manual(values = wes_paleta2)+
-  geom_smooth(method=lm, se=F) +
- # stat_regline_equation(aes(label = paste(..eq.label.., ..adj.rr.label.., sep = "~~~~"))) +
-  geom_smooth(method = lm, se = T , level = 0.95, na.rm = F, color = "black") +
-  scale_shape_manual(labels= c("A. membranacea", "C. cainito", "C. alliodora", "Dypterix .sp", "H. concinna", "L. panamensis", "T. cacao"),values=c(15:22)) +  #scale_color_manual(values= met.brewer("Cross", n = 8, type = "discrete")) +
-  stat_regline_equation(label.y = 2.5, label.x = 1.5, aes(label = ..eq.label..),size = rel(3), color= "black") +
-  stat_regline_equation(label.y = 2 , label.x = 1.5, aes(label = ..adj.rr.label..), size = rel(3),color = "black") +
-  labs(x="Shannon diversity index", y="logit[Leaf herbivory (%)]") +
-  theme_minimal(base_size = 10) +
- theme(legend.position="right",
-        legend.text = element_text(face = "italic", size = 12),
-        axis.text.x=element_text(size = 7),
-        axis.text.y=element_text(size = 7))
+summary(lm(logit_herbivory ~ Shannon, data = masterant2))
 
+# Extracting effect size of model to plot
+herb_shannon <- ggplot(data = masterant2, aes(y= logit_herbivory, x = Shannon, color = E_load)) +
+  geom_jitter(aes(color = E_load, shape = Species), 
+               size = 3, 
+               alpha = 0.7) +
+  geom_smooth(method = lm, 
+              se = T , 
+              level = 0.95, 
+              na.rm = F, 
+              color = "black", 
+              size = 0.75) +
+  scale_shape_manual(labels=c("A. membranacea", 
+                              "C. cainito", 
+                              "C. alliodora", 
+                              "Dypterix sp.", 
+                              "H. concinna", 
+                              "L. panamensis", 
+                              "T. cacao"),
+                     values = c(15:22)) +
+  scale_color_manual(name = "Treatment",
+                     labels=c("E-", "E+"),
+                     values = met.brewer(name = "Cross", n = 2, type="discrete")) +
+  geom_smooth(method=lm, se = F) +
+  geom_smooth(method = lm, se = T , level = 0.95, na.rm = F, color = "black") +
+  stat_regline_equation(label.y.npc = "top", 
+                        label.x.npc = "left",
+                        size = 5,
+                        aes(label = ..eq.label..), 
+                        color= "black") +
+  labs(x= "Shannon's Diversity Index", y = "logit[Herbivory (%)]") +
+  theme_classic(base_size = 10) +
+  theme(legend.position="right", 
+        legend.title = element_text(face = "bold"),
+        legend.text = element_text(face = "italic",
+                                   size = 12),
+        axis.text.x=element_text(size = 7),
+        axis.text.y=element_text(size = 7)) 
  
- dv
+
+
 
  # Multiples plots together
 
-ant_arranged <- ggarrange(t, tt, a, lma, dv, nrow = 2, ncol=3, common.legend = TRUE, legend="right")
+ant_arranged <- ggarrange(herb_lt, herb_lps, herb_aci, herb_lma, herb_shannon, 
+                          nrow = 2, 
+                          ncol=3, 
+                          common.legend = TRUE, 
+                          labels = c("(a)", "(b)", "(c)", "(d)", "(e)"),
+                          legend="bottom")
 
+ant_arranged
 
 # Adding caption
-ant_caption <- "*All individuals per tree species included (n = 210)"
-ant_arranged_with_caption <- annotate_figure(ant_arranged, bottom = text_grob(ant_caption), fig.lab.pos = "bottom.right", fig.lab.size = 6)
+# ant_caption <- "*All individuals per tree species included (n = 210)"
+# ant_arranged_with_caption <- annotate_figure(ant_arranged, bottom = text_grob(ant_caption), fig.lab.pos = "bottom.right", fig.lab.size = 6)
+# 
+# ant_arranged_with_caption
 
-ant_arranged_with_caption
-
-#ggsave(filename = "./plots/Aim3_ant_regression_30OCT2023.jpg", plot = ant_arranged_with_caption, dpi=600, units=c("mm"), width=180, height=140, bg = "white")
+#ggsave(filename = "./plots/Aim3_FigS7_21JAN024.jpg", plot = ant_arranged_with_caption, dpi=600, units=c("mm"), width=180, height=140, bg = "white")
 
 ```
 
@@ -3506,6 +3940,7 @@ plot_model(P3REM, type = "diag")
 
 Model `P3REM` has the lowest AIC score. It has variance structure (`varIdent()`) nested in Species/E_load/Treatment. It also uses an optimizer `lmeControl(opt='optim')`. It is the best model for the pathogen data set, at the moment.
 
+# Figure S8
 ## Plots: Pathogen
 
 ### LM plot
@@ -3533,168 +3968,249 @@ pbox <-  ggplot(data = masterpat2, aes(x = Species, y = Pathogen_percent_damage)
 pbox
 
 
- # ggplot(data = masterpat2, aes(x = E_load, y = Pathogen_percent_damage), color = Species) +
- #  geom_violin(aes(fill = E_load)) +
- #  geom_crossbar(stat="summary", fun = mean, fun.max = mean, fun.min = mean,  fatten = 2, width = 0.7) +
- #  scale_fill_manual(values = wes_paleta2)+
- #  geom_jitter(color="grey20", size = 2, alpha= 0.5) +
- #  theme_minimal(base_size = 10) +
- #  theme(legend.position="right", 
- #         legend.title = element_blank(),
- #         legend.text = element_text(size = 16),
- #         axis.text.x = element_blank()) + 
- #  theme(panel.grid.major = element_line(colour = "grey")) +
- #  theme(panel.grid.minor = element_line(colour = "grey")) +
- #  theme(strip.background = element_rect(fill = "white")) +
- #  theme(strip.text.x = element_text(colour = "black", face = "bold")) +
- #  theme(legend.title = element_text(face = "bold")) +
- #  theme(panel.border = element_rect(linetype = "blank", fill = NA)) +
- #  #(angle = 45, hjust = 1)) +
- #  labs(x="", y="Pathogen damage (%)") +
- #  annotate("text", x = 2.5, y = .65, label = "") +
- #  facet_wrap(~Species)
-  # stat_compare_means(comparisons = mycomparisons ) +
-  # stat_compare_means(method = "kruskal.test", label = "p.signif")
-
 
 # Pathogen
 # Regressions
 # Pathogen damage and Toughness
+# Herbivory and Toughness
+summary(lm(logit_pathogenicity ~ Toughness, data = masterpat2)) 
 
-pt <- ggplot(data = masterpat2, aes(y= logit_pathogenicity, x = Toughness, color = E_load)) +
-   geom_jitter(aes(shape = Species), size = 1.5, alpha = 0.7) +
-  scale_shape_manual(values=c(15:22)) +
-  scale_color_manual(values = wes_paleta2)+
+patho_lps <- ggplot(data = masterpat2, aes(y= logit_pathogenicity, x = Toughness, color = E_load)) +
+  geom_jitter(aes(color = E_load, shape = Species), 
+               size = 3, 
+               alpha = 0.7) +
+  geom_smooth(method = lm, 
+              se = T , 
+              level = 0.95, 
+              na.rm = F, 
+              color = "black", 
+              size = 0.75) +
+  scale_shape_manual(labels=c("A. membranacea", 
+                              "C. cainito", 
+                              "C. alliodora", 
+                              "Dypterix sp.", 
+                              "H. concinna", 
+                              "L. panamensis", 
+                              "T. cacao"),
+                     values = c(15:22)) +
+  scale_color_manual(name = "Treatment",
+                     labels=c("E-", "E+"),
+                     values = met.brewer(name = "Cross", n = 2, type="discrete")) +
   geom_smooth(method=lm, se = F) +
-  #stat_regline_equation(aes(label = paste(..eq.label.., ..adj.rr.label.., sep = "~~~~"))) +
   geom_smooth(method = lm, se = T , level = 0.95, na.rm = F, color = "black") +
-  stat_regline_equation(label.y = 2.25, label.x = 0.45, aes(label = ..eq.label..), sep = "~~~~", size = rel(3), color= "black") +
-  stat_regline_equation(label.y = 1.2 , label.x = 0.45, aes(label = ..adj.rr.label..), size = rel(3), color = "black") +
-  labs(x="Leaf Toughness (lbf)", y="logit[Pathogen damage (%)]") +
-  theme_minimal(base_size = 10) +
-  theme(legend.position="right", legend.title = element_blank(),
-        legend.text = element_text(size = 8),
+  stat_regline_equation(label.y.npc = "top", 
+                        label.x.npc = "left",
+                        size = 5,
+                        aes(label = ..eq.label..), 
+                        color= "black") +
+  labs(x=expression(paste("Leaf punch strength (N mm","^-1)")), y = "logit[Pathogen damage (%)]") +
+  theme_classic(base_size = 10) +
+  theme(legend.position="right", 
+        legend.title = element_text(face = "bold"),
+        legend.text = element_text(face = "italic",
+                                   size = 12),
         axis.text.x=element_text(size = 7),
-        axis.text.y=element_text(size = 7)) +
+        axis.text.y=element_text(size = 7))  +
   guides(color = "none")  +      #To turn off color legend
   guides(fill = "none") + #To turn off fill legend
   guides(shape = "none") #To turn off shape legend
+patho_lps
 
-pt
+# fit <- lm(logit_pathogenicity ~ Thickness, data = masterant2)
+# 
+# rSquared <- summary(fit)$r.squared
+# rSquared
+# anova(fit)
+# pVal <- anova(fit)$'Pr(>F)'[1]
+# pVal
 
 # Pathogen damage and Anthocyanins
+summary(lm(logit_pathogenicity ~ Anthocyanins, data = masterpat2))
 
- pa <- ggplot(data = masterpat2, aes(y= logit_pathogenicity, x= Anthocyanins, color = E_load)) +
-   geom_jitter(aes(shape = Species), size = 1.5, alpha = 0.7) +
-  scale_shape_manual(values=c(15:22)) +
-  scale_color_manual(values = wes_paleta2)+
-  geom_smooth(method=lm, se=F) +
-  #stat_regline_equation(aes(label = paste(..eq.label.., ..adj.rr.label.., sep = "~~~~"))) +
+patho_aci <- ggplot(data = masterpat2, aes(y= logit_pathogenicity, x = Anthocyanins, color = E_load)) +
+  geom_jitter(aes(color = E_load, shape = Species), 
+               size = 3, 
+               alpha = 0.7) +
+  geom_smooth(method = lm, 
+              se = T , 
+              level = 0.95, 
+              na.rm = F, 
+              color = "black", 
+              size = 0.75) +
+  scale_shape_manual(labels=c("A. membranacea", 
+                              "C. cainito", 
+                              "C. alliodora", 
+                              "Dypterix sp.", 
+                              "H. concinna", 
+                              "L. panamensis", 
+                              "T. cacao"),
+                     values = c(15:22)) +
+  scale_color_manual(name = "Treatment",
+                     labels=c("E-", "E+"),
+                     values = met.brewer(name = "Cross", n = 2, type="discrete")) +
+  geom_smooth(method=lm, se = F) +
   geom_smooth(method = lm, se = T , level = 0.95, na.rm = F, color = "black") +
-  stat_regline_equation(label.y = 2.5, label.x = 7, aes(label = ..eq.label..), size = rel(3), color= "black") +
-  stat_regline_equation(label.y = 1.5 , label.x = 7, aes(label = ..adj.rr.label..), size = rel(3), color = "black") +
-  labs(x="Anthocyanins (ACI)", y="logit[Pathogen damage (%)]") +
-  theme_minimal(base_size = 10) +
-  theme(legend.position="right", legend.title = element_blank(),
-        legend.text = element_text(size = 8),
+  stat_regline_equation(label.y.npc = "top", 
+                        label.x.npc = "left",
+                        size = 5,
+                        aes(label = ..eq.label..), 
+                        color= "black") +
+  labs(x=expression(paste("ACI (% ", italic("A") [lambda]," at 931 nm / % ", italic("A") [lambda]," at 530 nm)")), y = "logit[Pathogen damage (%)]") +
+  theme_classic(base_size = 10) +
+  theme(legend.position="right", 
+        legend.title = element_text(face = "bold"),
+        legend.text = element_text(face = "italic",
+                                   size = 12),
         axis.text.x=element_text(size = 7),
-        axis.text.y=element_text(size = 7)) +
+        axis.text.y=element_text(size = 7))  +
   guides(color = "none")  +      #To turn off color legend
   guides(fill = "none") + #To turn off fill legend
   guides(shape = "none") #To turn off shape legend
- 
-pa
+patho_aci
+#scale_shape_manual(values = c(1:7))
 
-# Herbivory and leaf thickness
+# Pathogen damage and leaf thickness
+summary(lm(logit_pathogenicity ~ Thickness, data = masterpat2))
 
-ptt <- ggplot(data = masterpat2, aes(y= logit_pathogenicity, x= Thickness, color = E_load))+
-   geom_jitter(aes(shape = Species), size = 1.5, alpha = 0.7) +
-  scale_shape_manual(values=c(15:22)) +
-  scale_color_manual(values = wes_paleta2) +
-  geom_smooth(method=lm, se=F) +
-  #stat_regline_equation(aes(label = paste(..eq.label.., ..adj.rr.label.., sep = "~~~~"))) +
+patho_lt <- ggplot(data = masterpat2, aes(y= logit_pathogenicity, x = Thickness, color = E_load)) +
+  geom_jitter(aes(color = E_load, shape = Species), 
+               size = 3, 
+               alpha = 0.7) +
+  geom_smooth(method = lm, 
+              se = T , 
+              level = 0.95, 
+              na.rm = F, 
+              color = "black", 
+              size = 0.75) +
+  scale_shape_manual(labels=c("A. membranacea", 
+                              "C. cainito", 
+                              "C. alliodora", 
+                              "Dypterix sp.", 
+                              "H. concinna", 
+                              "L. panamensis", 
+                              "T. cacao"),
+                     values = c(15:22)) +
+  scale_color_manual(name = "Treatment",
+                     labels=c("E-", "E+"),
+                     values = met.brewer(name = "Cross", n = 2, type="discrete")) +
+  geom_smooth(method=lm, se = F) +
   geom_smooth(method = lm, se = T , level = 0.95, na.rm = F, color = "black") +
-  stat_regline_equation(label.y = 2.5, label.x = 200, aes(label = ..eq.label..), size = rel(3), color= "black") +
-  stat_regline_equation(label.y = 1.5 , label.x = 200, aes(label = ..adj.rr.label..), size = rel(3), color = "black") +
-  labs(x="Leaf thickness (\u03BCm)", y="logit[Pathogen damage (%)]") +
-  theme_minimal(base_size = 10) +
-  theme(legend.position="right", legend.title = element_blank(),
-        legend.text = element_text(size = 8),
+  stat_regline_equation(label.y.npc = "top", 
+                        label.x.npc = "left",
+                        size = 5,
+                        aes(label = ..eq.label..), 
+                        color= "black") +
+  labs(x=expression(paste("Leaf thickness (",mu,"m)")), y = "logit[Pathogen damage (%)]") +
+  theme_classic(base_size = 10) +
+  theme(legend.position="right", 
+        legend.title = element_text(face = "bold"),
+        legend.text = element_text(face = "italic",
+                                   size = 12),
         axis.text.x=element_text(size = 7),
-        axis.text.y=element_text(size = 7)) +
+        axis.text.y=element_text(size = 7))  +
   guides(color = "none")  +      #To turn off color legend
   guides(fill = "none") + #To turn off fill legend
-  guides(shape = "none")
+  guides(shape = "none") #To turn off shape legend
 
-ptt
-
+patho_lt
 
 # Pathogen damage and LMA
+summary(lm(logit_pathogenicity ~ LMA, data = masterpat2))
 
-plma <- ggplot(data = masterpat2, aes(y= logit_pathogenicity, x= LMA, color = E_load))+
-  geom_point(aes(shape = Species), size = 1.5, alpha = 0.7) +
-  scale_shape_manual(values=c(15:22)) +
-  scale_color_manual(values = wes_paleta2) +
-  geom_smooth(method=lm, se=F) +
-#  stat_regline_equation(aes(label = paste(..eq.label.., ..adj.rr.label.., sep = "~~~~"))) +
+patho_lma <- ggplot(data = masterpat2, aes(y= logit_pathogenicity, x = LMA, color = E_load)) +
+  geom_jitter(aes(color = E_load, shape = Species), 
+               size = 3, 
+               alpha = 0.7) +
+  geom_smooth(method = lm, 
+              se = T , 
+              level = 0.95, 
+              na.rm = F, 
+              color = "black", 
+              size = 0.75) +
+  scale_shape_manual(labels=c("A. membranacea", 
+                              "C. cainito", 
+                              "C. alliodora", 
+                              "Dypterix sp.", 
+                              "H. concinna", 
+                              "L. panamensis", 
+                              "T. cacao"),
+                     values = c(15:22)) +
+  scale_color_manual(name = "Treatment",
+                     labels=c("E-", "E+"),
+                     values = met.brewer(name = "Cross", n = 2, type="discrete")) +
+  geom_smooth(method=lm, se = F) +
   geom_smooth(method = lm, se = T , level = 0.95, na.rm = F, color = "black") +
-  stat_regline_equation(label.y = 2.5, label.x = 0.00125, aes(label = ..eq.label..), size = rel(3),color= "black") +
-  stat_regline_equation(label.y = 1.5 , label.x = 0.00125, aes(label = ..adj.rr.label..), size = rel(3), color = "black") +
-  labs(x="Leaf mass per area (LMA)", y="logit[Pathogen damage (%)]") +
-  theme_minimal(base_size = 10) +
-  theme(legend.position="right", legend.title = element_blank(),
-        legend.text = element_text(size = 8),
+  stat_regline_equation(label.y.npc = "top", 
+                        label.x.npc = "left",
+                        size = 5,
+                        aes(label = ..eq.label..), 
+                        color= "black") +
+  labs(x= expression(paste("LMA (mg ",mm^-2, ")")), y = "logit[Pathogen damage (%)]") +
+  theme_classic(base_size = 10) +
+  theme(legend.position="right", 
+        legend.title = element_text(face = "bold"),
+        legend.text = element_text(face = "italic",
+                                   size = 12),
         axis.text.x=element_text(size = 7),
-        axis.text.y=element_text(size = 7)) +
-  guides(color = "none")  +      #To turn off color legend
-  guides(fill = "none") + #To turn off fill legend
-  guides(shape = "none") #To turn off shape legend
-
-plma
+        axis.text.y=element_text(size = 7)) 
+patho_lma
 
 # Pathogen damage and FEF Shannon Diversity
-# Extracting effect size of model to plot
-pdv <- ggplot(data = masterpat2, aes(y= logit_pathogenicity, x= Shannon, color = E_load))+
-  geom_jitter(aes(color = E_load, shape = Species), size = 1.5, alpha = 0.7) +
-  scale_color_manual(values = wes_paleta2)+
-  geom_smooth(method=lm, se=F) +
- # stat_regline_equation(aes(label = paste(..eq.label.., ..adj.rr.label.., sep = "~~~~"))) +
-  geom_smooth(method = lm, se = T , level = 0.95, na.rm = F, color = "black") +
-  scale_shape_manual(labels= c("A. membranacea", "C. cainito", "C. alliodora", "Dypterix .sp", "H. concinna", "L. panamensis", "T. cacao"),values=c(15:22)) +  #scale_color_manual(values= met.brewer("Cross", n = 8, type = "discrete")) +
-  stat_regline_equation(label.y = 2.5, label.x = 1.2, aes(label = ..eq.label..),size = rel(3), color= "black") +
-  stat_regline_equation(label.y = 1.5 , label.x = 1.2, aes(label = ..adj.rr.label..), size = rel(3),color = "black") +
-  labs(x="Shannon diversity index", y="logit[Pathogen Damage (%)]") +
-  theme_minimal(base_size = 10) +
- theme(legend.position="right",
-       legend.key.size = unit(0.5, "cm"),
-        legend.text = element_text(face = "italic", size = 12),
-        axis.text.x=element_text(size = 7),
-        axis.text.y=element_text(size = 7))
-  # guides(color = "none")  +      #To turn off color legend
-  # guides(fill = "none") + #To turn off fill legend
-  # guides(shape = "none") #To turn off shape legend
- #size = rel(5)
- #, caption = "*All individuals per tree species included (n = 382)",
+summary(lm(logit_pathogenicity ~ Shannon, data = masterpat2))
 
- pdv
+# Extracting effect size of model to plot
+patho_shannon <- ggplot(data = masterpat2, aes(y= logit_pathogenicity, x = Shannon, color = E_load)) +
+  geom_jitter(aes(color = E_load, shape = Species), 
+               size = 3, 
+               alpha = 0.7) +
+  geom_smooth(method = lm, 
+              se = T , 
+              level = 0.95, 
+              na.rm = F, 
+              color = "black", 
+              size = 0.75) +
+  scale_shape_manual(labels=c("A. membranacea", 
+                              "C. cainito", 
+                              "C. alliodora", 
+                              "Dypterix sp.", 
+                              "H. concinna", 
+                              "L. panamensis", 
+                              "T. cacao"),
+                     values = c(15:22)) +
+  scale_color_manual(name = "Treatment",
+                     labels=c("E-", "E+"),
+                     values = met.brewer(name = "Cross", n = 2, type="discrete")) +
+  geom_smooth(method=lm, se = F) +
+  geom_smooth(method = lm, se = T , level = 0.95, na.rm = F, color = "black") +
+  stat_regline_equation(label.y.npc = "top", 
+                        label.x.npc = "left",
+                        size = 5,
+                        aes(label = ..eq.label..), 
+                        color= "black") +
+  labs(x= "Shannon's Diversity Index", y = "logit[Pathogen damage (%)]") +
+  theme_classic(base_size = 10) +
+  theme(legend.position="right", 
+        legend.title = element_text(face = "bold"),
+        legend.text = element_text(face = "italic",
+                                   size = 12),
+        axis.text.x=element_text(size = 7),
+        axis.text.y=element_text(size = 7)) 
  
 
-#ggsave(filename = "Aim3_EXAMPLE.png", plot = eg, dpi=600, units=c("mm"), width=300, height=300)
 
 
+ # Multiples plots together
 
- # Arrange Multiples plots together
+suppfig_S8 <- ggarrange(patho_lt, patho_lps, patho_aci, patho_lma, patho_shannon, 
+                          nrow = 2, 
+                          ncol=3, 
+                          common.legend = TRUE, 
+                          labels = c("(a)", "(b)", "(c)", "(d)", "(e)"),
+                          legend="bottom")
 
-arranged <- ggarrange(pt, ptt, pa, plma, pdv, nrow = 2, ncol=3, common.legend = TRUE, legend="right")
-
-# Adding caption
-caption_text <- "*All individuals per tree species included (n = 382)"
-arranged_with_caption <- annotate_figure(arranged, bottom = text_grob(caption_text), fig.lab.pos = "bottom.right", fig.lab.size = 6)
-
-arranged_with_caption
-
+suppfig_S8
 #Saving
-#ggsave(filename ="./plots/Aim3_Pathogen_regression_01NOV2023.jpg", plot = arranged_with_caption, dpi= 600, units=c("mm"), width=180, height=140, bg = "white")
+#ggsave(filename ="./plots/Aim3_FigS8_21JAN2024.jpg", plot = arranged_with_caption, dpi= 600, units=c("mm"), width=180, height=140, bg = "white")
 
 ```
 
