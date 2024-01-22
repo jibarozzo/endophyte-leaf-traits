@@ -2936,6 +2936,89 @@ supptable_S8
 #gtsave(supptable_S8, file = "Aim3_supptable_S8_14JAN2024.docx", path = "./tables")
 ```
 
+## Table S9
+
+
+```{r, supptable_S9}
+#| echo: false
+#| eval: true
+#| tidy: true
+#| warning: false
+#| tbl-cap: "Sterilization protocol for tropical tree seeds"
+
+
+# sect_properties <- prop_section(
+#   page_size = page_size(
+#     orient = "portrait",
+#     width = 8.25, height = 11.7
+#   ),
+#   type = "continuous",
+#   page_margins = page_mar()
+# )
+
+#Thick borders for table
+thick <- fp_border(color = "black", style = "solid", width = 2)
+
+sterile_protocol <- hux(
+  "Tree Species" = c("Apeiba membranacea", 
+                            "Chrysophylum cainito", 
+                            "Cordia alliodora",
+                            "Dypterix sp.",
+                            "Heisteria concinna",
+                            "Lacmellea panamensis",
+                            "Theobroma cacao"), 
+  "Number of seed collected" = c("500",
+                                 "100",
+                                 "???",
+                                 "~100",
+                                 "250",
+                                 "75",
+                                 "???"),
+  "Number of maternal sources" = c("3",
+                                   "1",
+                                   "?",
+                                   "unknown",
+                                   "~6",
+                                   "3",
+                                   "?"),
+  "Sterilization protocol" = c("Soak in water for 3-5 days; 10% NaClO for 4 minutes; 70% EtOH for 5 minutes",
+                               "Soak in water for 3-5 days; 10% NaClO for 4 minutes, 70% EtOH for 5 minutes",
+                               "???",
+                               "Soak in water for 7 days; 10% NaClO for 5 minutes; 70% EtOH for 5 minutes",
+                               "Soak in water for 3-5 days; 10% NaClO for 4 minutes; 70% EtOH for 5 minutes",
+                               "Soak in water for 3-5 days; 5% NaClO for 3 minutes; 50% EtOH for 3 minutes",
+                               "???")) 
+
+
+sterile_protocol <- sterile_protocol|>
+  set_all_padding(4) |> 
+      set_outer_padding(0) |> 
+      set_bold(row = 1, col = everywhere) |> 
+      set_bottom_border(row = 1, col = everywhere) |> 
+      set_width(1.1) |>
+  theme_article() |>
+  huxtable::as_flextable(column_to_header=TRUE) |>
+  hline_bottom(part = "body", border = thick) |>
+  hline_top(part = "body", border = thick) |>
+  flextable::align(j = 1:3, align = "center", part = "all") |>
+  flextable::italic(j = 1, i = 2:8, italic = TRUE, part = "body") |>
+ # flextable::width(j = 1, width = 1.5, unit = "in") |>
+  flextable::font(
+    i = NULL,
+    j = NULL,
+    fontname = "Tex Gyre Termes",
+    part = "all",
+    cs.family = fontname,
+    hansi.family = fontname,
+    eastasia.family = fontname) 
+
+sterile_protocol
+#quick_docx(rep_statement, file = "./tables/replication_statement.docx")
+```
+
+
+
+
 ## Figure S1a- S1b
 
 ```{r, suppfig_1}

@@ -29,7 +29,7 @@
     ]
   },
   "Bioconductor": {
-    "Version": "TRUE"
+    "Version": "3.17"
   },
   "Packages": {
     "AsioHeaders": {
