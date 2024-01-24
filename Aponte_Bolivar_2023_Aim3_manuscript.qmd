@@ -119,6 +119,7 @@ library("plotrix")
 #library("viridis")
 library("MetBrewer")
 library("wesanderson")
+library("lattice")
 #library("knitr")
 
 
@@ -145,12 +146,11 @@ library("car") #For type 3 Anova with Anova() function.
 library("PerformanceAnalytics")
 library("corrr")
 library("permute")
-library("lattice")
+
 library("pls")
 library("buildmer")
 library("lme4")
 library("sjPlot")
-library("glmmTMB")
 library("indicspecies")
 library("rstatix")
 
@@ -324,7 +324,7 @@ There was a core set of OTUs that significantly correlated with host trees speci
 
 The PCA revealed how leaf traits (ACI, LT, LPS and LMA) were related. We plotted leaf trait data according to tree species groups on the PCA axes to show how the variance in the complete data set is explained by PC1 (60%) and PC2 (27%) (Fig. 4a). We observed that ACI, LPS and LMA loadings tracked along PC1 towards more negative values, showing correlation among these traits (Fig. 4a). Traits LT and LPS were orthogonal to each other in Fig. 4a, indicative of low correlation. We note distinct grouping of species along PC1 such as *C. alliodora* in the direction of positive values of PC1 and *C. cainito* towards negative values. Along PC1 we see distinct and tight clustering according to species for all except *H. concinna* and *A. membranacea* which overlap with various other species. We note that LT loading tracks towards negative values along PC2 (Fig. 4a). Clear species groupings are detected, such as *Dypterix* sp. located towards positive values and *L. panamensis* towards negative values of the PC2 axis. We note a similar relationship between the leaf traits with respect to PC1 and PC2 in individual seedlings used for herbivory versus pathogen damage trials (Fig. 4b-4c). The PCA of leaf traits from seedlings used in herbivory trials has a PC1 explaining 57.5% of the variance and a PC2 explaining 28% of the variance in the subset data (Fig. 4b). We saw an inversion of the LT loading in direction of positive values, as well as the main tree species clustered (i.e. *Dypteryx* sp. and *A. membranacea*) along PC2 (Fig. 4b) with respect to Fig. 4a. The PCA of leaf traits from seedling used in pathogen damage trials has a PC1 explaining 64% of the variance and a PC2 explaining 25% of the variance in the subset data (Fig. 4c). We detected similar relationships among leaf traits and PC axes in the pathogen damage subset data (Fig. 4c) when compared to the complete data set (Fig. 4a).
 
-Simple linear regressions of herbivory (%) against PC1 and PC2 revealed a statistically significant positive relationship (*p* \<0.001) (Fig. 5a and 5b). Even though we note large spread in the data (Fig. 5a and 5b), we see a statistically significant positive trend of herbivory plotted against PC1, where positive values represent greater values of ACI, LPS and LMA. Herbivory plotted against PC2 shows a statistically significant positive trend, where positive values represent greater LT (Fig. 5b). Percent pathogen damage plotted against PC1 revealed a statistically significant positive relationship (*p* = \<0.001), in which positive values represent greater values of ACI, LPS and LMA (Fig. 5c). We did not see a statistically significant relationship (*p* = 0.223) between pathogen damage and PC2 (Fig. 5d). We found similar patterns in the simple linear regressions perform on the leaf functional traits with out reducing dimension and logit transformed herbivory and pathogen damage data (Fig. S7 and S8, respectively). We observed a statistically significant positive relationship between herbivory and LT (ADD STAT, *p* \< 0.0001) when considering the complete data set (Figure S7a). We did not observe statistically significant relationship between herbivory (%) and LPS, ACI, LMA, and Shannon's diversity index (Figure S7b - S7e) for the complete data set. However, we did observed a general decline in herbivory as FEF diversity increased which aligns our predictions. In Figure S7e we see a steep decline in herbivory as diversity increases in the *E-* treatment groups and a slight increase in herbivory in the *E+* as diversity increased. Highlighting an inverse correlation between the treatment groups (THIS LAST FEW SENTENCES NEDD POLISHING AND REGRESSION STATISTICS INFO). For the simple linear regressions of pathogen damage against leaf traits we observed a statistically significant negative relationship between pathogen damage and LPS (ADD STATS), ACI (ADD STATS) and LMA (ADD STATS) (Figure S8b - S8d) when considering the complete data set. Nevertheless, the *E-* and *E+* treatment groups follow the same trend. With he complete data set, we observed a statistically significant positive relationship between pathogen damage and Shannon's diversity index (ADD STATS), contrary to our predictions (Figure S8e). Both treatment groups follow the same trend. (THIS LAST FEW SENTENCES NEDD POLISHING AND REGRESSION STATISTICS INFO).
+Simple linear regressions of herbivory (%) against PC1 revealed no correlation (*F*-statistic = 0.508, *df* = 208, R^2^~adj~ = -0.0024, *p* = 0.447)(Fig. 5a), where positive values represent greater values of ACI, LPS and LMA. Even though we note large spread in the data (Fig. 5a and 5b), we see a statistically significant positive trend of herbivory plotted against PC2 (*F*-statistic = 18.9, *df* = 208, R^2^~adj~ = 0.079, *p* \< 0.0001), where positive values represent greater LT (Fig. 5b). Percent pathogen damage plotted against PC1 revealed a statistically significant significant correlation (*F*-statistic = 26.93, *df* = 380, R^2^~adj~ = 0.064, *p* \< 0.0001), in which positive values represent greater values of ACI, LPS and LMA (Fig. 5c). We did not see a statistically significant relationship between pathogen damage and PC2 (*F*-statistic = 1.60, *df* = 380, R^2^~adj~ = 0.002, *p* = 0.207) (Fig. 5d). We found similar patterns in the simple linear regressions performed on the leaf functional traits with out reducing dimensions and logit transformed herbivory and pathogen damage data (Fig. S7 and S8, respectively). We observed a statistically significant positive relationship between herbivory and LT (*F*-statistic = 19.45, *df* = 208, R^2^~adj~ = 0.081, *p* \< 0.0001) when considering the complete data set (Figure S7a). We did not observe statistically significant relationship between herbivory (%) and LPS, ACI, LMA, and Shannon's diversity index (Figure S7b - S7e) for the complete data set. However, we did observed a general decline in herbivory as FEF diversity increased which aligns our predictions. In further detail we see a statistically significant negative relationship between herbivory and Shannon diversity for the *E-* treatment group (*F*-statistic = 17.7, *df* = 103, R^2^~adj~ = 0.138, *p* \< 0.0001) (Figure S7e). We also see an in crease in herbivory for the *E+* treatment group as Shannon's diversity index increased, but this is not statistically significant ((*F*-statistic = 3.55, *df* = 103, R^2^~adj~ = 0.024, *p* = 0.062) (Figure S7e). For the simple linear regressions of pathogen damage against leaf functional traits we observed a statistically significant negative relationships between pathogen damage and LPS (*F*-statistic = 33.32, *df* = 380, R^2^~adj~ = 0.078, *p* \< 0.0001), ACI (*F*-statistic = 14.34, *df* = 380, R^2^~adj~ = 0.033, *p* = 0.0002) and LMA (*F*-statistic = 12.6, *df* = 380, R^2^~adj~ = 0.030, *p* \< 0.001) (Figure S8b - S8d) when considering the complete data set. Pathogen damage did not have a statitiscally siginificant correlation with LMA (*F*-statistic = 0.50, *df* = 380, R^2^~adj~ = -0.001, *p* = 0.482) (Figure S8a). The *E-* and *E+* treatment groups follow the same general trend as the complete data set. Contrary to our predictions, when we observe the complete data set find a statistically significant positive relationship between pathogen damage and Shannon's diversity index (*F*-statistic = 6.90, *df* = 380, R^2^~adj~ = 0.015, *p* \< 0.01) (Figure S8e). Upon further scrutiny, only the *E+* treatment group has a satistically significantly positive correlation between pathogen damage and Shannon's diversity index (*F*-statistic = 7.11, *df* = 188, R^2^~adj~ = 0.031, *p* \< 0.01) (Figure S8e).
 
 **The general linear model (GLM) revealed that ETC ETC ETC Focus on explaining table 3 and focus on effect sizes, not p-values. LMA seem to have the greast effect size in the GLM.**
 
@@ -1483,7 +1483,10 @@ format.p <- function(p, precision = 0.001) {
   sub("0", "0", p)
 }
 
+#Summary of linear model
 lmpc1 <- lm(Ant_percent_leafloss ~ PC1, data = ant_pcalm)
+
+summary(lmpc1)
 
 # PC1
 # Formatted p-value
@@ -1525,15 +1528,18 @@ ant_pc1 <- ggplot(ant_pcalm, aes(PC1, Ant_percent_leafloss)) +
 
 
 # PC2
-# Formatted p-values
+# Summary of linear model
+lmpc2 <- lm(Ant_percent_leafloss ~ PC2, data = ant_pcalm)
 
+summary(lmpc2)
+
+
+# Formatted p-values
 ant_p2 <- cor.test(ant_pcalm$Ant_percent_leafloss, ant_pcalm$PC2)$p.value
 
 ant_p2 =format.p(ant_p2) # This is just to make the p-value nicer. 
 
 ## Plot PC2
-lmpc2 <- lm(Ant_percent_leafloss ~ PC2, data = ant_pcalm)
-
 ant_pc2 <- ggplot(ant_pcalm, aes(PC2, Ant_percent_leafloss)) +
   geom_jitter(aes(color = Species, shape = E_load), size = 3, alpha = 0.6) +
   geom_smooth(method = lm, se = T , level = 0.95, na.rm = F, color = "black", size = 0.75) +
@@ -1592,9 +1598,13 @@ format.p <- function(p, precision = 0.001) {
   sub("0", "0", p)
 }
 
-plmpc1 <- lm(Pathogen_percent_damage ~ PC2, data = pat_pcalm)
+
 
 # PC1
+# Summary of linear model
+plmpc1 <- lm(Pathogen_percent_damage ~ PC1, data = pat_pcalm)
+summary(plmpc1)
+
 # Formatted p-value
 pathogen_p1 <- cor.test(pat_pcalm$Pathogen_percent_damage, pat_pcalm$PC1)$p.value
 
@@ -1623,7 +1633,7 @@ pat_pc1 <- ggplot(pat_pcalm, aes(PC1, Pathogen_percent_damage)) +
   guides(fill = "none") + #To turn off fill legend
   guides(shape = "none")
 
-#pat_pc1
+pat_pc1
 
 #ggsave(filename="./plots/Aim3_PatPC1_AUG282023.png", plot = pat_pc1, dpi=600, units=c("mm"), width = 180, height = 180, bg = "white")
 
@@ -3765,6 +3775,7 @@ suppfig_6
 #| fig.width: 6
 #| fig.cap: "Need caption"
 # Herbivory and Toughness
+#Simple linear regression
 #summary(lm(logit_herbivory ~ Toughness, data = masterant2))
  
 herb_lps <- ggplot(data = masterant2, aes(y= logit_herbivory, x = Toughness, color = E_load)) +
@@ -3808,15 +3819,9 @@ herb_lps <- ggplot(data = masterant2, aes(y= logit_herbivory, x = Toughness, col
   guides(shape = "none") #To turn off shape legend
 #herb_lps
 
-# fit <- lm(logit_herbivory ~ Thickness, data = masterant2)
-# 
-# rSquared <- summary(fit)$r.squared
-# rSquared
-# anova(fit)
-# pVal <- anova(fit)$'Pr(>F)'[1]
-# pVal
 
 # Herbivory and Anthocyanins
+#Simple linear regression
 #summary(lm(logit_herbivory ~ Anthocyanins, data = masterant2))
 
 herb_aci <- ggplot(data = masterant2, aes(y= logit_herbivory, x = Anthocyanins, color = E_load)) +
@@ -3862,6 +3867,7 @@ herb_aci <- ggplot(data = masterant2, aes(y= logit_herbivory, x = Anthocyanins, 
 #scale_shape_manual(values = c(1:7))
 
 # Herbivory and leaf thickness
+#Simple linear regression
 #summary(lm(logit_herbivory ~ Thickness, data = masterant2))
 
 herb_lt <- ggplot(data = masterant2, aes(y= logit_herbivory, x = Thickness, color = E_load)) +
@@ -3907,6 +3913,7 @@ herb_lt <- ggplot(data = masterant2, aes(y= logit_herbivory, x = Thickness, colo
 #herb_lt
 
 # Herbivory and LMA
+#Simple linear regression
 #summary(lm(logit_herbivory ~ LMA, data = masterant2))
 
 herb_lma <- ggplot(data = masterant2, aes(y= logit_herbivory, x = LMA, color = E_load)) +
@@ -3948,9 +3955,19 @@ herb_lma <- ggplot(data = masterant2, aes(y= logit_herbivory, x = LMA, color = E
 #herb_lma
 
 # Herbivory and FEF Shannon Diversity
+#Simple linear regression
 #summary(lm(logit_herbivory ~ Shannon, data = masterant2))
 
-# Extracting effect size of model to plot
+#Simple linear regression by E_load
+
+#E- summary 
+summary(lm(logit_herbivory ~ Shannon, data = masterant2[masterant2$E_load == "E-",]))
+
+#E+ summary
+summary(lm(logit_herbivory ~ Shannon, data = masterant2[masterant2$E_load == "E+",]))
+
+
+
 herb_shannon <- ggplot(data = masterant2, aes(y= logit_herbivory, x = Shannon, color = E_load)) +
   geom_jitter(aes(color = E_load, shape = Species), 
                size = 3, 
@@ -4017,8 +4034,8 @@ suppfig_S7
 #| fig.width: 6
 #| fig.cap: "NEEDS caption"
 # Pathogen
-# Regressions
 # Pathogen damage and Toughness
+#Simple linear regression
 #summary(lm(logit_pathogenicity ~ Toughness, data = masterpat2)) 
 
 patho_lps <- ggplot(data = masterpat2, aes(y= logit_pathogenicity, x = Toughness, color = E_load)) +
@@ -4062,15 +4079,9 @@ patho_lps <- ggplot(data = masterpat2, aes(y= logit_pathogenicity, x = Toughness
   guides(shape = "none") #To turn off shape legend
 #patho_lps
 
-# fit <- lm(logit_pathogenicity ~ Thickness, data = masterant2)
-# 
-# rSquared <- summary(fit)$r.squared
-# rSquared
-# anova(fit)
-# pVal <- anova(fit)$'Pr(>F)'[1]
-# pVal
 
 # Pathogen damage and Anthocyanins
+#Simple linear regression
 #summary(lm(logit_pathogenicity ~ Anthocyanins, data = masterpat2))
 
 patho_aci <- ggplot(data = masterpat2, aes(y= logit_pathogenicity, x = Anthocyanins, color = E_load)) +
@@ -4116,6 +4127,7 @@ patho_aci
 #scale_shape_manual(values = c(1:7))
 
 # Pathogen damage and leaf thickness
+#Simple linear regression
 #summary(lm(logit_pathogenicity ~ Thickness, data = masterpat2))
 
 patho_lt <- ggplot(data = masterpat2, aes(y= logit_pathogenicity, x = Thickness, color = E_load)) +
@@ -4161,7 +4173,14 @@ patho_lt <- ggplot(data = masterpat2, aes(y= logit_pathogenicity, x = Thickness,
 #patho_lt
 
 # Pathogen damage and LMA
+#Simple linear regression
 #summary(lm(logit_pathogenicity ~ LMA, data = masterpat2))
+
+#E- summary
+summary(lm(logit_pathogenicity ~ LMA, data = masterpat2[masterpat2$E_load == "E-",]))
+
+#E+ summary
+summary(lm(logit_pathogenicity ~ LMA, data = masterpat2[masterpat2$E_load == "E+",]))
 
 patho_lma <- ggplot(data = masterpat2, aes(y= logit_pathogenicity, x = LMA, color = E_load)) +
   geom_jitter(aes(color = E_load, shape = Species), 
@@ -4202,7 +4221,14 @@ patho_lma <- ggplot(data = masterpat2, aes(y= logit_pathogenicity, x = LMA, colo
 #patho_lma
 
 # Pathogen damage and FEF Shannon Diversity
+#Simple linear regression
 #summary(lm(logit_pathogenicity ~ Shannon, data = masterpat2))
+
+#E- summary
+summary(lm(logit_pathogenicity ~ Shannon, data = masterpat2[masterpat2$E_load == "E-",]))
+
+#E+ summary
+summary(lm(logit_pathogenicity ~ Shannon, data = masterpat2[masterpat2$E_load == "E+",]))
 
 # Extracting effect size of model to plot
 patho_shannon <- ggplot(data = masterpat2, aes(y= logit_pathogenicity, x = Shannon, color = E_load)) +
