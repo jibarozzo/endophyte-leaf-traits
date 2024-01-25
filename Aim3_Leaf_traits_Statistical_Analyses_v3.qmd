@@ -2028,8 +2028,8 @@ suppfig_6
 #Comparison of means of Pathogen damage (%) between E+ and E- samples per tree species
 #rstatix package used for pairwise t-test
 suppfig7_pairwise_t_test <- master |>
-  group_by(Species) |>
-  pairwise_t_test(Pathogen_percent_damage ~ E_load,
+  group_by(E_load) |>
+  pairwise_t_test(Pathogen_percent_damage ~ Treatment,
          p.adjust.method = "BH",
   paired = TRUE,
   #var.equal = F,
@@ -2163,7 +2163,7 @@ suppfig_7
 
 The idea here is to see which leaf functional trait and community diversity traits (relative abundance, richness and diversity) impact herbivory and pathogenicity. Only using LMA, thickness and toughness, as these covariates are orthagonal to each other in PCA analysis. Reminder that de `ndata`'s experimental unit is the leaf, not the plant.
 
-## Fig. 3: Grid PCA plot
+## Fig. 4: Grid PCA plot
 ## Full PCA
 
 ```{r, Full PCA, tidy = FALSE}
@@ -2835,7 +2835,7 @@ anova(m3_dbrda_selection, by="axis", perm.max=500)
 ## Model 3 and 5 keep species and trial type as the most significant explanatory variables. Yes, the community composition will be different across species due to the combinantion of species traits and leaf functional trait values. 
 ```
 
-## Figure 2: dbRDA Results
+## Figure 3: dbRDA Results
 
 ### Plotting m3 model dbRDA
 
