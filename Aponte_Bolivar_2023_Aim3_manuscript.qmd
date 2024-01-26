@@ -142,7 +142,7 @@ library("kableExtra")
 library("vegan")
 library("nlme")
 library("MASS")
-library("MuMin")
+library("MuMIn")
 library("car") #For type 3 Anova with Anova() function.
 library("PerformanceAnalytics")
 library("corrr")
@@ -311,7 +311,7 @@ Thirdly, we arbitrarily designated percent leaf damage in herbivore assays as hi
 
 Fourthly, Principal Component Analysis (PCA) was used to reduce dimensions among covariates and reveal underlying interactions between covariates that could influence herbivory and pathogen damage. The PCA was computed using the `prcomp` function in R statistical software [@rcoreteam2023]. A complete PCA was computed with variables ACI, LT, LPS, and LMA. We then proceeded to compute a PCA with the data from leaves of plants used in the herbivory (*n* = 210) and pathogen assays (*n* = 192). We then took from the herbivory and pathogen PCA the principal components that explained the most variance (PC1 and PC2) and regressed them to herbivory (%) and pathogen damage (%). We also regressed ACI, LT, LPS, LMA and Shannon's Diversity Index to logit transformed herbivory (%) and pathogen damage (%). We used the `logit` function from the `car` package for logit transformation of variables and the `lm` function from the `stat` package for simple linear regressions [@fox2019; @rcoreteam2023].
 
-Lastly, to test how leaf functional traits and FEF communities interact to influence herbivory and pathogen damage in tropical tree species, we used a general linear mixed model (GLM) with herbivory and pathogen damage percentage (logit transformed) as the response variable. To determine which fixed effects to include in the GLMs we used the `vif` function from the `car` package in *R* to calculate the variance inflation factor for all explanatory variables (ACI, LT, LPS and LMA) [@fox2019; @rcoreteam2023]. Complementary to this, we calculated Pearson's coefficient for each pair of leaf functional traits with by creating a correlation matrix and applying the `cor` function from the `stats` package to assess correlations among traits [@rcoreteam2023]. We opted to maintain explanatory variables LT and LMA, and exclude ACI and LPS from subsequent general linear models (GLMs) due to high collinearity between the two variables (*r* = 0.54) and with LMA (*r* = 0.73). We modeled only main effects with explanatory variables, we did not model interactions effects to avoid overfitting models. We used a restricted maximum likelihood estimates for model fit with the `lme` function from the `nlme` package [@pinheiro2023]. For our logit herbivory GLMs we used tree species as a random effect and modeled tree species variance structure with the `varIdent` argument [@pinheiro2023]. For our logit pathogen damage GLMs we use tree species as a random effect and modeled a nested variance structure for pathogen treatment within treatment groups per species with the `varIdent` argument [@pinheiro2023]. We manually compared and selected models based on Akaike Information Criterion (AIC) with a penalty of 2 degrees of freedom with the `model.sel` function from the `MuMIn` package [@barton2023]. We selected the best-fit model based on the lowest value obtained. 
+Lastly, to test how leaf functional traits and FEF communities interact to influence herbivory and pathogen damage in tropical tree species, we used a general linear mixed model (GLM) with herbivory and pathogen damage percentage (logit transformed) as the response variable. To determine which fixed effects to include in the GLMs we used the `vif` function from the `car` package in *R* to calculate the variance inflation factor for all explanatory variables (ACI, LT, LPS and LMA) [@fox2019; @rcoreteam2023]. Complementary to this, we calculated Pearson's coefficient for each pair of leaf functional traits with by creating a correlation matrix and applying the `cor` function from the `stats` package to assess correlations among traits [@rcoreteam2023]. We opted to maintain explanatory variables LT and LMA, and exclude ACI and LPS from subsequent general linear models (GLMs) due to high collinearity between the two variables with LMA, *r*(1112) = 0.68, *p* \< 0.0001 and *r*(1113) = 0.65, *p* \< 0.0001, respectively. We modeled only main effects with explanatory variables, we did not model interactions effects to avoid overfitting models. We used a restricted maximum likelihood estimates for model fit with the `lme` function from the `nlme` package [@pinheiro2023]. For our logit herbivory GLMs we used tree species as a random effect and modeled tree species variance structure with the `varIdent` argument [@pinheiro2023]. For our logit pathogen damage GLMs we use tree species as a random effect and modeled a nested variance structure for pathogen treatment within treatment groups per species with the `varIdent` argument [@pinheiro2023]. We manually compared and selected models based on Akaike Information Criterion (AIC) with a penalty of 2 degrees of freedom (ΔAIC) with the `model.sel` function from the `MuMIn` package [@barton2023]. We selected the best-fit model based on the lowest value obtained.
 
 # Results
 
@@ -3808,7 +3808,7 @@ suppfig_6
 #| fig.cap: "Need caption"
 # Herbivory and Toughness
 #Simple linear regression
-summary(lm(logit_herbivory ~ Toughness, data = masterant2))
+#summary(lm(logit_herbivory ~ Toughness, data = masterant2))
  
 herb_lps <- ggplot(data = masterant2, aes(y= logit_herbivory, x = Toughness, color = E_load)) +
   geom_jitter(aes(color = E_load, shape = Species), 
@@ -3988,15 +3988,15 @@ herb_lma <- ggplot(data = masterant2, aes(y= logit_herbivory, x = LMA, color = E
 
 # Herbivory and FEF Shannon Diversity
 #Simple linear regression
-#summary(lm(logit_herbivory ~ Shannon, data = masterant2))
+summary(lm(logit_herbivory ~ Shannon, data = masterant2))
 
 #Simple linear regression by E_load
 
 #E- summary 
-summary(lm(logit_herbivory ~ Shannon, data = masterant2[masterant2$E_load == "E-",]))
+#summary(lm(logit_herbivory ~ Shannon, data = masterant2[masterant2$E_load == "E-",]))
 
 #E+ summary
-summary(lm(logit_herbivory ~ Shannon, data = masterant2[masterant2$E_load == "E+",]))
+#summary(lm(logit_herbivory ~ Shannon, data = masterant2[masterant2$E_load == "E+",]))
 
 
 

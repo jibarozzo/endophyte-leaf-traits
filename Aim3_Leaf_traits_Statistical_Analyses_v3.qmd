@@ -1132,6 +1132,12 @@ vif(lm(Ant_percent_leafloss ~ Anthocyanins + Thickness + Toughness + LMA + Obser
 # All explanatory variables have a VIF that is moderately correlated.
 # cor()
 corr <- cor(data2[,c(10:13)], y = NULL, use = "complete.obs", method = "pearson")
+corr
+#Correlation between Anthocyanins and LMA is 0.7
+cor.test(data2$Anthocyanins, data2$LMA, method = "pearson")
+cor.test(data2$Toughness, data2$LMA, method = "pearson")
+
+#Autocorrelation plot
 corrplot::corrplot(corr, type="upper", order="hclust")
 
 #To compute the matrix of p-value, a custom R function is used :
