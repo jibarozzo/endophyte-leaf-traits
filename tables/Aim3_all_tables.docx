@@ -1,0 +1,2399 @@
+Table 1: Replication statement of the statistical analysis in this study.
+Scale of inference
+Scale at which the factor of interest is applied
+Number of replicates at the appropriate scale
+Leaf functional traits
+Species
+Treatment = 2 (E-, E+), Tropical tree species = 7, Replicates per species = 5. Replicate leaves per plant = 3
+Genomic data
+Species
+Treatment = 2 (E-, E+), Tropical tree species = 7, Replicates per species = 5
+Herbivore assays
+Species/individual
+Treatment = 2 (E-, E+), Tropical tree species = 7, Replicates per species = 5, Replicates per plant = 1
+Pathogen assays
+Species/individual
+Treatment = 2 (E-, E+), sub-treatment = 2 (control and pathogen) for pathogen trials, Tropical tree species = 7, Replicates per species = 5, Replicates per plant = 1
+
+Table 2: Summary statistics for the leaf functional traits
+
+A. membranacea, n = 831
+C. alliodora, n = 1001
+C. cainito, n = 1501
+Dypterix sp., n = 2881
+H. concinna, n = 1321
+L. panamensis, n = 1851
+T. cacao, n = 1761
+Treatment
+
+
+
+
+
+
+
+E- (n = 570)
+47
+54
+75
+144
+66
+95
+89
+E+ (n = 544)
+36
+46
+75
+144
+66
+90
+87
+Anthocyanins (ACI)
+5.35 ± 1.06
+3.47 ± 0.43
+8.21 ± 1.41
+6.34 ± 1.15
+6.77 ± 2.86
+5.91 ± 1.30
+4.18 ± 0.77
+Leaf Thickness (LT) (µm)
+270 ± 45
+207 ± 37
+205 ± 30
+148 ± 13
+214 ± 42
+245 ± 18
+200 ± 43
+Leaf Punch Strength (LPS) (N mm/1)
+0.22 ± 0.05
+0.21 ± 0.05
+0.53 ± 0.09
+0.43 ± 0.06
+0.77 ± 0.23
+0.33 ± 0.04
+0.38 ± 0.06
+Leaf Mass per Area (LMA) (mg/mm)
+0.0011 ± 0.0002
+0.0007 ± 0.0001
+0.0015 ± 0.0002
+0.0011 ± 0.0001
+0.0017 ± 0.0004
+0.0014 ± 0.0002
+0.0009 ± 0.0001
+1n = observations ; Mean ± SD
+
+
+Table 3: Linear mixed effects models for predicting leaf herbivory and pathogenicity
+
+logit herbivory
+logit pathogenicity
+Predictors
+Estimates
+CI
+p
+Estimates
+CI
+p
+(Intercept)
+-0.26
+-2.31–1.80
+0.806
+-3.42
+-4.40–-2.43
+<0.001
+Thickness
+-0.01
+-0.02–-0.00
+0.013
+0.00
+-0.00–0.01
+0.097
+LMA
+1741.22
+768.82–2713.62
+0.001
+171.65
+-181.40–524.70
+0.340
+E load [E+]
+-0.78
+-1.11–-0.45
+<0.001
+
+
+
+Random Effects
+σ2
+3.34
+2.16
+τ00
+1.93 Species
+0.80 Treatment
+
+
+0.02 E_load
+
+
+0.96 Species
+ICC
+0.37
+
+N
+7 Species
+2 Treatment
+
+
+2 E_load
+
+
+7 Species
+Observations
+210
+382
+Marginal R2 / Conditional R2
+0.089 / 0.423
+0.011 / NA
+AIC
+745.559
+1012.259
+AICc
+747.143
+1013.248
+
+
+
+
+
+
+Supplementary Materials
+Table S1: Student's t-Tests of mean anthocyanins (ACI)
+Pairwise comparisons of ACI between species.
+
+p - values
+Comparison Species1
+p
+p.adj
+p.format
+p.signif2
+A. membranacea
+C. cainito
+2.636 × 10^-16
+4.500 × 10^-15
+2.6e-16
+****
+C. alliodora
+3.713 × 10^-15
+5.600 × 10^-14
+3.7e-15
+****
+Dypterix sp.
+2.296 × 10^-6
+1.600 × 10^-5
+2.3e-06
+****
+H. concinna
+6.179 × 10^-6
+3.700 × 10^-5
+6.2e-06
+****
+L. panamensis
+1.538 × 10^-2
+4.600 × 10^-2
+0.01538
+*
+T. cacao
+9.137 × 10^-8
+8.200 × 10^-7
+9.1e-08
+****
+C. cainito
+C. alliodora
+3.154 × 10^-23
+6.300 × 10^-22
+< 2e-16
+****
+Dypterix sp.
+4.559 × 10^-10
+5.000 × 10^-9
+4.6e-10
+****
+H. concinna
+5.309 × 10^-1
+5.300 × 10^-1
+0.53085
+ns
+L. panamensis
+1.599 × 10^-11
+2.200 × 10^-10
+1.6e-11
+****
+T. cacao
+3.656 × 10^-22
+6.900 × 10^-21
+< 2e-16
+****
+C. alliodora
+Dypterix sp.
+1.150 × 10^-26
+2.400 × 10^-25
+< 2e-16
+****
+H. concinna
+7.276 × 10^-11
+9.500 × 10^-10
+7.3e-11
+****
+L. panamensis
+2.486 × 10^-15
+4.000 × 10^-14
+2.5e-15
+****
+T. cacao
+1.428 × 10^-7
+1.100 × 10^-6
+1.4e-07
+****
+Dypterix sp.
+H. concinna
+3.050 × 10^-3
+1.200 × 10^-2
+0.00305
+**
+L. panamensis
+6.646 × 10^-2
+1.300 × 10^-1
+0.06646
+ns
+T. cacao
+3.807 × 10^-18
+6.900 × 10^-17
+< 2e-16
+****
+H. concinna
+L. panamensis
+3.062 × 10^-4
+1.500 × 10^-3
+0.00031
+***
+T. cacao
+5.704 × 10^-9
+5.700 × 10^-8
+5.7e-09
+****
+L. panamensis
+T. cacao
+3.583 × 10^-10
+4.300 × 10^-9
+3.6e-10
+****
+1 n = 156 individuals
+2Significance levels are represented by ns (not significant) and asterisks [p = 0.05 (*), p = 0.01 (**), p = 0.001 (***), and p < 0.0001 (****)].
+
+
+
+Table S2: Student's t-Tests of mean leaf thickness (LT) (μm)
+Pairwise comparisons of LT between species.
+
+p - values
+Comparison Species1
+p
+p.adj
+p.format
+p.signif2
+A. membranacea
+C. cainito
+1.793 × 10^-8
+2.300 × 10^-7
+1.8e-08
+****
+C. alliodora
+6.857 × 10^-8
+8.200 × 10^-7
+6.9e-08
+****
+Dypterix sp.
+7.836 × 10^-18
+1.500 × 10^-16
+< 2e-16
+****
+H. concinna
+1.255 × 10^-5
+1.000 × 10^-4
+1.3e-05
+****
+L. panamensis
+4.986 × 10^-1
+1.000
+0.499
+ns
+T. cacao
+1.604 × 10^-6
+1.400 × 10^-5
+1.6e-06
+****
+C. cainito
+C. alliodora
+7.854 × 10^-1
+1.000
+0.785
+ns
+Dypterix sp.
+2.605 × 10^-19
+5.200 × 10^-18
+< 2e-16
+****
+H. concinna
+6.876 × 10^-2
+4.800 × 10^-1
+0.069
+ns
+L. panamensis
+1.382 × 10^-12
+2.100 × 10^-11
+1.4e-12
+****
+T. cacao
+4.765 × 10^-1
+1.000
+0.477
+ns
+C. alliodora
+Dypterix sp.
+8.662 × 10^-17
+1.500 × 10^-15
+< 2e-16
+****
+H. concinna
+1.347 × 10^-1
+8.100 × 10^-1
+0.135
+ns
+L. panamensis
+1.161 × 10^-10
+1.600 × 10^-9
+1.2e-10
+****
+T. cacao
+6.481 × 10^-1
+1.000
+0.648
+ns
+Dypterix sp.
+H. concinna
+8.177 × 10^-17
+1.500 × 10^-15
+< 2e-16
+****
+L. panamensis
+8.008 × 10^-32
+1.700 × 10^-30
+< 2e-16
+****
+T. cacao
+4.639 × 10^-13
+7.400 × 10^-12
+4.6e-13
+****
+H. concinna
+L. panamensis
+7.274 × 10^-7
+7.300 × 10^-6
+7.3e-07
+****
+T. cacao
+3.649 × 10^-1
+1.000
+0.365
+ns
+L. panamensis
+T. cacao
+1.707 × 10^-7
+1.900 × 10^-6
+1.7e-07
+****
+1 n = 156 individuals
+2Significance levels are represented by ns (not significant) and asterisks [p = 0.05 (*), p = 0.01 (**), p = 0.001 (***), and p < 0.0001 (****)].
+
+
+
+Table S3: Student's t-Tests of mean leaf punch strength (LPS) (N mm-1)
+Pairwise comparisons of LPS between species.
+
+p - values
+Comparison Species1
+p
+p.adj
+p.format
+p.signif2
+A. membranacea
+C. cainito
+9.032 × 10^-36
+1.600 × 10^-34
+< 2e-16
+****
+C. alliodora
+3.180 × 10^-1
+3.200 × 10^-1
+0.32
+ns
+Dypterix sp.
+3.538 × 10^-43
+7.400 × 10^-42
+< 2e-16
+****
+H. concinna
+7.548 × 10^-21
+8.700 × 10^-20
+< 2e-16
+****
+L. panamensis
+7.304 × 10^-26
+1.200 × 10^-24
+< 2e-16
+****
+T. cacao
+7.242 × 10^-21
+8.700 × 10^-20
+< 2e-16
+****
+C. cainito
+C. alliodora
+3.873 × 10^-39
+7.700 × 10^-38
+< 2e-16
+****
+Dypterix sp.
+3.649 × 10^-16
+2.200 × 10^-15
+3.6e-16
+****
+H. concinna
+6.101 × 10^-12
+2.400 × 10^-11
+6.1e-12
+****
+L. panamensis
+3.975 × 10^-28
+6.800 × 10^-27
+< 2e-16
+****
+T. cacao
+7.651 × 10^-21
+8.700 × 10^-20
+< 2e-16
+****
+C. alliodora
+Dypterix sp.
+1.738 × 10^-36
+3.300 × 10^-35
+< 2e-16
+****
+H. concinna
+1.267 × 10^-21
+1.600 × 10^-20
+< 2e-16
+****
+L. panamensis
+8.205 × 10^-21
+8.700 × 10^-20
+< 2e-16
+****
+T. cacao
+1.371 × 10^-22
+1.900 × 10^-21
+< 2e-16
+****
+Dypterix sp.
+H. concinna
+1.617 × 10^-15
+8.100 × 10^-15
+1.6e-15
+****
+L. panamensis
+7.768 × 10^-26
+1.200 × 10^-24
+< 2e-16
+****
+T. cacao
+3.965 × 10^-7
+8.800 × 10^-7
+4.0e-07
+****
+H. concinna
+L. panamensis
+2.293 × 10^-18
+1.800 × 10^-17
+< 2e-16
+****
+T. cacao
+1.173 × 10^-17
+8.200 × 10^-17
+< 2e-16
+****
+L. panamensis
+T. cacao
+2.949 × 10^-7
+8.800 × 10^-7
+2.9e-07
+****
+1 n = 156 individuals
+2Significance levels are represented by ns (not significant) and asterisks [p = 0.05 (*), p = 0.01 (**), p = 0.001 (***), and p < 0.0001 (****)].
+
+
+
+Table S4: Student's t-Tests of mean leaf mass per area (LMA) (mg mm-2)
+Pairwise comparisons of LMA between species.
+
+p - values
+Comparison Species1
+p
+p.adj
+p.format
+p.signif2
+A. membranacea
+C. cainito
+9.032 × 10^-36
+1.600 × 10^-34
+< 2e-16
+****
+C. alliodora
+3.180 × 10^-1
+3.200 × 10^-1
+0.32
+ns
+Dypterix sp.
+3.538 × 10^-43
+7.400 × 10^-42
+< 2e-16
+****
+H. concinna
+7.548 × 10^-21
+8.700 × 10^-20
+< 2e-16
+****
+L. panamensis
+7.304 × 10^-26
+1.200 × 10^-24
+< 2e-16
+****
+T. cacao
+7.242 × 10^-21
+8.700 × 10^-20
+< 2e-16
+****
+C. cainito
+C. alliodora
+3.873 × 10^-39
+7.700 × 10^-38
+< 2e-16
+****
+Dypterix sp.
+3.649 × 10^-16
+2.200 × 10^-15
+3.6e-16
+****
+H. concinna
+6.101 × 10^-12
+2.400 × 10^-11
+6.1e-12
+****
+L. panamensis
+3.975 × 10^-28
+6.800 × 10^-27
+< 2e-16
+****
+T. cacao
+7.651 × 10^-21
+8.700 × 10^-20
+< 2e-16
+****
+C. alliodora
+Dypterix sp.
+1.738 × 10^-36
+3.300 × 10^-35
+< 2e-16
+****
+H. concinna
+1.267 × 10^-21
+1.600 × 10^-20
+< 2e-16
+****
+L. panamensis
+8.205 × 10^-21
+8.700 × 10^-20
+< 2e-16
+****
+T. cacao
+1.371 × 10^-22
+1.900 × 10^-21
+< 2e-16
+****
+Dypterix sp.
+H. concinna
+1.617 × 10^-15
+8.100 × 10^-15
+1.6e-15
+****
+L. panamensis
+7.768 × 10^-26
+1.200 × 10^-24
+< 2e-16
+****
+T. cacao
+3.965 × 10^-7
+8.800 × 10^-7
+4.0e-07
+****
+H. concinna
+L. panamensis
+2.293 × 10^-18
+1.800 × 10^-17
+< 2e-16
+****
+T. cacao
+1.173 × 10^-17
+8.200 × 10^-17
+< 2e-16
+****
+L. panamensis
+T. cacao
+2.949 × 10^-7
+8.800 × 10^-7
+2.9e-07
+****
+1 n = 156 individuals
+2Significance levels are represented by ns (not significant) and asterisks [p = 0.05 (*), p = 0.01 (**), p = 0.001 (***), and p < 0.0001 (****)].
+
+
+
+
+
+
+Table S5: Taxonomy of OTUs significantly correlated OTUs with tree host species
+
+
+
+
+
+
+
+
+Multilevel pattern analysis
+Kingdom
+Phylum
+Class
+Order
+Family
+Genus
+Species
+OTU
+Index
+Stat
+p1
+padj2
+T. cacao
+Fungi
+Ascomycota
+Dothideomycetes
+Capnodiales
+Mycosphaerellaceae
+Coremiopassalora
+Coremiopassalora leptophlebae
+OTU 2
+7
+0.507
+**
+0.012
+Fungi
+Ascomycota
+Dothideomycetes
+Capnodiales
+Mycosphaerellaceae
+Pseudocercospora
+Pseudocercospora sp
+OTU 5
+7
+0.531
+**
+0.012
+Fungi
+Ascomycota
+Eurotiomycetes
+Eurotiales
+Trichocomaceae
+Talaromyces
+Talaromyces sp
+OTU 3
+7
+0.469
+**
+0.012
+Fungi
+Ascomycota
+unidentified
+unidentified
+unidentified
+unidentified
+Ascomycota sp
+OTU 14
+7
+0.500
+**
+0.012
+Fungi
+Ascomycota
+Dothideomycetes
+Capnodiales
+Cladosporiaceae
+Cladosporium
+Cladosporium sp
+OTU 20
+7
+0.382
+**
+0.012
+Fungi
+Ascomycota
+Dothideomycetes
+Capnodiales
+Mycosphaerellaceae
+Zasmidium
+Zasmidium queenslandicum
+OTU 95
+7
+0.390
+**
+0.012
+Fungi
+Ascomycota
+Sordariomycetes
+Hypocreales
+Hypocreales_fam_Incertae_sedis
+Acremonium
+Acremonium sp
+OTU 84
+7
+0.430
+**
+0.012
+Fungi
+Ascomycota
+Dothideomycetes
+Capnodiales
+Dissoconiaceae
+Ramichloridium
+Ramichloridium sp
+OTU 79
+7
+0.362
+**
+0.019
+Fungi
+Ascomycota
+Dothideomycetes
+Capnodiales
+Mycosphaerellaceae
+Mycosphaerella
+Mycosphaerella sp
+OTU 183
+7
+0.427
+**
+0.012
+Fungi
+Ascomycota
+Sordariomycetes
+Xylariales
+Xylariaceae
+Annulohypoxylon
+Annulohypoxylon urceolatum
+OTU 279
+7
+0.352
+**
+0.019
+Fungi
+Ascomycota
+Dothideomycetes
+Capnodiales
+Mycosphaerellaceae
+Zasmidium
+Zasmidium commune
+OTU 286
+7
+0.331
+**
+0.041
+H. concinna
+Fungi
+Ascomycota
+Sordariomycetes
+Hypocreales
+Nectriaceae
+Fusarium
+Fusarium sp
+OTU 7
+5
+0.330
+**
+0.012
+Fungi
+Ascomycota
+Eurotiomycetes
+Chaetothyriales
+Herpotrichiellaceae
+Exophiala
+Exophiala oligosperma
+OTU 21
+5
+0.220
+**
+0.012
+Fungi
+Ascomycota
+Sordariomycetes
+Hypocreales
+Clavicipitaceae
+unidentified
+Clavicipitaceae sp
+OTU 53
+5
+0.281
+**
+0.012
+Fungi
+Ascomycota
+Saccharomycetes
+Saccharomycetales
+Saccharomycetales_fam_Incertae_sedis
+Candida
+Candida parapsilosis
+OTU 67
+5
+0.272
+**
+0.027
+Fungi
+Ascomycota
+Eurotiomycetes
+Chaetothyriales
+Trichomeriaceae
+Bradymyces
+Bradymyces sp
+OTU 160
+5
+0.251
+**
+0.047
+Fungi
+Ascomycota
+Eurotiomycetes
+Chaetothyriales
+Herpotrichiellaceae
+Exophiala
+Exophiala oligosperma
+OTU 173
+5
+0.350
+**
+0.012
+Fungi
+Ascomycota
+Sordariomycetes
+Sordariales
+Chaetomiaceae
+unidentified
+Chaetomiaceae sp
+OTU 209
+5
+0.351
+**
+0.019
+Fungi
+Ascomycota
+Dothideomycetes
+Pleosporales
+Didymellaceae
+Neodidymelliopsis
+Neodidymelliopsis sambuci
+OTU 596
+5
+0.351
+**
+0.019
+Dypterix sp.
+Fungi
+Ascomycota
+Dothideomycetes
+Capnodiales
+Dissoconiaceae
+Uwebraunia
+Uwebraunia dekkeri
+OTU 12
+4
+0.418
+**
+0.012
+Fungi
+Ascomycota
+Eurotiomycetes
+Eurotiales
+Aspergillaceae
+Aspergillus
+Aspergillus sp
+OTU 122
+4
+0.257
+**
+0.047
+Fungi
+Ascomycota
+Dothideomycetes
+Capnodiales
+Dissoconiaceae
+Ramichloridium
+Ramichloridium punctatum
+OTU 151
+4
+0.378
+**
+0.012
+Fungi
+Ascomycota
+Sordariomycetes
+Xylariales
+Xylariaceae
+unidentified
+Xylariaceae sp
+OTU 216
+4
+0.390
+**
+0.019
+Fungi
+Ascomycota
+Dothideomycetes
+Capnodiales
+Schizothyriaceae
+Zygophiala
+Zygophiala qianensis
+OTU 305
+4
+0.333
+**
+0.034
+A. membranacea
+Fungi
+Ascomycota
+Sordariomycetes
+Xylariales
+unidentified
+unidentified
+Xylariales sp
+OTU 25
+1
+0.219
+**
+0.012
+Fungi
+Ascomycota
+Dothideomycetes
+Capnodiales
+Mycosphaerellaceae
+Septoria
+Septoria sp
+OTU 26
+1
+0.366
+**
+0.012
+Fungi
+Ascomycota
+Sordariomycetes
+Xylariales
+Xylariaceae
+Xylaria
+Xylaria curta
+OTU 172
+9
+0.413
+**
+0.012
+Fungi
+Ascomycota
+Dothideomycetes
+Pleosporales
+Pleosporaceae
+Curvularia
+Curvularia sp
+OTU 120
+1
+0.352
+**
+0.047
+C. alliodora
+Fungi
+Ascomycota
+Dothideomycetes
+Botryosphaeriales
+Phyllostictaceae
+Phyllosticta
+Phyllosticta capitalensis
+OTU 32
+19
+0.362
+**
+0.012
+Fungi
+Ascomycota
+Sordariomycetes
+Diaporthales
+Diaporthaceae
+Diaporthe
+Diaporthe longicolla
+OTU 31
+3
+0.531
+**
+0.012
+Fungi
+Ascomycota
+Sordariomycetes
+Glomerellales
+Glomerellaceae
+Colletotrichum
+Colletotrichum gigasporum
+OTU 34
+3
+0.374
+**
+0.012
+Fungi
+Ascomycota
+Sordariomycetes
+Xylariales
+Xylariaceae
+Xylaria
+Xylaria sp
+OTU 62
+3
+0.516
+**
+0.012
+Fungi
+Ascomycota
+unidentified
+unidentified
+unidentified
+unidentified
+Ascomycota sp
+OTU 52
+3
+0.494
+**
+0.012
+Fungi
+Ascomycota
+Sordariomycetes
+Diaporthales
+Diaporthaceae
+Diaporthe
+Diaporthe sp
+OTU 99
+3
+0.443
+**
+0.012
+Fungi
+Ascomycota
+Sordariomycetes
+Sordariales
+Chaetomiaceae
+Ovatospora
+Ovatospora brasiliensis
+OTU 61
+3
+0.374
+**
+0.012
+Fungi
+Ascomycota
+Dothideomycetes
+Pleosporales
+Phaeosphaeriaceae
+Setophoma
+Setophoma sp
+OTU 71
+3
+0.386
+**
+0.012
+Fungi
+Ascomycota
+Sordariomycetes
+Xylariales
+Xylariaceae
+Annulohypoxylon
+Annulohypoxylon stygium
+OTU 78
+3
+0.503
+**
+0.012
+Fungi
+Ascomycota
+Sordariomycetes
+Xylariales
+Xylariaceae
+Hypoxylon
+Hypoxylon sp
+OTU 101
+3
+0.483
+**
+0.012
+Fungi
+Ascomycota
+Sordariomycetes
+Diaporthales
+Diaporthaceae
+Diaporthe
+Diaporthe sp
+OTU 223
+3
+0.415
+**
+0.012
+Fungi
+Ascomycota
+Sordariomycetes
+Xylariales
+Xylariaceae
+Xylaria
+Xylaria sp
+OTU 212
+3
+0.501
+**
+0.012
+Fungi
+Ascomycota
+Dothideomycetes
+Capnodiales
+Cladosporiaceae
+Melomastia
+Melomastia sp
+OTU 117
+3
+0.429
+**
+0.012
+Fungi
+Ascomycota
+Dothideomycetes
+Pleosporales
+Morosphaeriaceae
+Acrocalymma
+Acrocalymma sp
+OTU 169
+3
+0.434
+**
+0.012
+Fungi
+Ascomycota
+Sordariomycetes
+Diaporthales
+Diaporthaceae
+Diaporthe
+Diaporthe sp
+OTU 512
+3
+0.461
+**
+0.012
+Fungi
+Ascomycota
+Sordariomycetes
+Diaporthales
+Diaporthaceae
+Diaporthe
+Diaporthe melonis
+OTU 179
+3
+0.475
+**
+0.012
+Fungi
+Ascomycota
+Sordariomycetes
+Xylariales
+Xylariales_fam_Incertae_sedis
+Oxydothis
+Oxydothis garethjonesii
+OTU 94
+57
+0.366
+**
+0.027
+Fungi
+Ascomycota
+Sordariomycetes
+Xylariales
+Xylariaceae
+unidentified
+Xylariaceae sp
+OTU 106
+3
+0.455
+**
+0.012
+Fungi
+Ascomycota
+Sordariomycetes
+Xylariales
+Xylariaceae
+Hypoxylon
+Hypoxylon hypomiltum
+OTU 142
+3
+0.369
+**
+0.012
+Fungi
+Ascomycota
+Sordariomycetes
+Xylariales
+Xylariaceae
+Xylaria
+Xylaria sp
+OTU 262
+3
+0.399
+**
+0.012
+Fungi
+Ascomycota
+Sordariomycetes
+Diaporthales
+Diaporthaceae
+Diaporthe
+Diaporthe sp
+OTU 327
+3
+0.480
+**
+0.012
+Fungi
+Ascomycota
+Sordariomycetes
+Xylariales
+Xylariaceae
+Hypoxylon
+Hypoxylon submonticulosum
+OTU 202
+3
+0.339
+**
+0.012
+Fungi
+Ascomycota
+Sordariomycetes
+Xylariales
+Amphisphaeriaceae
+Lepteutypa
+Lepteutypa sambuci
+OTU 210
+3
+0.410
+**
+0.012
+Fungi
+Ascomycota
+Sordariomycetes
+Xylariales
+Xylariaceae
+unidentified
+Xylariaceae sp
+OTU 380
+3
+0.351
+**
+0.019
+Fungi
+Ascomycota
+Sordariomycetes
+Xylariales
+Xylariaceae
+unidentified
+Xylariaceae sp
+OTU 537
+3
+0.451
+**
+0.012
+Fungi
+Ascomycota
+Sordariomycetes
+Sordariales
+Lasiosphaeriaceae
+unidentified
+Lasiosphaeriaceae sp
+OTU 219
+3
+0.349
+**
+0.019
+Fungi
+Ascomycota
+unidentified
+unidentified
+unidentified
+unidentified
+Ascomycota sp
+OTU 192
+3
+0.395
+**
+0.012
+Fungi
+Ascomycota
+Sordariomycetes
+Xylariales
+Xylariaceae
+Lopadostoma
+Lopadostoma americanum
+OTU 936
+3
+0.417
+**
+0.019
+Fungi
+Ascomycota
+Sordariomycetes
+Sordariales
+Sordariales_fam_Incertae_sedis
+Ramophialophora
+Ramophialophora sp
+OTU 362
+3
+0.330
+**
+0.041
+Fungi
+Ascomycota
+unidentified
+unidentified
+unidentified
+unidentified
+Ascomycota sp
+OTU 784
+3
+0.399
+**
+0.012
+Fungi
+Ascomycota
+Sordariomycetes
+unidentified
+unidentified
+unidentified
+Sordariomycetes sp
+OTU 397
+3
+0.435
+**
+0.019
+Fungi
+Ascomycota
+Sordariomycetes
+Diaporthales
+Diaporthaceae
+Diaporthe
+Diaporthe fraxini-angustifoliae
+OTU 575
+3
+0.379
+**
+0.019
+Fungi
+Ascomycota
+Sordariomycetes
+Glomerellales
+Glomerellaceae
+Colletotrichum
+Colletotrichum ignotum
+OTU 614
+3
+0.342
+**
+0.034
+C. cainito
+Fungi
+Ascomycota
+Sordariomycetes
+Xylariales
+unidentified
+unidentified
+Xylariales sp
+OTU 58
+2
+0.362
+**
+0.027
+Fungi
+Ascomycota
+Sordariomycetes
+Hypocreales
+Hypocreales_fam_Incertae_sedis
+Sarocladium
+Sarocladium gamsii
+OTU 75
+18
+0.335
+**
+0.012
+Fungi
+Ascomycota
+Sordariomycetes
+Diaporthales
+Valsaceae
+Phomopsis
+Phomopsis sp
+OTU 86
+2
+0.323
+**
+0.012
+Fungi
+Ascomycota
+Sordariomycetes
+Sordariales
+Cephalothecaceae
+Phialemonium
+Phialemonium dimorphosporum
+OTU 139
+2
+0.334
+**
+0.019
+Fungi
+Ascomycota
+Sordariomycetes
+Hypocreales
+Hypocreales_fam_Incertae_sedis
+Acremonium
+Acremonium hennebertii
+OTU 145
+2
+0.406
+**
+0.012
+Fungi
+Ascomycota
+Sordariomycetes
+Xylariales
+unidentified
+unidentified
+Xylariales sp
+OTU 128
+50
+0.341
+**
+0.041
+Fungi
+Ascomycota
+Arthoniomycetes
+Lichenostigmatales
+Phaeococcomycetaceae
+Phaeococcomyces
+Phaeococcomyces rothmanniae
+OTU 197
+2
+0.352
+**
+0.012
+Fungi
+Ascomycota
+Sordariomycetes
+Diaporthales
+Diaporthaceae
+Diaporthe
+Diaporthe sp
+OTU 761
+2
+0.418
+**
+0.012
+L. panamensis
+Fungi
+Ascomycota
+Sordariomycetes
+Xylariales
+Xylariales_fam_Incertae_sedis
+Oxydothis
+Oxydothis sp
+OTU 221
+6
+0.335
+**
+0.027
+Fungi
+Ascomycota
+Dothideomycetes
+Pleosporales
+unidentified
+unidentified
+Pleosporales sp
+OTU 232
+6
+0.336
+**
+0.027
+Fungi
+Ascomycota
+Sordariomycetes
+Glomerellales
+Glomerellales_fam_Incertae_sedis
+Malaysiasca
+Malaysiasca phaii
+OTU 735
+6
+0.309
+**
+0.019
+1  Significance levels are represented by ns (not significant) and asterisks [p <= 0.05 (*), p <= 0.01 (**), p <= 0.001 (***), and p < 0.0001 (****)].
+2Benjamini & Hochberg method adjustment for multiple comparisons
+
+
+
+
+
+Table S6: Taxonomy of significantly correlated OTUs with Atta colombica herbivory levels
+
+
+
+
+
+
+
+
+Multilevel pattern analysis
+Kingdom
+Phylum
+Class
+Order
+Family
+Genus
+Species
+OTU
+Index
+Stat
+p2
+padj3
+Medium
+Fungi
+Ascomycota
+Eurotiomycetes
+Chaetothyriales
+Cyphellophoraceae
+Cyphellophora
+Cyphellophora oxyspora
+OTU 19
+3
+0.293
+*
+1.000
+Fungi
+Ascomycota
+unidentified
+unidentified
+unidentified
+unidentified
+Ascomycota sp
+OTU 153
+3
+0.307
+*
+1.000
+Fungi
+Ascomycota
+Sordariomycetes
+Hypocreales
+unidentified
+unidentified
+Hypocreales sp
+OTU 682
+3
+0.307
+*
+1.000
+High
+Fungi
+Ascomycota
+Sordariomycetes
+Xylariales
+Xylariaceae
+Xylaria
+Xylaria sp
+OTU 62
+1
+0.315
+*
+1.000
+Fungi
+Ascomycota
+Eurotiomycetes
+Eurotiales
+Aspergillaceae
+Aspergillus
+Aspergillus terreus
+OTU 55
+1
+0.232
+*
+1.000
+Fungi
+Ascomycota
+Sordariomycetes
+Xylariales
+Xylariaceae
+Xylaria
+Xylaria sp
+OTU 212
+1
+0.343
+*
+1.000
+Fungi
+Ascomycota
+Sordariomycetes
+Xylariales
+Xylariaceae
+unidentified
+Xylariaceae sp
+OTU 106
+1
+0.306
+*
+1.000
+Fungi
+Ascomycota
+Sordariomycetes
+Microascales
+unidentified
+unidentified
+Microascales sp
+OTU 608
+1
+0.268
+*
+1.000
+Fungi
+Ascomycota
+Sordariomycetes
+Hypocreales
+Cordycipitaceae
+Beauveria
+Beauveria sp
+OTU 204
+1
+0.283
+*
+1.000
+Fungi
+Ascomycota
+unidentified
+unidentified
+unidentified
+unidentified
+Ascomycota sp
+OTU 784
+1
+0.258
+*
+1.000
+Fungi
+Ascomycota
+Sordariomycetes
+Sordariales
+unidentified
+unidentified
+Sordariales sp
+OTU 437
+1
+0.300
+*
+1.000
+Fungi
+Ascomycota
+Sordariomycetes
+unidentified
+unidentified
+unidentified
+Sordariomycetes sp
+OTU 492
+1
+0.257
+*
+1.000
+Fungi
+Ascomycota
+Dothideomycetes
+Pleosporales
+Lentitheciaceae
+Poaceascoma
+Poaceascoma sp
+OTU 644
+1
+0.280
+*
+1.000
+Fungi
+Ascomycota
+Sordariomycetes
+Microascales
+unidentified
+unidentified
+Microascales sp
+OTU 1043
+1
+0.301
+*
+1.000
+Fungi
+Ascomycota
+Sordariomycetes
+Microascales
+Halosphaeriaceae
+unidentified
+Halosphaeriaceae sp
+OTU 1053
+1
+0.245
+*
+1.000
+Fungi
+Ascomycota
+Sordariomycetes
+Xylariales
+Xylariales_fam_Incertae_sedis
+Phialemoniopsis
+Phialemoniopsis sp
+OTU 1067
+1
+0.303
+*
+1.000
+Low
+Fungi
+Ascomycota
+Sordariomycetes
+Hypocreales
+Hypocreales_fam_Incertae_sedis
+Acremonium
+Acremonium hennebertii
+OTU 100
+2
+0.323
+**
+1.000
+1High = >70% leaf area damage, Medium = 31-69% leaf area damage, Low = <30% leaf area damage
+2Significance levels are represented by ns (not significant) and asterisks [p <= 0.05 (*), p <= 0.01 (**), p <= 0.001 (***), and p < 0.0001 (****)].
+3Benjamini & Hochberg method adjustment for multiple comparisons
+
+
+
+Table S7: Taxonomy of significantly correlated OTUs with Calonectria sp. pathogen damage levels
+
+
+
+
+
+
+
+
+Multilevel pattern analysis
+Kingdom
+Phylum
+Class
+Order
+Family
+Genus
+Species
+OTU
+Index
+Stat
+p2
+padj3
+High
+Fungi
+Ascomycota
+Sordariomycetes
+Glomerellales
+Glomerellaceae
+Colletotrichum
+Colletotrichum fructicola
+OTU 1
+1
+0.222
+*
+1.000
+Fungi
+Ascomycota
+Dothideomycetes
+Capnodiales
+Dissoconiaceae
+Ramichloridium
+Ramichloridium apiculatum
+OTU 18
+1
+0.239
+*
+1.000
+Fungi
+Ascomycota
+Dothideomycetes
+Botryosphaeriales
+Phyllostictaceae
+Phyllosticta
+Phyllosticta capitalensis
+OTU 32
+1
+0.229
+ns
+1.000
+Fungi
+Ascomycota
+Dothideomycetes
+Pleosporales
+unidentified
+unidentified
+Pleosporales sp
+OTU 70
+1
+0.226
+*
+1.000
+Fungi
+Ascomycota
+Sordariomycetes
+unidentified
+unidentified
+unidentified
+Sordariomycetes sp
+OTU 114
+1
+0.187
+*
+1.000
+Fungi
+Ascomycota
+Dothideomycetes
+Pleosporales
+Leptosphaeriaceae
+Leptosphaeria
+Leptosphaeria modesta
+OTU 108
+1
+0.236
+*
+1.000
+Fungi
+Ascomycota
+Sordariomycetes
+Chaetosphaeriales
+Chaetosphaeriaceae
+unidentified
+Chaetosphaeriaceae sp
+OTU 177
+1
+0.204
+ns
+1.000
+Fungi
+Ascomycota
+Sordariomycetes
+Xylariales
+Xylariaceae
+Hypoxylon
+Hypoxylon sp
+OTU 244
+1
+0.205
+*
+1.000
+Fungi
+Ascomycota
+Sordariomycetes
+Hypocreales
+unidentified
+unidentified
+Hypocreales sp
+OTU 196
+1
+0.227
+ns
+1.000
+Fungi
+Ascomycota
+Sordariomycetes
+Sordariales
+Lasiosphaeriaceae
+unidentified
+Lasiosphaeriaceae sp
+OTU 258
+1
+0.225
+*
+1.000
+Fungi
+Ascomycota
+Sordariomycetes
+Phomatosporales
+Phomatosporaceae
+Phomatospora
+Phomatospora sp
+OTU 637
+1
+0.209
+*
+1.000
+1High = >30% leaf area damage, Low = <29% leaf area damage
+2Significance levels are represented by ns (not significant) and asterisks [p = 0.05 (*), p = 0.01 (**), p = 0.001 (***), and p < 0.0001 (****)].
+3Benjamini & Hochberg method adjustment for multiple comparisons
+
+
+
+Table S8: Taxonomy of significantly correlated OTUs with FEF inoculation levels
+
+
+
+
+
+
+
+
+Multilevel pattern analysis
+Kingdom
+Phylum
+Class
+Order
+Family
+Genus
+Species
+OTU
+Index
+Stat
+p1
+padj2
+E+
+Fungi
+Ascomycota
+Sordariomycetes
+Glomerellales
+Glomerellaceae
+Colletotrichum
+Colletotrichum fructicola
+OTU 1
+2
+0.110
+**
+0.022
+Fungi
+Ascomycota
+Sordariomycetes
+Xylariales
+Sporocadaceae
+Neopestalotiopsis
+Neopestalotiopsis sp
+OTU 10
+2
+0.196
+**
+0.022
+Fungi
+Ascomycota
+Dothideomycetes
+Capnodiales
+Dissoconiaceae
+Uwebraunia
+Uwebraunia dekkeri
+OTU 12
+2
+0.202
+**
+0.022
+Fungi
+Ascomycota
+Sordariomycetes
+unidentified
+unidentified
+unidentified
+Sordariomycetes sp
+OTU 36
+2
+0.415
+**
+0.022
+Fungi
+Ascomycota
+Sordariomycetes
+Hypocreales
+unidentified
+unidentified
+Hypocreales sp
+OTU 39
+2
+0.301
+**
+0.022
+Fungi
+Ascomycota
+Sordariomycetes
+Diaporthales
+Diaporthaceae
+Diaporthe
+Diaporthe longicolla
+OTU 31
+2
+0.208
+**
+0.022
+Fungi
+Ascomycota
+Sordariomycetes
+Glomerellales
+Plectosphaerellaceae
+Wallrothiella
+Wallrothiella subiculosa
+OTU 35
+2
+0.271
+**
+0.022
+Fungi
+Ascomycota
+Sordariomycetes
+Glomerellales
+Glomerellaceae
+Colletotrichum
+Colletotrichum gigasporum
+OTU 34
+2
+0.273
+**
+0.022
+Fungi
+Ascomycota
+Sordariomycetes
+unidentified
+unidentified
+unidentified
+Sordariomycetes sp
+OTU 42
+2
+0.416
+**
+0.022
+Fungi
+Ascomycota
+Sordariomycetes
+Xylariales
+Sporocadaceae
+Pseudopestalotiopsis
+Pseudopestalotiopsis sp
+OTU 46
+2
+0.192
+**
+0.022
+Fungi
+Ascomycota
+Sordariomycetes
+Hypoceales
+Amplistromataceae
+Amplistroma
+Amplistroma erinaceum
+OTU 60
+2
+0.319
+**
+0.022
+Fungi
+Ascomycota
+Sordariomycetes
+Xylariales
+Xylariaceae
+Xylaria
+Xylaria sp
+OTU 62
+2
+0.236
+**
+0.022
+Fungi
+Ascomycota
+Sordariomycetes
+Hypocreales
+Hypocreales_fam_Incertae_sedis
+Acremonium
+Acremonium sp
+OTU 49
+2
+0.174
+**
+0.022
+Fungi
+Ascomycota
+unidentified
+unidentified
+unidentified
+unidentified
+Ascomycota sp
+OTU 52
+2
+0.289
+**
+0.022
+Fungi
+Ascomycota
+Sordariomycetes
+Diaporthales
+Diaporthaceae
+Diaporthe
+Diaporthe sp
+OTU 99
+2
+0.210
+**
+0.037
+Fungi
+Ascomycota
+Dothideomycetes
+Capnodiales
+Cladosporiaceae
+Cladosporium
+Cladosporium sp
+OTU 132
+2
+0.196
+**
+0.037
+Fungi
+Ascomycota
+Sordariomycetes
+Hypocreales
+Hypocreales_fam_Incertae_sedis
+Acremonium
+Acremonium hennebertii
+OTU 77
+2
+0.270
+**
+0.022
+Fungi
+Ascomycota
+Sordariomycetes
+Diaporthales
+Diaporthaceae
+Diaporthe
+Diaporthe sp
+OTU 223
+2
+0.179
+**
+0.022
+Fungi
+Ascomycota
+Sordariomycetes
+Hypocreales
+Hypocreales_fam_Incertae_sedis
+Acremonium
+Acremonium hennebertii
+OTU 100
+2
+0.262
+**
+0.022
+Fungi
+Ascomycota
+Dothideomycetes
+Capnodiales
+Cladosporiaceae
+Melomastia
+Melomastia sp
+OTU 117
+2
+0.167
+**
+0.037
+Fungi
+Ascomycota
+Sordariomycetes
+unidentified
+unidentified
+unidentified
+Sordariomycetes sp
+OTU 92
+2
+0.293
+**
+0.022
+Fungi
+Ascomycota
+Dothideomycetes
+Pleosporales
+Leptosphaeriaceae
+Leptosphaeria
+Leptosphaeria modesta
+OTU 108
+2
+0.282
+**
+0.022
+Fungi
+Ascomycota
+Sordariomycetes
+Diaporthales
+Diaporthaceae
+Diaporthe
+Diaporthe melonis
+OTU 179
+2
+0.223
+**
+0.037
+Fungi
+Ascomycota
+Sordariomycetes
+Xylariales
+Xylariales_fam_Incertae_sedis
+Oxydothis
+Oxydothis garethjonesii
+OTU 94
+2
+0.300
+**
+0.022
+Fungi
+Ascomycota
+Sordariomycetes
+Xylariales
+Xylariaceae
+unidentified
+Xylariaceae sp
+OTU 106
+2
+0.256
+**
+0.022
+Fungi
+Ascomycota
+Eurotiomycetes
+Chaetothyriales
+unidentified
+unidentified
+Chaetothyriales sp
+OTU 126
+2
+0.308
+**
+0.022
+Fungi
+Ascomycota
+Sordariomycetes
+Glomerellales
+Plectosphaerellaceae
+unidentified
+Plectosphaerellaceae sp
+OTU 146
+2
+0.130
+**
+0.037
+Fungi
+Ascomycota
+Sordariomycetes
+Sordariomycetes_ord_Incertae_sedis
+Sordariomycetes_fam_Incertae_sedis
+Distoseptispora
+Distoseptispora sp
+OTU 148
+2
+0.288
+**
+0.022
+Fungi
+Ascomycota
+Eurotiomycetes
+Chaetothyriales
+Herpotrichiellaceae
+Phialophora
+Phialophora geniculata
+OTU 278
+2
+0.301
+**
+0.022
+Fungi
+Ascomycota
+Sordariomycetes
+Glomerellales
+Plectosphaerellaceae
+Plectosphaerella
+Plectosphaerella cucumerina
+OTU 390
+2
+0.197
+**
+0.022
+Fungi
+Ascomycota
+Dothideomycetes
+unidentified
+unidentified
+unidentified
+Dothideomycetes sp
+OTU 201
+2
+0.269
+**
+0.022
+1Significance levels are represented by ns (not significant) and asterisks [p <= 0.05 (*), p <= 0.01 (**), p <= 0.001 (***), and p < 0.0001 (****)].
+2Benjamini & Hochberg method adjustment for multiple comparisons
+
+Table S9: Sterilization protocol for tropical tree seeds
+Tree Species
+Number of seed collected
+Number of maternal sources
+Sterilization protocol
+Apeiba membranacea
+500
+3
+Soak in water for 3-5 days; 10% NaClO for 4 minutes; 70% EtOH for 5 minutes
+Chrysophylum cainito
+100
+1
+Soak in water for 3-5 days; 10% NaClO for 4 minutes, 70% EtOH for 5 minutes
+Cordia alliodora
+???
+?
+???
+Dypterix sp.
+~100
+unknown
+Soak in water for 7 days; 10% NaClO for 5 minutes; 70% EtOH for 5 minutes
+Heisteria concinna
+250
+~6
+Soak in water for 3-5 days; 10% NaClO for 4 minutes; 70% EtOH for 5 minutes
+Lacmellea panamensis
+75
+3
+Soak in water for 3-5 days; 5% NaClO for 3 minutes; 50% EtOH for 3 minutes
+Theobroma cacao
+???
+?
+???
+

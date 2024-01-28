@@ -16,7 +16,7 @@ author:
         state: LA
         country: US
         url: www.tulane.edu
-    - name: A. Elizabeth Arnold
+  - name: A. Elizabeth Arnold
     orcid: 0000-0002-7013-4026
     email: arnold@ag.arizona.edu
     corresponding: false
@@ -35,7 +35,7 @@ author:
         state: AZ
         country: US
         url: www.arizona.edu
-    - name: Mareli Sánchez Juliá
+  - name: Mareli Sánchez Juliá
     email: msanchezjulia@tulane.edu
     corresponding: false
     affiliation: 
@@ -127,12 +127,12 @@ library("lattice")
 library("janitor")
 library("flextable")
 library("huxtable")
-library("vtable")
 library("gt")
 library("gtsummary")
 library("officer")
 library("broom")
 library("broom.mixed")
+library("broom.helpers")
 library("formatR")
 library("data.table")
 library("kableExtra")
@@ -192,7 +192,7 @@ Leaf defenses fall within the leaf economic spectrum (LES) which on one end has 
 
 Leaf microbial communities, such as foliar endophytic fungi (FEF), are found inside the leaf tissue of all vascular land plants [@currie2014; @rodriguez2009]. In tropical forests, FEF transmit horizontally through ambient spore fall [@arnold2000]. Newly flushed leaves are free of FEF presenting fungal spores with challenges to colonization that will ultimately determine FEF communities. They generally grow asymptomatically within leaves [@porras-alfaro2011]. Nevertheless, FEF have been found to modulate leaf functional traits, especially with regard to the expression of secondary metabolites, sensitivity to drought, photosyntheic rates an efficiency, and defense against natural enemies [@arnold2003; @arnold2007a; @friesen2011; @bittleston2011; @estrada2013; @mejia2014]. Such effects have not been examined systematically and quantitatively, but are critical to understanding the species interactions in tropical forests relevant to plant survival, performance, and productivity and downstream ecosystem services [@mcgill2006; CITE mORE]. Tellez et al. [-@tellezTraits2022] highlighted how FEF communities in tropical trees structure along specific leaf functional traits, thus extending the LES framework by including diverse and ecologically important FEF. The potential FEF have to alter where plants fall in the LES offers a useful lens to ask: what is the role of FEF in plant defenses against herbivores and pathogens and what are the trade-offs. Our grasp of the role of FEF in plant defenses is critical to our understanding of plant-enemy interactions and the maintenance of plant diversity in tropical forests.
 
-In this study, we set out to investigate the role of FEF abundance, diversity and community composition in the modulation of leaf functional traits and plant's response to herbivory and pathogen damage. This work builds upon experiments that used single plant species to plant enemies [@estrada2013; @mejia2009; @mejia2014] by incorporating seven phylogenetically distinct tropical tree species to increase. We hypothesized that FEF improve leaf defenses against generalist herbivores and pathogens, especially in plants that invest less in constitutive defenses (e.g., thin leaves and short-lived). Alternatively, plants that invest more in constitutive defenses rely less on induced FEF acquisition. To test our hypothesis we designed an experiment that manipulated tropical tree seedlings and measured leaf damage (herbivory and pathogen infection) and a subset of leaf functional traits: leaf mass per area (LMA) , leaf thickness (LT), leaf punch strength (LPS), and anthocyanins (ACI), in response to high and *E-* treatments. As plant enemies, we used as model systems leaf-cutter ants, *Atta colombica* (Formicidae), for a generalist herbivore and *Calonectria* sp. (Nectriaceae) for a generalist pathogen. We predicted the following: 1) Leaf-cutter ants and *Calonectria* sp. would cause less leaf damage (herbivory through leaf tissue removal and leaf necrosis through pathogen infection, respectively) on leaves with higher FEF abundance, richness and diversity composition; 2) Tree species with leaf functional traits on the low end of the economic spectrum (e.g., lower leaf mass per area) would have less herbivory and pathogen damage when treated with high FEF densities compared to their *E-* counterparts; 3) Conversely, tree species with leaf functional traits of the high side of the economic spectrum (e.g., greater leaf mass per area) treated with *E+* would have no differences in herbivory and pathogen damage compared to their low FEF counterparts; 4) We anticipated that leaves with leaf functional traits on the high end of the economic spectrum would be less attractive to leaf-cutter ants, but *E-* in them may outweigh this selection factor. To test our predictions, we addressed the following questions:
+In this study, we set out to investigate the role of FEF abundance, diversity and community composition in the modulation of leaf functional traits and plant's response to herbivory and pathogen damage. This work builds upon experiments that used single plant species to plant enemies [@estrada2013; @mejia2008; @mejia2014] by incorporating seven phylogenetically distinct tropical tree species and two plant enemies. We hypothesized that FEF improve leaf defenses against generalist herbivores and pathogens, especially in plants that invest less in constitutive defenses (e.g., thin leaves and short-lived). Alternatively, plants that invest more in constitutive defenses rely less on induced FEF acquisition. To test our hypothesis we designed an experiment that manipulated tropical tree seedlings and measured leaf damage (herbivory and pathogen infection) and a subset of leaf functional traits: leaf mass per area (LMA) , leaf thickness (LT), leaf punch strength (LPS), and anthocyanins (ACI), in response to high and *E-* treatments. As plant enemies, we used as model systems leaf-cutter ants, *Atta colombica* (Formicidae), for a generalist herbivore and *Calonectria* sp. (Nectriaceae) for a generalist pathogen. We predicted the following: 1) Leaf-cutter ants and *Calonectria* sp. would cause less leaf damage (herbivory through leaf tissue removal and leaf necrosis through pathogen infection, respectively) on leaves with higher FEF abundance, richness and diversity composition; 2) Tree species with leaf functional traits on the low end of the economic spectrum (e.g., lower leaf mass per area) would have less herbivory and pathogen damage when treated with high FEF densities compared to their *E-* counterparts; 3) Conversely, tree species with leaf functional traits of the high side of the economic spectrum (e.g., greater leaf mass per area) treated with *E+* would have no differences in herbivory and pathogen damage compared to their low FEF counterparts; 4) We anticipated that leaves with leaf functional traits on the high end of the economic spectrum would be less attractive to leaf-cutter ants, but *E-* in them may outweigh this selection factor. To test our predictions, we addressed the following questions:
 
 1.  How do FEF high and low treatment differs in terms of abundance, richness, diversity, and community composition?
 
@@ -208,17 +208,17 @@ To our knowledge this is the first study to examine the interplay of FEF communi
 
 ### Study site and seedling rearing
 
-The species, *Theobroma cacao*, *Dypterix* sp., *Lacmellea panamensis*, *Apeiba membranacea*, *Heisteria concinna*, *Chrysophyllum caimito*, and *Cordia alliodora* were chosen due to their variance in leaf functional traits (J.Wright *unpublished data*). Seeds from at least to maternal sources were collected from the forest floor at Barro Colorado Island (BCI) in central Panama (9°050N, 79°450W) during January - April 2019. The average annual precipitation at BCI is 2,600 mm and the pronounced wet season ranges from May to December [@leigh1996]. In preparation for the experiment, seeds were surface sterilized by soaking in water and rinsing in sodium hypochlorite (NaClO) and ethanol (EtOH). Seed from each species had a species-specific sterilization protocol (see Supplementary Materials). Seed germination and the experiment was carried out at the Santa Cruz Field Facility of the Smithsonian Tropical Research Institute in Gamboa, Panama (9°070N, 79°420W). We germinated and reared seedlings in a clean and shaded greenhouse were we enclosed four tables with a PVC pipe frame and covered it in 3 mil clear plastic sheet; two plastic enclosure with two tables each. The enclosures allowed us to grow plants at ambient temperature and moderate light while providing protection from rain and most fungal spores. Which allowed us to rear seedlings with yielding zero to low endophyte densities [@bittleston2011]. To ensure sterile conditions throughout the experiment, we cleaned table surfaces and walls of the enclosures on a weekly basis with 70% EtOH and 0.5 % NaClO. We germinated seedlings in sterilized trays containing a 3:1 mix of soil and river sand that was autoclaved for two one-hour cycles at 121°C prior to planting. Individual seedlings were transferred from germination trays to a 24 cell tray (each cell \~380 mL) containing the same autoclaved soil and sand mixture. We took precaution to extract complete root systems from the seedlings. See Supplementary Materials for further details on plastic tray and pot sterilizations protocols.
+The species, *Theobroma cacao*, *Dypterix* sp., *Lacmellea panamensis*, *Apeiba membranacea*, *Heisteria concinna*, *Chrysophyllum caimito*, and *Cordia alliodora* were chosen due to their variance in leaf functional traits (J.Wright *unpublished data*). Seeds from at least to maternal sources were collected from the forest floor at Barro Colorado Island (BCI) in central Panama (9°050N, 79°450W) during January - April 2019. The average annual precipitation at BCI is 2,600 mm and the pronounced wet season ranges from May to December [@leigh1996]. In preparation for the experiment, seeds were surface sterilized by soaking in water and rinsing in sodium hypochlorite (NaClO) and ethanol (EtOH). Seed from each species had a species-specific sterilization protocol (see Supplementary Materials). Seed germination and the experiment was carried out at the Santa Cruz Field Facility of the Smithsonian Tropical Research Institute in Gamboa, Panama (9°070N, 79°420W). We germinated and reared seedlings in a clean and shaded greenhouse where we enclosed four tables with a PVC pipe frame and covered it in 3 mil clear plastic sheet; two plastic enclosures with two tables each. The enclosures allowed us to grow plants at ambient temperature and moderate light while providing protection from rain and most fungal spores. This allowed us to rear seedlings with yielding zero to low endophyte densities [@bittleston2011]. To ensure sterile conditions throughout the experiment, we cleaned table surfaces and walls of the enclosures on a weekly basis with 70% EtOH and 0.5 % NaClO. We germinated seedlings in sterilized trays containing a 3:1 mix of soil and river sand that was autoclaved for two one-hour cycles at 121°C prior to planting. Individual seedlings were transferred from germination trays to a 24 cell tray (each cell \~380 mL) containing the same autoclaved soil and sand mixture. We took precaution to extract complete root systems from the seedlings. See Supplementary Materials for further details on plastic tray and pot sterilizations protocols.
 
-Seedlings reached a minimum of 3-4 true leaves before endophyte inoculation. We placed seedlings on separate tables designated for spore fall inoculation and non-inoculated treatment groups within the enclosures. Seedling of the same species but different treatment groups were in the same enclosure. We watered seedlings at the soil level to minimize endophyte spore germination in the enclosures [@arnold2003].
+Seedlings reached a minimum of 3-4 true leaves before endophyte inoculation. We placed seedlings on separate tables designated for spore fall inoculation and non-inoculated treatment groups within the enclosures. Seedlings of the same species but different treatment groups were in the same enclosure. We watered seedlings at the soil level to minimize endophyte spore germination in the enclosures [@arnold2003].
 
 ### Fungal endophyte inoculation
 
-To inoculate seedlings with FEF, we took 10 individual seedlings of each species and exposed them to 10 nights of spore fall to achieve a high FEF load (*E+*) and 10 homologous plants were kept inside the greenhouse plastic enclosure to maintain a low FEF load (*E-*). Plants exposed to spore fall were placed on a table near (\~10 m) the forest edge at dusk (\~18:OO hours) and returned to the greenhouse at dawn (\~07:00 hours) [@bittleston2011]. We sprayed the *E+* seedlings with water to simulate rain and to promote endophyte spore germination and infection of leaves. We repeated this process for 10 consecutive nights. Low FEF plants (*E-*) were watered only at the soil level and shuffled and and moved inside the greenhouse to simulate similar treatment as *E+* seedlings.
+To inoculate seedlings with FEF, we took 10 individual seedlings of each species and exposed them to 10 nights of spore fall to achieve a high FEF load (*E+*) and 10 homologous plants were kept inside the greenhouse plastic enclosure to maintain a low FEF load (*E-*). Plants exposed to spore fall were placed on a table near (\~10 m) the forest edge at dusk (\~18:00 hours) and returned to the greenhouse at dawn (\~07:00 hours) [@bittleston2011]. We sprayed the *E+* seedlings with water to simulate rain and to promote endophyte spore germination and infection of leaves. We repeated this process for 10 consecutive nights. Low FEF plants (*E-*) were watered only at the soil level and shuffled and and moved inside the greenhouse to simulate similar treatment as *E+* seedlings.
 
 ### Leaf trait measurements
 
-Three mature leaves were haphazardly collected from each of the individual plants in each treatment (*E+*, *E-*) within 7-10 days after inoculation treatment. Anthocyanin (ACI) content and leaf thickness (LT) were measured while the leaf was still attached to the plant. We measured anthocyanin content with ACM-200plus (Opti-Sciences Inc. Hudson, New Hampshire, U.S.A.) on three haphazardly selected locations (working from the petiole out to the leaf tip) on the leaf surface of three haphazardly selected leaves for a total of nine measurements per plant [@tellezTraits2022]. To account for leaf thickness, the ACM-200 calculates an anthocyanin content index (ACI) value from the ratio of % transmittance at 931 nm/% transmittance at 525 nm [@tellezRedCol2016, @opti-sciencesinc]. On compound leaves (i.e., *Dypterix* sp.) we measured at three different leaflets. Leaf thickness (μm) was measured with a Mitutoyo 7327 Micrometer Gauge (Mitutoyo, Takatsu-ku, Kawasaki, Japan) at six different points on the leaf lamina; at the base, mid-leaf and tip on both sides of the mid-vein, taking care to avoid major and secondary veins. After ACI and leaf LT measurements were completed, we removed the leaves from their stems, placed them inside a plastic bag (i.e. ZiplocⓇ), place in an ice chest and moved them to the lab for further measurements. Leaf punch strength (LPS) was measured with an Imada DST-11a digital force gauge (Imada Inc., Northbrook, IL, United States) by conducting punch-and-die tests with a sharp-edged cylindrical steel punch (2.0 mm diameter) and a steel die with a sharp-edged aperture of small clearance (0.05 mm). The leaf punch measurements were taken at six diffrent points of the leaf by puncturing the lamina at the base, mid-leaf and tip on both sides of the mid-vein, avoiding minor leaf veins when possible [@tellezTraits2022]. Once LPS was measured, we used a 7 mm diameter punch hole to puncture disks for leaf mass per area (LMA) measurements. We collected three disks per leaf (see Supplementary material for details). The disk punches dried at 60 °C for 48-72 hours. before being weighed.
+Three mature leaves were haphazardly collected from each of the individual plants in each treatment (*E+*, *E-*) within 7-10 days after inoculation treatment. Anthocyanin (ACI) content and leaf thickness (LT) were measured while the leaf was still attached to the plant. We measured anthocyanin content with ACM-200plus (Opti-Sciences Inc. Hudson, New Hampshire, U.S.A.) on three haphazardly selected locations (working from the petiole out to the leaf tip) on the leaf surface of three haphazardly selected leaves for a total of nine measurements per plant [@tellezTraits2022]. To account for leaf thickness, the ACM-200 calculates an anthocyanin content index (ACI) value from the ratio of % transmittance at 931 nm/% transmittance at 525 nm [@tellezRedCol2016, @opti-sciencesinc]. On compound leaves (i.e., *Dypterix* sp.) we measured at three different leaflets. Leaf thickness (μm) was measured with a Mitutoyo 7327 Micrometer Gauge (Mitutoyo, Takatsu-ku, Kawasaki, Japan) at six different points on the leaf lamina; at the base, mid-leaf and tip on both sides of the mid-vein, taking care to avoid major and secondary veins. After ACI and leaf LT measurements were completed, we removed the leaves from their stems, placed them inside a plastic bag (i.e., ZiplocⓇ), place in an ice chest and moved them to the lab for further measurements. Leaf punch strength (LPS) was measured with an Imada DST-11a digital force gauge (Imada Inc., Northbrook, IL, United States) by conducting punch-and-die tests with a sharp-edged cylindrical steel punch (2.0 mm diameter) and a steel die with a sharp-edged aperture of small clearance (0.05 mm). The leaf punch measurements were taken at six different points of the leaf by puncturing the lamina at the base, mid-leaf and tip on both sides of the mid-vein, avoiding minor leaf veins when possible [@tellezTraits2022]. Once LPS was measured, we used a 7 mm diameter punch hole to puncture disks for leaf mass per area (LMA) measurements. We collected three disks per leaf (see Supplementary material for details). The disk punches dried at 60 °C for 48-72 hours. before being weighed.
 
 ### Leaf tissue preparation for molecular work
 
@@ -234,7 +234,7 @@ We processed and sequenced 12 mock communities following the methods described a
 
 ### Bioinformatic analyses
 
-We used VSEARCH (v2.14.1) for *de novo* chimera detection, dereplication and sequence alignment. VSEARCH is an open-source alternative to USEARCH that uses an optimal global aligner (full dynamic programming Needleman-Wunsch), resulting in more accurate alignments and sensitivity [@rognes2016]. For mock communities and experimental samples, we used forward reads (ITS1) for downstream bioinformatics analyses due to their high quality, rather than reverse reads (ITS4). Following Sarmiento et al. [-@sarmiento2017], we concatenated all reads in a single file and used FastQC reports to assess Phred scores above 30 and determine the adequate length of truncation. We processed 892,713 of sequence reads from mock communities and 3,778,081 from experimental samples. We truncated mock community and experimental sample reads to a length of 250 bp with command `fast_trunclen` and filtered them at a maximum expected error of 1.0 with command `fast_maxee`. We then clustered unique sequence zero radius OTUs (that is, zOTUs; analogous to amplicon sequence variants [@callahan2016]), by using commands `derep_fulllength` and `minseqlength` set at 2. Sequentially we denoised and removed chimeras from read sequences with commands `cluster_unoise`, and `uchime3_denovo`, respectively (see Supplementary YYY for details). Finally, we clustered zOTUs at a 95% sequence similarity with command `usearch_global` and option `id` set at 0.95. After which, 3,035,960 sequence reads from experimental samples remained. Taxonomy was assigned with the Tree-Based Alignment Selector Toolkit [v2.2; @carbone2019] by placing unknowns within the Pezizomycotina v2 reference tree [@carbone2017]. ITS sequences were blasted against the UNITE database by the ribosomal database project (RDP) classifier. A total of 2147 OTUs hits were obtained and are composed of 68.6% Ascomycota, 26.8% Basidiomycota,\<0.05% Chytridiomycota, \<0.05% Glomeromycota, \<0.05% Mortierellomycota, \<0.05% Rozellomycota, 0.05% Kickxellomycota, and 4.2 % BLAST hit misses. Only OTUs representing Ascomycota were used for downstream statistical analyses since foliar endophyte communities in tropical trees are dominated by Ascomycota [@arnold2007]. For each OTU identified, we removed laboratory contaminants from experimental samples by substracting the average read count found in control samples from the DNA extraction and PCR steps. Our analysis of mock communities allowed use to identify and remove false OTUs from experimental samples, those with fewer than 10 reads, and remove 0.1% of the read relative abundance across all samples [@oita2021]. Removed reads represent the frequency of reads classified as contamination in the mock communities relative to the expected read count. Three experimental samples from *Theobroma cacao* ($n$=2) and *Apeiba membranacea* ($n$=1) were removed from all analyses due to incomplete entries. After pruning taxa with zero reads from experimental samples, we identified 260 OTUs found exclusively in control (*E-*) plants ($n$=78) and deemed them as artifacts resulting from the greenhouse conditions. Consequently, these were consistently eliminated from treatment (*E+*) plants across all species. We converted reads for each fungal OTU to proportions of total sequence abundance per sample to reduce differences in sampling effort, following previous studies (@weiss2017; @mcmurdie2014 ). We then removed singletons and obtained an average of 2,464,558 sequence reads in 529 Ascomycota OTUs across 156 experimental samples of 7 tree species. All analyses post taxonomic assignment were performed in R [v. 4.3.2; @rcoreteam2023] using the `phyloseq` package [@mcmurdie2013] and custom scripts (see Supplementary Material).
+We used VSEARCH (v2.14.1) for *de novo* chimera detection, dereplication and sequence alignment. VSEARCH is an open-source alternative to USEARCH that uses an optimal global aligner (full dynamic programming Needleman-Wunsch), resulting in more accurate alignments and sensitivity [@rognes2016]. For mock communities and experimental samples, we used forward reads (ITS1) for downstream bioinformatics analyses due to their high quality, rather than reverse reads (ITS4). Following Sarmiento et al. [-@sarmiento2017], we concatenated all reads in a single file and used FastQC reports to assess Phred scores above 30 and determine the adequate length of truncation. We processed 892,713 of sequence reads from mock communities and 3,778,081 from experimental samples. We truncated mock community and experimental sample reads to a length of 250 bp with command `fast_trunclen` and filtered them at a maximum expected error of 1.0 with command `fast_maxee`. We then clustered unique sequence zero radius OTUs (that is, zOTUs; analogous to amplicon sequence variants [@callahan2016]), by using commands `derep_fulllength` and `minseqlength` set at 2. Sequentially we denoised and removed chimeras from read sequences with commands `cluster_unoise`, and `uchime3_denovo`, respectively. Finally, we clustered zOTUs at a 95% sequence similarity with command `usearch_global` and option `id` set at 0.95. After which, 3,035,960 sequence reads from experimental samples remained. Taxonomy was assigned with the Tree-Based Alignment Selector Toolkit [v2.2; @carbone2019] by placing unknowns within the Pezizomycotina v2 reference tree [@carbone2017]. ITS sequences were blasted against the UNITE database by the ribosomal database project (RDP) classifier. A total of 2147 OTUs hits were obtained and are composed of 68.6% Ascomycota, 26.8% Basidiomycota,\<0.05% Chytridiomycota, \<0.05% Glomeromycota, \<0.05% Mortierellomycota, \<0.05% Rozellomycota, 0.05% Kickxellomycota, and 4.2 % BLAST hit misses. Only OTUs representing Ascomycota were used for downstream statistical analyses since foliar endophyte communities in tropical trees are dominated by Ascomycota [@arnold2007]. For each OTU identified, we removed laboratory contaminants from experimental samples by subtracting the average read count found in control samples from the DNA extraction and PCR steps. Our analysis of mock communities allowed use to identify and remove false OTUs from experimental samples, those with fewer than 10 reads, and remove 0.1% of the read relative abundance across all samples [@oita2021]. Removed reads represent the frequency of reads classified as contamination in the mock communities relative to the expected read count. Three experimental samples from *Theobroma cacao* (*n*=2) and *Apeiba membranacea* (*n*=1) were removed from all analyses due to incomplete entries. After pruning taxa with zero reads from experimental samples, we identified 260 OTUs found exclusively in control (*E-*) plants (*n*=78) and deemed them as artifacts resulting from the greenhouse conditions. Consequently, these were consistently eliminated from treatment (*E+*) plants across all species. We converted reads for each fungal OTU to proportions of total sequence abundance per sample to reduce differences in sampling effort, following previous studies (@weiss2017; @mcmurdie2014 ). We then removed singletons and obtained an average of 2,464,558 sequence reads in 529 Ascomycota OTUs across 156 experimental samples of 7 tree species. All analyses post taxonomic assignment were performed in R [v. 4.3.2; @rcoreteam2023] using the `phyloseq` package [@mcmurdie2013] and custom scripts (see Supplementary Material).
 
 ### Herbivore assays
 
@@ -313,7 +313,7 @@ We explored how leaf functional traits and FEF correlated to herbivory and patho
 
 First, we compared the means of herbivory (%) damage, and leaf functional traits for each species and treatment groups using paired two-sided Student's t-Test and analysis of variance (ANOVA) with the `compare_means` and `stat_compare_means` functions from the `ggpubr` package in R [@kassambara2023], which wrap and extend the `anova` and `t.test` functions from the `stats` package [@rcoreteam2023] and facilitate plotting. Additionally, to facilitate comparison between group levels we used the `pairwise_t_test` function from the `rstatix` package [@kassambara2023a] when we compared pathogen (%) damage means. This function also wraps and extends base *R* functions. We adjusted *p* values to account for false discovery rates in multiple comparisons by using "BH" method [@benjamini1995].
 
-Secondly, we calculated a Bray-Curtis dissimilarity matrix with our OTU relative abundance data and computed a distance-based redundancy analysis (dbRDA) by applying the `dbRDA` function in the `vegan` package to our dissimilarity matrix [@oksanen2022]. We computed forward model selection for dbRDA analysis with the `ordistep` function which selects terms based on *p* values [@blanchet2008; @oksanen2022]. We started with our initial model containing only the intercept (dissimilarity_matrix \~ 1) and setting the functions arguments to the following: `scope` = formula(*m*), where *m* is the formula with a defined range including leaf functional traits, tree species and treatment groups; `Pin` = 0.5, `Pout` = 0.05, `trace` = T, `permutations` = how(nperm = 999), `steps` = 50.The dbRDA is considered analogous to a permutational analysis of variance (PERMANOVA) with non-Euclidean distance [@anderson2017; @mcardle2001]. Its corresponding visualizations appropriately illustrate underlying patterns of compositional differences [@anderson2017; @legendre1999; @mcardle2001]. We used the `anova.cca` function to assess the marinal significance of contraining variables [@oksanen2022; @legendre2012; @legendre2011] Applied here to visualize associations between leaf functional traits and FEF communities in host tree species and treatment groups.
+Secondly, we calculated a Bray-Curtis dissimilarity matrix with our OTU relative abundance data and computed a distance-based redundancy analysis (dbRDA) by applying the `dbRDA` function in the `vegan` package to our dissimilarity matrix [@oksanen2022]. We computed forward model selection for dbRDA analysis with the `ordistep` function which selects terms based on *p* values [@blanchet2008; @oksanen2022]. We started with our initial model containing only the intercept (dissimilarity_matrix \~ 1) and setting the functions arguments to the following: `scope` = formula(*m*), where *m* is the formula with a defined range including leaf functional traits, tree species and treatment groups; `Pin` = 0.5, `Pout` = 0.05, `trace` = T, `permutations` = how(nperm = 999), `steps` = 50.The dbRDA is considered analogous to a permutational analysis of variance (PERMANOVA) with non-Euclidean distance [@anderson2017; @mcardle2001]. Its corresponding visualizations appropriately illustrate underlying patterns of compositional differences [@anderson2017; @legendre1999; @mcardle2001]. We used the `anova.cca` function to assess the marginal significance of constraining variables [@oksanen2022; @legendre2012; @legendre2011] Applied here to visualize associations between leaf functional traits and FEF communities in host tree species and treatment groups.
 
 Thirdly, we arbitrarily designated percent leaf damage in herbivore assays as high (\>70%), medium (31-69%) and low (\<30%) and in pathogen assays as high (\>30%) and low (\<29%). These categories allowed us to explore the correlations between host tree species and specific FEF OTUs. To achieve this we used the `multipatt` function from the `indicspecies` package in *R* [@decaceres2009]. We calculated the point biserial correlation coefficient for each OTU at all tree species and treatment group combinations by applying the `multipatt` function with arguments `func`= "r.g" and `control` = how(nperm=999) to our OTU abundance matrix [@decaceres2009] (CITE MORE). Like with other statistical tests performed, we adjusted *p* values to account for false discovery rates in multiple comparisons by using "BH" method [@benjamini1995] in the `p.adjust` function from the `stats` package [@rcoreteam2023]. We then filtered the adjusted a *p* value with a cutoff of \<0.05.
 
@@ -327,13 +327,13 @@ Seedlings exposed to forest spore fall, *E+*, had a significantly higher proport
 
 We observed general differences in leaf functional traits among species (Table 2). For ACI and LPS we did not find significant differences between treatments (*E-* and *E+*) when we combined all host species (Fig. S2a and Fig. S4a respectively). For LT and LMA we saw statistically significant differences between *E-* and *E+* treatment groups when we combined all host species (Fig S3a and Fig. S5a, respectively). As predicted, we did observe statistically significant lower herbivory in the *E+* treatment compared to the *E-* treatment when we combined all host species, *t*(34) = 2.23, *p* = 0.033 (Fig. 2a). We did not observe statistically significant differences in pathogen damage between *E-* and *E+* treatments when we combined all host species (Fig. 2b). However, we did see significant differences between exposed (*M* = 17.37, *SD* = 12.57) and non-exposed (*M* = 3.49, *SD* = 5.42) pathogen leaves within the *E-* treatment group, *t*(31) = -7.19, *p* \< 0.0001 (Fig. 2b) and within the *E+* treatment group: exposed (*M* = 20.04, *SD* = 15.72), non-exposed (*M* = 7.17, *SD* = 17.48), *t*(31) = -3.26, *p* \< 0.01 (Fig. 2b). We did not observe significant differences between treatment groups for herbivory and pathogen damage (5) at the species level (Fig. S6a-S6b).
 
-The dbRDA analyses revealed that 6.34% of the overall variance inf FEF communities was accounted for by the leaf functional traits, the constraining variables. The first axis (dbRDA1) explained 49% and the second axis (dbRDA2) explained 21.3% of the constrained variance (Fig. 3). We observed a high degree of overlap between the FEF communities (Fig. 3) indicating that the communities are similar in composition across host species and treatment groups (Fig. 3). We see tight clustering of FEF communities in *C. cainito* and *L. panamensis* although these are overlapped by *A. membranacea* pointing to a distinct subset composition of FEF OTUs within the latter (Fig. 3). All leaf functional traits significantly correlated with FEF community composition (Fig.3).
+We used a dbRDA analyses to understand FEF community composition acorss host species and treatment groups. The analyses revealed that 6.34% of the overall variance inf FEF communities was accounted for by the leaf functional traits, the constraining variables. The first axis (dbRDA1) explained 49% and the second axis (dbRDA2) explained 21.3% of the constrained variance (Fig. 3). We observed a high degree of overlap between the FEF communities (Fig. 3) indicating that the communities are similar in composition across host species and treatment groups (Fig. 3). We see tight clustering of FEF communities in *C. cainito* and *L. panamensis* although these are overlapped by *A. membranacea* pointing to a distinct subset composition of FEF OTUs within the latter (Fig. 3). All leaf functional traits significantly correlated with FEF community composition (Fig.3).
 
-There was a core set of OTUs that significantly correlated with host trees species or paticular treatments. In summary, 72 out of 569 Ascomycota OTUs are significantly correlated to our host trees species (Table S5). Seedlings used in herbivory assays had 13 OTUs significantly correlated with high herbivory damage (\>70%) and 3 and 1 OTUs significantly correlated with medium (31-69%) and low (\<30%) herbivory damage, respectively (Table S6). Seedlings used in pathogen damage assays had 11 OTUs significantly correlated with high (\>30%) pathogen damage (Table S7). Because the genomic data scale is at the plant level we could not tease apart what OTUs were correlated with leaves treated with control and *Calonectria* sp. inoculated agar plugs treatments in the pathogen assays. We found 30 OTUs significantly correlated with *E+* treatment (Table S8).
+There was a core set of OTUs that significantly correlated with host trees species or particular treatments. In summary, 72 out of 569 Ascomycota OTUs are significantly correlated to our host trees species (Table S5). Seedlings used in herbivory assays had 13 OTUs significantly correlated with high herbivory damage (\>70%) and 3 and 1 OTUs significantly correlated with medium (31-69%) and low (\<30%) herbivory damage, respectively (Table S6). Seedlings used in pathogen damage assays had 11 OTUs significantly correlated with high (\>30%) pathogen damage (Table S7). Because the genomic data scale is at the plant level we could not tease apart what OTUs were correlated with leaves treated with control and *Calonectria* sp. inoculated agar plugs treatments in the pathogen assays. We found 30 OTUs significantly correlated with *E+* treatment (Table S8).
 
-The PCA revealed how leaf traits (ACI, LT, LPS and LMA) were related. We plotted leaf trait data according to tree species groups on the PCA axes to show how the variance in the complete data set is explained by PC1 (60%) and PC2 (27%) (Fig. 4a). We observed that ACI, LPS and LMA loadings tracked along PC1 towards more negative values, showing correlation among these traits (Fig. 4a). Traits LT and LPS were orthogonal to each other in Fig. 4a, indicative of low correlation. We note distinct grouping of species along PC1 such as *C. alliodora* in the direction of positive values of PC1 and *C. cainito* towards negative values. Along PC1 we see distinct and tight clustering according to species for all except *H. concinna* and *A. membranacea* which overlap with various other species. We note that LT loading tracks towards negative values along PC2 (Fig. 4a). Clear species groupings are detected, such as *Dypterix* sp. located towards positive values and *L. panamensis* towards negative values of the PC2 axis. We note a similar relationship between the leaf traits with respect to PC1 and PC2 in individual seedlings used for herbivory versus pathogen damage trials (Fig. 4b-4c). The PCA of leaf traits from seedlings used in herbivory trials has a PC1 explaining 57.5% of the variance and a PC2 explaining 28% of the variance in the subset data (Fig. 4b). We saw an inversion of the LT loading in direction of positive values, as well as the main tree species clustered (i.e. *Dypteryx* sp. and *A. membranacea*) along PC2 (Fig. 4b) with respect to Fig. 4a. The PCA of leaf traits from seedling used in pathogen damage trials has a PC1 explaining 64% of the variance and a PC2 explaining 25% of the variance in the subset data (Fig. 4c). We detected similar relationships among leaf traits and PC axes in the pathogen damage subset data (Fig. 4c) when compared to the complete data set (Fig. 4a).
+The PCA revealed how leaf traits (ACI, LT, LPS and LMA) were related. We plotted leaf trait data according to tree species groups on the PCA axes to show how the variance in the complete data set is explained by PC1 (60%) and PC2 (27%) (Fig. 4a). We observed that ACI, LPS and LMA loadings tracked along PC1 towards more negative values, showing correlation among these traits (Fig. 4a). Traits LT and LPS were orthogonal to each other in Fig. 4a, indicative of low correlation. We note distinct grouping of species along PC1 such as *C. alliodora* in the direction of positive values of PC1 and *C. cainito* towards negative values. Along PC1 we saw distinct and tight clustering according to species for all except *H. concinna* and *A. membranacea* which overlaped with various other species. We noted that LT loading tracked towards negative values along PC2 (Fig. 4a). Clear species groupings were detected, such as *Dypterix* sp. located towards positive values and *L. panamensis* towards negative values of the PC2 axis. We note a similar relationship between the leaf traits with respect to PC1 and PC2 in individual seedlings used for herbivory versus pathogen damage trials (Fig. 4b-4c). The PCA of leaf traits from seedlings used in herbivory trials had a PC1 explaining 57.5% of the variance and a PC2 explaining 28% of the variance in the subset data (Fig. 4b). We saw an inversion of the LT loading in direction of positive values, as well as the main tree species clustered (i.e., *Dypteryx* sp. and *A. membranacea*) along PC2 (Fig. 4b) with respect to Fig. 4a. The PCA of leaf traits from seedling used in pathogen damage trials had a PC1 explaining 64% of the variance and a PC2 explaining 25% of the variance in the subset data (Fig. 4c). We detected similar relationships among leaf traits and PC axes in the pathogen damage subset data (Fig. 4c) when compared to the complete data set (Fig. 4a).
 
-Simple linear regressions of herbivory (%) against PC1 revealed no correlation (*R^2^~adj~* = -0.0024, *F*(1, 208) = 0.508, *df* = 208, *p* = 0.447)(Fig. 5a), where positive values represent greater values of ACI, LPS and LMA. Even though we note large spread in the data (Fig. 5a and 5b), we see a statistically significant positive trend of herbivory plotted against PC2 (*R^2^~adj~* = 0.079, *F*(1, 208) = 18.9, *p* \< 0.0001), where positive values represent greater LT (Fig. 5b). Percent pathogen damage plotted against PC1 revealed a statistically significant significant correlation (*R^2^~adj~* = 0.064, *F*(1, 380) = 26.93 *p* \< 0.0001), in which positive values represent greater values of ACI, LPS and LMA (Fig. 5c). We did not see a statistically significant relationship between pathogen damage and PC2 (*R^2^~adj~* = 0.002, *F*(1, 380) = 1.60, *p* = 0.207) (Fig. 5d). We found similar patterns in the simple linear regressions performed on the leaf functional traits with out reducing dimensions and logit transformed herbivory and pathogen damage data (Fig. S7 and S8, respectively). We observed a statistically significant positive relationship between herbivory and LT (*R^2^~adj~* = 0.081, *F*(1, 208) = 19.45, *p* \< 0.0001) when considering the complete data set (Figure S7a). We did not observe statistically significant relationship between herbivory (%) and LPS, ACI, LMA, and Shannon's diversity index (Figure S7b - S7e) for the complete data set. However, we did observed a general decline in herbivory as FEF diversity increased which aligns our predictions. In further detail we see a statistically significant negative relationship between herbivory and Shannon diversity for the *E-* treatment group (*R^2^~adj~* = 0.138, *F*(1, 103) = 17.7, *p* \< 0.0001) (Figure S7e). We also see an in crease in herbivory for the *E+* treatment group as Shannon's diversity index increased, but this is not statistically significant (*R^2^~adj~* = 0.024, *F*(1, 103) = 3.55, *p* = 0.062) (Figure S7e). For the simple linear regressions of pathogen damage against leaf functional traits we observed a statistically significant negative relationships between pathogen damage and LPS (*R^2^~adj~* = 0.078, *F*(1, 380) = 33.32, *p* \< 0.0001), ACI (*R^2^~adj~* = 0.033, *F*(1, 380) = 14.34, *p* = 0.0002) and LMA (*R^2^~adj~* = 0.030, *F*(1, 380) = 12.6, *p* \< 0.001) (Figure S8b - S8d) when considering the complete data set. Pathogen damage did not have a statistically significant correlation with LMA (*R^2^~adj~* = -0.001, *F*(1, 380) = 0.50, *p* = 0.482) (Figure S8a). The *E-* and *E+* treatment groups follow the same general trend as the complete data set. Contrary to our predictions, when we observe the complete data set find a statistically significant positive relationship between pathogen damage and Shannon's diversity index (*R^2^~adj~* = 0.015, *F*(1, 380) = 6.90, *p* \< 0.01) (Figure S8e). Upon further scrutiny, only the *E+* treatment group has a statistically significantly positive correlation between pathogen damage and Shannon's diversity index (*R^2^~adj~* = 0.031, *F*(1, 188) = 7.11, *p* \< 0.01) (Figure S8e).
+Simple linear regressions of herbivory (%) against PC1 revealed no correlation (*R^2^~adj~* = -0.0024, *F*(1, 208) = 0.508, *df* = 208, *p* = 0.447)(Fig. 5a), where positive values represent greater values of ACI, LPS and LMA. Even though we note large spread in the data (Fig. 5a and 5b), we see a statistically significant positive trend of herbivory plotted against PC2 (*R^2^~adj~* = 0.079, *F*(1, 208) = 18.9, *p* \< 0.0001), where positive values represent greater LT (Fig. 5b). Percent pathogen damage plotted against PC1 revealed a statistically significant significant correlation (*R^2^~adj~* = 0.064, *F*(1, 380) = 26.93 *p* \< 0.0001), in which positive values represent greater values of ACI, LPS and LMA (Fig. 5c). We did not see a statistically significant relationship between pathogen damage and PC2 (*R^2^~adj~* = 0.002, *F*(1, 380) = 1.60, *p* = 0.207) (Fig. 5d). We found similar patterns in the simple linear regressions performed on the leaf functional traits without reducing dimensions and on logit transformed herbivory and pathogen damage data (Fig. S7 and S8, respectively). We observed a statistically significant positive relationship between herbivory and LT (*R^2^~adj~* = 0.081, *F*(1, 208) = 19.45, *p* \< 0.0001) when considering the complete data set (Figure S7a). We did not observe statistically significant relationship between herbivory (%) and LPS, ACI, LMA, and Shannon's diversity index for FEF (Figure S7b - S7e) for the complete data set. However, we did observe a general decline in herbivory as FEF diversity increased which aligns with our predictions. In further detail we see a statistically significant negative relationship between herbivory and Shannon diversity for the *E-* treatment group (*R^2^~adj~* = 0.138, *F*(1, 103) = 17.7, *p* \< 0.0001) (Figure S7e). We also see an in crease in herbivory for the *E+* treatment group as Shannon's diversity index for FEF increased, but this is not statistically significant (*R^2^~adj~* = 0.024, *F*(1, 103) = 3.55, *p* = 0.062) (Figure S7e). For the simple linear regressions of pathogen damage against leaf functional traits we observed a statistically significant negative relationships between pathogen damage and LPS (*R^2^~adj~* = 0.078, *F*(1, 380) = 33.32, *p* \< 0.0001), ACI (*R^2^~adj~* = 0.033, *F*(1, 380) = 14.34, *p* = 0.0002) and LMA (*R^2^~adj~* = 0.030, *F*(1, 380) = 12.6, *p* \< 0.001) (Figure S8b - S8d) when considering the complete data set. Pathogen damage did not have a statistically significant correlation with LMA (*R^2^~adj~* = -0.001, *F*(1, 380) = 0.50, *p* = 0.482) (Figure S8a). The *E-* and *E+* treatment groups follow the same general trend as the complete data set. Contrary to our predictions, when we observe the complete data set find a statistically significant positive relationship between pathogen damage and Shannon's diversity index for FEF (*R^2^~adj~* = 0.015, *F*(1, 380) = 6.90, *p* \< 0.01) (Figure S8e). Upon further scrutiny, only the *E+* treatment group has a statistically significantly positive correlation between pathogen damage and Shannon's diversity index for FEF (*R^2^~adj~* = 0.031, *F*(1, 188) = 7.11, *p* \< 0.01) (Figure S8e).
 
 The best-fit for our general linear mixed model (GLM) showed that fixed effects LT, LMA, and *E+* treatment group are statistically significant predictors of herbivory damage (Table 3). Leaf mass per area is a significant positive predictor of herbivory with the greatest effect size (estimate = 1741, *t*(200) = 3.53 *p* \< 0.001). While LT is a significant negative predictor of herbivory damage (estimate = -0.01, *t*(200) = -2.52, *p* = 0.01) and *E+* as well (estimate = -0.78, *t*(200) = -4.62, *p* \< 0.001). The best fit model for pathogen damage did not reveal any of the leaf functional traits as significant predictors (Table 3). Even tough, not significant, LMA showed the greatest effect size (estimate = 171.7, *t*(352) = 0.96, *p* = 0.34).
 
@@ -1054,10 +1054,8 @@ fig1
 #| warning: false
 #| fig.height: 6
 #| fig.width: 6
-#| fig.cap: "Distributions of values and means of herbivory (%) damage caused by *Atta colombica* in treatment groups (*E-* and *E+*) and tree species. a) Comparison of herbivory (%) means between treatment groups across individuals of all species. Pink filled violins represent low FEF group (*E-*) and yellow filed violins represent high FEF group (*E+*). b) Comparison of pathogen (%) means between treatment groups across individuals of all species.  Maroon filled violins represent control leaves and blue filled violins represent pathogen treated leaves.  Statistical significance was calculated using a two-sided Student's t-Test. Significance levels are represented by *ns* (not significant) and asterisks [*p* = 0.05 (\\*), *p* = 0.01 (\\**), and *p* = 0.001 (\\***)].
-#| 
-#| 
-#| b) Comparison of herbivory (%) means between treatment types of each species. Statistical significance was calculated with an analysis of variance (ANOVA).  Significance levels are represented by *ns* (not significant) and asterisks [*p* = 0.05 (\\*), *p* = 0.01 (\\**), and *p* = 0.001 (\\***)]."
+#| fig.cap: "Distributions of values and means of herbivory (%) damage caused by *Atta colombica* in treatment groups (*E-* and *E+*) and tree species. a) Comparison of herbivory (%) means between treatment groups across individuals of all species. Pink filled violins represent low FEF group (*E-*) and yellow filed violins represent high FEF group (*E+*). b) Comparison of pathogen (%) means between treatment groups across individuals of all species.  Maroon filled violins represent control leaves and blue filled violins represent pathogen treated leaves.  Statistical significance was calculated using a two-sided Student's t-Test. Significance levels are represented by *ns* (not significant) and asterisks [*p* <= 0.05 (\\*), *p* < 0.01 (\\**), and *p* < 0.001 (\\***)]."
+
 
 #Comparison of means of Herbivory(%) between E+ and E- samples per tree species
 #rstatix package used for pairwise t-test
@@ -1187,7 +1185,7 @@ patho_violin <- ggplot(data = master, aes(x = E_load, y = Pathogen_percent_damag
                width = 0.7,
                position = position_dodge(width = 0.9)) +
   scale_fill_manual(name = "Pathogen treatment ", values= met.brewer("Egypt", n = 2, type = "discrete")) +
-  #scale_color_manual(name = "Treatment ", values= met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
   #scale_shape_manual(name = "Treatment", labels = c("E-", "E+"), values = c(16, 17)) +
   theme_classic(base_size = 12) +
   theme(
@@ -1838,11 +1836,12 @@ rep_statement
 
 ```{r, table2}
 #| echo: false
-#| eval: true
+#| eval: false
 #| tidy: true
 #| warning: false
 #| tbl-cap: "Summary statistics for the leaf functional traits"
- # Using `gtsummary` and 'flextable' packages
+
+# Using `gtsummary` and 'flextable' packages
 summa_t2 <- tbl_summary(data2 |>
   group_by(Species, E_load) |>
   select(c(10:13)) |>
@@ -1862,10 +1861,10 @@ summa_t2 <- tbl_summary(data2 |>
                         "E+" ~ "E+ (n = 544)")) |> # The sum of E- and E+ was added after iterations of tbl_summary().
     na.omit(),
   by = Species,
-  missing = "no",
-  statistic = list(
-    all_continuous() ~ "{mean} \u00B1 {sd}", 
-    all_categorical() ~ "{n}")) |>
+  missing = "no") |>
+  # statistic = list( #Not working with statistic argument 01/28/2024
+  #   all_continuous() ~ "{mean} \u00B1 {sd}", 
+  #   all_categorical() ~ "{n}")) |>
   modify_header(label = "",
                 stat_1 = 'A. membranacea, n = 83',
                 stat_2 = 'C. alliodora, n = 100',
@@ -1917,17 +1916,7 @@ summa_t2 <- summa_t2 |>
   hline_bottom(part = "body", border = thick) |>
   hline_top(part = "body", border = thick)
 
-
-sect_properties <- prop_section(
-  page_size = page_size(
-    orient = "portrait",
-    width = 8.25, height = 11.7
-  ),
-  type = "continuous",
-  page_margins = page_mar()
-)
-
-summa_t2
+#summa_t2
 
 ```
 
@@ -1938,7 +1927,6 @@ summa_t2
 #| eval: true
 #| tidy: true
 #| warning: false
-#| 
 #Optimizers
 ctrl <- lmeControl(opt='optim')
 ctrl2 <- lmeControl(opt = "nlminb")
@@ -1959,8 +1947,9 @@ summary(P3REM)
 
 ```{r, Table3, tidy = TRUE}
 #| echo: false
-#| eval: true
-# # Regression model table
+#| eval: false
+
+# GLM tables with `sjPlot` package
 table3 <- tab_model(M3REM, P3REM,
           show.aic = TRUE,
           show.intercept = TRUE,
@@ -1977,26 +1966,132 @@ table3 <- tab_model(M3REM, P3REM,
             css.firsttablecol = 'font-weight: bold;',
             css.summary = 'color: grey; font-weight: bold;',
             p.style = "numeric_stars"))
-# table3
-# flextable::as_flextable(P3REM, add.random = TRUE)
-# View(table3)
-# View(M3REM)
-# broom.mixed::glance(M3REM, conf.int = TRUE, effects = "fixed") 
 
-# tidy_table <-
-#   M3REM %>%
-#   # perform initial tidying of the model
-#   tidy_and_attach(exponentiate = TRUE, conf.int = TRUE) %>%
-#   # adding in the reference row for categorical variables
-#   tidy_add_reference_rows() %>%
-#   # adding the variable labels
-#   tidy_add_term_labels() %>%
-#   # add header row
-#   tidy_add_header_rows() %>%
-#   # removing intercept estimate from model
-#   tidy_remove_intercept()
+# GLM tables with `flextable` package
+# Checking AIC values
+broom.mixed::glance(M3REM, conf.int = TRUE, effects = "fixed") 
 
+# Herbivory model
+# `flextable` uses `broom.mixed::tidy` to extract model coefficients. The same could be achieved with `broom::tidy` for `lme` models and changing the `effects` argument to "var_model" then "ran_pars" instead of "fixed".
+broom::tidy(M3REM,
+     scales = "sdcor",
+     conf.int = TRUE,
+     conf.level = 0.95,
+     effects = "fixed", 
+     data = masterant2)
+
+herb_model_table <- flextable::as_flextable(M3REM, add.random = TRUE, 
+                        show.signif.stars = FALSE) |>
+  # flextable::set_caption(
+  #   as_paragraph(
+  #     as_b(
+  #       as_chunk("Table 3: Linear mixed effects models for predicting leaf herbivory and pathogenicity",
+  #                props = fp_text_default(font.family = "Tex Gyre Termes", font.size = 12)
+  #              )
+  #     )
+  #   ),
+  #   align_with_table = F) |>
+
+  flextable::add_header_lines(
+      as_paragraph(
+        as_chunk("Herbivory model",
+                 props = fp_text_default(font.family = "Tex Gyre Termes",
+                                         bold = TRUE,
+                                         font.size = 12)
+              )
+      )
+    ) |>
+  flextable::align(i = 1, align = "center", part = "header") |>
+  set_header_labels(group = "Predictors") |>
+  flextable::align(j = 1, align = "left", part = "body") |>
+  flextable::align(j = 2:8, align = "center", part = "all") |>
+  flextable::italic(j = c(3:8), italic = TRUE, part = "header") |>
+  flextable::italic(i = c(1,6), j = 1, italic = TRUE, part = "body") |>
+  flextable::bold(i = 2, bold = TRUE, part = "header") |>
+  flextable::bold(i = c(3:5), j = c(7:8), bold = TRUE, part = "body") |>
+  delete_rows(i = c(9:16) , part = "body") |>
+  hline_bottom(j = c(1:8), 
+               border = fp_border(color = "black", 
+                                  style = "solid", 
+                                  width = 1.25), 
+               part = "body") |>
+  flextable::width(j = 1, width = 1.25, unit = "in") |>
+  flextable::width(j = 2:8, width = 0.75, unit = "in") |>
+  flextable::font(
+    i = NULL,
+    j = NULL,
+    fontname = "Tex Gyre Termes",
+    part = "all",
+    cs.family = fontname,
+    hansi.family = fontname,
+    eastasia.family = fontname) 
+
+herb_model_table
+
+
+# Pathogenicity model
+broom::tidy(P3REM,
+     scales = "sdcor",
+     conf.int = TRUE,
+     conf.level = 0.95,
+     effects = "fixed", 
+     data = masterpat2)
+
+patho_model_table <- flextable::as_flextable(P3REM, add.random = TRUE, 
+                        show.signif.stars = FALSE) |>
+  flextable::add_header_lines(
+      as_paragraph(
+        as_chunk("Pathogen damage model",
+                 props = fp_text_default(font.family = "Tex Gyre Termes",
+                                         bold = TRUE,
+                                         font.size = 12)
+              )
+      )
+    ) |>
+  flextable::align(i = 1, align = "center", part = "header") |>
+  set_header_labels(group = "Predictors") |>
+  flextable::align(j = 1, align = "left", part = "body") |>
+  flextable::align(j = 2:8, align = "center", part = "all") |>
+  flextable::italic(j = c(3:8), italic = TRUE, part = "header") |>
+  flextable::italic(i = c(1,6), j = 1, italic = TRUE, part = "body") |>
+  flextable::bold(i = 2, bold = TRUE, part = "header") |>
+  flextable::bold(i = c(3:5), j = c(7:8), bold = TRUE, part = "body") |>
+  delete_rows(i = c(5:12) , part = "body") |>
+  hline_bottom(j = c(1:8), 
+               border = fp_border(color = "black", 
+                                  style = "solid", 
+                                  width = 1.25), 
+               part = "body") |>
+  flextable::width(j = 1, width = 1.25, unit = "in") |>
+  flextable::width(j = 2:8, width = 0.75, unit = "in") |>
+  flextable::font(
+    i = NULL,
+    j = NULL,
+    fontname = "Tex Gyre Termes",
+    part = "all",
+    cs.family = fontname,
+    hansi.family = fontname,
+    eastasia.family = fontname)
+
+
+# Saving table as a Word document
+# sect_properties <- prop_section(
+#   page_size = page_size(
+#     orient = "portrait",
+#     width = 8.2, height = 11.5
+#   ),
+#   type = "continuous",
+#   page_margins = page_mar()
+# )
+# tf <- tempfile(fileext = ".docx")
+# save_as_docx(
+#   `table3_herbivory` = herb_model_table, `table3_pathogen` = path_model_table,
+#   path = tf, pr_section = sect_properties
+# )
+# save_as_docx(herb_model_table, path = "./tables/table3_herbivory.docx")
+#   
 ```
+
 
 # Supplementary Materials
 
@@ -2004,7 +2099,7 @@ table3 <- tab_model(M3REM, P3REM,
 
 ```{r, supptable_S1}
 #| echo: false
-#| eval: true
+#| eval: false
 #| tidy: true
 #| warning: false
 #| tbl-cap: "Comparison of anthocyanin content (ACI) (\u03BCm) means between species."
@@ -2101,7 +2196,7 @@ supptable_S1
 
 ```{r, supptable_S2}
 #| echo: false
-#| eval: true
+#| eval: false
 #| tidy: true
 #| warning: false
 #| tbl-cap: "Comparison of leaf thickness (LT) (\u03BCm) means between species."
@@ -2194,7 +2289,7 @@ supptable_S2
 
 ```{r, supptable_S3}
 #| echo: false
-#| eval: true
+#| eval: false
 #| tidy: true
 #| warning: false
 #| tbl-cap: "Comparison of leaf punch strength (LPS) (N mm<sup>-1</sup>) means between species."
@@ -2287,7 +2382,7 @@ supptable_S3
 
 ```{r, supptable_S4}
 #| echo: false
-#| eval: true
+#| eval: false
 #| tidy: true
 #| warning: false
 #| tbl-cap: "Comparison of leaf mass per are LMA) (mg mm^-2) means between species."
@@ -2417,7 +2512,7 @@ multipatt_analysis <- multipatt(species_corr_matrix, species, func = "r.g", cont
 
 ```{r, supptable_S5}
 #| echo: false
-#| eval: true
+#| eval: false
 #| tidy: true
 #| warning: false
 #| tbl-cap: "Taxonomy of OTUs significantly correlated with tree host species"
@@ -2549,7 +2644,7 @@ supptable_S5
 
 ```{r, Recoding_upper_lower}
 #| echo: false
-#| eval: true
+#| eval: false
 #| tidy: true
 #| warning: false
 
@@ -2567,7 +2662,7 @@ upper_lower_damage <- master |>
 
 ```{r, Filtering_damage}
 #| echo: false
-#| eval: true
+#| eval: false
 #| tidy: true
 #| warning: false
 #Some filtering and joining
@@ -2579,7 +2674,7 @@ filter_filter <- anti_join(leaf_damage_filter, cotu, by = c("Sample_name")) #sho
 
 ```{r, Highest_lowest_leaf_damage_herb_pathogen}
 #| echo: false
-#| eval: true
+#| eval: false
 #| tidy: true
 #| warning: false
 # Recoded dataset for indicator species analysis
@@ -2620,7 +2715,7 @@ patho_multipatt = multipatt(patho_recoded_filtered, patho_level, func = "r.g", c
 
 ```{r, supptable_S6}
 #| echo: false
-#| eval: true
+#| eval: false
 #| tidy: true
 #| warning: false
 #| tbl-cap: "Taxonomic information of OTUs that are significantly correlated to different levels of leaf herbivory damage"
@@ -2750,7 +2845,7 @@ supptable_S6
 
 ```{r, supptable_S7}
 #| echo: false
-#| eval: true
+#| eval: false
 #| tidy: true
 #| warning: false
 #| tbl-cap: "Taxonomic information of OTUs that are significantly correlated to high and low levels leaf pathogen damage"
@@ -2874,7 +2969,7 @@ supptable_S7
 
 ```{r, Eload_multipatt_analysis}
 #| echo: false
-#| eval: true
+#| eval: false
 #| tidy: true
 #| warning: false
 species_corr_matrix <- cotu[, 4:ncol(cotu)]
@@ -3011,7 +3106,7 @@ supptable_S8
 
 ```{r, supptable_S9}
 #| echo: false
-#| eval: true
+#| eval: false
 #| tidy: true
 #| warning: false
 #| tbl-cap: "Sterilization protocol for tropical tree seeds"
@@ -3083,7 +3178,7 @@ sterile_protocol <- sterile_protocol|>
     eastasia.family = fontname) 
 
 sterile_protocol
-#quick_docx(rep_statement, file = "./tables/replication_statement.docx")
+#save_as_docx(sterile_protocol, path = "./tables/Aim3_supptable_S9_28JAN2024.docx")
 ```
 
 ## Figure S1a- S1b
@@ -3346,7 +3441,7 @@ suppfig_2
 #| warning: false
 #| fig.height: 6
 #| fig.width: 6
-#| fig.cap: "Distributions of values and means of leaf thickness (LT) (\u03Bcg) in treatment groups (*E-* and *E+*) and tree species. a) Comparison of LT means between treatment groups across individuals of all species. Statistical significance was calculated using a two-sided Student's t-Test. b) Comparison of LT means between treatment types of each species. Statistical significance was calculated with an analysis of variance (ANOVA). Pink filled violins represent low FEF group (*E-*) and yellow filed violins represent high FEF group (*E+*). Significance levels are represented by *ns* (not significant) and asterisks [*p* <= 0.05 (\\*), *p* <= 0.01 (\\**), *p* <= 0.001 (\\***), and *p* < 0.0001 (\\****)]."
+#| fig.cap: "Distributions of values and means of leaf thickness (LT) (\u03Bcg) in treatment groups (*E-* and *E+*) and tree species. a) Comparison of LT means between treatment groups across individuals of all species. Statistical significance was calculated using a two-sided Student's t-Test. b) Comparison of LT means between treatment types of each species. Statistical significance was calculated with an analysis of variance (ANOVA). Pink filled violins represent low FEF group (*E-*) and yellow filed violins represent high FEF group (*E+*).Significance levels are represented by *ns* (not significant) and asterisks [*p* <= 0.05 (\\*), *p* < 0.01 (\\**), *p* < 0.001 (\\***), and *p* < 0.0001 (\\****)]."
 
 #Comparison of means of LT between E+ and E- samples per tree species
 #rstatix package used for pairwise t-test
@@ -3480,7 +3575,7 @@ suppfig_3
 #| warning: false
 #| fig.height: 6
 #| fig.width: 6
-#| fig.cap: "Distributions of values and means of leaf punch stength (LPS) (N mm^-1) in treatment groups (*E-* and *E+*) and tree species. a) Comparison of LPS means between treatment groups across individuals of all species. Statistical significance was calculated using a two-sided Student's t-Test. b) Comparison of LPS means between treatment types of each species. Statistical significance was calculated with an analysis of variance (ANOVA). Pink filled violins represent low FEF group (*E-*) and yellow filed violins represent high FEF group (*E+*). Significance levels are represented by *ns* (not significant) and asterisks [*p* <= 0.05 (\\*), *p* <= 0.01 (\\**), *p* <= 0.001 (\\***), and *p* < 0.0001 (\\****)]."
+#| fig.cap: "Distributions of values and means of leaf punch stength (LPS) (N mm^-1) in treatment groups (*E-* and *E+*) and tree species. a) Comparison of LPS means between treatment groups across individuals of all species. Statistical significance was calculated using a two-sided Student's t-Test. b) Comparison of LPS means between treatment types of each species. Statistical significance was calculated with an analysis of variance (ANOVA). Pink filled violins represent low FEF group (*E-*) and yellow filed violins represent high FEF group (*E+*).Significance levels are represented by *ns* (not significant) and asterisks [*p* <= 0.05 (\\*), *p* < 0.01 (\\**), *p* < 0.001 (\\***), and *p* < 0.0001 (\\****)]."
 
 
 #Comparison of means of LPS between E+ and E- samples per tree species
@@ -3614,7 +3709,7 @@ suppfig_4
 #| warning: false
 #| fig.height: 6
 #| fig.width: 6
-#| fig.cap: "Distributions of values and means of leaf mass per area (LMA) (mg mm^2) in treatment groups (*E-* and *E+*) and tree species. a) Comparison of LMA means between treatment groups across individuals of all species. Statistical significance was calculated using a two-sided Student's t-Test. b) Comparison of LMA means between treatment types of each species. Statistical significance was calculated with an analysis of variance (ANOVA). Pink filled violins represent low FEF group (*E-*) and yellow filed violins represent high FEF group (*E+*). Significance levels are represented by *ns* (not significant) and asterisks [*p* = 0.05 (\\*), *p* = 0.01 (\\**), and *p* = 0.001 (\\***)]."
+#| fig.cap: "Distributions of values and means of leaf mass per area (LMA) (mg mm^2) in treatment groups (*E-* and *E+*) and tree species. a) Comparison of LMA means between treatment groups across individuals of all species. Statistical significance was calculated using a two-sided Student's t-Test. b) Comparison of LMA means between treatment types of each species. Statistical significance was calculated with an analysis of variance (ANOVA). Pink filled violins represent low FEF group (*E-*) and yellow filed violins represent high FEF group (*E+*). Significance levels are represented by *ns* (not significant) and asterisks [*p* <= 0.05 (\\*), *p* < 0.01 (\\**), and *p* < 0.001 (\\***)]."
 
 #Comparison of means of LMA between E+ and E- samples per tree species
 #rstatix package used for pairwise t-test
@@ -3744,7 +3839,7 @@ suppfig_5
 #| warning: false
 #| fig.height: 6
 #| fig.width: 6
-#| fig.cap: "Distributions of values and means of herbivory (%) and pathogen damage caused by *Atta colombica* and *Calonectria* sp. , respectively, in treatment groups (*E-* and *E+*) per tree species. a) Comparison of herbivory (%) means between treatment groups across individuals of all species. b) Comparison of pathogen (%) means between treatment groups across individuals of all species. Pink filled violins represent low FEF group (*E-*) and yellow filed violins represent high FEF group (*E+*). Statistical significance was calculated with an analysis of variance (ANOVA). Significance levels are represented by *ns* (not significant) and asterisks [*p* = 0.05 (\\*), *p* = 0.01 (\\**), and *p* = 0.001 (\\***)]."
+#| fig.cap: "Distributions of values and means of herbivory (%) and pathogen damage caused by *Atta colombica* and *Calonectria* sp. , respectively, in treatment groups (*E-* and *E+*) per tree species. a) Comparison of herbivory (%) means between treatment groups across individuals of all species. b) Comparison of pathogen (%) means between treatment groups across individuals of all species. Pink filled violins represent low FEF group (*E-*) and yellow filed violins represent high FEF group (*E+*). Statistical significance was calculated with an analysis of variance (ANOVA). Significance levels are represented by *ns* (not significant) and asterisks [*p* <= 0.05 (\\*), *p* < 0.01 (\\**), and *p* < 0.001 (\\***)]."
 
 #Fig. S6a
 herb_violin_a <-  ggplot(data = master, aes( x = Species, y = Ant_percent_leafloss, fill = E_load)) +
