@@ -1,3 +1,6 @@
+# Relative abundance using `phyloseq`
+# Code by Mareli Sánchez Juliá
+
 ####################### RELATIVE ABUNDANCE  in E+ and E- ########
 lifespan_names <- c(
   `CORDAL` = "CORDAL - 303 leaf days",

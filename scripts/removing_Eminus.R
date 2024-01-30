@@ -1,8 +1,6 @@
-#########################################################################################################
-
 #Aim 2 - removing Eminus OTUs
 #Created on: April 2, 2022 
-#Created by: Mareli
+#Created by: Mareli Sánchez Juliá
 
 #What it do?
 #It removes all OTUs that are only found in E- plants, as they can be considered greenhouse only endophytes.Data already has CORDBI samples removed from OTU table and samples table

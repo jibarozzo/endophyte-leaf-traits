@@ -1,5 +1,6 @@
 #### Betapart -- Beta diversity over time 
-##Code for Boli adapted from Ch1 - Mareli's dissertation. 
+#Code by Mareli Sánchez 
+#Adapted by Bolívar Aponte Rolón fromCh1 - Mareli's dissertation. 
 
 
 library(betapart)
