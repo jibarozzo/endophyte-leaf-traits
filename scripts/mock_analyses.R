@@ -21,7 +21,7 @@ library("lattice")
 library("nlme")
 
 ###Set WD
-setwd("G:/My Drive/VBL_users/Grad_Students/Bolivar/Dissertation/Leaf_Traits_Panama/Data/Sample_Sequencing/Post_Sequencing/Sequence_Analyses")
+setwd("/home/baponte/Boxx/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses/")
 
 ####################################
 ###Cleaning the data a little bit###
@@ -35,7 +35,7 @@ setwd("G:/My Drive/VBL_users/Grad_Students/Bolivar/Dissertation/Leaf_Traits_Pana
 ###Eliminate OTUs that are below this threshold.Also consider the MOckBlan and MockNegative###
 ####Cleaning using Betsy Arnold's approach###
 #######################################################################################################################
-data<- read.csv("Exp_Ob_MockCommunitySequences_BAR_09142020.csv")
+data<- read.csv("./mock_files/Exp_Ob_MockCommunitySequences_BAR_09142020.csv")
 str(data)
 as_tibble(data)
 ###This ^ data set has been created in Excel with the calculation sheet from Nicole Colón. 
@@ -106,37 +106,7 @@ dataclean2 <- dataclean2 %>%
   left_join(dataclean3, by = "OTU_ID")
 
 ###RAW data check point###
-write.csv(dataclean2, file = "G:\\My Drive\\VBL_users\\Grad_Students\\Bolivar\\Dissertation\\Leaf_Traits_Panama\\Data\\Sample_Sequencing\\Post_Sequencing\\Sequence_Analyses\\Exp_Ob_Mock_Analyses_CLEAN_RAW_09152020.csv", row.names = FALSE)
-
-####Introducing NAs to replace with new label.
-#Dataclean
-#dataclean[dataclean == "#N/A"] <- "XXX" #Changing "#N/A" to NA. Thiss needs improvement
-#dataclean[dataclean == "na"] <- "XXX"
-#dataclean$Phylum[dataclean$Phylum  == "0"] <-  "XXX"
-
-#as.tibble(dataclean)
-
-#dataclean <- dataclean %>%
-#  mutate(
-#    Code = as.character(Code),
-#    Code = ifelse(is.na(Code), "UNKNOWN", Code),
-#    Code = as.factor(Code),
-#    Phylum = as.character(Phylum),
-#    Phylum = ifelse(is.na(Phylum), "UNKNOWN", Phylum),
-#    Phylum = as.factor(Phylum),
-#    Species = as.character(Species),
-#    Species = ifelse(is.na(Species), "UNKNOWN", Species),
-#    Species = as.factor(Species))%>%
-#  select(-MockBlank_R1) %>%
-#  arrange(desc(Even_OBS_avg))%>%
-# filter(Even_OBS_avg > 11)
-
-#dataclean <- dataclean %>%
-#  arrange(OTU_ID) %>%
-#  filter(!OTU_ID %in% c("OTU_14")) 
-###It's OTU14. Given that it is so prevalent in the Mock_Neg I think we should flag it and remove it. 
-###Therefore we have 27 OTU remaining. 
-###This leaves you with 27 OTU. In percentage terms, out of the sum of the reads for the 28 OTU, this removes everything < 0.02%.
+#write.csv(dataclean2, file = "./mock_files/Exp_Ob_Mock_Analyses_CLEAN_RAW_09152020.csv", row.names = FALSE)
 
 
 ####Introducing NAs to replace with new label.
@@ -163,13 +133,19 @@ dataclean2 <- dataclean2 %>%
   arrange(desc(Even_OBS_avg))%>%
   filter(Even_OBS_avg > 11)
 
+#dataclean <- dataclean %>%
+#  arrange(OTU_ID) %>%
+#  filter(!OTU_ID %in% c("OTU_14")) 
+###It's OTU14. Given that it is so prevalent in the Mock_Neg I think we should flag it and remove it. 
+###Therefore we have 27 OTU remaining. 
+###This leaves you with 27 OTU. In percentage terms, out of the sum of the reads for the 28 OTU, this removes everything < 0.02%.
 
 
 ###Checking if Dataclean and datclean2 are the same###
 dataclean_check <- anti_join(dataclean, dataclean2, by = "OTU_ID")
 
 ###Saving###
-write.csv(dataclean2, file = "G:\\My Drive\\VBL_users\\Grad_Students\\Bolivar\\Dissertation\\Leaf_Traits_Panama\\Data\\Sample_Sequencing\\Post_Sequencing\\Sequence_Analyses\\Exp_Ob_Mock_Analyses_CLEAN_28OTU_09262020.csv", row.names = FALSE)
+#write.csv(dataclean2, file = "./mock_files/Exp_Ob_Mock_Analyses_CLEAN_28OTU_09262020.csv", row.names = FALSE)
 
 ########################################################################################################################################################
 ###Dataclean2 incorporates Betsy Anrold's approach but first it is decontaminated. I substract the MockNeg_R1 reads from the Observed reads then###
@@ -207,27 +183,18 @@ str(newdata)
 n_distinct(newdata$OTU_ID)
 
 #Saving data frame 
-write.csv(newdata, file = "G:\\My Drive\\VBL_users\\Grad_Students\\Bolivar\\Dissertation\\Leaf_Traits_Panama\\Data\\Sample_Sequencing\\Post_Sequencing\\Sequence_Analyses\\Exp_Ob_Mock_Analyses_CLEAN_LONG_09152020.csv", row.names = FALSE)
-
+write.csv(newdata, file = "./mock_files/Exp_Ob_Mock_Analyses_CLEAN_LONG_09152020.csv", row.names = FALSE)
+newdata <- read.csv("./mock_files/Exp_Ob_Mock_Analyses_CLEAN_LONG_09152020.csv")
 
 #Histogram and distribution of read numbers
 hist(newdata$log10Expected)
 hist(newdata$log10Observed)
 is.na(newdata$log10Expected)
 
-qqnorm(rnorm(n = length(newdata$log10Expected), 
-             mean =mean(newdata$log10Expected, na.rm = TRUE), 
-             sd = sd(newdata$log10Expected, na.rm = TRUE)))
-shapiro.test(rnorm(n = length(newdata$log10Expected), 
-             mean =mean(newdata$log10Expected, na.rm = TRUE), 
-             sd = sd(newdata$log10Expected, na.rm = TRUE)))
-
-qqnorm(rnorm(n = length(newdata$log10Observed), 
-             mean =mean(newdata$log10Observed, na.rm = TRUE), 
-             sd = sd(newdata$log10Observed, na.rm = TRUE)))
-shapiro.test(rnorm(n = length(newdata$log10Observed), 
-                   mean =mean(newdata$log10Observed, na.rm = TRUE), 
-                   sd = sd(newdata$log10Observed, na.rm = TRUE)))
+qqnorm(newdata$log10Expected)
+shapiro.test(newdata$log10Expected)
+qqnorm(newdata$log10Observed)
+shapiro.test(newdata$log10Observed) #not normally distributed
 
 
 ###Subsetting for TIER community
@@ -256,27 +223,44 @@ AIC(newdata.lm, newdata.gls, newdata.rdm, newdata.rmdwt)
 
 
 ###GGPLOT###
-ggplot(data = newdata.T, aes(y = Expected, x = Observed, color = Even_Tier, shape = Even_Tier))+
-  geom_point(position = "jitter", size = 3, alpha = 0.5)+
-  geom_smooth(method= "lm", se=F, formula = y ~ x, aes(fill = Even_Tier)) +
+# Formatting formula for p value
+format.p <- function(p, precision = 0.001) {
+  digits <- -log(precision, base = 10)
+  p <- formatC(p, format = 'f', digits = digits)
+  if (p < 0.001) {
+    p = paste0('< ', precision)}
+  if (p >= 0.001) {
+    p = paste0('= ', p)    }
+  sub("0", "0", p)
+}
+
+# Formatted p-value
+p1 <- cor.test(newdata.T$log10Expected, newdata.T$log10Observed,  data = newdata.T)$p.value
+
+p1 = format.p(p1) # This is just to make the p-value nicer.
+
+
+mock <- ggplot(data = newdata.T, aes(y = Expected, x = Observed))+
+  geom_point(aes(color = Even_Tier, shape = Even_Tier), position = "jitter", size = 3, alpha = 0.8)+
   scale_x_log10() +
   scale_y_log10() +
   expand_limits(y = 0, x = 0) +
-  geom_abline(slope = newdata.lm$coefficients[2], intercept = newdata.lm$coefficients[1], size = 1) +
-  annotate("text", size = 3.5, x = 125, y=0.1, label="y = 1.19*x - 2.17, Adj.R^2 = 0.87") +
-  annotate("text", size = 3.5 , x = 10000, y = 0.1, label = "OTUs = 27") +
-  labs(title = "Aim3 Mock Community without MockBlank1 ", subtitle = "Bolívar Aponte Rolón Sept 28, 2020", 
+  geom_smooth(aes(color = Even_Tier),method=lm, se = F) +
+  geom_smooth(method = lm, 
+              se = T , 
+              level = 0.95,
+              na.rm = F, 
+              color = "black") +
+  stat_regline_equation(label.y.npc = "top",
+                        label.x.npc = "left",
+                        size = 5,
+                        aes(label = paste(..eq.label.., sprintf("italic('p')~'%s'", p1 ),
+                                          sep = "~~~~"))) +
+  annotate("text", size = 5 , x = 10, y = 500, label = "R^2adj = 0.87") +
+  annotate("text", size = 5 , x = 50, y = 500, label = "OTUs = 27") +
+  theme_classic() +
+  labs(title = "Mock Community without MockBlank1 ", subtitle = "Bolívar Aponte Rolón Sept 28, 2020", 
        y = "log10(Expected reads)", x = "log10(Observed reads)")
 
-#ALTERNATIVE MODE OF PLOTTING. THIS REQUIRES THE USE OF MUTATE() IN THE PIPELINE TO CREATE
-#TWO NEW COLUMNS WITH LOG10 VALUES. 
-#ggplot(data = newdata, aes(y = log10_Expected, x = log10_Observed, color = EVEN_TIER, shape = EVEN_TIER))+
-#    geom_point(size = 3)+
-#    geom_jitter()+
-#    geom_smooth(method= "lm", se=F, formula = y ~ x, aes(fill = EVEN_TIER)) +
-#    geom_abline(slope = newdata.lm$coefficients[2], intercept = newdata.lm$coefficients[1], size = 1)
-#  annotate("text", x = 2, y=4, label="y = -0.03*x + 3.45, R2 =")
-  
-
-###############################################################################################################################################
-
+# Saving plot
+#ggsave(filename = "./mock_files/mock_regressions.png", plot = mock, width = 300, height = 300, units = "mm", dpi = 600)
