@@ -456,7 +456,7 @@ data <- read.csv("field_data/Aim3_Bolivar_Summer_2019_Leaf_Traits_datasheet.csv"
 #   unite("Sample_name", Species2:Replicate, sep = "") |>
 #   relocate(Sample_name, Trial_Code, E_load, .after = Species) |>
 #   select(!c(5, 15:17, 20)) |>
-#   rename( Anthocyanins = Anthocyanins..aci., 
+#   rename(Anthocyanins = Anthocyanins..aci., 
 #           Thickness = Thickness..micro.m.,  
 #           Toughness =Toughness..lbf., 
 #           LMA = LMA_dw, 
@@ -547,8 +547,7 @@ ndata2 <- readRDS(file.path(save.path, "R_objects", "new_leaf_data2.rds"))
 #             Y_coordinates, 
 #             Elevation_meters, 
 #             ELoad, 
-#             Analyzer, 
-#            
+#             Analyzer,             
 #             Time_start_trial, 
 #             Time_first_contact, 
 #             Time_first_cut, 
@@ -1558,8 +1557,7 @@ format.p <- function(p, precision = 0.001) {
 
 #Summary of linear model
 lmpc1 <- lm(Ant_percent_leafloss ~ PC1, data = ant_pcalm)
-
-summary(lmpc1)
+#summary(lmpc1)
 
 # PC1
 # Formatted p-value
@@ -1603,8 +1601,7 @@ ant_pc1 <- ggplot(ant_pcalm, aes(PC1, Ant_percent_leafloss)) +
 # PC2
 # Summary of linear model
 lmpc2 <- lm(Ant_percent_leafloss ~ PC2, data = ant_pcalm)
-
-summary(lmpc2)
+#summary(lmpc2)
 
 
 # Formatted p-values
@@ -1943,7 +1940,7 @@ M3REM <- lme(logit_herbivory ~ Thickness  + LMA + E_load, weights = varIdent(for
 #P3REM
 #Best fit model after model selection. See Aim3_leaftraits_Statistical_Analyses.qmd for details.
 P3REM <- lme(logit_pathogenicity ~  LMA + Thickness, weights = varIdent(form = ~ 1|Species),  random = ~ 1 | Species/E_load/Treatment, method = "REML", control = ctrl, data = masterpat2, na.action = na.exclude)
-summary(P3REM)
+#summary(P3REM)
 #AIC(P3REM) #1011.239 as of 30/OCT/2023
 ```
 
@@ -1955,146 +1952,290 @@ summary(P3REM)
 #| tbl-cap: "Best-fit generalized linear mixed models (GLMMs) for predicting leaf herbivory and pathogenicity"
 
 # GLMM tables with `sjPlot` package
-table3 <- tab_model(M3REM, P3REM,
-          show.aic = TRUE,
-          show.intercept = TRUE,
-          show.df = TRUE,
-          show.ci = 0.95,
-          show.se = TRUE,
-          show.stat =TRUE,
-          show.aicc = TRUE,
-          seed = 123,
-          title = "Linear mixed effects models for predicting leaf herbivory and pathogenicity",
-          CSS = list(
-            css.depvarhead = 'font-weight:bold;',
-            css.centeralign = 'text-align: center;',
-            css.firsttablecol = 'font-weight: bold;',
-            css.summary = 'color: grey; font-weight: bold;',
-            p.style = "numeric_stars"))
+# table3 <- tab_model(M3REM, P3REM,
+#           show.aic = TRUE,
+#           show.intercept = TRUE,
+#           show.df = TRUE,
+#           show.ci = 0.95,
+#           show.se = TRUE,
+#           show.stat =TRUE,
+#           show.aicc = TRUE,
+#           seed = 123,
+#           title = "Linear mixed effects models for predicting leaf herbivory and pathogenicity",
+#           CSS = list(
+#             css.depvarhead = 'font-weight:bold;',
+#             css.centeralign = 'text-align: center;',
+#             css.firsttablecol = 'font-weight: bold;',
+#             css.summary = 'color: grey; font-weight: bold;',
+#             p.style = "numeric_stars"))
 
 # GLMM tables with `flextable` package
 # Checking AIC values
-broom.mixed::glance(M3REM, conf.int = TRUE, effects = "fixed") 
+broom.mixed::glance(M3REM, conf.int = TRUE, effects = "fixed")
+broom.mixed::glance(P3REM, conf.int = TRUE, effects = "fixed")
+
+#Joining the two models
+tidy_m3rem <- broom::tidy(M3REM,
+                          scales = "sdcor",
+                          conf.int = TRUE,
+                          conf.level = 0.95,
+                          effects = "fixed", 
+                          data = masterant2)
+
+tidy_p3rem <- broom::tidy(P3REM,
+                          scales = "sdcor",
+                          conf.int = TRUE,
+                          conf.level = 0.95,
+                          effects = "fixed", 
+                          data = masterpat2)
+
+
+models <- left_join(tidy_m3rem, tidy_p3rem, by = "term") |>
+  select(!c(effect.y, effect.x)) |>
+  mutate(stars.x = makeStars(p.value.x),
+         stars.y = makeStars(p.value.y)
+  ) |>
+  relocate(conf.low.x, conf.high.x, .after = estimate.x) |>
+  relocate(conf.low.y, conf.high.y, .after = estimate.y) |>
+  relocate(stars.x, .after = p.value.x) |>
+  relocate(stars.y, .after = p.value.y)
+
+# Significance stars
+makeStars <- function(x){
+  stars <- c("****", "***", "**", "*", "ns")
+  vec <- c(0, 0.0001, 0.001, 0.01, 0.05, 1)
+  i <- findInterval(x, vec)
+  stars[i]
+}
+
+# Table with `gt` package
+table3 <- gt(models, 
+             rowname_col = "term") |>
+  cols_width(everything() ~ px(70),
+             starts_with("term") ~ px(200)
+  ) |>
+  tab_options(row_group.as_column = TRUE) |>
+  tab_stubhead(label = "Fixed effects") |>
+  cols_merge(
+    columns = c(conf.low.x, conf.high.x),
+    pattern = "{1} - {2}"
+  ) |>
+  cols_merge(
+    columns = c(conf.low.y, conf.high.y),
+    pattern = "{1} - {2}"
+  ) |>
+  cols_label(
+    estimate.x = "Estimate",
+    estimate.y = "Estimate",
+    std.error.x = "Standard error",
+    std.error.y = "Standard error",
+    df.x = "df",
+    df.y = "df",
+    statistic.x = "statistic",
+    statistic.y = "statistic",
+    p.value.x = "p-value",
+    p.value.y = "p-value",
+    stars.x = "",
+    stars.y = "",
+    conf.low.x = "CI",
+    conf.low.y = "CI",
+  ) |>
+  fmt_number(columns = everything(),
+             rows = everything(),
+             decimals = 3,
+             n_sigfig = NULL
+   ) |>
+  tab_spanner(
+    label = md("Herbivory model"),
+    columns = ends_with(".x")
+    ) |>
+  tab_spanner(
+    label = md("Pathogen damage model"),
+    columns = ends_with(".y")
+    ) |>
+  tab_style(
+    style = list(
+      cell_text(weight = "bold"),
+      cell_text(style = "italic")),
+    locations = cells_column_labels()
+    ) |>
+  tab_style(
+    style = list(
+      cell_text(style = "italic")),
+    locations = cells_stubhead()
+    ) |>
+  tab_style(
+    style = list(
+      cell_text(weight = "bold")),
+    locations = cells_column_spanners()
+    ) |>
+   tab_style(
+    style = cell_text(size = pct(90)),
+    locations = list(cells_body(),
+                     cells_stub(),
+                     cells_column_labels())                      ) |>
+  tab_style(
+    style = cell_borders(
+      sides = "all",
+      color = NULL
+    ),
+    locations = list(cells_body(),
+                     cells_stub())
+   ) |>
+  tab_style(
+    style = cell_text(weight = "bold"),
+    locations = cells_body(
+      columns = c(p.value.x, p.value.y),
+      rows = p.value.x < 0.05 | p.value.y < 0.05)
+  ) |>
+
+  tab_header(
+    title = md("Generalized linear mixed models (GLMMs) for predicting leaf herbivory and pathogen damage")
+   ) |>
+  tab_footnote(
+    footnote = md("Akaike Information Criterion (AIC) = 741.8"),
+    locations = cells_column_spanners(spanner = "Herbivory model")
+  ) |>
+  tab_footnote(
+    footnote = md("Akaike Information Criterion (AIC) = 1011.2"),
+    locations = cells_column_spanners(spanner = "Pathogen damage model")
+  ) |>
+  tab_footnote(
+    footnote = md("Significance levels are represented by *ns* (not significant) and asterisks [*p* <= 0.05 (\\*), *p* < 0.01 (\\**), *p* < 0.001 (\\***), and *p* < 0.0001 (\\****)]."),
+    locations = cells_column_labels(columns = starts_with("p"))
+  ) |>
+  opt_align_table_header(align = "left") |>
+  opt_table_font(
+    font = list(
+      google_font(name = "Tex Gyre Termes"),
+       "serif"
+    )
+  ) |>
+  opt_footnote_marks(marks = "letters")
+
+#Final editing of the table will be completed in text editor. 
+
+#gtsave(table3, file = "Aim3_table3_30JAN2024.docx", path = "./tables")
 
 # Herbivory model
 # `flextable` uses `broom.mixed::tidy` to extract model coefficients. The same could be achieved with `broom::tidy` for `lme` models and changing the `effects` argument to "var_model" then "ran_pars" instead of "fixed".
-broom::tidy(M3REM,
-     scales = "sdcor",
-     conf.int = TRUE,
-     conf.level = 0.95,
-     effects = "fixed", 
-     data = masterant2)
-
-herb_model_table <- flextable::as_flextable(M3REM, add.random = TRUE, 
-                        show.signif.stars = FALSE) |>
-  # flextable::set_caption(
-  #   as_paragraph(
-  #     as_b(
-  #       as_chunk("Table 3: Linear mixed effects models for predicting leaf herbivory and pathogenicity",
-  #                props = fp_text_default(font.family = "Tex Gyre Termes", font.size = 12)
-  #              )
-  #     )
-  #   ),
-  #   align_with_table = F) |>
-
-  flextable::add_header_lines(
-      as_paragraph(
-        as_chunk("Herbivory model",
-                 props = fp_text_default(font.family = "Tex Gyre Termes",
-                                         bold = TRUE,
-                                         font.size = 12)
-              )
-      )
-    ) |>
-  flextable::align(i = 1, align = "center", part = "header") |>
-  set_header_labels(group = "Predictors") |>
-  flextable::align(j = 1, align = "left", part = "body") |>
-  flextable::align(j = 2:8, align = "center", part = "all") |>
-  flextable::italic(j = c(3:8), italic = TRUE, part = "header") |>
-  flextable::italic(i = c(1,6), j = 1, italic = TRUE, part = "body") |>
-  flextable::bold(i = 2, bold = TRUE, part = "header") |>
-  flextable::bold(i = c(3:5), j = c(7:8), bold = TRUE, part = "body") |>
-  delete_rows(i = c(9:16) , part = "body") |>
-  hline_bottom(j = c(1:8), 
-               border = fp_border(color = "black", 
-                                  style = "solid", 
-                                  width = 1.25), 
-               part = "body") |>
-  flextable::width(j = 1, width = 1.25, unit = "in") |>
-  flextable::width(j = 2:8, width = 0.75, unit = "in") |>
-  flextable::font(
-    i = NULL,
-    j = NULL,
-    fontname = "Tex Gyre Termes",
-    part = "all",
-    cs.family = fontname,
-    hansi.family = fontname,
-    eastasia.family = fontname) 
-
-herb_model_table
-
-
-# Pathogenicity model
-broom::tidy(P3REM,
-     scales = "sdcor",
-     conf.int = TRUE,
-     conf.level = 0.95,
-     effects = "fixed", 
-     data = masterpat2)
-
-patho_model_table <- flextable::as_flextable(P3REM, add.random = TRUE, 
-                        show.signif.stars = FALSE) |>
-  flextable::add_header_lines(
-      as_paragraph(
-        as_chunk("Pathogen damage model",
-                 props = fp_text_default(font.family = "Tex Gyre Termes",
-                                         bold = TRUE,
-                                         font.size = 12)
-              )
-      )
-    ) |>
-  flextable::align(i = 1, align = "center", part = "header") |>
-  set_header_labels(group = "Predictors") |>
-  flextable::align(j = 1, align = "left", part = "body") |>
-  flextable::align(j = 2:8, align = "center", part = "all") |>
-  flextable::italic(j = c(3:8), italic = TRUE, part = "header") |>
-  flextable::italic(i = c(1,6), j = 1, italic = TRUE, part = "body") |>
-  flextable::bold(i = 2, bold = TRUE, part = "header") |>
-  flextable::bold(i = c(3:5), j = c(7:8), bold = TRUE, part = "body") |>
-  delete_rows(i = c(5:12) , part = "body") |>
-  hline_bottom(j = c(1:8), 
-               border = fp_border(color = "black", 
-                                  style = "solid", 
-                                  width = 1.25), 
-               part = "body") |>
-  flextable::width(j = 1, width = 1.25, unit = "in") |>
-  flextable::width(j = 2:8, width = 0.75, unit = "in") |>
-  flextable::font(
-    i = NULL,
-    j = NULL,
-    fontname = "Tex Gyre Termes",
-    part = "all",
-    cs.family = fontname,
-    hansi.family = fontname,
-    eastasia.family = fontname)
-
-
-# Saving table as a Word document
-# sect_properties <- prop_section(
-#   page_size = page_size(
-#     orient = "portrait",
-#     width = 8.2, height = 11.5
-#   ),
-#   type = "continuous",
-#   page_margins = page_mar()
-# )
-# tf <- tempfile(fileext = ".docx")
-# save_as_docx(
-#   `table3_herbivory` = herb_model_table, `table3_pathogen` = path_model_table,
-#   path = tf, pr_section = sect_properties
-# )
-# save_as_docx(herb_model_table, path = "./tables/table3_herbivory.docx")
-#   
+# broom::tidy(M3REM,
+#      scales = "sdcor",
+#      conf.int = TRUE,
+#      conf.level = 0.95,
+#      effects = "fixed", 
+#      data = masterant2)
+# 
+# herb_model_table <- flextable::as_flextable(M3REM, add.random = TRUE, 
+#                         show.signif.stars = FALSE) |>
+#   # flextable::set_caption(
+#   #   as_paragraph(
+#   #     as_b(
+#   #       as_chunk("Table 3: Linear mixed effects models for predicting leaf herbivory and pathogenicity",
+#   #                props = fp_text_default(font.family = "Tex Gyre Termes", font.size = 12)
+#   #              )
+#   #     )
+#   #   ),
+#   #   align_with_table = F) |>
+# 
+#   flextable::add_header_lines(
+#       as_paragraph(
+#         as_chunk("Herbivory model",
+#                  props = fp_text_default(font.family = "Tex Gyre Termes",
+#                                          bold = TRUE,
+#                                          font.size = 12)
+#               )
+#       )
+#     ) |>
+#   flextable::align(i = 1, align = "center", part = "header") |>
+#   set_header_labels(group = "Predictors") |>
+#   flextable::align(j = 1, align = "left", part = "body") |>
+#   flextable::align(j = 2:8, align = "center", part = "all") |>
+#   flextable::italic(j = c(3:8), italic = TRUE, part = "header") |>
+#   flextable::italic(i = c(1,6), j = 1, italic = TRUE, part = "body") |>
+#   flextable::bold(i = 2, bold = TRUE, part = "header") |>
+#   flextable::bold(i = c(3:5), j = c(7:8), bold = TRUE, part = "body") |>
+#   delete_rows(i = c(9:16) , part = "body") |>
+#   hline_bottom(j = c(1:8), 
+#                border = fp_border(color = "black", 
+#                                   style = "solid", 
+#                                   width = 1.25), 
+#                part = "body") |>
+#   flextable::width(j = 1, width = 1.25, unit = "in") |>
+#   flextable::width(j = 2:8, width = 0.75, unit = "in") |>
+#   flextable::font(
+#     i = NULL,
+#     j = NULL,
+#     fontname = "Tex Gyre Termes",
+#     part = "all",
+#     cs.family = fontname,
+#     hansi.family = fontname,
+#     eastasia.family = fontname) 
+# 
+# herb_model_table
+# 
+# 
+# # Pathogenicity model
+# broom::tidy(P3REM,
+#      scales = "sdcor",
+#      conf.int = TRUE,
+#      conf.level = 0.95,
+#      effects = "fixed", 
+#      data = masterpat2)
+# 
+# patho_model_table <- flextable::as_flextable(P3REM, add.random = TRUE, 
+#                         show.signif.stars = FALSE) |>
+#   flextable::add_header_lines(
+#       as_paragraph(
+#         as_chunk("Pathogen damage model",
+#                  props = fp_text_default(font.family = "Tex Gyre Termes",
+#                                          bold = TRUE,
+#                                          font.size = 12)
+#               )
+#       )
+#     ) |>
+#   flextable::align(i = 1, align = "center", part = "header") |>
+#   set_header_labels(group = "Predictors") |>
+#   flextable::align(j = 1, align = "left", part = "body") |>
+#   flextable::align(j = 2:8, align = "center", part = "all") |>
+#   flextable::italic(j = c(3:8), italic = TRUE, part = "header") |>
+#   flextable::italic(i = c(1,6), j = 1, italic = TRUE, part = "body") |>
+#   flextable::bold(i = 2, bold = TRUE, part = "header") |>
+#   flextable::bold(i = c(3:5), j = c(7:8), bold = TRUE, part = "body") |>
+#   delete_rows(i = c(5:12) , part = "body") |>
+#   hline_bottom(j = c(1:8), 
+#                border = fp_border(color = "black", 
+#                                   style = "solid", 
+#                                   width = 1.25), 
+#                part = "body") |>
+#   flextable::width(j = 1, width = 1.25, unit = "in") |>
+#   flextable::width(j = 2:8, width = 0.75, unit = "in") |>
+#   flextable::font(
+#     i = NULL,
+#     j = NULL,
+#     fontname = "Tex Gyre Termes",
+#     part = "all",
+#     cs.family = fontname,
+#     hansi.family = fontname,
+#     eastasia.family = fontname)
+# 
+# 
+# # Saving table as a Word document
+# # sect_properties <- prop_section(
+# #   page_size = page_size(
+# #     orient = "portrait",
+# #     width = 8.2, height = 11.5
+# #   ),
+# #   type = "continuous",
+# #   page_margins = page_mar()
+# # )
+# # tf <- tempfile(fileext = ".docx")
+# # save_as_docx(
+# #   `table3_herbivory` = herb_model_table, `table3_pathogen` = path_model_table,
+# #   path = tf, pr_section = sect_properties
+# # )
+# # save_as_docx(herb_model_table, path = "./tables/table3_herbivory.docx")
+# #   
 ```
 
 

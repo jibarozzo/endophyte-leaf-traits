@@ -2,7 +2,7 @@
 
 In this study, we investigate the role of FEF abundance, diversity and community composition in the modulation of leaf functional traits and plant's response to herbivory and pathogen damage. The dataset includes information about anthocyanin content, leaf thickness, toughness, and leaf mass per area for different tropical woody species and the foliar endophytic fungi found inside their leaf tissue. 
 
-This repository contains the R code and notbooks used for bioinformatic pipeline and statistical analyses used in this project. We include a first manuscript (Aponte_Bolivar_2023_Aim3_manuscript.docx) and the main notebook used for analyses (Aim3_Leaf_traits_Statistical_Analyses_v3.qmd file.). Supplementary files are also included in the repository.
+This repository contains the R code and notebooks used for bioinformatic pipeline and statistical analyses used in this project. We include a first manuscript (*Aponte_Bolivar_2023_Aim3_manuscript.docx*) and the main notebook used for analyses (*Aim3_Leaf_traits_Statistical_Analyses_v3.qmd file*). Supplementary files are also included in the repository.
 
 ## Table of Contents
 
