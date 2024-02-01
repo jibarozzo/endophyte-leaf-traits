@@ -83,7 +83,7 @@ library("broom")
 library("vegan")
 library("nlme")
 library("MASS")
-library("MuMin")
+library("MuMIn")
 library("car") #For type 3 Anova with Anova() function.
 library("PerformanceAnalytics")
 library("corrr")
@@ -1015,10 +1015,10 @@ summa_t1 <- tbl_summary(data2 |>
                         "E+" ~ "E+ (n = 544)")) |> # The sum of E- and E+ was added after iterations of tbl_summary().
     na.omit(),
   by = Species,
-  missing = "no",
-  statistic = list(
-    all_continuous() ~ "{mean} \u00B1 {sd}", 
-    all_categorical() ~ "{n}")) |>
+  missing = "no") |>
+  # statistic = list(
+  #   all_continuous() ~ "{mean} \u00B1 {sd}", 
+  #   all_categorical() ~ "{n}")) |>
   modify_header(label = "",
                 stat_1 = 'A. membranacea, n = 83',
                 stat_2 = 'C. alliodora, n = 100',
@@ -2929,7 +2929,7 @@ plot(otu.anosim)
 ```
 
 
-# GLMs: How do leaf traits influence herbivory and pathogenicity?
+# GLLMs: How do leaf traits influence herbivory and pathogenicity?
 
 ## Ant Linear Mixed Models: `logit_herbivory ~ raw functional leaf traits`
 
@@ -2939,14 +2939,16 @@ Now that we have answered how the leaf functional traits influence influence the
 # ANTS:Diversity
 # Model with intercept only
 M0 <- lm(logit_herbivory ~ 1, data = masterant2, na.action = na.exclude)
+summary(M0)
+AIC(M0)
 plot(M0)
 
 # M1
-M1 <- lm(logit_herbivory ~ LMA + Species + Anthocyanins + Thickness + Toughness + E_load, data = masterant2, na.action = na.exclude)
+M1 <- lm(logit_herbivory ~ LMA + Species + Anthocyanins + Thickness + Toughness + Shannon + E_load, data = masterant2, na.action = na.exclude)
 
 #Model with all continuous explanatory variables.
 summary(M1)
-AIC(M1) #738.2146
+AIC(M1) #737
 
 # Transforming "Ant_percent_leafloss" with logit() and using that transformed data reduces the AIC value to ~738. It is a better fit model. The transformation of percent herbivory is due to the many values close to zero or zeros. 
 
@@ -2974,14 +2976,14 @@ AIC(M1AIC) #586.7715 #736.86 06/04/2023 -BAR
 plot(M1AIC)
 plot_model(M1AIC, type = "diag")
 #Final Model:
-#logit_herbivory ~ LMA + Species + Thickness + E_load
+#logit_herbivory ~ LMA + Species + Thickness + Shannon + E_load
 ```
 
 Using "masterant2" improves normality of residuals and overall model. 5/23/2023
 
-Species has a high VIF. This should change when I use species as a random effect. The residuals spread increases slightly as the fitted values increase. Indicating heterogeneity. Note that some nests have residuals that are above or below the zero line, indicating the need for a random effect. Possibly Species and E_Load
+Species has a high VIF. This should change when I use species as a random effect. The residuals spread increases slightly as the fitted values increase. Indicating heterogeneity. Note that some nests have residuals that are above or below the zero line, indicating the need for a random effect. Possibly Species and E_Load. Shannon diversity index does not seem to have a significant effect on herbivory.
 
-As of 06/04/2023: The final model as a results of `stepAIC()` is: `logit_herbivory ~ LMA + Species + Thickness + E_load`
+The final model as a results of `stepAIC()` is: `logit_herbivory ~ LMA + Species + Thickness + Shannon + E_load`
 
 ## Random effect models with fixed terms
 
@@ -2996,9 +2998,9 @@ Models for predicting herbivory loss using FEF community diversity. Use of raw f
 ```{r, Ant masterant2 ML model selection}
 #ANTS: Species as random effect, NO interactions
 #M2
-M2 <- lme(logit_herbivory ~ Thickness + LMA + E_load, random = ~1 | Species, method = "ML", data = masterant2, na.action = na.exclude)
+M2 <- lme(logit_herbivory ~ Thickness + LMA + E_load + Shannon, random = ~1 | Species, method = "ML", data = masterant2, na.action = na.exclude)
 summary(M2) #Adding the random effect INCREASES AIC score.
-AIC(M2)# 756.4149 as of 30/OCT/2023
+AIC(M2)# 755 as of 30JAN2024
 
 # Residuals histograms and plots ####
 M2_resid <- resid(M2, type = "response")
@@ -3011,7 +3013,7 @@ plot_model(M2, type = "diag") # The residuals spread increases slightly as the f
 # Stepwise selection of terms
 M2.step <- stepAIC(update(M2, .~.), direction = "both", k= 2)
 M2.step$anova
-AIC(M2.step) #Step:  AIC = 596.744 Ant_percent_leafloss ~ E_load.x  # as of 5/23/23 Final Model:logit_herbivory ~ Thickness + LMA + E_load
+AIC(M2.step) #Step:  No change in AIC score. 30JAN2024
 
 # ANOVAs
 Anova(M2.step, type = 3)
@@ -3019,10 +3021,9 @@ drop1(M2.step, .~., test="Chisq", trace = TRUE)
 
 # M3 ####
 # Nesting Species and E_load
-M3 <- lme(logit_herbivory ~ Thickness + LMA, random = ~1 | Species/E_load, method = "ML", data = masterant2, na.action = na.exclude)
-
+M3 <- lme(logit_herbivory ~ Thickness + LMA + Shannon, random = ~1 | Species/E_load, method = "ML", data = masterant2, na.action = na.exclude)
 summary(M3) #Nestin E_load in Species term INCREASES AIC score.
-AIC(M3) #604.2886 # 1936.182 as of 5/23/23 # 768.2949 06/04/2023
+AIC(M3) #765 as of 30JAN2024
 
 # Residuals histograms and plots ####
 M3_resid <- resid(M3, type = "response")
@@ -3044,12 +3045,16 @@ plot_model(M3, type = "diag")
 ```{r, Ant RAW ML interactions}
 # M4: modelling interactions_ No E_load.x, Total_reads and Observed richness #### 
 # Using the fixed terms from M1 model.
-M4 <- lme(logit_herbivory ~ Thickness  * LMA  * E_load, random = ~1|Species, method = "ML", data = masterant2, na.action = na.exclude) #Observed richness is confounded by Shannon diversity, probably. The same happens with Toughness and Thickness. 
+M4 <- lme(logit_herbivory ~ Thickness  * LMA  * E_load * Shannon, random = ~1|Species, method = "ML", data = masterant2, na.action = na.exclude) #Observed richness is confounded by Shannon diversity, probably. The same happens with Toughness and Thickness. 
 summary(M4)
-AIC(M4) #601.8333 Decreases slightly # 1912.486 as of 5/23/23 # 757.2809  as of 30/OCT/2023 IT INCREASEs
+AIC(M4) #748 as of 30JAN2024
 
 M4.step <- stepAIC(update(M4, .~.) , direction = "both", k= 2)
 M4.step$anova
+
+# Final Model:
+# logit_herbivory ~ Thickness + LMA + E_load + Shannon + Thickness:LMA + 
+#     LMA:E_load + LMA:Shannon + E_load:Shannon + LMA:E_load:Shannon
 
 # Residuals histograms and plots
 M4_resid <- resid(M4, type = "response")
@@ -3057,10 +3062,10 @@ M4_fitted <- fitted(M4)
 hist(M4_resid)
 hist(M4_fitted)
 plot(M4)
-plot_model(M4, type = "diag")
+plot_model(M4.step, type = "diag")
 ```
 
--   Not the best model
+-   Not the best models
 
 ### REML: interactions
 
@@ -3069,26 +3074,25 @@ Using Restricted Maximum Likelihood (REML) to model. Maximum likelihood tends to
 ```{r, Ant masternat2 RAW REML model selection}
 # REML
 #M1REM All fixed terms
-M1REM <- lme(logit_herbivory ~ Anthocyanins + Toughness + Thickness  + LMA + E_load, random = ~1 | Species, method = "REML", data = masterant2, na.action = na.exclude)
-
-plot(M1REM)
+M1REM <- lme(logit_herbivory ~ Anthocyanins + Toughness + Thickness  + LMA + E_load + Shannon, random = ~1 | Species, method = "REML", data = masterant2, na.action = na.exclude)
 summary(M1REM)
-AIC(M1REM) # 755.8854 as of 30/OCT/2023 BETTER
+Anova(M1REM, type = 3)
+AIC(M1REM) # 757 as of 30JAN2024 it increases the AIC score.
 
-M1.gls <- gls(logit_herbivory ~ Anthocyanins + Toughness + Thickness  + LMA + E_load, method = "REML", data = masterant2, na.action = na.exclude)
-
-plot(M1.gls)
+M1.gls <- gls(logit_herbivory ~ Anthocyanins + Toughness + Thickness  + LMA + E_load + Shannon, method = "REML", data = masterant2, na.action = na.exclude)
 summary(M1.gls)
-AIC(M1.gls) #589.6144 # 1955.694 as of 5/23/23 # 797.37 as of 06/04/2023
+Anova(M1REM, type = 3)
+AIC(M1.gls) #801 as of 30JAN2024
 ```
 
--   Random effect "Species" REDUCES the AIC score. It is important to incorporate as a randome effect in the model!
+-   Random effect "Species" REDUCES the AIC score. It is important to incorporate as a random effect in the model!
 
 ### REML: Variance Structure
 
 Using `varIdent()` to model variance structure.
 
 -   Model M2REM without Anthocyanins and Toughness has the lowest AIC score.
+-   Removing Shannon diversity. In previous models it has been a trondg predictor of herbivory.
 
 ```{r}
 # M2REM: Removed Toughness from M1REM
@@ -3097,6 +3101,7 @@ M2REM <- lme(logit_herbivory ~ Thickness  + LMA + E_load, random = ~1 | Species,
 #Validation
 plot(M2REM)
 summary(M2REM)
+Anova(M2REM, type = 3)
 AIC(M2REM) #594.0651 # 1934.192 as of 5/23/23 # 752.4332 as of 30/OCT/2023
 ```
 
@@ -3115,7 +3120,8 @@ M3REM <- lme(logit_herbivory ~ Thickness  + LMA + E_load, weights = varIdent(for
 
 plot(M3REM)
 summary(M3REM)
-AIC(M3REM) #584.711 #1902.209 as of 5/23/23 # 741.7825 as of 30/OCT/2023
+Anova(M3REM, type = 3)
+AIC(M3REM)  #741.7825 as of 30/OCT/2023
 ```
 
 The spread of residuals vs. fitted values improves for M2REM and so does AIC value. Model M3REM has the lowest AIC value and the spread of residuals vs fitted values is more constant/even throughout, regardless of optimizer used (AIC = 741.7852).
@@ -3131,6 +3137,7 @@ M4REM <- lme(logit_herbivory ~ Thickness  + LMA,  weights = varIdent(form = ~ 1|
 # Validation
 plot(M4REM)
 summary(M4REM)
+Anova(M4REM, type = 3)
 AIC(M4REM) # 753 as of 01/NOV/2023
 plot_model(M4REM, type = "diag")
 ```
@@ -3152,6 +3159,7 @@ summary(M5REM)
 AIC(M5REM) # 527 AIC # 1571.156 as of 5/23/23 # 720.7501 as of 30/OCT/2023
 
 plot(M5REM)
+
 logit_est <- plot_model(M5REM, type = "diag")
 logit_est
 tab_model(M5REM, M3REM,
@@ -3171,7 +3179,7 @@ From the previous section I can see that model `M3REM` and `M5REM` have the lowe
 
 This doesn't make much sense to me. Sure E_load reduces the AIC score but of course it is going to have an impact or predict well herbivory loss. It is a treatment, not a continuous explanatory variable. It just does not fit the question well.
 
-The best fit model(s), considering the elimination of Anthocyanins and Toughness due to high colinearity, is `M5REM` (AIC 720) and `M3REM` (AIC 741).
+The best fit model(s), considering the elimination of Anthocyanins and Toughness due to high colinearity, is `M5REM` (AIC 720) and `M3REM` (AIC 741). All models had Shannon diversity removed as it was not a significant predictor of herbivory.
 
 ### Conclusions of model selection using REML model estimation (ANT)
 
@@ -3599,6 +3607,8 @@ Now that we have answered how the leaf functional traits influence FEF community
 # Model with intercept only ####
 P0 <- lm(logit_pathogenicity ~ 1, data = masterpat2, na.action = na.exclude)
 plot(P0)
+summary(P0)
+AIC(P0) # 1376 as of 30JAN2024
 
 # P1
 P1 <- lm(logit_pathogenicity ~ Anthocyanins + Species + LMA + Toughness + Thickness + E_load + Shannon, data = masterpat2, na.action = na.exclude) #Model with all continuous explanatory variables.
@@ -3628,15 +3638,15 @@ drop1(P1,test = "F", trace = TRUE)
 drop1(P1, .~., test="F", trace = TRUE)
 ```
 
--   The result of `stepAIC` is `logit_pathogenicity ~ Anthocyanins + Species + LMA + Toughness + Thickness + E_load + Shannon`.
+-   The result of `stepAIC` is `logit_pathogenicity ~  Species + Thickness + E_load`.
 
--   I opted to remove Anthocyanins and Toughness due to high colinearity with LMA (see Correlations section).
+-   I opted to remove Anthocyanins and Toughness due to high colinearity with LMA (see Correlations section). Shannon diversity was also removed from the model.
 
 ```{r}
 #P2
-P2 <- lm(logit_pathogenicity ~  Species + E_load + Thickness + LMA + Shannon, data = masterpat2, na.action = na.exclude)
+P2 <- lm(logit_pathogenicity ~  Species + E_load + Thickness + LMA, data = masterpat2, na.action = na.exclude)
 summary(P2)
-AIC(P2) #1253.497 as of 16/OCT/2023
+AIC(P2) #1251 as of 30JAN2024
 
 # Residuals
 P2_resid <- resid(P2, type = "response")
@@ -3656,7 +3666,7 @@ AIC(P2AIC) #1249.769 as of 30/OCT/2023
 plot(P2AIC)
 ```
 
-The final model from this section (P2AIC): `logit_pathogenicity ~ Species + E_load + Thickness`
+The final model from this section (P2AIC): `logit_pathogenicity ~ Species + E_load + Thickness`. LMA was removed from the model. It does not seem to be a good predictor of pathogenicity. 
 
 ## Random effect models with fixed terms
 
@@ -3670,9 +3680,9 @@ The final model from this section (P2AIC): `logit_pathogenicity ~ Species + E_lo
 ```{r, Pathogen RAW ML model selection}
 # PATHOGEN: Species as random effect, NO interactions
 # P3
-P3 <- lme(logit_pathogenicity ~ E_load + Thickness + LMA , random = ~1 | Species, method = "ML", data = masterpat2, na.action = na.exclude)
+P3 <- lme(logit_pathogenicity ~ E_load + Thickness, random = ~1 | Species, method = "ML", data = masterpat2, na.action = na.exclude)
 summary(P3) #Adding the random effect INCREASES AIC score.
-AIC(P3) #1271.734  as of 30/OCT/2023
+AIC(P3) #1269 as of 30JAN2024
 
 # Residuals histograms and plots
 P3_resid <- resid(P3, type = "response")
@@ -3685,9 +3695,9 @@ plot_model(P3, type = "diag") # The residuals spread increases slightly as the f
 
 # P4
 # Nesting Species and E_load
-P4 <- lme(logit_pathogenicity ~ Thickness + LMA, random = ~1 | Species/E_load, method = "ML", data = masterpat2, na.action = na.exclude)
+P4 <- lme(logit_pathogenicity ~ Thickness, random = ~1 | Species/E_load, method = "ML", data = masterpat2, na.action = na.exclude)
 summary(P4) #Removing E_load term and nesting it INCREASES AIC score.
-AIC(P4) #1274.849 as of 30/OCT/2023
+AIC(P4) #1272 as of 30JAN2024
 
 # Residuals histograms and plots ####
 P4_resid <- resid(P4, type = "response")
@@ -3705,6 +3715,7 @@ There is not much improvement of P4 over P1-P2. The AIC score is higher than P1-
 ### REML: fixed terms
 
 No interactions yet, checking random effects. \*\*Notice the use of `Treatment` as one of the fixed terms. This is a level that is not present in the Ant dataset.
+I am including LMA and Treatment as fixed terms to see if they are significant. 
 
 ```{r, Restricted Maximum Likelihood (REML)}
 # REML
@@ -3733,7 +3744,7 @@ AIC(P2ML) #1088 INCREASES AIC score.
 
 P2.step <- stepAIC(update(P2ML, .~.) , direction = "both", k= 2)
 P2.step$anova
-
+Anova(P2.step, type = "III")
 # Residuals histograms and plots
 P2_resid <- resid(P2ML, type = "response")
 P2_fitted <- fitted(P2ML)
@@ -3747,7 +3758,7 @@ plot_model(P2ML, type = "diag")
 
 ### REML: interactions
 
-Using Restricted Maximum Likelihood (REML) to model. Maximum likelihood tends to be biased with high dimensional data.
+Using Restricted Maximum Likelihood (REML) to model. Maximum likelihood tends to be biased with high dimensional data. LMA is a significant predictor of pathogenicity (p \<= 0.05). 
 
 Let's model with interactions and remove variance structure. Having Treatment and E_load as fixed effect reduces AIC score.
 
@@ -3817,8 +3828,6 @@ pbox <-  ggplot(data = masterpat2, aes(x = Species, y = Pathogen_percent_damage)
   # stat_compare_means(comparisons = mycomparisons ) +
   # stat_compare_means(method = "kruskal.test", label = "p.signif")
 pbox
-
-
 
 # Pathogen
 # Regressions
@@ -4066,7 +4075,7 @@ suppfig_S8
 ```
 
 # Table 3
-# LMM tables and estimites for ant and pathogen GLMs with `logit_herbivory` and `logit_pathogenicity`
+# GLMM tables and estimates for ant and pathogen GLMMs with `logit_herbivory` and `logit_pathogenicity`
 
 ### Plotting Estimates (Fixed Effects) of Best Fit model for Ant and Pathogen data sets
 
