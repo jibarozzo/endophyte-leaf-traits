@@ -338,7 +338,7 @@ save.path <- ("/home/baponte/Boxx/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequ
 # ## csv file should have row = OTU, col = sample
 # 
 # otu.data <- read.csv('clean_data/otu_data/all_toFilt_10_percent.csv', row.names = 1,as.is = T)
-# otu.data2 <- apply(otu.data, 2, function(x) ifelse({100*x/sum(x)} < 0.10, 0, x))
+# otu.data <- apply(otu.data, 2, function(x) ifelse({100*x/sum(x)} < 0.10, 0, x))
 # OTU_table.cleaned <- subset((otu.data2), rowSums(otu.data2)>1)
 # OTU_table.cleaned <- as.data.frame(OTU_table.cleaned)
 # write.csv(OTU_table.cleaned, "all_cleaned_at_10_percent.csv")
@@ -400,50 +400,40 @@ tbas <- readRDS(file.path(save.path, "R_objects", "tbas_filtered.rds"))
 
 data <- read.csv("field_data/Aim3_Bolivar_Summer_2019_Leaf_Traits_datasheet.csv")
 
-# data2
+# data
 # Data set created on May 23, 2023 for analysis with raw data.
-# data2 <- data |> 
-#   separate(Unique_ID, c("Trial_Code", "ELoad", "Species2", "Replicate")) |>
-#   unite("Sample_name", Species2:Replicate, sep = "") |>
-#   relocate(Sample_name, Trial_Code, E_load, .after = Species) |>
-#   select(!c(5, 15:17, 20)) |>
-#   rename( Anthocyanins = Anthocyanins..aci., 
-#           Thickness = Thickness..micro.m.,  
-#           Toughness =Toughness..lbf., 
-#           LMA = LMA_dw, 
-#           Abun_3 = Abundance_Proportion_day3, 
-#           Abun_7 = Abundance_Proportion_day7)
+data <- data |>
+  separate(Unique_ID, c("Trial_Code", "ELoad", "Species2", "Replicate")) |>
+  unite("Sample_name", Species2:Replicate, sep = "") |>
+  relocate(Sample_name, Trial_Code, E_load, .after = Species) |>
+  select(!c(5, 15:17, 20)) |>
+  rename( Anthocyanins = Anthocyanins..aci.,
+          Thickness = Thickness..micro.m.,
+          Toughness =Toughness..lbf.,
+          LMA = LMA_dw,
+          Abun_3 = Abundance_Proportion_day3,
+          Abun_7 = Abundance_Proportion_day7)
 
 # Saving
-# saveRDS(data2, file.path(save.path, "R_objects", "leaf_data_raw_analyses.rds"))
+# saveRDS(data, file.path(save.path, "R_objects", "leaf_data_raw_analyses.rds"))
 
 # Reading
-data2 <- readRDS(file.path(save.path, "R_objects", "leaf_data_raw_analyses.rds"))
+data <- readRDS(file.path(save.path, "R_objects", "leaf_data_raw_analyses.rds"))
 
 # ndata (new_data)
-# This data set can also be used to conduct analysis with "raw" data . It is summarized by leaf.
+# This data set can also be used to conduct analyses summarized by leaf.
 
-# ndata <- data |>  
-#   group_by(Species, Unique_ID, Trial_type, E_load, Leaf_ID) |>
-#   summarise(Anthocyanins..aci. = mean(Anthocyanins..aci., na.rm = TRUE), 
-#             Thickness..micro.m. = mean(Thickness..micro.m., na.rm = TRUE),
-#             Toughness..lbf. = mean(Toughness..lbf., na.rm = TRUE),
-#             LMA_dw = mean(LMA_dw, na.rm = TRUE),
-#             Abundance_Proportion_day3 = mean(Abundance_Proportion_day3, na.rm = TRUE),
-#             Abundance_Proportion_day7 = mean(Abundance_Proportion_day7, na.rm = TRUE)) |>
-#    separate(Unique_ID, c("Trial_Code", "ELoad", "Species2", "Replicate")) |>
-#   unite("Sample_name", Species2:Replicate, sep = "") |>
-#   relocate(Species, Trial_Code,.after = Sample_name) |>
-#   rename( Anthocyanins = Anthocyanins..aci., 
-#           Thickness = Thickness..micro.m.,  
-#           Toughness =Toughness..lbf., 
-#           LMA = LMA_dw, 
-#           Abun_3 = Abundance_Proportion_day3, 
-#           Abun_7 = Abundance_Proportion_day7) |>
-#   select(!ELoad) |>
+# ndata <- data |>
+#   group_by(Sample_name, Species, Trial_Code, Trial_type, E_load, Leaf_ID) |>
+#   summarise(Anthocyanins = mean(Anthocyanins, na.rm = TRUE),
+#             Thickness = mean(Thickness, na.rm = TRUE),
+#             Toughness = mean(Toughness, na.rm = TRUE),
+#             LMA = mean(LMA, na.rm = TRUE),
+#             Abun_3 = mean(Abun_3, na.rm = TRUE),
+#             Abun_7 = mean(Abun_7, na.rm = TRUE)) |>
 #   ungroup() |>
 #    mutate_if(is.character, as.factor) |>
-#   na.omit() |> 
+#   na.omit() |>
 #   na.fail()
 
 # Saving
@@ -509,7 +499,6 @@ The code below cleans the `ants` data set by removing all the variables with inc
 #             Elevation_meters, 
 #             ELoad, 
 #             Analyzer, 
-#            
 #             Time_start_trial, 
 #             Time_first_contact, 
 #             Time_first_cut, 
@@ -528,14 +517,13 @@ ants <- readRDS(file.path(save.path, "R_objects", "ants_data.rds"))
 ants2 <- ants |>
   select(c(1,3,4,9,10))
 
-ants3 <- ants |>
-  select(c(1,3,4,5,9,10))
+# ants3 <- ants |>
+#   select(c(1,3,4,5,9,10))
 
 
 # Glimpse
  glimpse(ants)
  glimpse(ants2)
- kable(head(ants2))
 ```
 
 I removed rows for trials T1-T2 of THEO samples and T5 of APEIME samples (rows 41:48, 97:100, respectively). Removing these Trials because they have missing data and they are paired. Only removing the row with missing data would create an uneven paired data set. Making paired t-tests troublesome.
@@ -798,17 +786,17 @@ rawra <- readRDS(file.path(save.path, "R_objects", "rawra_tidy.rds"))
 
 # Master data set: richness, diversity and abundances post-phyloseq
 
-This data frame combines all the necessary richness, diverstiy and relative abundance estimates post-`phyloseq` manipulation with the data frames from the ant and pathogen assays. This is useful for testing hypothesis directly from one data set.
+This data frame combines all the necessary richness, diversty and relative abundance estimates post-`phyloseq` manipulation with the data frames from the ant and pathogen assays. This is useful for testing hypothesis directly from one data set.
 
 ```{r, Master data set}
 #This contains all the OTU id's per sample type. Hence, 156 (# samples) observations per OTU_ID. The phyloseq object achieves the same purpose. This data set is easier to use with other functions or test not supported by phyloseq.
 
 # Master ####
 #put all data frames into list
-df_list_ant <- list(ndata2, cOTU, ants2, patho2, rich)    
+df_list <- list(ndata2, cOTU, ants2, patho2, rich)    
 
 #merge all data frames together
-master <- df_list_ant |> 
+master <- df_list |> 
   reduce(left_join, by= "Sample_name", "E_load") |>
   mutate(Total_reads = sum(across(starts_with("OTU")))) |>
   group_by(Species) |>
@@ -996,7 +984,7 @@ Somewhat better distributions. Ant_percent_leafloss is not normally distributed.
 Two packages to visualize summary statistics in a table. 
 ```{r, table1}
 # Using `gtsummary` and 'flextable' packages
-summa_t1 <- tbl_summary(data2 |>
+summa_t1 <- tbl_summary(data |>
   group_by(Species, E_load) |>
   select(c(10:13)) |>
   rename(Treatment = E_load) |>
@@ -1130,11 +1118,11 @@ vif(lm(Ant_percent_leafloss ~ Anthocyanins + Thickness + Toughness + LMA + Obser
 
 # All explanatory variables have a VIF that is moderately correlated.
 # cor()
-corr <- cor(data2[,c(10:13)], y = NULL, use = "complete.obs", method = "pearson")
+corr <- cor(data[,c(10:13)], y = NULL, use = "complete.obs", method = "pearson")
 corr
 #Correlation between Anthocyanins and LMA is 0.7
-cor.test(data2$Anthocyanins, data2$LMA, method = "pearson")
-cor.test(data2$Toughness, data2$LMA, method = "pearson")
+cor.test(data$Anthocyanins, data$LMA, method = "pearson")
+cor.test(data$Toughness, data$LMA, method = "pearson")
 
 #Autocorrelation plot
 corrplot::corrplot(corr, type="upper", order="hclust")
@@ -1383,7 +1371,7 @@ fig1
 
 ## Figure S1
 ```{r, suppfig_1}
-Abun7a <- ggplot(data= data2 |>
+Abun7a <- ggplot(data= data |>
                       group_by(Species, Sample_name, E_load, Leaf_ID) |>
                       summarise(Abun_7 = mean(Abun_7)),
                      aes(x = E_load, y = Abun_7)) +
@@ -1422,7 +1410,7 @@ theme_classic(base_size = 14)+
   #facet_wrap(~Species, labeller = as_labeller(newname))
  Abun7a  
  
-Abun7b <- ggplot(data= data2 |>
+Abun7b <- ggplot(data= data |>
                       group_by(Species, Sample_name, E_load, Leaf_ID) |>
                       summarise(Abun_7 = mean(Abun_7)),
                      aes(x = E_load, y = Abun_7)) +
