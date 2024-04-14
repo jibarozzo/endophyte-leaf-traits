@@ -364,10 +364,10 @@ set.seed(123)
 #   as.matrix()
 
 # Saving
-# saveRDS(csamp, file.path(save.path, "R_objects", "clean_sequences.rds"))
+# saveRDS(csamp, file.path(save.path, "R_objects/clean_sequences.rds"))
 
 # Reading
-csamp <- readRDS(file.path(save.path, "R_objects", "clean_sequences.rds"))
+csamp <- readRDS(file.path(save.path, "R_objects/clean_sequences.rds"))
 ```
 
 ### T-BAS
@@ -387,10 +387,10 @@ csamp <- readRDS(file.path(save.path, "R_objects", "clean_sequences.rds"))
 #   as.matrix()
 
 # Saving
-#saveRDS(tbas, file.path(save.path, "R_objects", "tbas_filtered.rds"))
+#saveRDS(tbas, file.path(save.path, "R_objects/tbas_filtered.rds"))
 
 # Reading
-tbas <- readRDS(file.path(save.path, "R_objects", "tbas_filtered.rds"))
+tbas <- readRDS(file.path(save.path, "R_objects/tbas_filtered.rds"))
 ```
 
 ### Leaf traits measurements
@@ -415,10 +415,10 @@ data <- data |>
           Abun_7 = Abundance_Proportion_day7)
 
 # Saving
-# saveRDS(data, file.path(save.path, "R_objects", "leaf_data_raw_analyses.rds"))
+# saveRDS(data, file.path(save.path, "R_objects/leaf_data_raw_analyses.rds"))
 
 # Reading
-data <- readRDS(file.path(save.path, "R_objects", "leaf_data_raw_analyses.rds"))
+data <- readRDS(file.path(save.path, "R_objects/leaf_data_raw_analyses.rds"))
 
 # ndata (new_data)
 # This data set can also be used to conduct analyses summarized by leaf.
@@ -437,10 +437,10 @@ data <- readRDS(file.path(save.path, "R_objects", "leaf_data_raw_analyses.rds"))
 #   na.fail()
 
 # Saving
-# saveRDS(ndata, file.path(save.path, "R_objects", "new_leaf_data.rds"))
+# saveRDS(ndata, file.path(save.path, "R_objects/new_leaf_data.rds"))
 
 # Reading
-ndata <- readRDS(file.path(save.path, "R_objects", "new_leaf_data.rds"))
+ndata <- readRDS(file.path(save.path, "R_objects/new_leaf_data.rds"))
 
 # Splitting and relocating Unique_ID column 
 # Extract names to match to phyloseq objects separate(Species2, c("Species3", "Numbers"), sep = "(?<=[A-Za-z])(?=[0-9])")
@@ -458,10 +458,10 @@ ndata <- readRDS(file.path(save.path, "R_objects", "new_leaf_data.rds"))
 #             LMA = mean(LMA, na.rm = TRUE)) 
 
 # Saving
-# saveRDS(ndata2, file.path(save.path, "R_objects", "new_leaf_data2.rds"))
+# saveRDS(ndata2, file.path(save.path, "R_objects/new_leaf_data2.rds"))
 
 # Reading
-ndata2 <- readRDS(file.path(save.path, "R_objects", "new_leaf_data2.rds"))
+ndata2 <- readRDS(file.path(save.path, "R_objects/new_leaf_data2.rds"))
 
 # Glimpse
 glimpse(data)
@@ -507,10 +507,10 @@ The code below cleans the `ants` data set by removing all the variables with inc
 #   mutate_if(is.character, as.factor)
 
 # Saving
-# saveRDS(ants, file.path(save.path, "R_objects", "ants_data.rds"))
+# saveRDS(ants, file.path(save.path, "R_objects/ants_data.rds"))
 
 # Reading
-ants <- readRDS(file.path(save.path, "R_objects", "ants_data.rds"))
+ants <- readRDS(file.path(save.path, "R_objects/ants_data.rds"))
 
 
 # Just the area loss
@@ -549,10 +549,10 @@ I removed rows for trials T1-T2 of THEO samples and T5 of APEIME samples (rows 4
 #   mutate_if(is.character, as.factor)
 
 # Saving
-# saveRDS(patho, file.path(save.path, "R_objects", "pathogen_data.rds"))
+# saveRDS(patho, file.path(save.path, "R_objects/pathogen_data.rds"))
 
 # Reading
-patho <- readRDS(file.path(save.path, "R_objects", "pathogen_data.rds"))
+patho <- readRDS(file.path(save.path, "R_objects/pathogen_data.rds"))
 
 
 #Just the area damaged
@@ -581,13 +581,13 @@ The taxonomic assignment was completed with T-BAS. The file `unite_report2BSDHQZ
 # OTU
 
 # Saving
-# saveRDS(OTU, file.path(save.path, "R_objects", "otu_table.rds"))
+# saveRDS(OTU, file.path(save.path, "R_objects/otu_table.rds"))
 
 # Taxonomic Table: 1473 OTU by 7 taxonomic ranks
 # TAX <- tax_table(tbas)
 
 # Saving
-# saveRDS(TAX, file.path(save.path, "R_objects", "taxonomy_table.rds"))
+# saveRDS(TAX, file.path(save.path, "R_objects/taxonomy_table.rds"))
 
 # SAMP (sample metadata)
 
@@ -596,17 +596,17 @@ The taxonomic assignment was completed with T-BAS. The file `unite_report2BSDHQZ
 # SAMP <- sample_data(SAMP)
 
 # Saving
-# saveRDS(SAMP, file.path(save.path, "R_objects", "samp_data.rds"))
+# saveRDS(SAMP, file.path(save.path, "R_objects/samp_data.rds"))
 
 
 # Merging phyloseq objects ####
 # pq1 <- phyloseq(OTU, TAX, SAMP)
 
 # Saving
-# saveRDS(pq1, file.path(save.path, "R_objects", "phyloseq_main.rds"))
+# saveRDS(pq1, file.path(save.path, "R_objects/phyloseq_main.rds"))
 
 # Reading
-pq1 <- readRDS(file.path(save.path, "R_objects", "phyloseq_main.rds"))
+pq1 <- readRDS(file.path(save.path, "R_objects/phyloseq_main.rds"))
 
 # Random tree ####
 #random_tree <- rtree(ntaxa(pq), rooted=TRUE, tip.label=taxa_names(pq))
@@ -625,10 +625,10 @@ Are there any taxa with no (0) reads? \#
 # ntaxa(pq2) #There are 488 taxa with 0 reads.
 
 # Saving
-# saveRDS(pq2, file.path(save.path, "R_objects", "phyloseq_pq2.rds"))
+# saveRDS(pq2, file.path(save.path, "R_objects/phyloseq_pq2.rds"))
 
 # Reading
-pq2 <- readRDS(file.path(save.path, "R_objects", "phyloseq_pq2.rds"))
+pq2 <- readRDS(file.path(save.path, "R_objects/phyloseq_pq2.rds"))
 
 # Subset of pq1 -- only E+ samples and OTUs.
 #Important -- don't remove OTUs with 0 reads here, because we want to know which ones have no reads in E+ but DO have reads in E-.
@@ -730,10 +730,10 @@ newpqDF <- newpqDF |>  # Code from the Taxonomical assginment section dopes the 
 #   rename(Sample_name = rowname)
 
 # Saving
-#saveRDS(eOTU2, file.path(save.path, "R_objects", "eOTU2.rds"))
+#saveRDS(eOTU2, file.path(save.path, "R_objects/eOTU2.rds"))
 
 # Reading
-eOTU2 <- readRDS(file.path(save.path, "R_objects", "eOTU2.rds"))
+eOTU2 <- readRDS(file.path(save.path, "R_objects/eOTU2.rds"))
 
 
 # Just 569 OTUs and 156 samples (total abundances)
@@ -747,10 +747,10 @@ eOTU2 <- readRDS(file.path(save.path, "R_objects", "eOTU2.rds"))
 #   rename(Sample_name = rowname)
 
 # Saving
-# saveRDS(cOTU, file.path(save.path, "R_objects", "clean_OTU.rds"))
+# saveRDS(cOTU, file.path(save.path, "R_objects/clean_OTU.rds"))
 
 # Reading
-cOTU <- readRDS(file.path(save.path, "R_objects", "clean_OTU.rds"))
+cOTU <- readRDS(file.path(save.path, "R_objects/clean_OTU.rds"))
 
 # Relative Abundance matrix (trimmed to 569 OTUs)
 # rabun <- read.csv("clean_data/otu_data/Aim3_OTU_Relative_Abundance_singletons_trimmed.csv")
@@ -762,10 +762,10 @@ cOTU <- readRDS(file.path(save.path, "R_objects", "clean_OTU.rds"))
 #   as.matrix()
 
 # Saving
-# saveRDS(rabun, file.path(save.path, "R_objects", "rabun_tidy.rds"))
+# saveRDS(rabun, file.path(save.path, "R_objects/rabun_tidy.rds"))
 
 # Reading
-rabun <- readRDS(file.path(save.path, "R_objects", "rabun_tidy.rds"))
+rabun <- readRDS(file.path(save.path, "R_objects/rabun_tidy.rds"))
 
 # Relative Abundance matrix (singletons untrimmed Ascomycota 959 OTUs)
 # rawra <- read.csv("clean_data/otu_data/Aim3_OTU_Relative_Abundance_singletons_untrimmed.csv")
@@ -777,10 +777,10 @@ rabun <- readRDS(file.path(save.path, "R_objects", "rabun_tidy.rds"))
 #   as.matrix()
 
 # Saving
-# saveRDS(rawra, file.path(save.path, "R_objects", "rawra_tidy.rds"))
+# saveRDS(rawra, file.path(save.path, "R_objects/rawra_tidy.rds"))
 
 # Reading
-rawra <- readRDS(file.path(save.path, "R_objects", "rawra_tidy.rds"))
+rawra <- readRDS(file.path(save.path, "R_objects/rawra_tidy.rds"))
 
 ```
 

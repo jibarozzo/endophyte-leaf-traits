@@ -137,6 +137,7 @@ library("ggiraphExtra")
 library("ggpubr")
 library("gridExtra")
 library("ggthemes")
+library("showtext")
 library("ggtext")
 library("ggpmisc")
 library("plotrix")
@@ -208,12 +209,12 @@ Plants use chemical compounds and physical barriers to defend themselves against
 # Introduction
 
 <!-- Vascular plants encountered many challenges in their expansion inland: new climates, rising CO~2~ [@leakey2012],  unique substrates, and stressors like water limitation that required innovations in both allocation and transfer (CITE).  -->
-Angiosperms have been successful throughout their evolutionary history by developing strategies against biotic [@feild2005] and abiotic [@leakey2012] selective pressures. Strategies against stressors that damage leaf tissue range from  production of secondary metabolites like alkaloid and jasmonic acid [@guerriero2018; @teoh2016] to structures that prevent potential attacks by pests (e.g., thorns/modified leaves)(CITE). Leaf functional traits such as shape, leaf thickness, leaf strength, leaf mass per area (LMA), and anthocyanins can confer plants with strategies to ward off 
+Angiosperms have been successful throughout their evolutionary history by developing strategies against biotic [@feild2005] and abiotic [@leakey2012] selective pressures. Strategies against stressors that damage leaf tissue range from  production of secondary metabolites like alkaloid and jasmonic acid [@guerriero2018; @teoh2016] to structures that prevent potential attacks by pests (e.g., thorns/modified leaves)[@hanley2007]. Leaf functional traits such as shape, leaf thickness, leaf strength, leaf mass per area (LMA), and anthocyanins can confer plants with strategies to ward off 
 <!-- often are a plant’s first line of defense against -->
 foliar herbivores and pathogens, which represent key selective evolutionary pressures [@niklas2023; @anderson2010].
 
 Leaf defenses can be placed conceptually along the leaf economic spectrum (LES), which on one end has short-lived leaves with high nitrogen (N) content, low leaf mass per area (LMA), thin  leaf blades, and thin cell walls, and on the other end, long-lived leaves with low N content, high LMA, thick leaf blades and thick cell walls [@mason2015; @wright2004]. Investment in baseline constitutive defenses is associated with longer lifespans [@kitajima2012; @kitajima2013], whereas plants that invest little in leaf N content and LMA are potentially able to invest more in induced defense [@kitajima2013; @poorter2006; @wright2004]. 
-Such leaf functional traits are expressed differentially across species and are influenced by their life history and the environment they occupy (CITE).Because they define the chemical, structural, and longevity characteristics of leaves, leaf functional traits also influence associated leaf microbial communities [@saunders2010; @tellezTraits2022]. Many leaf-associated microbes establish in leaves via horizontal transmission and are thought to alter the physical and chemical traits of leaves (CITE). If leaf traits confer selectivity, then plants can gain or lose potential allies in the fight against herbivores and pathogens, ultimately contributing to their ecological and evolutionary success [@friesen2011].
+Such leaf functional traits are expressed differentially across species and are influenced by their life history and the environment they occupy [@kitajima2013; @wright2005; wright2004]. Because they define the chemical, structural, and longevity characteristics of leaves, leaf functional traits also influence associated leaf microbial communities [@saunders2010; @tellezTraits2022]. Many leaf-associated microbes establish in leaves via horizontal transmission and are thought to alter the physical and chemical traits of leaves [reviewed in @christian2017; @chagas2018; bael2017a]. If leaf traits confer selectivity, then plants can gain or lose potential allies in the fight against herbivores and pathogens, ultimately contributing to their ecological and evolutionary success [@friesen2011].
 
 Leaf microbial communities, such as foliar endophytic fungi (FEF), are found inside the leaf tissue of all lineages of vascular land plants [@currie2014; @rodriguez2009]. In tropical forests, FEF transmit horizontally through ambient spore fall [@arnold2000], and newly flushed leaves of such trees are free of FEF. Although FEF generally grow asymptomatically within leaves [@porras-alfaro2011], they can modulate leaf functional traits, especially with regard to the expression of secondary metabolites, sensitivity to drought, defense against natural enemies, photosynthetic rates and efficiency [@arnold2003; @arnold2007; @friesen2011; @bittleston2011; @estrada2013; @mejia2014]. Such effects have not been examined systematically and quantitatively, but are critical to understanding how species interactions in tropical forests relate to plant survival, performance, productivity, and downstream ecosystem services [@mcgill2006].
 
@@ -294,7 +295,7 @@ rep_statement <- hux(
                            "Pathogen assays"),
   
   "Scale at which the factor of interest is applied" = c("Host Species",
-                                                        "Species",
+                                                        "Species (OTUs)",
                                                         "Species/individual",
                                                         "Species/individual"),
   "Number of replicates at the appropriate scale" = c("Treatment = 2 (E-, E+), Tropical tree species = 7, Replicates per species = 5. Replicate leaves per plant = 3",
@@ -340,7 +341,7 @@ Thirdly, we arbitrarily designated percent leaf damage in herbivore assays as hi
 
 We used Principal Component Analysis (PCA) to reduce dimensions among covariates and reveal underlying interactions between covariates that could influence herbivory and pathogen damage. The PCA was computed using the `prcomp` function in R statistical software [@rcoreteam2024]. A complete PCA was computed with variables ACI, LT, LPS, and LMA. We then proceeded to compute a PCA with the data from leaves of plants used in the herbivory (*n* = 210) and pathogen assays (*n* = 192). We then took from the herbivory and pathogen PCA the principal components that explained the most variance (PC1 and PC2) and regressed them to herbivory (%) and pathogen damage (%). We also regressed ACI, LT, LPS, LMA and Shannon diversity index to logit transformed herbivory (%) and pathogen damage (%). We used the `logit` function from the `car` package for logit transformation of variables and the `lm` function from the `stat` package for simple linear regressions [@fox2019; @rcoreteam2024].
 
-Lastly, to test how leaf functional traits and FEF communities interact to influence herbivory and pathogen damage in tropical tree species, we used a generalized linear mixed model (GLMM) with herbivory and pathogen damage percentage (logit transformed) as the response variable. To determine which fixed effects to include in the GLMMs we used the `vif` function from the `car` package in *R* to calculate the variance inflation factor for all explanatory variables (ACI, LT, LPS, LMA, and Shannon diversity index) [@fox2019; @rcoreteam2024]. Complementary to this, we calculated Pearson's coefficient for each pair of leaf functional traits with by creating a correlation matrix and applying the `cor` function from the `stats` package to assess correlations among traits [@rcoreteam2024]. We opted to maintain explanatory variables LT and LMA, and exclude ACI and LPS from subsequent general linear models (GLMMs) due to high collinearity between the two variables with LMA, *r*(1112) = 0.68, *p* \< .0001 and *r*(1113) = 0.65, *p* \< .0001, respectively. We modeled only main effects with explanatory variables, we did not model interactions effects to avoid overfitting models. We used a restricted maximum likelihood estimates for model fit with the `lme` function from the `nlme` package [@pinheiro2023]. For our logit herbivory GLMMs we used tree species as a random effect and modeled tree species variance structure with the `varIdent` argument [@pinheiro2023]. For our logit pathogen damage GLMMs we use tree species as a random effect and modeled a nested variance structure for pathogen treatment within treatment groups per species with the `varIdent` argument [@pinheiro2023]. We manually compared and selected models based on Akaike Information Criterion (AIC) with a penalty of 2 degrees of freedom (ΔAIC) with the `model.sel` function from the `MuMIn` package [@barton2023]. We selected the best-fit model based on the lowest value obtained.
+Lastly, to test how leaf functional traits and FEF communities interact to influence herbivory and pathogen damage in tropical tree species, we used a generalized linear mixed model (GLMM) with herbivory and pathogen damage percentage (logit transformed) as the response variable. To determine which fixed effects to include in the GLMMs we used the `vif` function from the `car` package in *R* to calculate the variance inflation factor for all explanatory variables (ACI, LT, LPS, LMA, and Shannon diversity index) [@fox2019; @rcoreteam2024]. Complementary to this, we calculated Pearson's coefficient for each pair of leaf functional traits with by creating a correlation matrix and applying the `cor` function from the `stats` package to assess correlations among traits [@rcoreteam2024]. We opted to maintain explanatory variables LT and LMA, and exclude ACI and LPS from subsequent general linear models (GLMMs) due to high collinearity between the two variables with LMA, *r*(1112) = 0.68, *p* \< .0001 and *r*(1113) = 0.65, *p* \< .0001, respectively. We modeled only main effects with explanatory variables, we did not model interactions effects to avoid overfitting models. We used a restricted maximum likelihood estimates for model fit with the `lme` function from the `nlme` package [@pinheiro2023; @pinheiro2000]. For our logit herbivory GLMMs we used tree species as a random effect and modeled tree species variance structure with the `varIdent` argument [@pinheiro2023; @pinheiro2000]. For our logit pathogen damage GLMMs we use tree species as a random effect and modeled a nested variance structure for pathogen treatment within treatment groups per species with the `varIdent` argument [@pinheiro2023; @pinheiro2000]. We manually compared and selected models based on Akaike Information Criterion (AIC) with a penalty of 2 degrees of freedom (ΔAIC) with the `model.sel` function from the `MuMIn` package [@barton2023]. We selected the best-fit model based on the lowest value obtained.
 
 # Results
 
@@ -409,267 +410,38 @@ rm(list = ls())
 #Working Directory and Path for Linux
 save.path <- ("../Aim3_Sequence_analyses/")
 
+# Laoding files
+csamp <-
+  readRDS(file.path(save.path, "R_objects/clean_sequences.rds"))
 
+tbas <- readRDS(file.path(save.path, "R_objects/tbas_filtered.rds"))
 
-set.seed(123)
-# Cleaned (decontaminated) sample sequences ####
-#csamp
-# csamp <- read.csv("clean_data/otu_data/all_cleaned_at_10_percent.csv")
-# csamp[,2:157] <- lapply(csamp[,2:157], as.integer)
-# csamp <- csamp |>
-#   rename(OTU_ID = X) |>
-#   column_to_rownames(var = "OTU_ID") |>
-#   na.omit() |>
-#   na.fail() |>
-#   as.matrix()
+data <-
+  readRDS(file.path(save.path, "R_objects/leaf_data_raw_analyses.rds"))
 
-# Saving
-# saveRDS(csamp, file.path(save.path, "R_objects", "clean_sequences.rds"))
+ndata <-
+  readRDS(file.path(save.path, "R_objects/new_leaf_data.rds"))
 
-# Reading
-csamp <- readRDS(file.path(save.path, "R_objects", "clean_sequences.rds"))
-```
+ndata2 <-
+  readRDS(file.path(save.path, "R_objects/new_leaf_data2.rds"))
 
-```{r, TBAS}
-#| echo: false
-#| eval: true
-#| tidy: true
-#| warning: false
-
-# T-BAS taxonomic assignment ####
-#tbas
-# tbas <- read.csv("unite_report2BSDHQZP.csv")
-# tbas <- tbas |>
-#   dplyr::filter(phylum == "Ascomycota") |>
-#   select(-match,-e.value, -percent, -coverage, -bitscore) |> #eliminating some columns that I am not really using
-#   na.omit()|>
-#   rename( OTU_ID = query) |>
-#   column_to_rownames(var = "OTU_ID") |>
-#   na.omit() |>
-#   na.fail() |>
-#   as.matrix()
-
-# Saving
-#saveRDS(tbas, file.path(save.path, "R_objects", "tbas_filtered.rds"))
-
-# Reading
-tbas <- readRDS(file.path(save.path, "R_objects", "tbas_filtered.rds"))
-```
-
-```{r, Leaf trait variables data}
-#| echo: false
-#| eval: true
-#| tidy: true
-#| warning: false
-
-data <- read.csv("field_data/Aim3_Bolivar_Summer_2019_Leaf_Traits_datasheet.csv")
-
-# data
-# Data set created on May 23, 2023 for analysis with raw data.
-# data <- data |> 
-#   separate(Unique_ID, c("Trial_Code", "ELoad", "Species2", "Replicate")) |>
-#   unite("Sample_name", Species2:Replicate, sep = "") |>
-#   relocate(Sample_name, Trial_Code, E_load, .after = Species) |>
-#   select(!c(5, 15:17, 20)) |>
-#   rename(Anthocyanins = Anthocyanins..aci., 
-#           Thickness = Thickness..micro.m.,  
-#           Toughness =Toughness..lbf., 
-#           LMA = LMA_dw, 
-#           Abun_3 = Abundance_Proportion_day3, 
-#           Abun_7 = Abundance_Proportion_day7)
-
-# Saving
-# saveRDS(data, file.path(save.path, "R_objects", "leaf_data_raw_analyses.rds"))
-
-# Reading
-data <- readRDS(file.path(save.path, "R_objects", "leaf_data_raw_analyses.rds"))
-
-# ndata (new_data)
-# This data set can also be used to conduct analyses summarized by leaf.
-
-# ndata <- data |>
-#   group_by(Sample_name, Species, Trial_Code, Trial_type, E_load, Leaf_ID) |>
-#   summarise(Anthocyanins = mean(Anthocyanins, na.rm = TRUE),
-#             Thickness = mean(Thickness, na.rm = TRUE),
-#             Toughness = mean(Toughness, na.rm = TRUE),
-#             LMA = mean(LMA, na.rm = TRUE),
-#             Abun_3 = mean(Abun_3, na.rm = TRUE),
-#             Abun_7 = mean(Abun_7, na.rm = TRUE)) |>
-#   ungroup() |>
-#    mutate_if(is.character, as.factor) |>
-#   na.omit() |>
-#   na.fail()
-
-# Saving
-# saveRDS(ndata, file.path(save.path, "R_objects", "new_leaf_data.rds"))
-
-# Reading
-ndata <- readRDS(file.path(save.path, "R_objects", "new_leaf_data.rds"))
-
-# Splitting and relocating Unique_ID column 
-# Extract names to match to phyloseq objects separate(Species2, c("Species3", "Numbers"), sep = "(?<=[A-Za-z])(?=[0-9])")
-
-# ndata2 (new_data2)
-# Data frame is summarized by plant (n = 156)
-
-# ndata2 <- ndata |> 
-#   select(!c(Abun_3, Abun_7)) |>
-#   mutate_if(is.character, as.factor) |>
-#   group_by(Sample_name, Species, Trial_type, Trial_Code, E_load) |>
-#   summarise(Anthocyanins = mean(Anthocyanins, na.rm = TRUE),
-#             Thickness = mean(Thickness, na.rm = TRUE),
-#             Toughness = mean(Toughness, na.rm =TRUE),
-#             LMA = mean(LMA, na.rm = TRUE)) 
-
-# Saving
-# saveRDS(ndata2, file.path(save.path, "R_objects", "new_leaf_data2.rds"))
-
-# Reading
-ndata2 <- readRDS(file.path(save.path, "R_objects", "new_leaf_data2.rds"))
-```
-
-```{r, Ant assay data}
-#| echo: false
-#| eval: true
-#| tidy: true
-#| warning: false
-
-#ants <- read.csv("field_data/Aim3_Bolivar_Summer_2019_Ant_Assay_datasheet.csv")
-# 
-# ants <- ants |>
-#   separate(Unique.ID, c("Trial_Code", "ELoad", "Species2", "Replicate")) |>
-#   unite("Sample_name", Species2:Replicate, sep = "") |>
-#   relocate(Species, Trial_Code,.after = Sample_name)|>
-#   slice(-c(11,12)) |>
-#   dplyr::filter(Trial_success!="0") |>
-#   select(!c(Leaf_ID, 
-#             Colony_ID, 
-#             Picture_ID, 
-#             Colony_location_Pipeline.Gamboa, 
-#             Attempt, 
-#             Date_analyzed, 
-#             X_coordinates, 
-#             Y_coordinates, 
-#             Elevation_meters, 
-#             ELoad, 
-#             Analyzer,             
-#             Time_start_trial, 
-#             Time_first_contact, 
-#             Time_first_cut, 
-#             Time_end_elapsed_trial )) |>
-#   mutate(Ant_percent_leafloss = -100*{(Leaf_area_final-Leaf_area_initial)/Leaf_area_initial}) |>
-#   mutate_if(is.character, as.factor)
-
-# Saving
-# saveRDS(ants, file.path(save.path, "R_objects", "ants_data.rds"))
-
-# Reading
-ants <- readRDS(file.path(save.path, "R_objects", "ants_data.rds"))
+ants <- readRDS(file.path(save.path, "R_objects/ants_data.rds"))
 
 # Just the area loss
 ants2 <- ants |>
-  select(c(1,3,4,9,10))
-```
+  select(c(1, 3, 4, 9, 10))
 
-```{r, Pathogen Assay Data}
-#| echo: false
-#| eval: true
-#| tidy: true
-#| warning: false
-
-#patho <- read.csv("./field_data/Aim3_Bolivar_Summer_2019_Patho_Assay_datasheet.csv")
-# 
-#patho <- patho |>
-  # separate(Unique.ID, c("Trial_Code", "ELoad", "Species2", "Replicate")) |>
-  # unite("Sample_name", Species2:Replicate, sep = "") |>
-  # relocate(Species, Trial_Code,.after = Sample_name) |>
-  # slice(-c(41:48, 97:100)) |>
-  # select(!c(ELoad,
-  #           Leaf_ID,
-  #           Trial_start_time,
-  #           Date,
-  #           ImageJ_link,
-  #           X,
-  #           Notes)) |>
-  # rename(Treatment = Treatment_Ctrl_Pathogen) |>
-  # mutate(Pathogen_percent_damage = (Damage_area/Leaf_area)*100) |>
-  # mutate_if(is.character, as.factor)
-
-# Saving
-#saveRDS(patho, file.path(save.path, "R_objects", "pathogen_data.rds"))
-
-# Reading
-patho <- readRDS(file.path(save.path, "R_objects", "pathogen_data.rds"))
-
+patho <-
+  readRDS(file.path(save.path, "R_objects/pathogen_data.rds"))
 
 #Just the area damaged
 patho2 <- patho |>
-  select(c(1,3,4,8,9,12))
+  select(c(1, 3, 4, 8, 9, 12))
 
-# 
-# patho3 <- patho |>
-#   select(c(1,3,4,6,7,8,9,12))
-```
-
-```{r, Objects and dataframes}
-#| echo: false
-#| eval: true
-#| tidy: true
-#| warning: false
-
-### Phyloseq objects ####
-
-# OTU Table: 1774 OTU with 156 Samples
-# OTU <- otu_table(csamp, taxa_are_rows = TRUE)
-# OTU
-
-# Saving
-# saveRDS(OTU, file.path(save.path, "R_objects", "otu_table.rds"))
-
-# Taxonomic Table: 1473 OTU by 7 taxonomic ranks
-# TAX <- tax_table(tbas)
-
-# Saving
-# saveRDS(TAX, file.path(save.path, "R_objects", "taxonomy_table.rds"))
-
-# SAMP (sample metadata)
-
-# SAMP <- ndata2 |>
-#   column_to_rownames(var = "Sample_name")
-# SAMP <- sample_data(SAMP)
-
-# Saving
-# saveRDS(SAMP, file.path(save.path, "R_objects", "samp_data.rds"))
+pq1 <- readRDS(file.path(save.path, "R_objects/phyloseq_main.rds"))
 
 
-# Merging phyloseq objects ####
-# pq1 <- phyloseq(OTU, TAX, SAMP)
-
-# Saving
-# saveRDS(pq1, file.path(save.path, "R_objects", "phyloseq_main.rds"))
-
-# Reading
-pq1 <- readRDS(file.path(save.path, "R_objects", "phyloseq_main.rds"))
-
-# Random tree ####
-#random_tree <- rtree(ntaxa(pq), rooted=TRUE, tip.label=taxa_names(pq))
-
-```
-
-```{r, Mareli code}
-#| echo: false
-#| eval: true
-#| tidy: true
-#| warning: false
-
-# pq2 <- prune_taxa(taxa_sums(pq1) > 0, pq1)
-# ntaxa(pq2) #There are 488 taxa with 0 reads.
-
-# Saving
-# saveRDS(pq2, file.path(save.path, "R_objects", "phyloseq_pq2.rds"))
-
-# Reading
-pq2 <- readRDS(file.path(save.path, "R_objects", "phyloseq_pq2.rds"))
+pq2 <- readRDS(file.path(save.path, "R_objects/phyloseq_pq2.rds"))
 
 # Subset of pq1 -- only E+ samples and OTUs.
 #Important -- don't remove OTUs with 0 reads here, because we want to know which ones have no reads in E+ but DO have reads in E-.
@@ -696,47 +468,36 @@ OTU_ID <- rownames(otu_table(pq1))
 notShared <- setdiff(OTU_ID, EminusOTUs2)
 
 # Subset phyloseq object to only these OTUs
-pq2ET <- subset(otu_table(pq2), rownames(otu_table(pq2)) %in% notShared)
+pq2ET <-
+  subset(otu_table(pq2), rownames(otu_table(pq2)) %in% notShared)
 
 # Exported into "Sequence Analyses"
 #write.csv(pq2ET, "clean_data/Aim3_OTU_phyloseq_trimmed.csv")
 
 # New phyloseq object without E- OTUs.
-newpq <- merge_phyloseq(pq2ET, tax_table(pq2), sample_data(pq2), rtree(ntaxa(pq2), rooted=TRUE, tip.label=taxa_names(pq2)))
+newpq <-
+  merge_phyloseq(
+    pq2ET,
+    tax_table(pq2),
+    sample_data(pq2),
+    rtree(ntaxa(pq2), rooted = TRUE, tip.label = taxa_names(pq2))
+  )
 
 # Relative Abundance of 959 OTUs. No removal of singletons yet.
 
-# rawra <- transform_sample_counts(newpq, function(x)x/sum(x))
-# rawRA <- subset(otu_table(rawra), rownames(otu_table(rawra)) %in% notShared)
-# write.csv(rawRA, "clean_data/otu_data/Aim3_OTU_Relative_Abundance_singletons_untrimmed.csv")
-
-# Outputs of this script -- OTU table without E minus only OTUs and phyloseq object with E- OTUs removed. No removal of singletons yet.
-
-# End of Mareli's Code #
-```
-
-```{r, Singleton removal}
-#| echo: false
-#| eval: true
-#| tidy: true
-#| warning: false
-
 # Filtering Taxa: Removal of singletons ####
- # Removal of  singletons
-newpq1 <- filter_taxa(newpq, function (x) {sum(x > 0) > 1}, prune=TRUE)
+# Removal of  singletons
+newpq1 <-
+  filter_taxa(newpq, function (x) {
+    sum(x > 0) > 1
+  }, prune = TRUE)
 # The result is 2,464,558 sequence reads from 569 taxa in 156 samples.
 
-# Relative abundance calculation ####
-# Code below is for making the .csv file. After that refer to df rawra from .csv file.
-
-# newpqRA <- transform_sample_counts(newpq1, function(x)x/sum(x))
-# rabun <- subset(otu_table(newpqRA), rownames(otu_table(newpqRA)) %in% notShared)
-# write.csv(rabun, "clean_data/otu_data/Aim3_OTU_Relative_Abundance_singletons_trimmed.csv")
-#GPfr = filter_taxa(GPr, function(x) mean(x) > 1e-5, TRUE)
-
-
 # Richness data frame ####
-rich <- estimate_richness(newpq1, split = TRUE, measures = c("Observed","Shannon"))
+rich <-
+  estimate_richness(newpq1,
+                    split = TRUE,
+                    measures = c("Observed", "Shannon"))
 
 rich <- rich |>
   rownames_to_column() |>
@@ -745,88 +506,40 @@ rich <- rich |>
 # Phyloseq object to data frames ####
 
 # Cleaned: no singletons
-newpqDF <- phyloseq_to_df(newpq1, addtax = T, addtot = F, addmaxrank = F, sorting = "abundance")
-#write.csv(newpqDF, "clean_data/otu_data/Aim3_OTUs_assigned_nonsingletons.csv")
-```
-
-```{r, Loading phyloseq products}
-#| echo: false
-#| eval: true
-#| tidy: true
-#| warning: false
-
-#These are the data frames resulting from the phyloseq data wrangling.
+newpqDF <-
+  phyloseq_to_df(
+    newpq1,
+    addtax = T,
+    addtot = F,
+    addmaxrank = F,
+    sorting = "abundance"
+  )
 
 #The 569 OTUs and 156 samples (total abundances)
-newpqDF <- read.csv("clean_data/otu_data/Aim3_OTUs_assigned_nonsingletons.csv")
-newpqDF <- newpqDF |>  # Code from the Taxonomical assginment section dopes the same. This is just calling it directly from the /csv to avoid running all the code. 
+newpqDF <-
+  read.csv("clean_data/otu_data/Aim3_OTUs_assigned_nonsingletons.csv")
+newpqDF <-
+  newpqDF |>  # Code from the Taxonomical assginment section dopes the same. This is just calling it directly from the /csv to avoid running all the code.
   select(!c(1))
 
-# OTUs 959 and 156 samples (total abundances)
+eOTU2 <- readRDS(file.path(save.path, "R_objects/eOTU2.rds"))
 
-# eOTU <- read.csv("clean_data/Aim3_OTU_phyloseq_trimmed.csv") 
-# Can upload as data frame. Use for distance matrices.
-# 
-# eOTU2 <- eOTU |>
-#   rename(OTU_ID = X) |>
-#   column_to_rownames(var = "OTU_ID") |>
-#   t() |>
-#   as.data.frame() |>
-#   rownames_to_column() |>
-#   rename(Sample_name = rowname)
+cOTU <- readRDS(file.path(save.path, "R_objects/clean_OTU.rds"))
 
-# Saving
-#saveRDS(eOTU2, file.path(save.path, "R_objects", "eOTU2.rds"))
+rabun <- readRDS(file.path(save.path, "R_objects/rabun_tidy.rds"))
 
-# Reading
-eOTU2 <- readRDS(file.path(save.path, "R_objects", "eOTU2.rds"))
+rawra <- readRDS(file.path(save.path, "R_objects/rawra_tidy.rds"))
 
 
-# Just 569 OTUs and 156 samples (total abundances)
-# cOTU <- newpqDF |>
-#   select(-kingdom, -phylum, -class, -order, -family, -genus, -species) |>
-#   column_to_rownames(var = "OTU") |>
-#   as.matrix() |>
-#   t() |>
-#   as.data.frame() |>
-#   rownames_to_column() |>
-#   rename(Sample_name = rowname)
+###################################
+#### Theme set ####
+###################################
 
-# Saving
-# saveRDS(cOTU, file.path(save.path, "R_objects", "clean_OTU.rds"))
+font_add_google("Roboto", "RobotoCondensed-Regular.ttf")
 
-# Reading
-cOTU <- readRDS(file.path(save.path, "R_objects", "clean_OTU.rds"))
-
-# Relative Abundance matrix (trimmed to 569 OTUs)
-# rabun <- read.csv("clean_data/otu_data/Aim3_OTU_Relative_Abundance_singletons_trimmed.csv")
-# rabun <- rabun |>
-#   rename(OTU_ID = X) |>
-#   column_to_rownames(var = "OTU_ID") |>
-#   na.omit() |>
-#   na.fail() |>
-#   as.matrix()
-
-# Saving
-# saveRDS(rabun, file.path(save.path, "R_objects", "rabun_tidy.rds"))
-
-# Reading
-rabun <- readRDS(file.path(save.path, "R_objects", "rabun_tidy.rds"))
-
-# Relative Abundance matrix (singletons untrimmed Ascomycota 959 OTUs)
-# rawra <- read.csv("clean_data/otu_data/Aim3_OTU_Relative_Abundance_singletons_untrimmed.csv")
-# rawra <- rawra |>
-#   rename(OTU_ID = X) |>
-#   column_to_rownames(var = "OTU_ID") |>
-#   na.omit() |>
-#   na.fail() |>
-#   as.matrix()
-
-# Saving
-# saveRDS(rawra, file.path(save.path, "R_objects", "rawra_tidy.rds"))
-
-# Reading
-rawra <- readRDS(file.path(save.path, "R_objects", "rawra_tidy.rds"))
+showtext_auto()
+showtext_opts(dpi = 300)
+theme_set(theme_classic(base_size = 12, base_family = "Roboto"))
 
 ```
 
@@ -859,13 +572,7 @@ master <- df_list |>
   rename(Pathogen_Damage_area = Damage_area, 
          E_load = E_load.x, 
          Trial_Code = Trial_Code.x)
-```
 
-```{r, Ant Master Data}
-#| echo: false
-#| eval: true
-#| tidy: true
-#| warning: false
 
 # Masterant on a per plant level
 masterant <- master |>
@@ -894,14 +601,6 @@ masterant2 <- df_list_ant2 |>
   select(!c(5, 14:15)) |>
   na.omit() |>
   mutate(logit_herbivory = logit(Ant_percent_leafloss))
-```
-
-```{r, Pathogen Master data}
-#| echo: false
-#| eval: true
-#| tidy: true
-#| warning: false
-
 
 # Pathogen Observations per plant level
 masterpat <- master |>
@@ -940,7 +639,7 @@ masterpat2 <- df_list_ant2 |>
 #| warning: false
 #| fig.width: 7
 #| fig.height: 4.5
-#| fig.cap: "Relative abundance (RA) of Ascomycota OTUs of seven tree species used in the study. (a) Violin plots show individuals' RA and and its distribution by species. The horizontal line within the violins represents the mean RA per species. (b) The RA of OTU's by treatment withing each tree species. Pink filled violin plots represent low endophyte (*E-*) treatment and yellow filled represent high endophyte (*E+*) treatment. Relative abundance is the percentage of endophyte colonization within individuals of the same species. Significance levels are represented by *ns* (not significant) and asterisks [*p* < 0.05 (\\*), *p* < 0.01 (\\**), *p* < 0.001 (\\***), and *p* < 0.0001 (\\****)]."
+#| fig.cap: "Relative abundance (RA) of Ascomycota OTUs of seven tree species used in the study. (a) Violin plots show individuals' RA and its distribution by species. The horizontal line within the violins represents the mean RA per species. (b) The RA of OTU's by treatment withing each tree species. Pink filled violin plots represent low endophyte (*E-*) treatment and yellow filled represent high endophyte (*E+*) treatment. Relative abundance is the percentage of endophyte colonization within individuals of the same species. Significance levels are represented by *ns* (not significant) and asterisks [*p* < 0.05 (\\*), *p* < 0.01 (\\**), *p* < 0.001 (\\***), and *p* < 0.0001 (\\****)]."
 
 
 #Comparison of means of LMA between E+ and E- samples per tree species
@@ -994,7 +693,6 @@ RAE <- ggplot(data= master, aes(x = E_load, y = Relative_Abundance)) +
   geom_point(color="grey15", alpha = 0.4,size = 2, position = position_jitter(w=0.05)) +
   scale_fill_manual(name = "Treatment ", values= met.brewer("Cross", n = 2, type = "discrete")) +
   scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
-  theme_classic(base_size = 12)+
   theme(panel.grid.major = element_line(colour = "grey"),
         panel.grid.minor = element_line(colour = "grey"),
         strip.background = element_rect(fill = "white"),
@@ -1116,7 +814,6 @@ herb_violin <- ggplot(data = master, aes(x = E_load, y = Ant_percent_leafloss, f
                position = position_dodge(width = 0.9)) +
   scale_fill_manual(name = "Treatment ", values= met.brewer("Cross", n = 2, type = "discrete")) +
   scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
-  theme_classic(base_size = 12) +
   theme(
         #panel.grid.major = element_line(colour = "grey"),
         #panel.grid.minor = element_line(colour = "grey"),
@@ -1189,7 +886,7 @@ patho_violin <- ggplot(data = master, aes(x = E_load, y = Pathogen_percent_damag
   scale_fill_manual(name = "Pathogen treatment ", values= met.brewer("Egypt", n = 2, type = "discrete")) +
   scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
   #scale_shape_manual(name = "Treatment", labels = c("E-", "E+"), values = c(16, 17)) +
-  theme_classic(base_size = 12) +
+ 
   theme(
         #panel.grid.major = element_line(colour = "grey"),
         #panel.grid.minor = element_line(colour = "grey"),
@@ -1316,7 +1013,7 @@ p_m3dbrda <- p_m3 +
   stat_ellipse(aes(color=Species), geom = "path", size = 1.3, position = "identity", type = "t", linetype = 1,
                level = 0.95, segments = 51, na.rm = FALSE, show.legend = NA, inherit.aes = TRUE) +
   #labs(caption = "ACI = anthocyanins, LPS = leaf punch strength, LMA = leaf mass per area, LT = leaf thickness")+
-  theme_classic(base_size = 12) +
+ 
   theme(plot.title = element_text(color="black", size = 12, face="bold"),
         legend.title = element_text(face = "bold"),
         legend.text = element_markdown(color="black", size = 12))
@@ -1325,7 +1022,7 @@ p_m3dbrda$layers <- c(p_m3dbrda$layers, p_m3dbrda$layers[[2]], p_m3dbrda$layers[
 
 figure3 <- p_m3dbrda
 figure3
-ggsave(filename="./figures/figure4.png", plot=figure3, dpi=300, units=c("mm"), width=200, height=200)
+ggsave(filename="./figures/figure3.png", plot=figure3, dpi=300, units=c("mm"), width=200, height=200)
 ```
 
 ## Figure 4
@@ -1377,7 +1074,7 @@ auto <- autoplot((pca), data = data.frame(ndata), # For some reason this functio
                               "*L. panamensis*", 
                               "*T. cacao*")) +
   scale_shape_manual(name = "Treatment", labels = c("E-", "E+"), values = c(16, 17)) +
-  theme_classic(base_size = 12) +
+ 
   #labs(title = "(a)") + 
   theme(plot.title = element_text(color="black", size = 12, face="bold"),
         legend.title = element_text(face = "bold"),
@@ -1423,7 +1120,7 @@ auto_ant <- autoplot((ant.pca), data = data.frame(masterant2), # For some reason
   geom_vline(xintercept = 0, colour = "gray45") +
   scale_color_manual(values = met.brewer(name = "Cross", n = 8, type="discrete")) +
   stat_ellipse(aes(color=Species), geom = "path", size = 1, position = "identity", type = "t", linetype = 1, level = 0.95, segments = 51, na.rm = FALSE, show.legend = NA, inherit.aes = TRUE) +
-  theme_classic(base_size = 12) +
+ 
   #labs(title = "(b)") +
   theme(plot.title = element_text(color="black", size = 12, face="bold")) +
   guides(color = "none")  +      #To turn off color legend
@@ -1472,7 +1169,7 @@ auto_pat <- autoplot((pat.pca), data = data.frame(masterpat2), # For some reason
   geom_vline(xintercept = 0, colour = "gray45") +
   scale_color_manual(values = met.brewer(name = "Cross", n = 8, type="discrete")) +
   stat_ellipse(aes(color=Species), geom = "path", size = 1, position = "identity", type = "t", linetype = 1, level = 0.95, segments = 51, na.rm = FALSE, show.legend = NA, inherit.aes = TRUE) +
-  theme_classic(base_size = 12) +
+ 
   #labs(title = "(c)") +
   theme(plot.title = element_text(color="black", size = 12, face="bold")) + 
   guides(color = "none")  +      #To turn off color legend
@@ -1614,7 +1311,7 @@ ant_pc1 <- ggplot(ant_pcalm, aes(PC1, Ant_percent_leafloss)) +
     labels = c("E-", "E+"),
     values = c(16, 17)
   ) +
-  theme_classic(base_size = 12) +
+ 
   labs(y = "Herbivory (%)", caption = "") +
   scale_y_continuous(limits = c(0, 100)) +
   theme(
@@ -1680,7 +1377,7 @@ ant_pc2 <- ggplot(ant_pcalm, aes(PC2, Ant_percent_leafloss)) +
     ),
     values = met.brewer(name = "Cross", n = 8, type = "discrete")
   ) +
-  theme_classic(base_size = 12) +
+ 
   labs(y = "Herbivory (%)", caption = "") +
   scale_y_continuous(limits = c(0, 100)) +
   guides(color = "none")  +      #To turn off color legend
@@ -1779,7 +1476,7 @@ pat_pc1 <- ggplot(pat_pcalm, aes(PC1, Pathogen_percent_damage)) +
     ),
     values = met.brewer(name = "Cross", n = 8, type = "discrete")
   ) +
-  theme_classic(base_size = 12) +
+ 
   labs(y = "Pathogen damage (%)", caption = "") +
   guides(color = "none")  +      #To turn off color legend
   guides(fill = "none") + #To turn off fill legend
@@ -1842,7 +1539,7 @@ scale_color_manual(
   ),
   values = met.brewer(name = "Cross", n = 8, type = "discrete")
 ) +
-  theme_classic(base_size = 12) +
+ 
   labs(y = "Pathogen damage (%)", caption = "") +
   guides(color = "none")  +      #To turn off color legend
   guides(fill = "none") + #To turn off fill legend
@@ -3293,7 +2990,7 @@ sterile_protocol
 #save_as_docx(sterile_protocol, path = "./tables/Aim3_supptable_S9_28JAN2024.docx")
 ```
 
-## Figure S1a- S1b
+## Figure S1
 
 ```{r, suppfig_1}
 #| echo: false
@@ -3402,7 +3099,7 @@ suppfig_1
 ggsave(filename="./figures/suppfig1.png", plot = suppfig_1, dpi=300, units=c("mm"), width = 250, height = 200, bg ="white")
 ```
 
-## Figure S2a-S2b
+## Figure S2
 
 ```{r, suppfig_2}
 #| echo: false
@@ -3478,7 +3175,7 @@ ACIa <- ggplot(data = master, aes(x = E_load, y = Anthocyanins, fill = E_load)) 
   scale_fill_manual(name = "Treatment ", values= met.brewer("Cross", n = 2, type = "discrete")) +
   scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
   scale_x_discrete(labels=c(newname)) +
-  theme_classic(base_size = 12) +
+ 
   theme(
         #panel.grid.major = element_line(colour = "grey"),
         #panel.grid.minor = element_line(colour = "grey"),
@@ -3514,7 +3211,7 @@ ACIb <- ggplot(data = master, aes(x = Species, y = Anthocyanins, fill = E_load))
   scale_fill_manual(name = "Treatment ", values= met.brewer("Cross", n = 2, type = "discrete")) +
   scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
   scale_x_discrete(labels=c(newname)) +
-  theme_classic(base_size = 12) +
+ 
   theme(
         #panel.grid.major = element_line(colour = "grey"),
         #panel.grid.minor = element_line(colour = "grey"),
@@ -3544,7 +3241,7 @@ suppfig_2
 ggsave(filename="./figures/suppfig2.png", plot = suppfig_2, dpi=300, units=c("mm"), width = 250, height = 200, bg ="white")
 ```
 
-## Figure S3a-S3b
+## Figure S3
 
 ```{r, suppfig_3}
 #| echo: false
@@ -3611,7 +3308,7 @@ LTa <- ggplot(data = master, aes(x = E_load, y = Thickness, fill = E_load)) +
   scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
   scale_x_discrete(labels=c(newname)) +
   scale_y_continuous(limits = c(100, 300)) +
-  theme_classic(base_size = 12) +
+ 
   theme(
         #panel.grid.major = element_line(colour = "grey"),
         #panel.grid.minor = element_line(colour = "grey"),
@@ -3648,7 +3345,7 @@ LTb <- ggplot(data = master, aes(x = Species, y = Thickness, fill = E_load)) +
   scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
   scale_x_discrete(labels=c(newname)) +
   scale_y_continuous(limits = c(100, 300)) +
-  theme_classic(base_size = 12) +
+ 
   theme(
         #panel.grid.major = element_line(colour = "grey"),
         #panel.grid.minor = element_line(colour = "grey"),
@@ -3678,7 +3375,7 @@ ggsave(filename="./figures/suppfig3.png", plot = suppfig_3, dpi=300, units=c("mm
 #Previously saved under name: Aim3_LT_Species_07062022.png
 ```
 
-## Figure S4a-S4b
+## Figure S4
 
 ```{r, suppfig_4}
 #| echo: false
@@ -3745,7 +3442,7 @@ geom_violin() +
   scale_fill_manual(name = "Treatment ", values= met.brewer("Cross", n = 2, type = "discrete")) +
   scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
   scale_x_discrete(labels=c(newname)) +
-  theme_classic(base_size = 12) +
+ 
   theme(
         #panel.grid.major = element_line(colour = "grey"),
         #panel.grid.minor = element_line(colour = "grey"),
@@ -3781,7 +3478,7 @@ geom_violin() +
   scale_fill_manual(name = "Treatment ", values= met.brewer("Cross", n = 2, type = "discrete")) +
   scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
   scale_x_discrete(labels=c(newname)) +
-  theme_classic(base_size = 12) +
+ 
   theme(
         #panel.grid.major = element_line(colour = "grey"),
         #panel.grid.minor = element_line(colour = "grey"),
@@ -3812,7 +3509,7 @@ ggsave(filename="./figures/suppfig4.png", plot = suppfig_4, dpi=300, units=c("mm
 
 ```
 
-## Figure S5a-S5b
+## Figure S5
 
 ```{r, suppfig_5}
 #| echo: false
@@ -3878,7 +3575,7 @@ LMAa <- ggplot(data = master, aes(x = E_load, y = LMA, fill = E_load)) +
   scale_fill_manual(name = "Treatment ", values= met.brewer("Cross", n = 2, type = "discrete")) +
   scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
   scale_x_discrete(labels=c(newname)) +
-  theme_classic(base_size = 12) +
+ 
   theme(
         #panel.grid.major = element_line(colour = "grey"),
         #panel.grid.minor = element_line(colour = "grey"),
@@ -3912,7 +3609,7 @@ geom_violin() +
   scale_fill_manual(name = "Treatment ", values= met.brewer("Cross", n = 2, type = "discrete")) +
   scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
   scale_x_discrete(labels=c(newname)) +
-  theme_classic(base_size = 12) +
+ 
   theme(
         #panel.grid.major = element_line(colour = "grey"),
         #panel.grid.minor = element_line(colour = "grey"),
@@ -3942,7 +3639,7 @@ suppfig_5
 ggsave(filename="./figures/suppfig5.png", plot = suppfig_5, dpi=300, units=c("mm"), width = 250, height = 200, bg ="white")
 ```
 
-## Figure S6a-S6b
+## Figure S6
 
 ```{r, suppfig_6}
 #| echo: false
@@ -3969,7 +3666,7 @@ geom_violin() +
   scale_fill_manual(name = "Treatment ", values= met.brewer("Cross", n = 2, type = "discrete")) +
   scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
   scale_x_discrete(labels=c(newname)) +
-  theme_classic(base_size = 12) +
+ 
   theme(
         #panel.grid.major = element_line(colour = "grey"),
         #panel.grid.minor = element_line(colour = "grey"),
@@ -4003,7 +3700,7 @@ geom_violin() +
   scale_fill_manual(name = "Treatment ", values= met.brewer("Cross", n = 2, type = "discrete")) +
   scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
   scale_x_discrete(labels=c(newname)) +
-  theme_classic(base_size = 12) +
+ 
   theme(
         #panel.grid.major = element_line(colour = "grey"),
         #panel.grid.minor = element_line(colour = "grey"),
@@ -4045,7 +3742,7 @@ ggsave(filename="./figures/suppfig6.png", plot = suppfig_6, dpi=300, units=c("mm
 #| warning: false
 #| fig.height: 6
 #| fig.width: 6
-#| fig.cap: "Simple linear regressions of logit transfomed herbivory (%) and and leaf functional traits. a) Herbivory *vs.* leaf thickness (LT) (\u03Bcg) (R^2^-adjusted= 0.0811, *p* < 0.0001). b) Herbivory *vs.* LPS (N mm<sup>-1</sup>) (R^2^-adjusted= -0.0018, *p* = 0.429)). c) Herbivory *vs.* ACI (R^2^-adjusted= 0.0071, *p* = 0.116). d) Pathogen *vs.* LMA (mg mm^2) (R^2^-adjusted= -0.0008, *p* = 0.36). e) Herbivory *vs.* Shannon diversity index (R^2^-adjusted= 0.007 , *p* = 0.12). Pink filled line and shapes represent low FEF group (*E-*) and yellow filled line and shapes represent high FEF group (*E+*). Black line represents the linear regression on all observations. Significance levels are represented by *ns* (not significant) and asterisks [*p* < 0.05 (\\*), *p* < 0.01 (\\**), *p* < 0.001 (\\***), and *p* < 0.0001 (\\****)]."
+#| fig.cap: "Simple linear regressions of logit transfomed herbivory (%) and and leaf functional traits. a) Herbivory *vs.* leaf thickness (LT) (\u03Bcg) (R^2^-adjusted= 0.0811, *p* < 0.0001). b) Herbivory *vs.* LPS (N mm<sup>-1</sup>) (R^2^-adjusted= -0.0018, *p* = 0.429)). c) Herbivory *vs.* ACI (R^2^-adjusted= 0.0071, *p* = 0.116). d) Pathogen *vs.* LMA (mg mm^2) (R^2^-adjusted= -0.0008, *p* = 0.36). e) Herbivory *vs.* Shannon diversity index (R^2^-adjusted= 0.007 , *p* = 0.12). Pink filled line and shapes represent low FEF group (*E-*) and yellow filled line and shapes represent high FEF group (*E+*). Black line represents the linear regression on all observations."
 # Herbivory and Toughness
 #Simple linear regression
 #summary(lm(logit_herbivory ~ Toughness, data = masterant2))
@@ -4064,8 +3761,7 @@ herb_lps <-
     color = "black",
     size = 0.75
   ) +
-  scale_shape_manual(
-    # labels = c(
+  scale_shape_manual(# labels = c(
     #   "*A. membranacea*",
     #   "*C. cainito*",
     #   "*C. alliodora*",
@@ -4074,14 +3770,22 @@ herb_lps <-
     #   "*L. panamensis*",
     #   "*T. cacao*"
     # ),
-    values = c(15:22)
-  ) +
+    values = c(15:22)) +
   scale_color_manual(
     name = "Treatment",
     labels = c("E-", "E+"),
     values = met.brewer(name = "Cross", n = 2, type = "discrete")
   ) +
-   stat_poly_eq(
+  ggplot2::annotate(
+    "rect",
+    ymin = -4.5,
+    ymax = -3.25,
+    xmin = 0.5,
+    xmax = 0.95,
+    alpha = .7,
+    fill = "white"
+  ) +
+  stat_poly_eq(
     formula = y ~ x,
     inherit.aes = TRUE,
     aes(label = paste(
@@ -4095,28 +3799,11 @@ herb_lps <-
     p.digits = 3 ,
     parse = TRUE,
     label.x = "right",
-    label.y = "top",
-    vstep = 0.08
-  ) +
-  stat_poly_eq(
-    formula = y ~ x,
-    color = "black",
-    aes(label = paste(
-      #..eq.label..,
-      ..adj.rr.label.., #"~italic(p) ==",
-      ..p.value.label..,
-      #signif(..p.value.., digits = 4),
-      sep = "*`,`~~"
-    )),
-    rr.digits = 2,
-    p.digits = 3 ,
-    parse = TRUE,
-    label.x = "left",
-    label.y = "top",
+    label.y = "bottom",
     vstep = 0.08
   ) +
   labs(x = expression(paste("Leaf punch strength (N mm", "^-1)")), y = "logit[Herbivory (%)]") +
-  theme_classic(base_size = 10) +
+  ##theme_classic(base_size = 10) +
   theme(
     legend.position = "right",
     legend.title = element_text(face = "bold"),
@@ -4148,8 +3835,7 @@ herb_aci <-
     color = "black",
     size = 0.75
   ) +
-  scale_shape_manual(
-    # labels = c(
+  scale_shape_manual(# labels = c(
     #   "A. membranacea",
     #   "C. cainito",
     #   "C. alliodora",
@@ -4158,12 +3844,20 @@ herb_aci <-
     #   "L. panamensis",
     #   "T. cacao"
     # ),
-    values = c(15:22)
-  ) +
+    values = c(15:22)) +
   scale_color_manual(
     name = "Treatment",
     labels = c("E-", "E+"),
     values = met.brewer(name = "Cross", n = 2, type = "discrete")
+  ) +
+  ggplot2::annotate(
+    "rect",
+    ymin = -4.5,
+    ymax = -3.25,
+    xmin = 5.6,
+    xmax = 10.8,
+    alpha = .7,
+    fill = "white"
   ) +
   stat_poly_eq(
     formula = y ~ x,
@@ -4179,30 +3873,13 @@ herb_aci <-
     p.digits = 3 ,
     parse = TRUE,
     label.x = "right",
-    label.y = "top",
-    vstep = 0.08
-  ) +
-  stat_poly_eq(
-    formula = y ~ x,
-    color = "black",
-    aes(label = paste(
-      #..eq.label..,
-      ..adj.rr.label.., #"~italic(p) ==",
-      ..p.value.label..,
-      #signif(..p.value.., digits = 4),
-      sep = "*`,`~~"
-    )),
-    rr.digits = 2,
-    p.digits = 3 ,
-    parse = TRUE,
-    label.x = "left",
-    label.y = "top",
+    label.y = "bottom",
     vstep = 0.08
   ) +
   labs(x = expression(paste(
     "ACI (% ", italic("A") [lambda], " at 931 nm / % ", italic("A") [lambda], " at 530 nm)"
   )), y = "logit[Herbivory (%)]") +
-  theme_classic(base_size = 10) +
+  #theme_classic(base_size = 10) +
   theme(
     legend.position = "right",
     legend.title = element_text(face = "bold"),
@@ -4235,8 +3912,7 @@ herb_lt <-
     color = "black",
     size = 0.75
   ) +
-  scale_shape_manual(
-    # labels = c(
+  scale_shape_manual(# labels = c(
     #   "A. membranacea",
     #   "C. cainito",
     #   "C. alliodora",
@@ -4245,12 +3921,20 @@ herb_lt <-
     #   "L. panamensis",
     #   "T. cacao"
     # ),
-    values = c(15:22)
-  ) +
+    values = c(15:22)) +
   scale_color_manual(
     name = "Treatment",
     labels = c("E-", "E+"),
     values = met.brewer(name = "Cross", n = 2, type = "discrete")
+  ) +
+  ggplot2::annotate(
+    "rect",
+    ymin = -4.5,
+    ymax = -3.25,
+    xmin = 195,
+    xmax = 300,
+    alpha = .7,
+    fill = "white"
   ) +
   stat_poly_eq(
     formula = y ~ x,
@@ -4266,28 +3950,11 @@ herb_lt <-
     p.digits = 3 ,
     parse = TRUE,
     label.x = "right",
-    label.y = "top",
+    label.y = "bottom",
     vstep = 0.08
   ) +
-  stat_poly_eq(
-    formula = y ~ x,
-    color = "black",
-    aes(label = paste(
-      #..eq.label..,
-      ..adj.rr.label.., #"~italic(p) ==",
-      ..p.value.label..,
-      #signif(..p.value.., digits = 4),
-      sep = "*`,`~~"
-    )),
-    rr.digits = 2,
-    p.digits = 3 ,
-    parse = TRUE,
-    label.x = "left",
-    label.y = "top",
-    vstep = 0.08
-  )+
   labs(x = expression(paste("Leaf thickness (", mu, "m)")), y = "logit[Herbivory (%)]") +
-  theme_classic(base_size = 10) +
+  #theme_classic(base_size = 10) +
   theme(
     legend.position = "right",
     legend.title = element_text(face = "bold"),
@@ -4320,8 +3987,7 @@ herb_lma <-
     color = "black",
     size = 0.75
   ) +
-  scale_shape_manual(
-    # labels = c(
+  scale_shape_manual(# labels = c(
     #   "A. membranacea",
     #   "C. cainito",
     #   "C. alliodora",
@@ -4330,12 +3996,20 @@ herb_lma <-
     #   "L. panamensis",
     #   "T. cacao"
     # ),
-    values = c(15:22)
-  ) +
+    values = c(15:22)) +
   scale_color_manual(
     name = "Treatment",
     labels = c("E-", "E+"),
     values = met.brewer(name = "Cross", n = 2, type = "discrete")
+  ) +
+  ggplot2::annotate(
+    "rect",
+    ymin = -4.5,
+    ymax = -3.25,
+    xmin = 0.0011,
+    xmax = 0.0022,
+    alpha = .7,
+    fill = "white"
   ) +
   stat_poly_eq(
     formula = y ~ x,
@@ -4351,28 +4025,11 @@ herb_lma <-
     p.digits = 3 ,
     parse = TRUE,
     label.x = "right",
-    label.y = "top",
+    label.y = "bottom",
     vstep = 0.08
   ) +
-  stat_poly_eq(
-    formula = y ~ x,
-    color = "black",
-    aes(label = paste(
-      #..eq.label..,
-      ..adj.rr.label.., #"~italic(p) ==",
-      ..p.value.label..,
-      #signif(..p.value.., digits = 4),
-      sep = "*`,`~~"
-    )),
-    rr.digits = 2,
-    p.digits = 3 ,
-    parse = TRUE,
-    label.x = "left",
-    label.y = "top",
-    vstep = 0.08
-  )+
   labs(x = expression(paste("LMA (mg ", mm ^ -2, ")")), y = "logit[Herbivory (%)]") +
-  theme_classic(base_size = 10) +
+  #theme_classic(base_size = 10) +
   theme(
     legend.position = "right",
     legend.title = element_text(face = "bold"),
@@ -4423,7 +4080,7 @@ herb_shannon <-
       "*H. concinna*",
       "*L. panamensis*",
       "*T. cacao*"
-    ), 
+    ),
     values = c(15:22)
   ) +
   scale_color_manual(
@@ -4431,13 +4088,14 @@ herb_shannon <-
     labels = c("E-", "E+"),
     values = met.brewer(name = "Cross", n = 2, type = "discrete")
   ) +
-  geom_smooth(method = lm, se = F) +
-  geom_smooth(
-    method = lm,
-    se = T ,
-    level = 0.95,
-    na.rm = F,
-    color = "black"
+  ggplot2::annotate(
+    "rect",
+    ymin = -4.5,
+    ymax = -3.25,
+    xmin = 1.75,
+    xmax = 4.4,
+    alpha = .7,
+    fill = "white"
   ) +
   stat_poly_eq(
     formula = y ~ x,
@@ -4453,28 +4111,11 @@ herb_shannon <-
     p.digits = 3 ,
     parse = TRUE,
     label.x = "right",
-    label.y = "top",
-    vstep = 0.08
-  ) +
-  stat_poly_eq(
-    formula = y ~ x,
-    color = "black",
-    aes(label = paste(
-      #..eq.label..,
-      ..adj.rr.label.., #"~italic(p) ==",
-      ..p.value.label..,
-      #signif(..p.value.., digits = 4),
-      sep = "*`,`~~"
-    )),
-    rr.digits = 2,
-    p.digits = 3 ,
-    parse = TRUE,
-    label.x = "left",
-    label.y = "top",
+    label.y = "bottom",
     vstep = 0.08
   ) +
   labs(x = "Shannon's Diversity Index", y = "logit[Herbivory (%)]") +
-  theme_classic(base_size = 10) +
+  #theme_classic(base_size = 10) +
   theme(
     legend.position = "right",
     legend.title = element_text(face = "bold"),
@@ -4484,16 +4125,22 @@ herb_shannon <-
   )
 
 
-
-
  # Multiples plots together
 
-suppfig_S7 <- ggarrange(herb_lt, herb_lps, herb_aci, herb_lma, herb_shannon, 
-                          nrow = 2, 
-                          ncol=3, 
-                          common.legend = TRUE, 
-                          labels = c("(a)", "(b)", "(c)", "(d)", "(e)"),
-                          legend="bottom")
+suppfig_S7 <-
+  ggarrange(
+    herb_lt,
+    herb_lps,
+    herb_aci,
+    herb_lma,
+    herb_shannon,
+    nrow = 2,
+    ncol = 3,
+    label.x = -0.015,
+    common.legend = TRUE,
+    labels = c("(a)", "(b)", "(c)", "(d)", "(e)"),
+    legend = "bottom"
+  )
 
 suppfig_S7
 
@@ -4510,7 +4157,7 @@ ggsave(filename = "./figures/suppfig7.png", plot = suppfig_S7, dpi=300, units=c(
 #| warning: false
 #| fig.height: 6
 #| fig.width: 6
-#| fig.cap: "Simple linear regressions of logit transformed pathogen damage (%) and and leaf functional traits. a) Pathogen damage *vs.* leaf thickness (LT) (\u03Bcg) (R^2^-adjusted= -0.0013, *p* = 0.482). b) Pathogen damage *vs.* LPS (N mm<sup>-1</sup>) (R^2^-adjusted= 0.0782, *p* < 0.0001)). c) Pathogen damage *vs.* ACI (R^2^-adjusted= 0.0338, *p* < 0.001). d) Pathogen *vs.* LMA (mg mm^2) (R^2^-adjusted= 0.0295, *p* < 0.001). e) Pathogen damage *vs.* Shannon diversity index (R^2^-adjusted= 0.0152 , *p* < 0.001). Pink filled line and shapes represent low FEF group (*E-*) and yellow filled line and shapes represent high FEF group (*E+*). Black line represents the linear regression on all observations. Significance levels are represented by *ns* (not significant) and asterisks [*p* < 0.05 (\\*), *p* < 0.01 (\\**), *p* < 0.001 (\\***), and *p* < 0.0001 (\\****)]."
+#| fig.cap: "Simple linear regressions of logit transformed pathogen damage (%) and and leaf functional traits. a) Pathogen damage *vs.* leaf thickness (LT) (\u03Bcg) (R^2^-adjusted= -0.0013, *p* = 0.482). b) Pathogen damage *vs.* LPS (N mm<sup>-1</sup>) (R^2^-adjusted= 0.0782, *p* < 0.0001)). c) Pathogen damage *vs.* ACI (R^2^-adjusted= 0.0338, *p* < 0.001). d) Pathogen *vs.* LMA (mg mm^2) (R^2^-adjusted= 0.0295, *p* < 0.001). e) Pathogen damage *vs.* Shannon diversity index (R^2^-adjusted= 0.0152 , *p* < 0.001). Pink filled line and shapes represent low FEF group (*E-*) and yellow filled line and shapes represent high FEF group (*E+*). Black line represents the linear regression on all observations."
 # Pathogen
 # Pathogen damage and Toughness
 #Simple linear regression
@@ -4560,29 +4207,12 @@ patho_lps <-
     rr.digits = 2,
     p.digits = 3 ,
     parse = TRUE,
-    label.x = "right",
-    label.y = "top",
-    vstep = 0.08
-  ) +
-  stat_poly_eq(
-    formula = y ~ x,
-    color = "black",
-    aes(label = paste(
-      #..eq.label..,
-      ..adj.rr.label.., #"~italic(p) ==",
-      ..p.value.label..,
-      #signif(..p.value.., digits = 4),
-      sep = "*`,`~~"
-    )),
-    rr.digits = 2,
-    p.digits = 3 ,
-    parse = TRUE,
     label.x = "left",
     label.y = "top",
     vstep = 0.08
   ) +
   labs(x = expression(paste("Leaf punch strength (N mm", "^-1)")), y = "logit[Pathogen damage (%)]") +
-  theme_classic(base_size = 10) +
+  #theme_classic(base_size = 10) +
   theme(
     legend.position = "right",
     legend.title = element_text(face = "bold"),
@@ -4646,23 +4276,6 @@ patho_aci <-
     rr.digits = 2,
     p.digits = 3 ,
     parse = TRUE,
-    label.x = "right",
-    label.y = "top",
-    vstep = 0.08
-  ) +
-  stat_poly_eq(
-    formula = y ~ x,
-    color = "black",
-    aes(label = paste(
-      #..eq.label..,
-      ..adj.rr.label.., #"~italic(p) ==",
-      ..p.value.label..,
-      #signif(..p.value.., digits = 4),
-      sep = "*`,`~~"
-    )),
-    rr.digits = 2,
-    p.digits = 3 ,
-    parse = TRUE,
     label.x = "left",
     label.y = "top",
     vstep = 0.08
@@ -4670,7 +4283,7 @@ patho_aci <-
   labs(x = expression(paste(
     "ACI (% ", italic("A") [lambda], " at 931 nm / % ", italic("A") [lambda], " at 530 nm)"
   )), y = "logit[Pathogen damage (%)]") +
-  theme_classic(base_size = 10) +
+  #theme_classic(base_size = 10) +
   theme(
     legend.position = "right",
     legend.title = element_text(face = "bold"),
@@ -4733,29 +4346,12 @@ patho_lt <-
     rr.digits = 2,
     p.digits = 3 ,
     parse = TRUE,
-    label.x = "right",
-    label.y = "top",
-    vstep = 0.08
-  ) +
-  stat_poly_eq(
-    formula = y ~ x,
-    color = "black",
-    aes(label = paste(
-      #..eq.label..,
-      ..adj.rr.label.., #"~italic(p) ==",
-      ..p.value.label..,
-      #signif(..p.value.., digits = 4),
-      sep = "*`,`~~"
-    )),
-    rr.digits = 2,
-    p.digits = 3 ,
-    parse = TRUE,
     label.x = "left",
     label.y = "top",
     vstep = 0.08
   ) +
   labs(x = expression(paste("Leaf thickness (", mu, "m)")), y = "logit[Pathogen damage (%)]") +
-  theme_classic(base_size = 10) +
+  #theme_classic(base_size = 10) +
   theme(
     legend.position = "right",
     legend.title = element_text(face = "bold"),
@@ -4824,29 +4420,12 @@ patho_lma <-
     rr.digits = 2,
     p.digits = 3 ,
     parse = TRUE,
-    label.x = "right",
-    label.y = "top",
-    vstep = 0.08
-  ) +
-  stat_poly_eq(
-    formula = y ~ x,
-    color = "black",
-    aes(label = paste(
-      #..eq.label..,
-      ..adj.rr.label.., #"~italic(p) ==",
-      ..p.value.label..,
-      #signif(..p.value.., digits = 4),
-      sep = "*`,`~~"
-    )),
-    rr.digits = 2,
-    p.digits = 3 ,
-    parse = TRUE,
     label.x = "left",
     label.y = "top",
     vstep = 0.08
   ) +
   labs(x = expression(paste("LMA (mg ", mm ^ -2, ")")), y = "logit[Pathogen damage (%)]") +
-  theme_classic(base_size = 10) +
+  #theme_classic(base_size = 10) +
   theme(
     legend.position = "right",
     legend.title = element_text(face = "bold"),
@@ -4854,7 +4433,7 @@ patho_lma <-
                                size = 12),
     axis.text.x = element_text(size = 7),
     axis.text.y = element_text(size = 7)
-  )+
+  ) +
   guides(color = "none")  +      #To turn off color legend
   guides(fill = "none") + #To turn off fill legend
   guides(shape = "none")
@@ -4915,29 +4494,12 @@ patho_shannon <-
     rr.digits = 2,
     p.digits = 3 ,
     parse = TRUE,
-    label.x = "right",
-    label.y = "top",
-    vstep = 0.08
-  ) +
-  stat_poly_eq(
-    formula = y ~ x,
-    color = "black",
-    aes(label = paste(
-      #..eq.label..,
-      ..adj.rr.label.., #"~italic(p) ==",
-      ..p.value.label..,
-      #signif(..p.value.., digits = 4),
-      sep = "*`,`~~"
-    )),
-    rr.digits = 2,
-    p.digits = 3 ,
-    parse = TRUE,
     label.x = "left",
     label.y = "top",
     vstep = 0.08
   ) +
   labs(x = "Shannon's Diversity Index", y = "logit[Pathogen damage (%)]") +
-  theme_classic(base_size = 10) +
+  #theme_classic(base_size = 10) +
   theme(
     legend.position = "right",
     legend.title = element_text(face = "bold"),
@@ -4960,6 +4522,7 @@ suppfig_S8 <-
     patho_shannon,
     nrow = 2,
     ncol = 3,
+    label.x = -0.015,
     common.legend = TRUE,
     labels = c("(a)", "(b)", "(c)", "(d)", "(e)"),
     legend = "bottom"
@@ -4968,6 +4531,8 @@ suppfig_S8 <-
 suppfig_S8
 #Saving
 ggsave(filename ="./figures/suppfig8.png", plot = suppfig_S8, dpi= 300, units=c("mm"), width=250, height=200, bg = "white")
+
+showtext_auto(FALSE)
 ```
 
 ## Figure S9
