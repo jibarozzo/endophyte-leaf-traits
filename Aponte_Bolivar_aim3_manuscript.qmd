@@ -694,8 +694,7 @@ RAE <- ggplot(data= master, aes(x = E_load, y = Relative_Abundance)) +
     position = position_jitter(w = 0.2)
   ) +
   geom_boxplot(aes(color = E_load), alpha = 0.0, outlier.alpha = 0.0) +
-  scale_fill_manual(name = "Treatment ", values= met.brewer("Cross", n = 2, type = "discrete")) +
-  scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_color_manual(name = "Treatment ", values= met.brewer("Cross", n = 2, type = "discrete")) +
   theme_classic(base_size = 12) +
   theme(strip.background = element_rect(fill = "white"),
         axis.line.x.bottom = element_blank(),
@@ -3174,27 +3173,31 @@ suppfig2_pairwise_t_test <- master |>
 
 #ggpubr package used for t.tests and plotting t-test comparisons
 #E+ vs E- for all specie. To compare means of pathogen damage (%) between E+ and E- samples per species un-comment `group.by = "Species"` and change method to  "anova" in compare_means.
-suppfig2a_compare_means <- compare_means(Anthocyanins ~ E_load,
-         data = master,
-         #group.by = "Species",
-         method = "t.test",
-         p.adjust.method = "BH",
+suppfig2a_compare_means <- compare_means(
+  Anthocyanins ~ E_load,
+  data = master,
+  #group.by = "Species",
+  method = "t.test",
+  p.adjust.method = "BH",
   paired = TRUE,
-  alternative = "two.sided", 
-  mu = 0, 
+  alternative = "two.sided",
+  mu = 0,
   var.equal = FALSE,
-  conf.level = 0.95)
+  conf.level = 0.95
+)
 #Roughly the same outcome as pairwise_t_test.
-suppfig2b_compare_means <- compare_means(Anthocyanins ~ E_load,
-         data = master,
-         group.by = "Species",
-         method = "anova",
-         p.adjust.method = "BH",
+suppfig2b_compare_means <- compare_means(
+  Anthocyanins ~ E_load,
+  data = master,
+  group.by = "Species",
+  method = "anova",
+  p.adjust.method = "BH",
   paired = TRUE,
-  alternative = "two.sided", 
-  mu = 0, 
+  alternative = "two.sided",
+  mu = 0,
   var.equal = FALSE,
-  conf.level = 0.95)
+  conf.level = 0.95
+)
 
 # Anthocyanins by endophyte load an species
 ACIa <- ggplot(data = master, aes(x = E_load, y = Anthocyanins)) +
@@ -3210,9 +3213,9 @@ ACIa <- ggplot(data = master, aes(x = E_load, y = Anthocyanins)) +
     outlier.alpha = 0.5,
     linewidth = 1.2
   ) +
-  scale_color_manual(name = "Treatment ",
-                     values = met.brewer("Cross", n = 2, type = "discrete")) +
-  scale_fill_manual(values = met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_color_manual(values = met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_fill_manual(name = "Treatment ",
+                    values = met.brewer("Cross", n = 2, type = "discrete")) +
   scale_x_discrete(labels = c(newname)) +
   theme(
     legend.title = element_text(face = "bold"),
@@ -3240,23 +3243,16 @@ ACIb <-
   geom_point(
     aes(color = E_load),
     alpha = 0.7,
-    size = 1.7, 
+    size = 1.7,
     position = position_jitterdodge(jitter.width = 0.2, dodge.width = 0.75)
   ) +
-  geom_boxplot(
-    aes(color = E_load),
-    alpha = 0.0,
-    outlier.alpha = 0.5) +
+  geom_boxplot(aes(color = E_load),
+               alpha = 0.0,
+               outlier.alpha = 0.5) +
   scale_color_manual(name = "Treatment ",
                      values = met.brewer("Cross", n = 2, type = "discrete")) +
   scale_x_discrete(labels = c(newname)) +
-  
-  theme(
-    #panel.grid.major = element_line(colour = "grey"),
-    #panel.grid.minor = element_line(colour = "grey"),
-    #strip.background = element_rect(fill = "white"),
-    #strip.text.x = element_text(colour = "black", face = "bold"),
-    legend.title = element_text(face = "bold"),
+  theme(legend.title = element_text(face = "bold"),
     panel.border = element_rect(linetype = "blank", fill = NA),
     axis.text.x = element_text(
       face = "italic",
@@ -3272,6 +3268,7 @@ ACIb <-
   stat_compare_means(label = "p.signif",
                      method = "anova",
                      paired = T,
+                     
   )
 
 #ACIb
