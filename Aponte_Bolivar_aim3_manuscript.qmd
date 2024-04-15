@@ -639,7 +639,7 @@ masterpat2 <- df_list_ant2 |>
 #| warning: false
 #| fig.width: 7
 #| fig.height: 4.5
-#| fig.cap: "Relative abundance (RA) of Ascomycota OTUs of seven tree species used in the study. (a) Violin plots show individuals' RA and its distribution by species. The horizontal line within the violins represents the mean RA per species. (b) The RA of OTU's by treatment withing each tree species. Pink filled violin plots represent low endophyte (*E-*) treatment and yellow filled represent high endophyte (*E+*) treatment. Relative abundance is the percentage of endophyte colonization within individuals of the same species. Significance levels are represented by *ns* (not significant) and asterisks [*p* < 0.05 (\\*), *p* < 0.01 (\\**), *p* < 0.001 (\\***), and *p* < 0.0001 (\\****)]."
+#| fig.cap: "Relative abundance (RA) of Ascomycota OTUs of seven tree species used in the study. (a) Violin plots show individuals' RA and its distribution by species. The horizontal line within the violins represents the mean RA per species. (b) The RA of OTU's by treatment withing each tree species. Pink outlined box plots represent low endophyte (*E-*) treatment and yellow outlined represent high endophyte (*E+*) treatment. Relative abundance is the percentage of endophyte colonization within individuals of the same species. Significance levels are represented by *ns* (not significant) and asterisks [*p* < 0.05 (\\*), *p* < 0.01 (\\**), *p* < 0.001 (\\***), and *p* < 0.0001 (\\****)]."
 
 
 #Comparison of means of LMA between E+ and E- samples per tree species
@@ -687,16 +687,19 @@ newname <- c("A. membranacea", "C. cainito", "C. alliodora", "Dipteryx sp.", "H.
 names(newname) <- c("APEIME", "CHRYCA", "CORDAL", "DYPTE", "HEISCO", "LACPA", "THEOCA")
 
 RAE <- ggplot(data= master, aes(x = E_load, y = Relative_Abundance)) +
-  geom_violin(aes(fill = E_load)) +
-  #geom_boxplot(width=0.1, color="grey30", alpha=0.2) +
-  geom_crossbar(stat="summary", fun = mean, fun.max = mean, fun.min = mean,  fatten = 2, width = 0.5) +
-  geom_point(color="grey15", alpha = 0.4,size = 2, position = position_jitter(w=0.05)) +
+   geom_point(
+    aes(color = E_load),
+    alpha = 0.7,
+    size = 1.7,
+    position = position_jitter(w = 0.2)
+  ) +
+  geom_boxplot(aes(color = E_load), alpha = 0.0, outlier.alpha = 0.0) +
   scale_fill_manual(name = "Treatment ", values= met.brewer("Cross", n = 2, type = "discrete")) +
   scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
-  theme(panel.grid.major = element_line(colour = "grey"),
-        panel.grid.minor = element_line(colour = "grey"),
-        strip.background = element_rect(fill = "white"),
-        axis.line.x.bottom = element_blank(), 
+  theme_classic(base_size = 12) +
+  theme(strip.background = element_rect(fill = "white"),
+        axis.line.x.bottom = element_blank(),
+        axis.ticks.x = element_blank(),
         strip.text.x = element_text(colour = "grey15", face = "italic"),
         panel.border = element_rect(linetype = "blank", fill = NA),
         legend.position="right", 
@@ -704,7 +707,7 @@ RAE <- ggplot(data= master, aes(x = E_load, y = Relative_Abundance)) +
         legend.text = element_text(size = 14),
         plot.title = element_text(color="black", size = 14, face="bold"),
         axis.text.x=element_blank()) +
-  labs(x="", y="Relative Abundance of Ascomycota", face = "bold")+
+  labs(x="", y="Mean Relative Abundance of Ascomycota", face = "bold")+
   theme() +
   #labs(caption = "*Outliers and singletons removed.") +
   stat_compare_means(comparisons = list(c("E-", "E+")),
@@ -754,7 +757,7 @@ ggsave(filename="./figures/figure1.png", plot = fig1, dpi=300, units=c("mm"), wi
 #| warning: false
 #| fig.height: 6
 #| fig.width: 6
-#| fig.cap: "Distributions of values and means of herbivory (%) damage caused by *Atta colombica* in treatment groups (*E-* and *E+*) and tree species. a) Comparison of herbivory (%) means between treatment groups across individuals of all species. Pink filled violins represent low FEF group (*E-*) and yellow filed violins represent high FEF group (*E+*). b) Comparison of pathogen (%) means between treatment groups across individuals of all species.  Maroon filled violins represent control leaves and blue filled violins represent pathogen treated leaves.  Statistical significance was calculated using a two-sided Student's t-Test. Significance levels are represented by *ns* (not significant) and asterisks [*p* < 0.05 (\\*), *p* < 0.01 (\\**), *p* < 0.001 (\\***), and *p* < 0.0001 (\\****)]"
+#| fig.cap: "Distributions of values and means of herbivory (%) damage caused by *Atta colombica* in treatment groups (*E-* and *E+*) and tree species. a) Comparison of herbivory (%) means between treatment groups across individuals of all species. Pink outlined box plots represent low FEF group (*E-*) and yellow outlined box plots represent high FEF group (*E+*). b) Comparison of pathogen (%) means between treatment groups across individuals of all species.  Maroon filled violins represent control leaves and blue filled violins represent pathogen treated leaves.  Statistical significance was calculated using a two-sided Student's t-Test. Significance levels are represented by *ns* (not significant) and asterisks [*p* < 0.05 (\\*), *p* < 0.01 (\\**), *p* < 0.001 (\\***), and *p* < 0.0001 (\\****)]"
 
 
 #Comparison of means of Herbivory(%) between E+ and E- samples per tree species
@@ -800,36 +803,39 @@ fig2a_t_test <-t.test(Ant_percent_leafloss ~ E_load,
 
 
 # Fig. 2a
-herb_violin <- ggplot(data = master, aes(x = E_load, y = Ant_percent_leafloss, fill = E_load)) +
-  geom_violin() +
-  geom_point(position = position_jitterdodge(dodge.width = 0.9, jitter.width = 0.2),
-             alpha = 0.3, color = "grey30", size = 2) +
-  geom_crossbar(stat="summary",
-               fun = mean,
-               fun.max = mean,
-               fun.min = mean,
-               alpha = 0.3,
-               size = 0.3,
-               width = 0.7,
-               position = position_dodge(width = 0.9)) +
-  scale_fill_manual(name = "Treatment ", values= met.brewer("Cross", n = 2, type = "discrete")) +
-  scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
+herb_violin <-
+  ggplot(data = master, aes(x = E_load, y = Ant_percent_leafloss)) +
+  #geom_violin() +
+  geom_point(
+    aes(color = E_load),
+    alpha = 0.7,
+    size = 1.7,
+    position = position_jitter(w = 0.2)
+  ) +
+  geom_boxplot(
+    aes(color = E_load),
+    alpha = 0.0,
+    outlier.alpha = 0.0,
+    linewidth = 1.2
+  ) +
+  scale_fill_manual(values = met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_color_manual(name = "Inoculation treatment ",
+                     values = met.brewer("Cross", n = 2, type = "discrete")) +
   theme(
-        #panel.grid.major = element_line(colour = "grey"),
-        #panel.grid.minor = element_line(colour = "grey"),
-        #strip.background = element_rect(fill = "white"),
-        #strip.text.x = element_text(colour = "black", face = "bold"),
-        legend.title = element_text(face = "bold"),
-        panel.border = element_rect(linetype = "blank", fill = NA),
-        axis.text.x=element_blank(),
-        legend.position="right", 
-        legend.text = element_text(size = 12)) +
-  labs(x="", y= expression(paste("Herbivory (%)"))) +
-  stat_compare_means(label = "p.signif", 
-                     method = "t.test",
-                     paired = T,
-                     comparisons =list(c("E-", "E+")),
-                     bracket.size = 0.8)
+    legend.title = element_text(face = "bold"),
+    panel.border = element_rect(linetype = "blank", fill = NA),
+    axis.text.x = element_blank(),
+    legend.position = "right",
+    legend.text = element_text(size = 12)
+  ) +
+  labs(x = "", y = expression(paste("Herbivory (%)"))) +
+  stat_compare_means(
+    label = "p.signif",
+    method = "t.test",
+    paired = T,
+    comparisons = list(c("E-", "E+")),
+    bracket.size = 0.8
+  )
 
 #herb_violin
 
@@ -839,75 +845,90 @@ herb_violin <- ggplot(data = master, aes(x = E_load, y = Ant_percent_leafloss, f
 #rstatix package used for pairwise t-test
 fig2b_pairwise_t_test <- master |>
   group_by(E_load) |>
-  pairwise_t_test(Pathogen_percent_damage ~ Treatment,
-         p.adjust.method = "BH",
-  paired = TRUE,
-  #var.equal = F,
-  alternative = "two.sided",
-  mu = 0,
-  conf.level = 0.95, 
-  detailed = TRUE) 
+  pairwise_t_test(
+    Pathogen_percent_damage ~ Treatment,
+    p.adjust.method = "BH",
+    paired = TRUE,
+    #var.equal = F,
+    alternative = "two.sided",
+    mu = 0,
+    conf.level = 0.95,
+    detailed = TRUE
+  )
 
 #ggpubr package used for t.tests and plotting t-test comparisons
 #E+ vs E- for all specie. To compare means of pathogen damage (%) between E+ and E- samples per species un-comment `group.by = "Species"` and change method to  "anova" in compare_means.
-fig2b_compare_means <- compare_means(Pathogen_percent_damage ~ E_load,
-         data = master,
-         #group.by = "Species",
-         method = "t.test",
-         p.adjust.method = "BH",
-  paired = TRUE,
-  alternative = "two.sided", 
-  mu = 0, 
-  var.equal = FALSE,
-  conf.level = 0.95)
+fig2b_compare_means <-
+  compare_means(
+    Pathogen_percent_damage ~ E_load,
+    data = master,
+    #group.by = "Species",
+    method = "t.test",
+    p.adjust.method = "BH",
+    paired = TRUE,
+    alternative = "two.sided",
+    mu = 0,
+    var.equal = FALSE,
+    conf.level = 0.95
+  )
 #Roughly the same outcome as pairwise_t_test.
-fig2b_compare_means <- compare_means(Pathogen_percent_damage ~ E_load,
-         data = master,
-         group.by = "Species",
-         method = "anova",
-         p.adjust.method = "BH",
-  paired = TRUE,
-  alternative = "two.sided", 
-  mu = 0, 
-  var.equal = FALSE,
-  conf.level = 0.95)
-patho_violin <- ggplot(data = master, aes(x = E_load, y = Pathogen_percent_damage, fill = Treatment)) +
-  geom_violin() +
-  geom_point(aes(color = E_load),position = position_jitterdodge(dodge.width = 0, jitter.width = 0.2),
-             alpha = 0.5, size = 2) +
-  geom_crossbar(stat="summary",
-               fun = mean,
-               fun.max = mean,
-               fun.min = mean,
-               alpha = 0.3,
-               size = 0.3,
-               width = 0.7,
-               position = position_dodge(width = 0.9)) +
-  scale_fill_manual(name = "Pathogen treatment ", values= met.brewer("Egypt", n = 2, type = "discrete")) +
-  scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
-  #scale_shape_manual(name = "Treatment", labels = c("E-", "E+"), values = c(16, 17)) +
- 
+fig2b_compare_means <-
+  compare_means(
+    Pathogen_percent_damage ~ E_load,
+    data = master,
+    group.by = "Species",
+    method = "anova",
+    p.adjust.method = "BH",
+    paired = TRUE,
+    alternative = "two.sided",
+    mu = 0,
+    var.equal = FALSE,
+    conf.level = 0.95
+  )
+
+patho_violin <-
+  ggplot(data = master |>
+           filter(!is.na(Treatment)),
+         aes(x = E_load, y = Pathogen_percent_damage, fill = Treatment)) +
+  # geom_violin() +
+  # geom_point(aes(color = E_load),position = position_jitterdodge(dodge.width = 0, jitter.width = 0.2),
+  #            alpha = 0.5, size = 2) +
+  geom_point(
+    aes(color = E_load),
+    alpha = 0.7,
+    size = 1.7,
+    position = position_jitter(w = 0.2)
+  ) +
+  geom_boxplot(alpha = 0.5,
+               outlier.alpha = 0.0) +
+  scale_fill_manual(
+    name = "Pathogen treatment ",
+    labels = c("Control", "Pathogen"),
+    values = met.brewer("Egypt", n = 2, type = "discrete")
+  ) +
+  scale_color_manual(values = met.brewer("Cross", n = 2, type = "discrete")) +
   theme(
-        #panel.grid.major = element_line(colour = "grey"),
-        #panel.grid.minor = element_line(colour = "grey"),
-        #strip.background = element_rect(fill = "white"),
-        #strip.text.x = element_text(colour = "black", face = "bold"),
-        legend.title = element_text(face = "bold"),
-        panel.border = element_rect(linetype = "blank", fill = NA),
-        #axis.text.x=element_blank(),
-        legend.position="right", 
-        legend.text = element_text(size = 12)) +
-  labs(x="", y= expression(paste("Pathogen damage (%)"))) +
-  stat_compare_means(label = "p.signif", 
-                     method = "t.test",
-                     paired = T,
-                     label.y = 80) +
-  stat_compare_means(label = "p.signif",
-                     method = "t.test",
-                     paired = T,
-                     comparisons =list(c("E-", "E+")),
-                     bracket.size = 0.8) +
-   guides(color = "none") 
+    legend.title = element_text(face = "bold"),
+    panel.border = element_rect(linetype = "blank", fill = NA),
+    #axis.text.x=element_blank(),
+    legend.position = "right",
+    legend.text = element_text(size = 12)
+  ) +
+  labs(x = "", y = expression(paste("Pathogen damage (%)"))) +
+  stat_compare_means(
+    label = "p.signif",
+    method = "t.test",
+    paired = T,
+    label.y = 80
+  ) +
+  stat_compare_means(
+    label = "p.signif",
+    method = "t.test",
+    paired = T,
+    comparisons = list(c("E-", "E+")),
+    bracket.size = 0.8
+  ) +
+  guides(color = "none")
 #patho_violin
 
 
@@ -2999,93 +3020,109 @@ sterile_protocol
 #| warning: false
 #| fig.height: 6
 #| fig.width: 6
-#| fig.cap: "Foliar endophytic fungi (FEF) colonization of seven tropical tree species in malt extract agar (MEA 2%). a) Comparison of mean percent colonization of leaves by FEF measured 7 days after placing leaf pieces on plates. Statistical significance was calculated with a Student's t-Test. Violin plots show the distribution of colonization values for all tree species within treatment groups (*E-* and *E+*). b) Comparison of mean percent colonization of leaves by FEF measured 7 days after culture. Violin plots show the distribution of percent colonization values for each species per treatment group. Pink filled violins represent low FEF group (*E-*) and yellow filled violins represent high FEF group (*E+*). Significance levels are represented by *ns* (not significant) and asterisks [*p* < 0.05 (\\*), *p* < 0.01 (\\**), *p* < 0.001 (\\***), and *p* < 0.0001 (\\****)]. "
-Abun7a <- ggplot(data= data |>
-                      group_by(Species, Sample_name, E_load, Leaf_ID) |>
-                      summarise(Abun_7 = mean(Abun_7)),
-                     aes(x = E_load, y = Abun_7)) +
-  geom_violin(aes(fill = E_load)) +
-  #geom_boxplot(width=0.1, color="grey30", alpha=0.2) +
-  geom_crossbar(stat="summary", 
-                fun = mean, 
-                fun.max = mean,
-                fun.min = mean,  
-                fatten = 2, 
-                width = 0.5) +
-  geom_point(color="grey30", 
-             alpha = 0.4,
-             size = 2, 
-             position = position_jitter(w=0.05)) +
-  scale_fill_manual(name = "Treatment ", values= met.brewer("Cross", n = 2, type = "discrete")) +
-  scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
+#| fig.cap: "Foliar endophytic fungi (FEF) colonization of seven tropical tree species in malt extract agar (MEA 2%). a) Comparison of mean percent colonization of leaves by FEF measured 7 days after placing leaf pieces on plates. Statistical significance was calculated with a Student's t-Test. Violin plots show the distribution of colonization values for all tree species within treatment groups (*E-* and *E+*). b) Comparison of mean percent colonization of leaves by FEF measured 7 days after culture. Violin plots show the distribution of percent colonization values for each species per treatment group. Pink outlined box plots represent low FEF group (*E-*) and yellow outlined box plots represent high FEF group (*E+*). Significance levels are represented by *ns* (not significant) and asterisks [*p* < 0.05 (\\*), *p* < 0.01 (\\**), *p* < 0.001 (\\***), and *p* < 0.0001 (\\****)]. "
+Abun7a <- ggplot(
+  data = data |>
+    group_by(Species, Sample_name, E_load, Leaf_ID) |>
+    summarise(Abun_7 = mean(Abun_7)),
+  aes(x = E_load, y = Abun_7)
+) +
+  geom_point(
+    aes(color = E_load),
+    alpha = 0.7,
+    size = 1.7,
+    position = position_jitter(w = 0.2)
+  ) +
+  geom_boxplot(
+    aes(color = E_load),
+    alpha = 0.0,
+    outlier.alpha = 0.5,
+    linewidth = 1.2
+  ) +
+  scale_fill_manual(values = met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_color_manual(name = "Treatment ",
+                     values = met.brewer("Cross", n = 2, type = "discrete")) +
   scale_y_continuous(labels = scales::percent) +
-theme_classic(base_size = 12)+
+  theme_classic(base_size = 12) +
   theme(
-        #panel.grid.major = element_line(colour = "grey"),
-        #panel.grid.minor = element_line(colour = "grey"),
-        #strip.background = element_rect(fill = "white"),
-        #axis.line.x.bottom = element_blank(), 
-        strip.text.x = element_text(colour = "grey15", face = "italic"),
-        panel.border = element_rect(linetype = "blank", fill = NA)) +
-  labs(x="", y="Endophyte colonization (%)", face = "bold")+
-  theme(legend.position="right", 
-        legend.title = element_text(face = "bold"),
-        legend.text = element_text(size = 14),
-        plot.title = element_text(color="black", size = 14, face="bold"),
-        axis.text.x=element_blank()) +
-  stat_compare_means(comparisons = list(c("E-", "E+")),
-                     method = "t.test",
-                     paired = T,
-                     label = "p.signif", 
-                     bracket.size = 0.65) 
-  #facet_wrap(~Species, labeller = as_labeller(newname))
-#Abun7a  
- 
-Abun7b <- ggplot(data= data |>
-                      group_by(Species, Sample_name, E_load, Leaf_ID) |>
-                      summarise(Abun_7 = mean(Abun_7)),
-                     aes(x = E_load, y = Abun_7)) +
-  geom_violin(aes(fill = E_load)) +
-  #geom_boxplot(width=0.1, color="grey30", alpha=0.2) +
-  geom_crossbar(stat="summary", 
-                fun = mean, 
-                fun.max = mean,
-                fun.min = mean,  
-                fatten = 2, 
-                width = 0.5) +
-  geom_point(color="grey30", 
-             alpha = 0.4,
-             size = 2, 
-             position = position_jitter(w=0.05)) +
-  scale_fill_manual(name = "Treatment ", values= met.brewer("Cross", n = 2, type = "discrete")) +
-  scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
-  scale_y_continuous(expand = expansion(mult = 0.1), 
-                     breaks = c(0, 0.25, 0.50, 0.75, 1),
-                     labels = scales::percent) +
+    strip.text.x = element_text(colour = "grey15", face = "italic"),
+    panel.border = element_rect(linetype = "blank", fill = NA)
+  ) +
+  labs(x = "", y = "Endophyte colonization (%)", face = "bold") +
+  theme(
+    legend.position = "right",
+    legend.title = element_text(face = "bold"),
+    legend.text = element_text(size = 14),
+    plot.title = element_text(
+      color = "black",
+      size = 14,
+      face = "bold"
+    ),
+    axis.text.x = element_blank()
+  ) +
+  stat_compare_means(
+    comparisons = list(c("E-", "E+")),
+    method = "t.test",
+    paired = T,
+    label = "p.signif",
+    bracket.size = 0.65
+  )
+#Abun7a
+
+Abun7b <- ggplot(
+  data = data |>
+    group_by(Species, Sample_name, E_load, Leaf_ID) |>
+    summarise(Abun_7 = mean(Abun_7)),
+  aes(x = E_load, y = Abun_7)
+) +
+  geom_point(
+    aes(color = E_load),
+    alpha = 0.7,
+    size = 1.7,
+    position = position_jitter(w = 0.2)
+  ) +
+  geom_boxplot(aes(color = E_load),
+               alpha = 0.0,
+               outlier.alpha = 0.5) +
+  scale_fill_manual(name = "Treatment ",
+                    values = met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_color_manual(values = met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_y_continuous(
+    expand = expansion(mult = 0.1),
+    breaks = c(0, 0.25, 0.50, 0.75, 1),
+    labels = scales::percent
+  ) +
   #scale_y_continuous(labels = scales::percent) +
-theme_classic(base_size = 8)+
+  theme_classic(base_size = 8) +
   theme(
-        panel.grid.major = element_line(colour = "grey"),
-        panel.grid.minor = element_line(colour = "grey"),
-        strip.background = element_rect(fill = "white"),
-        axis.line.x.bottom = element_blank(),
-        strip.text.x = element_text(colour = "grey15", face = "italic"),
-        panel.border = element_rect(linetype = "blank", fill = NA)) +
-  labs(x="", y="Endophyte colonization (%)", face = "bold")+
-  theme(legend.position="right", 
-        legend.title = element_text(face = "bold"),
-        legend.text = element_text(size = 14),
-        plot.title = element_text(color="black", size = 14, face="bold"),
-        axis.text.x=element_blank(),
-        axis.text.y = element_text(size = 12), 
-  axis.title.y=element_text(size = 12)) +
-  stat_compare_means(comparisons = list(c("E-", "E+")),
-                     method = "t.test",
-                     label = "p.signif",
-                     paired = T,
-                     label.y = 1.03, 
-                     bracket.size = 0.65) +
-  facet_wrap(~Species, labeller = as_labeller(newname))
+    axis.line.x.bottom = element_blank(),
+    strip.text.x = element_text(colour = "grey15", face = "italic"),
+    panel.border = element_rect(linetype = "blank", fill = NA)
+  ) +
+  labs(x = "", y = "Endophyte colonization (%)", face = "bold") +
+  theme(
+    legend.position = "right",
+    legend.title = element_text(face = "bold"),
+    legend.text = element_text(size = 14),
+    plot.title = element_text(
+      color = "black",
+      size = 14,
+      face = "bold"
+    ),
+    axis.text.x = element_blank(),
+    axis.ticks.x = element_blank(),
+    axis.text.y = element_text(size = 12),
+    axis.title.y = element_text(size = 12)
+  ) +
+  stat_compare_means(
+    comparisons = list(c("E-", "E+")),
+    method = "t.test",
+    label = "p.signif",
+    paired = T,
+    label.y = 1.03,
+    bracket.size = 0.65
+  ) +
+  facet_wrap( ~ Species, labeller = as_labeller(newname))
 
 
 #Abun7b  
@@ -3108,7 +3145,7 @@ ggsave(filename="./figures/suppfig1.png", plot = suppfig_1, dpi=300, units=c("mm
 #| warning: false
 #| fig.height: 6
 #| fig.width: 6
-#| fig.cap: "Distributions of values and means of anthocyanin content (ACI) in treatment groups (*E-* and *E+*) and tree species. a) Comparison of ACI means between treatment groups across individuals of all species. Statistical significance was calculated using a two-sided Student's t-Test. b) Comparison of ACI means between treatment types of each species. Statistical significance was calculated with an analysis of variance (ANOVA). Pink filled violins represent low FEF group (*E-*) and yellow filed violins represent high FEF group (*E+*).Significance levels are represented by *ns* (not significant) and asterisks [*p* < 0.05 (\\*), *p* < 0.01 (\\**), *p* < 0.001 (\\***), and *p* < 0.0001 (\\****)]."
+#| fig.cap: "Distributions of values and means of anthocyanin content (ACI) in treatment groups (*E-* and *E+*) and tree species. a) Comparison of ACI means between treatment groups across individuals of all species. Statistical significance was calculated using a two-sided Student's t-Test. b) Comparison of ACI means between treatment types of each species. Statistical significance was calculated with an analysis of variance (ANOVA). Pink outlined box plots represent low FEF group (*E-*) and yellow filed violins represent high FEF group (*E+*).Significance levels are represented by *ns* (not significant) and asterisks [*p* < 0.05 (\\*), *p* < 0.01 (\\**), *p* < 0.001 (\\***), and *p* < 0.0001 (\\****)]."
 
 # Comparisons
 mycomparisons <- list(c("APEIME", "CHRYCA"), c("APEIME", "CORDAL"), c("APEIME", "DYPTE"), c("APEIME", "HEISCO"),c("APEIME", "LACPA"), c("APEIME","THEOCA"),
@@ -3160,72 +3197,82 @@ suppfig2b_compare_means <- compare_means(Anthocyanins ~ E_load,
   conf.level = 0.95)
 
 # Anthocyanins by endophyte load an species
-ACIa <- ggplot(data = master, aes(x = E_load, y = Anthocyanins, fill = E_load)) +
-  geom_violin() +
-  geom_point(position = position_jitterdodge(dodge.width = 0.9, jitter.width = 0.2),
-             alpha = 0.3, color = "grey30", size = 2) +
-  geom_crossbar(stat="summary", 
-               fun = mean, 
-               fun.max = mean, 
-               fun.min = mean,
-               alpha = 0.3, 
-               size = 0.3, 
-               width = 0.7,
-               position = position_dodge(width = 0.9)) +
-  scale_fill_manual(name = "Treatment ", values= met.brewer("Cross", n = 2, type = "discrete")) +
-  scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
-  scale_x_discrete(labels=c(newname)) +
- 
+ACIa <- ggplot(data = master, aes(x = E_load, y = Anthocyanins)) +
+  geom_point(
+    aes(color = E_load),
+    alpha = 0.7,
+    size = 1.7,
+    position = position_jitter(w = 0.2)
+  ) +
+  geom_boxplot(
+    aes(color = E_load),
+    alpha = 0.0,
+    outlier.alpha = 0.5,
+    linewidth = 1.2
+  ) +
+  scale_color_manual(name = "Treatment ",
+                     values = met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_fill_manual(values = met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_x_discrete(labels = c(newname)) +
   theme(
-        #panel.grid.major = element_line(colour = "grey"),
-        #panel.grid.minor = element_line(colour = "grey"),
-        #strip.background = element_rect(fill = "white"),
-        #strip.text.x = element_text(colour = "black", face = "bold"),
-        legend.title = element_text(face = "bold"),
-        panel.border = element_rect(linetype = "blank", fill = NA),
-        axis.text.x=element_blank(),
-        legend.position="right", 
-        legend.text = element_text(size = 12)) +
-    labs(x="", y=expression(paste("ACI (% ", italic("A") [lambda]," at 931 nm / % ", italic("A") [lambda]," at 530 nm)"))) +
-    stat_compare_means(label = "p.signif", 
-                     method = "t.test",
-                     paired = T,
-                     comparisons =list(c("E-", "E+")),
-                     bracket.size = 0.8)
+    legend.title = element_text(face = "bold"),
+    panel.border = element_rect(linetype = "blank", fill = NA),
+    axis.text.x = element_blank(),
+    legend.position = "right",
+    legend.text = element_text(size = 12)
+  ) +
+  labs(x = "", y = expression(paste(
+    "ACI (% ", italic("A") [lambda], " at 931 nm / % ", italic("A") [lambda], " at 530 nm)"
+  ))) +
+  stat_compare_means(
+    label = "p.signif",
+    method = "t.test",
+    paired = T,
+    comparisons = list(c("E-", "E+")),
+    bracket.size = 0.8
+  )
 
 #ACIa
 
 
-ACIb <- ggplot(data = master, aes(x = Species, y = Anthocyanins, fill = E_load)) +
-  geom_violin() +
-  geom_point(position = position_jitterdodge(dodge.width = 0.9, jitter.width = 0.2),
-             alpha = 0.3, color = "grey30", size = 2) +
-  geom_crossbar(stat="summary", 
-               fun = mean, 
-               fun.max = mean, 
-               fun.min = mean,
-               alpha = 0.3, 
-               size = 0.3, 
-               width = 0.7,
-               position = position_dodge(width = 0.9)) +
-  scale_fill_manual(name = "Treatment ", values= met.brewer("Cross", n = 2, type = "discrete")) +
-  scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
-  scale_x_discrete(labels=c(newname)) +
- 
+ACIb <-
+  ggplot(data = master, aes(x = Species, y = Anthocyanins)) +
+  geom_point(
+    aes(color = E_load),
+    alpha = 0.7,
+    size = 1.7, 
+    position = position_jitterdodge(jitter.width = 0.2, dodge.width = 0.75)
+  ) +
+  geom_boxplot(
+    aes(color = E_load),
+    alpha = 0.0,
+    outlier.alpha = 0.5) +
+  scale_color_manual(name = "Treatment ",
+                     values = met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_x_discrete(labels = c(newname)) +
+  
   theme(
-        #panel.grid.major = element_line(colour = "grey"),
-        #panel.grid.minor = element_line(colour = "grey"),
-        #strip.background = element_rect(fill = "white"),
-        #strip.text.x = element_text(colour = "black", face = "bold"),
-        legend.title = element_text(face = "bold"),
-        panel.border = element_rect(linetype = "blank", fill = NA),
-        axis.text.x=element_text(face = "italic", hjust = 1, angle = 30),
-        legend.position="right", 
-        legend.text = element_text(size = 12)) +
-  labs(x="", y=expression(paste("ACI (% ", italic("A") [lambda]," at 931 nm / % ", italic("A") [lambda]," at 530 nm)"))) +
-  stat_compare_means(label = "p.signif", 
+    #panel.grid.major = element_line(colour = "grey"),
+    #panel.grid.minor = element_line(colour = "grey"),
+    #strip.background = element_rect(fill = "white"),
+    #strip.text.x = element_text(colour = "black", face = "bold"),
+    legend.title = element_text(face = "bold"),
+    panel.border = element_rect(linetype = "blank", fill = NA),
+    axis.text.x = element_text(
+      face = "italic",
+      hjust = 1,
+      angle = 30
+    ),
+    legend.position = "right",
+    legend.text = element_text(size = 12)
+  ) +
+  labs(x = "", y = expression(paste(
+    "ACI (% ", italic("A") [lambda], " at 931 nm / % ", italic("A") [lambda], " at 530 nm)"
+  ))) +
+  stat_compare_means(label = "p.signif",
                      method = "anova",
-                     paired = T,)
+                     paired = T,
+  )
 
 #ACIb
 
@@ -3250,7 +3297,7 @@ ggsave(filename="./figures/suppfig2.png", plot = suppfig_2, dpi=300, units=c("mm
 #| warning: false
 #| fig.height: 6
 #| fig.width: 6
-#| fig.cap: "Distributions of values and means of leaf thickness (LT) (\u03Bcg) in treatment groups (*E-* and *E+*) and tree species. a) Comparison of LT means between treatment groups across individuals of all species. Statistical significance was calculated using a two-sided Student's t-Test. b) Comparison of LT means between treatment types of each species. Statistical significance was calculated with an analysis of variance (ANOVA). Pink filled violins represent low FEF group (*E-*) and yellow filed violins represent high FEF group (*E+*).Significance levels are represented by *ns* (not significant) and asterisks [*p* < 0.05 (\\*), *p* < 0.01 (\\**), *p* < 0.001 (\\***), and *p* < 0.0001 (\\****)]."
+#| fig.cap: "Distributions of values and means of leaf thickness (LT) (\u03Bcg) in treatment groups (*E-* and *E+*) and tree species. a) Comparison of LT means between treatment groups across individuals of all species. Statistical significance was calculated using a two-sided Student's t-Test. b) Comparison of LT means between treatment types of each species. Statistical significance was calculated with an analysis of variance (ANOVA). Pink outlined box plots represent low FEF group (*E-*) and yellow filed violins represent high FEF group (*E+*).Significance levels are represented by *ns* (not significant) and asterisks [*p* < 0.05 (\\*), *p* < 0.01 (\\**), *p* < 0.001 (\\***), and *p* < 0.0001 (\\****)]."
 
 #Comparison of means of LT between E+ and E- samples per tree species
 #rstatix package used for pairwise t-test
@@ -3292,74 +3339,74 @@ suppfig3b_compare_means <- compare_means(Thickness ~ E_load,
 
 # Leaf thickness by endophyte load and species
 
-LTa <- ggplot(data = master, aes(x = E_load, y = Thickness, fill = E_load)) +
-  geom_violin() +
-  geom_point(position = position_jitterdodge(dodge.width = 0.9, jitter.width = 0.2),
-             alpha = 0.3, color = "grey30", size = 2) +
-  geom_crossbar(stat="summary", 
-               fun = mean, 
-               fun.max = mean, 
-               fun.min = mean,
-               alpha = 0.3, 
-               size = 0.3, 
-               width = 0.7,
-               position = position_dodge(width = 0.9)) +
-  scale_fill_manual(name = "Treatment ", values= met.brewer("Cross", n = 2, type = "discrete")) +
-  scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
-  scale_x_discrete(labels=c(newname)) +
+LTa <-
+  ggplot(data = master, aes(x = E_load, y = Thickness, color = E_load)) +
+  geom_point(
+    aes(color = E_load),
+    alpha = 0.7,
+    size = 1.7,
+    position = position_jitter(w = 0.2)
+  ) +
+  geom_boxplot(
+    aes(color = E_load),
+    alpha = 0.0,
+    outlier.alpha = 0.5,
+    linewidth = 1.2
+  ) +
+  scale_color_manual(name = "Treatment ",
+                     values = met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_x_discrete(labels = c(newname)) +
   scale_y_continuous(limits = c(100, 300)) +
- 
   theme(
-        #panel.grid.major = element_line(colour = "grey"),
-        #panel.grid.minor = element_line(colour = "grey"),
-        #strip.background = element_rect(fill = "white"),
-        #strip.text.x = element_text(colour = "black", face = "bold"),
-        legend.title = element_text(face = "bold"),
-        panel.border = element_rect(linetype = "blank", fill = NA),
-        axis.text.x=element_blank(),
-        legend.position="right", 
-        legend.text = element_text(size = 12)) +
-  labs(x="", y= expression(paste("Leaf thickness (",mu,"m)"))) +
-  stat_compare_means(label = "p.signif", 
-                     method = "t.test",
-                     paired = T,
-                     comparisons =list(c("E-", "E+")),
-                     bracket.size = 0.8)
+    legend.title = element_text(face = "bold"),
+    panel.border = element_rect(linetype = "blank", fill = NA),
+    axis.text.x = element_blank(),
+    legend.position = "right",
+    legend.text = element_text(size = 12)
+  ) +
+  labs(x = "", y = expression(paste("Leaf thickness (", mu, "m)"))) +
+  stat_compare_means(
+    label = "p.signif",
+    method = "t.test",
+    paired = T,
+    comparisons = list(c("E-", "E+")),
+    bracket.size = 0.8
+  )
 
 #LTa
 
 
-LTb <- ggplot(data = master, aes(x = Species, y = Thickness, fill = E_load)) +
-  geom_violin() +
-  geom_point(position = position_jitterdodge(dodge.width = 0.9, jitter.width = 0.2),
-             alpha = 0.3, color = "grey30", size = 2) +
-  geom_crossbar(stat="summary", 
-               fun = mean, 
-               fun.max = mean, 
-               fun.min = mean,
-               alpha = 0.3, 
-               size = 0.3, 
-               width = 0.7,
-               position = position_dodge(width = 0.9)) +
-  scale_fill_manual(name = "Treatment ", values= met.brewer("Cross", n = 2, type = "discrete")) +
-  scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
-  scale_x_discrete(labels=c(newname)) +
+LTb <-
+  ggplot(data = master, aes(x = Species, y = Thickness, color = E_load)) +
+  geom_point(
+    aes(color = E_load),
+    alpha = 0.7,
+    size = 1.7,
+    position = position_jitterdodge(jitter.width = 0.2, dodge.width = 0.75)
+  ) +
+  geom_boxplot(aes(color = E_load),
+               alpha = 0.0,
+               outlier.alpha = 0.5) +
+  scale_color_manual(name = "Treatment ",
+                     values = met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_x_discrete(labels = c(newname)) +
   scale_y_continuous(limits = c(100, 300)) +
- 
+  
   theme(
-        #panel.grid.major = element_line(colour = "grey"),
-        #panel.grid.minor = element_line(colour = "grey"),
-        #strip.background = element_rect(fill = "white"),
-        #strip.text.x = element_text(colour = "black", face = "bold"),
-        legend.title = element_text(face = "bold"),
-        panel.border = element_rect(linetype = "blank", fill = NA),
-        axis.text.x=element_text(face = "italic", hjust = 1, angle = 30),
-        legend.position="right", 
-        legend.text = element_text(size = 12)) +
-  labs(x="", y= expression(paste("Leaf thickness (",mu,"m)"))) +
-  stat_compare_means(label = "p.signif", 
+    legend.title = element_text(face = "bold"),
+    panel.border = element_rect(linetype = "blank", fill = NA),
+    axis.text.x = element_text(
+      face = "italic",
+      hjust = 1,
+      angle = 30
+    ),
+    legend.position = "right",
+    legend.text = element_text(size = 12)
+  ) +
+  labs(x = "", y = expression(paste("Leaf thickness (", mu, "m)"))) +
+  stat_compare_means(label = "p.signif",
                      method = "anova",
-                     paired = T,)
+                     paired = T)
 #LTb
 
 # Figure S3a S3b
@@ -3384,7 +3431,7 @@ ggsave(filename="./figures/suppfig3.png", plot = suppfig_3, dpi=300, units=c("mm
 #| warning: false
 #| fig.height: 6
 #| fig.width: 6
-#| fig.cap: "Distributions of values and means of leaf punch strength (LPS) (N mm^-1) in treatment groups (*E-* and *E+*) and tree species. a) Comparison of LPS means between treatment groups across individuals of all species. Statistical significance was calculated using a two-sided Student's t-Test. b) Comparison of LPS means between treatment types of each species. Statistical significance was calculated with an analysis of variance (ANOVA). Pink filled violins represent low FEF group (*E-*) and yellow filed violins represent high FEF group (*E+*).Significance levels are represented by *ns* (not significant) and asterisks [*p* < 0.05 (\\*), *p* < 0.01 (\\**), *p* < 0.001 (\\***), and *p* < 0.0001 (\\****)]."
+#| fig.cap: "Distributions of values and means of leaf punch strength (LPS) (N mm^-1) in treatment groups (*E-* and *E+*) and tree species. a) Comparison of LPS means between treatment groups across individuals of all species. Statistical significance was calculated using a two-sided Student's t-Test. b) Comparison of LPS means between treatment types of each species. Statistical significance was calculated with an analysis of variance (ANOVA). Pink outlined box plots represent low FEF group (*E-*) and yellow filed violins represent high FEF group (*E+*).Significance levels are represented by *ns* (not significant) and asterisks [*p* < 0.05 (\\*), *p* < 0.01 (\\**), *p* < 0.001 (\\***), and *p* < 0.0001 (\\****)]."
 
 
 #Comparison of means of LPS between E+ and E- samples per tree species
@@ -3427,20 +3474,20 @@ suppfig4b_compare_means <- compare_means(Toughness ~ E_load,
 
 # Figure S3
 # Leaf toughness (lbf) by  endophyte load and species with data (data) ####
-LPSa <- ggplot(data = master, aes( x = E_load, y = Toughness, fill = E_load)) +
-geom_violin() +
-  geom_point(position = position_jitterdodge(dodge.width = 0.9, jitter.width = 0.2),
-             alpha = 0.3, color = "grey30", size = 2) +
-  geom_crossbar(stat="summary", 
-               fun = mean, 
-               fun.max = mean, 
-               fun.min = mean,
-               alpha = 0.3, 
-               size = 0.3, 
-               width = 0.7,
-               position = position_dodge(width = 0.9)) +
-  scale_fill_manual(name = "Treatment ", values= met.brewer("Cross", n = 2, type = "discrete")) +
-  scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
+LPSa <- ggplot(data = master, aes( x = E_load, y = Toughness, color = E_load)) +
+geom_point(
+  aes(color = E_load),
+  alpha = 0.7,
+  size = 1.7,
+  position = position_jitter(w = 0.2)
+) +
+  geom_boxplot(
+    aes(color = E_load),
+    alpha = 0.0,
+    outlier.alpha = 0.5,
+    linewidth = 1.2
+  ) +
+  scale_color_manual(name = "Treatment ", values= met.brewer("Cross", n = 2, type = "discrete")) +
   scale_x_discrete(labels=c(newname)) +
  
   theme(
@@ -3463,20 +3510,18 @@ geom_violin() +
 
 # 
 #
-LPSb <- ggplot(data = master, aes( x = Species, y = Toughness, fill = E_load)) +
-geom_violin() +
-  geom_point(position = position_jitterdodge(dodge.width = 0.9, jitter.width = 0.2),
-             alpha = 0.3, color = "grey30", size = 2) +
-  geom_crossbar(stat="summary", 
-               fun = mean, 
-               fun.max = mean, 
-               fun.min = mean,
-               alpha = 0.3, 
-               size = 0.3, 
-               width = 0.7,
-               position = position_dodge(width = 0.9)) +
-  scale_fill_manual(name = "Treatment ", values= met.brewer("Cross", n = 2, type = "discrete")) +
-  scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
+LPSb <- ggplot(data = master, aes( x = Species, y = Toughness, color= E_load)) +
+geom_point(
+  aes(color = E_load),
+  alpha = 0.7,
+  size = 1.7,
+    position = position_jitterdodge(jitter.width = 0.2, dodge.width = 0.75)
+) +
+  geom_boxplot(
+    aes(color = E_load),
+    alpha = 0.0,
+    outlier.alpha = 0.5) +
+  scale_color_manual(name = "Treatment ", values= met.brewer("Cross", n = 2, type = "discrete")) +
   scale_x_discrete(labels=c(newname)) +
  
   theme(
@@ -3492,7 +3537,7 @@ geom_violin() +
   labs(x="", y= expression(paste("Leaf punch strength (N ", mm^-1,")"))) +
   stat_compare_means(label = "p.signif",
                      method = "anova",
-                     paired = T,) +
+                     paired = T) +
   ylim(0.10, 1) 
 #LPSb
 
@@ -3518,7 +3563,7 @@ ggsave(filename="./figures/suppfig4.png", plot = suppfig_4, dpi=300, units=c("mm
 #| warning: false
 #| fig.height: 6
 #| fig.width: 6
-#| fig.cap: "Distributions of values and means of leaf mass per area (LMA) (mg mm^2) in treatment groups (*E-* and *E+*) and tree species. a) Comparison of LMA means between treatment groups across individuals of all species. Statistical significance was calculated using a two-sided Student's t-Test. b) Comparison of LMA means between treatment types of each species. Statistical significance was calculated with an analysis of variance (ANOVA). Pink filled violins represent low FEF group (*E-*) and yellow filed violins represent high FEF group (*E+*). Significance levels are represented by *ns* (not significant) and asterisks [*p* < 0.05 (\\*), *p* < 0.01 (\\**), and *p* < 0.001 (\\***)]."
+#| fig.cap: "Distributions of values and means of leaf mass per area (LMA) (mg mm^2) in treatment groups (*E-* and *E+*) and tree species. a) Comparison of LMA means between treatment groups across individuals of all species. Statistical significance was calculated using a two-sided Student's t-Test. b) Comparison of LMA means between treatment types of each species. Statistical significance was calculated with an analysis of variance (ANOVA). Pink outlined box plots represent low FEF group (*E-*) and yellow filed violins represent high FEF group (*E+*). Significance levels are represented by *ns* (not significant) and asterisks [*p* < 0.05 (\\*), *p* < 0.01 (\\**), and *p* < 0.001 (\\***)]."
 
 #Comparison of means of LMA between E+ and E- samples per tree species
 #rstatix package used for pairwise t-test
@@ -3560,81 +3605,85 @@ suppfig5b_compare_means <- compare_means(LMA ~ E_load,
 
 # Figure S5
 # Leaf mass per area (LMA) by  endophyte load and species
-LMAa <- ggplot(data = master, aes(x = E_load, y = LMA, fill = E_load)) +
-  geom_violin() +
-  geom_point(position = position_jitterdodge(dodge.width = 0.9, jitter.width = 0.2),
-             alpha = 0.3, color = "grey30", size = 2) +
-  geom_crossbar(stat="summary", 
-               fun = mean, 
-               fun.max = mean, 
-               fun.min = mean,
-               alpha = 0.3, 
-               size = 0.3, 
-               width = 0.7,
-               position = position_dodge(width = 0.9)) +
-  scale_fill_manual(name = "Treatment ", values= met.brewer("Cross", n = 2, type = "discrete")) +
-  scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
-  scale_x_discrete(labels=c(newname)) +
- 
+LMAa <-
+  ggplot(data = master, aes(x = E_load, y = LMA, color = E_load)) +
+  geom_point(
+    aes(color = E_load),
+    alpha = 0.7,
+    size = 1.7,
+    position = position_jitter(w = 0.2)
+  ) +
+  geom_boxplot(
+    aes(color = E_load),
+    alpha = 0.0,
+    outlier.alpha = 0.5,
+    linewidth = 1.2
+  ) +
+  scale_color_manual(name = "Treatment ",
+                     values = met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_x_discrete(labels = c(newname)) +
   theme(
-        #panel.grid.major = element_line(colour = "grey"),
-        #panel.grid.minor = element_line(colour = "grey"),
-        #strip.background = element_rect(fill = "white"),
-        #strip.text.x = element_text(colour = "black", face = "bold"),
-        legend.title = element_text(face = "bold"),
-        panel.border = element_rect(linetype = "blank", fill = NA),
-        axis.text.x=element_blank(),
-        legend.position="right", 
-        legend.text = element_text(size = 12)) +
-  labs(x="", y= expression(paste("LMA (mg ",mm^-2, ")"))) +
-  stat_compare_means(label = "p.signif", 
-                     method = "t.test",
-                     paired = T,
-                     comparisons =list(c("E-", "E+")),
-                     bracket.size = 0.8)
+    legend.title = element_text(face = "bold"),
+    panel.border = element_rect(linetype = "blank", fill = NA),
+    axis.text.x = element_blank(),
+    legend.position = "right",
+    legend.text = element_text(size = 12)
+  ) +
+  labs(x = "", y = expression(paste("LMA (mg ", mm ^ -2, ")"))) +
+  stat_compare_means(
+    label = "p.signif",
+    method = "t.test",
+    paired = T,
+    comparisons = list(c("E-", "E+")),
+    bracket.size = 0.8
+  )
 #LMAa
 
-LMAb <- ggplot(data = master, aes( x = Species, y = LMA, fill = E_load)) +
-geom_violin() +
-  geom_point(position = position_jitterdodge(dodge.width = 0.9, jitter.width = 0.2),
-             alpha = 0.3, color = "grey30", size = 2) +
-  geom_crossbar(stat="summary", 
-               fun = mean, 
-               fun.max = mean, 
-               fun.min = mean,
-               alpha = 0.3, 
-               size = 0.3, 
-               width = 0.7,
-               position = position_dodge(width = 0.9)) +
-  scale_fill_manual(name = "Treatment ", values= met.brewer("Cross", n = 2, type = "discrete")) +
-  scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
-  scale_x_discrete(labels=c(newname)) +
- 
+LMAb <-
+  ggplot(data = master, aes(x = Species, y = LMA, color = E_load)) +
+  geom_point(
+    aes(color = E_load),
+    alpha = 0.7,
+    size = 1.7,
+    position = position_jitterdodge(jitter.width = 0.2, dodge.width = 0.75)
+  ) +
+  geom_boxplot(aes(color = E_load),
+               alpha = 0.0,
+               outlier.alpha = 0.5) +
+  scale_color_manual(name = "Treatment ",
+                     values = met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_x_discrete(labels = c(newname)) +
   theme(
-        #panel.grid.major = element_line(colour = "grey"),
-        #panel.grid.minor = element_line(colour = "grey"),
-        #strip.background = element_rect(fill = "white"),
-        #strip.text.x = element_text(colour = "black", face = "bold"),
-        legend.title = element_text(face = "bold"),
-        panel.border = element_rect(linetype = "blank", fill = NA),
-        axis.text.x=element_text(face = "italic", hjust = 1, angle = 30),
-        legend.position="right", 
-        legend.text = element_text(size = 12)) +
-  labs(x="", y= expression(paste("LMA (mg ",mm^-2, ")"))) +
+    legend.title = element_text(face = "bold"),
+    panel.border = element_rect(linetype = "blank", fill = NA),
+    axis.text.x = element_text(
+      face = "italic",
+      hjust = 1,
+      angle = 30
+    ),
+    legend.position = "right",
+    legend.text = element_text(size = 12)
+  ) +
+  labs(x = "", y = expression(paste("LMA (mg ", mm ^ -2, ")"))) +
   #labs(caption = "*Outliers and singletons removed.") +
-  stat_compare_means(label = "p.signif", 
+  stat_compare_means(label = "p.signif",
                      method = "anova",
                      paired = T)
 
 #LMAb
 
 # Figure S5a-S5b
-suppfig_5 <- ggarrange(LMAa, LMAb, nrow = 1, 
-                       ncol=2, 
-                       label.x = -0.015, vjust = 1, 
-                       common.legend = TRUE,
-                       legend="bottom", 
-                       labels = c("(a)", "(b)"))
+suppfig_5 <- ggarrange(
+  LMAa,
+  LMAb,
+  nrow = 1,
+  ncol = 2,
+  label.x = -0.015,
+  vjust = 1,
+  common.legend = TRUE,
+  legend = "bottom",
+  labels = c("(a)", "(b)")
+)
 suppfig_5
 ggsave(filename="./figures/suppfig5.png", plot = suppfig_5, dpi=300, units=c("mm"), width = 250, height = 200, bg ="white")
 ```
@@ -3648,75 +3697,77 @@ ggsave(filename="./figures/suppfig5.png", plot = suppfig_5, dpi=300, units=c("mm
 #| warning: false
 #| fig.height: 6
 #| fig.width: 6
-#| fig.cap: "Distributions of values and means of herbivory (%) and pathogen damage caused by *Atta colombica* and *Calonectria* sp. , respectively, in treatment groups (*E-* and *E+*) per tree species. a) Comparison of herbivory (%) means between treatment groups across individuals of all species. b) Comparison of pathogen (%) means between treatment groups across individuals of all species. Pink filled violins represent low FEF group (*E-*) and yellow filed violins represent high FEF group (*E+*). Statistical significance was calculated with an analysis of variance (ANOVA). Significance levels are represented by *ns* (not significant) and asterisks [*p* < 0.05 (\\*), *p* < 0.01 (\\**), and *p* < 0.001 (\\***)]."
+#| fig.cap: "Distributions of values and means of herbivory (%) and pathogen damage caused by *Atta colombica* and *Calonectria* sp. , respectively, in treatment groups (*E-* and *E+*) per tree species. a) Comparison of herbivory (%) means between treatment groups across individuals of all species. b) Comparison of pathogen (%) means between treatment groups across individuals of all species. Pink outlined box plots represent low FEF group (*E-*) and yellow filed violins represent high FEF group (*E+*). Statistical significance was calculated with an analysis of variance (ANOVA). Significance levels are represented by *ns* (not significant) and asterisks [*p* < 0.05 (\\*), *p* < 0.01 (\\**), and *p* < 0.001 (\\***)]."
 
 #Fig. S6a
-herb_violin_a <-  ggplot(data = master, aes( x = Species, y = Ant_percent_leafloss, fill = E_load)) +
-geom_violin() +
-  geom_point(position = position_jitterdodge(dodge.width = 0.9, jitter.width = 0.2),
-             alpha = 0.3, color = "grey30", size = 2) +
-  geom_crossbar(stat="summary", 
-               fun = mean, 
-               fun.max = mean, 
-               fun.min = mean,
-               alpha = 0.3, 
-               size = 0.3, 
-               width = 0.7,
-               position = position_dodge(width = 0.9)) +
-  scale_fill_manual(name = "Treatment ", values= met.brewer("Cross", n = 2, type = "discrete")) +
-  scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
-  scale_x_discrete(labels=c(newname)) +
- 
+herb_violin_a <-
+  ggplot(data = master, aes(x = Species, y = Ant_percent_leafloss, color = E_load)) +
+  geom_point(
+    aes(color = E_load),
+    alpha = 0.7,
+    size = 1.7,
+    position = position_jitterdodge(jitter.width = 0.2, dodge.width = 0.75)
+  ) +
+  geom_boxplot(
+    aes(color = E_load),
+    alpha = 0.0,
+    outlier.alpha = 0.5
+  ) +
+  scale_color_manual(name = "Treatment ",
+                     values = met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_x_discrete(labels = c(newname)) +
   theme(
-        #panel.grid.major = element_line(colour = "grey"),
-        #panel.grid.minor = element_line(colour = "grey"),
-        #strip.background = element_rect(fill = "white"),
-        #strip.text.x = element_text(colour = "black", face = "bold"),
-        legend.title = element_text(face = "bold"),
-        panel.border = element_rect(linetype = "blank", fill = NA),
-        axis.text.x=element_text(face = "italic", hjust = 1, angle = 30),
-        legend.position="right", 
-        legend.text = element_text(size = 12)) +
-  labs(x="", y= expression(paste("Herbivory (%)"))) +
-
-  stat_compare_means(label = "p.signif", 
+    legend.title = element_text(face = "bold"),
+    panel.border = element_rect(linetype = "blank", fill = NA),
+    axis.text.x = element_text(
+      face = "italic",
+      hjust = 1,
+      angle = 30
+    ),
+    legend.position = "right",
+    legend.text = element_text(size = 12)
+  ) +
+  labs(x = "", y = expression(paste("Herbivory (%)"))) +
+  
+  stat_compare_means(label = "p.signif",
                      method = "anova",
                      paired = T)
-#herb_violin_b
+#herb_violin_a
 
 #Fig. S6b
-patho_violin_b <-  ggplot(data = master, aes( x = Species, y = Pathogen_percent_damage, fill = E_load)) +
-geom_violin() +
-  geom_point(position = position_jitterdodge(dodge.width = 0.9, jitter.width = 0.2),
-             alpha = 0.3, color = "grey30", size = 2) +
-  geom_crossbar(stat="summary", 
-               fun = mean, 
-               fun.max = mean, 
-               fun.min = mean,
-               alpha = 0.3, 
-               size = 0.3, 
-               width = 0.7,
-               position = position_dodge(width = 0.9)) +
-  scale_fill_manual(name = "Treatment ", values= met.brewer("Cross", n = 2, type = "discrete")) +
-  scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
-  scale_x_discrete(labels=c(newname)) +
- 
-  theme(
-        #panel.grid.major = element_line(colour = "grey"),
-        #panel.grid.minor = element_line(colour = "grey"),
-        #strip.background = element_rect(fill = "white"),
-        #strip.text.x = element_text(colour = "black", face = "bold"),
-        legend.title = element_text(face = "bold"),
-        panel.border = element_rect(linetype = "blank", fill = NA),
-        axis.text.x=element_text(face = "italic", hjust = 1, angle = 30),
-        legend.position="right", 
-        legend.text = element_text(size = 12)) +
-  labs(x="", y= expression(paste("Pathogen damage (%)"))) +
-
-  stat_compare_means(label = "p.signif", 
+patho_violin_b <-
+  ggplot(data = master,
+         aes(x = Species, y = Pathogen_percent_damage, color = E_load)) +
+  geom_point(
+    aes(color = E_load),
+    alpha = 0.7,
+    size = 1.7,
+    position = position_jitterdodge(jitter.width = 0.2, dodge.width = 0.75)
+  ) +
+  geom_boxplot(
+    aes(color = E_load),
+    alpha = 0.0,
+    outlier.alpha = 0.5
+  ) +
+  scale_color_manual(name = "Treatment ",
+                     values = met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_x_discrete(labels = c(newname)) +
+  theme(legend.title = element_text(face = "bold"),
+    panel.border = element_rect(linetype = "blank", fill = NA),
+    axis.text.x = element_text(
+      face = "italic",
+      hjust = 1,
+      angle = 30
+    ),
+    legend.position = "right",
+    legend.text = element_text(size = 12)
+  ) +
+  labs(x = "", y = expression(paste("Pathogen damage (%)"))) +
+  
+  stat_compare_means(label = "p.signif",
                      method = "anova",
                      paired = T) +
-   guides(color = "none")
+  guides(color = "none")
 
 #patho_violin_b
 
