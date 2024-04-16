@@ -62,7 +62,6 @@ library("ggplot2")
 library("ggpubr")
 library("gridExtra")
 library("ggthemes")
-library("ggraph")
 library("hrbrthemes")
 library("igraph")
 library("tidyverse")
@@ -2780,6 +2779,7 @@ anova(m3_dbrda_selection, by="axis", perm.max=500)
 #Best model selected with `ordistep` function 
 #Terms: otu_e.dist ~ Thickness + Toughness + Anthocyanins + LMA
 m3dbRDA <- dbrda(otu_e.dist ~ Anthocyanins + Toughness + Thickness + LMA, data= ndata2, dist="bray", na.action = na.omit)
+anova.cca(m3dbRDA, by="margin")
 m3dbrda_summary <- summary(m3dbRDA)
 plot(m3dbRDA)
 #Correlation of constrained and unconstrained axes
@@ -2906,6 +2906,55 @@ NM.DS
 #
 ```
 
+
+
+## PERMDISP
+
+```{r}
+#Corroborating what dbRDA results tell us
+#By Tree Species
+beta_disp <-
+  betadisper(as.dist(otu_e.dist),
+             # Matrix of Hellinger transformed data rarefied
+             ndata2$Species,
+             # Grouping variable
+             type = "median",
+             sqrt.dist = FALSE)
+
+anova(beta_disp)
+TukeyHSD(beta_disp, conf.level = 0.95)
+
+set.seed(123)
+beta_perm1 <-
+  permutest(beta_disp,
+            parallel = 8,
+            permutations = 999,
+            by = "margin")
+save(beta_perm1, file = "clean_data/statistics/beta_perm1.rda")
+
+beta_perm1 #Communities inside tree species do not differ in dispersion
+
+TukeyHSD(beta_disp, conf.level = 0.95)
+
+# By treatment group
+beta_disp2  <-
+  betadisper(otu_e.dist,
+             ndata2$E_load,
+             type = "median",
+             sqrt.dist = FALSE)
+anova(beta_disp2) # Significant differences in community according to E_load
+
+
+set.seed(123)
+beta_perm2 <-
+  permutest(beta_disp2,
+            parallel = 8,
+            permutations = 999,
+            by = "margin")
+beta_perm2 # We see differences in dispersion of E_load
+TukeyHSD(beta_disp2, conf.level = 0.95)
+
+```
 ## ANOSIM
 
 ```{r}
