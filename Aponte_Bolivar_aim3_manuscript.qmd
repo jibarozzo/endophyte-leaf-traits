@@ -196,8 +196,6 @@ conflict_prefer("filter", "dplyr")
 conflict_prefer_all("phyloseq")
 ```
 
-**Author contributions:** A.E.A., S.A.V. designed research study. M.S.J. and B.A.R. performed experiments and collected data. B.A.R. and M.S.J. analyzed data. B.A.R. wrote the manuscript with input from all authors. All authors gave final approval for publication. Our study included technicians based in the country where the study was carried out throughout the preparation phase of the project (seed collection and preparation). We recognize that more could have been done to engage local residents, students and scientists with our research as our project developed. We plan to address these caveats in future research
-
 
 # Abstract
 
@@ -352,7 +350,7 @@ Inoculation of seedlings was successful. Seedlings exposed to forest spore fall 
 
 We observed general differences in leaf functional traits among species (Table 1). Anthocyanins (ACI) and leaf punch strength (LPS) did not differ between treatments (*E-* and *E+*) when we combined all host species (Fig. S2a and Fig. S4a respectively). For LT and LMA we saw significant differences between *E-* and *E+* treatment groups when we combined all host species (Fig S3a and Fig. S5a, respectively). As predicted, we did observe lower herbivory in the *E+* treatment compared to the *E-* treatment when we combined all host species, *t*(34) = 2.23, *p* = 0.033 (Fig. 2a). We did not observe differences in pathogen damage between *E-* and *E+* treatments when we combined all host species (Fig. 2b). However, within the *E-* treatment group, leaves exposed to *Calonectria* sp. suffered greater damage (*M* = 17.37, *SD* = 12.57) compared to non-exposed leaves (*M* = 3.49, *SD* = 5.42), *t*(31) = -7.19, *p* \< .0001 (Fig. 2b). The same pattern arose for the *E+* treatment group: exposed leaves (*M* = 20.04, *SD* = 15.72), non-exposed leaves (*M* = 7.17, *SD* = 17.48), *t*(31) = -3.26, *p* \< .01 (Fig. 2b). At the species level, herbivory and pathogen damage did not differ between treatment groups (Fig. S6a-S6b).
 
-All leaf functional traits are significantly correlated with FEF community composition (Fig.3). We used dbRDA to understand FEF community composition across host species and treatment groups. The analyses revealed that 6.34% of the overall variance in FEF communities was constrained for by the leaf functional traits. The first axis (dbRDA1) explained 49% and the second axis (dbRDA2) explained 21.3% of the constrained variance (Fig. 3). We observed a high degree of overlap between FEF communities (Fig. 3), indicating that the communities are similar in composition across host species and treatment groups, at least at the degree of resolution provided by ITS data (Fig. 3). Nonetheless, we also observed tight clustering of FEF communities in *C. cainito* and *L. panamensis*, emphasizing a distinct composition of FEF OTUs within the subspace of FEF identified. Other host species showed greater variation in FEF composition. Our PERMDISP analyses showed no significant differences in host species group dispersion (*F*~6, 149~ = 0.717, *p* \< .63) observed differences are due to location. Unsurprisingly, the dispersion for *E-* and *E+* treatment groups was significantly different (*F*~1, 154~ = 5.09, *p* \= .03). The post Tukey tests revealed dispersion of host species were not significantly different at the α \< .05 level, while treatment group dispersions were.
+All leaf functional traits are significantly correlated with FEF community composition (Fig.3). We used dbRDA to understand FEF community composition across host species and treatment groups. The analyses revealed that 6.34% of the overall variance in FEF communities was constrained for by the leaf functional traits. The first axis (dbRDA1) explained 49% and the second axis (dbRDA2) explained 21.3% of the constrained variance (Fig. 3). We observed a high degree of overlap between FEF communities (Fig. 3), indicating that the communities are similar in composition across host species and treatment groups, at least at the degree of resolution provided by ITS data (Fig. 3). Nonetheless, we also observed tight clustering of FEF communities in *C. cainito* and *L. panamensis*, emphasizing a distinct composition of FEF OTUs within the subspace of FEF identified. Other host species showed greater variation in FEF composition. Our PERMDISP analyses showed no significant differences in host species group dispersion (*F*~6, 149~ = 0.717, *p* \< .63), observed differences were due to location. Unsurprisingly, the dispersion for *E-* and *E+* treatment groups was significantly different (*F*~1, 154~ = 5.09, *p* \= .03). The post Tukey tests revealed dispersion of host species were not significantly different at the α \< .05 level, while treatment group dispersions were.
 
 There was a core set of OTUs that significantly associated with host tree species or particular treatments. In summary, 72 out of 569 Ascomycota OTUs were significantly associated with all host tree species (Table S5). Seedlings used in herbivory assays had 13 OTUs significantly associated with high herbivory damage (\>70%) and 3 and 1 OTUs significantly associated with medium (31-69%) and low (\<30%) herbivory damage, respectively, in *E-* and *E+* treatment groups (Table S6). We detected 11 OTUs significantly associated with seedlings that experienced high (\>30%) pathogen damage in *E-* and *E+* treatment groups (Table S7). We could not tease apart which OTUs were associated with leaves exposed to *Calonectria* sp. agar plugs and non-exposed leaves because the genomic data scale for these trials was at the individual plant level, not leaf level. We found 30 OTUs significantly associated with *E+* treated (inoculated with forest spore fall) individuals used in our pathogen assays (Table S8).
 
@@ -370,7 +368,7 @@ This is the first study to examine the interplay of FEF communities and leaf fun
 
 Our GLMM analysis allowed us to look at FEF and leaf traits at the same time; for herbivory damage we observed only LMA, LT and *E+* treatment group as strong predictors (Table 2). Using data from all the assays in simple linear regressions, FEF diversity and community composition correlated negatively with herbivory damage, since we saw reduced herbivory as Shannon diversity index increased (black regression line in Figure S7e). As a caveat to these results, we saw an inverse relationship between the treatment groups with the *E+* group positively correlating to herbivory and *E-* group negatively correlating to herbivory (yellow and pink regression lines, respectively, in Figure S7e). The contrast between GLMM and simple linear regressions point to the nuanced role of FEF diversity in combating herbivory; leaf functional traits, LMA and LT, overshadowed FEF diversity in our results. The FEF abundance, measured as *E+* treatment group, also played a strong role in predicting herbivory, but less so diversity and community composition. <!-- Given consistent preference by leaf-cutter ants [@bittleston2011; @coblentz2013; @estrada2013], we interpret our results as evidence for a threshold of diminishing returns for the host plant, were the acquisition of more FEF increases the chances of hosting a community that does not deter leaf-cutter ants. From the perspective of the leaf-cutter ants, everything is equally infected and the cost of allocating new resources is taxing. It highlights a trade-off in the presumably asymptomatic symbiosis host species have with FEF communities. -->
 
-We did not observe the same pattern for pathogen damage since there were no significant differences between treatment groups when considering all tree species combined (Figure 2b). Similar to herbivory damage, pathogen damage was not significantly different across treatment groups per species. Interestingly we saw that the *E+* group had equal or slightly higher pathogen damage than the *E-* group in all tree species (Figure S6b). The best-fit GLMM for pathogen damage showed LMA and LT as weak predictors (Table 2). On the other hand, with simple linear regressions we sew a significant increase in pathogen damage as Shannon diversity index increased for the complete data set (Figure S8e). Like our herbivory damage models, the contrast between GLMM and simple linear regression point to a nuanced role of FEF abundance and diversity in combating a pathogen. Pathogen damage significantly increased in the *E+* group as Shannon diversity increased, but the *E-* group did not (Figure S8e). González-Tauber [-@gonzalez-teuber2016] found the opposite trend when examining *in vitro* the inhibitory effects of the most abundant genera (*Mycosphaerella* sp., *Xylaria* sp., *Diaporthe* sp., and *Penicillium* sp.) in FEF communities isolated from the southern temperate tree *Embothrium coccineum* against three common pathogens (*Botrytis cinerea*, *Fusarium oxysporum* and *Ceratocystis pilifera*). In our case, it is possible that the FEF abundance and diversity acquired from spore-fall have a synergistic interaction with *Calonectria* sp., thus outweighing any benefits provided by single-species interactions, ultimately increasing pathogen damage intensity.
+We did not observe the same pattern for pathogen damage since there were no significant differences between treatment groups when considering all tree species combined (Figure 2b). Similar to herbivory damage, pathogen damage was not significantly different across treatment groups per species. Interestingly we saw that the *E+* group had equal or slightly higher pathogen damage than the *E-* group in all tree species (Figure S6b). The best-fit GLMM for pathogen damage showed LMA and LT as weak predictors (Table 2). On the other hand, with simple linear regressions we saw a significant increase in pathogen damage as Shannon diversity index increased for the complete data set (Figure S8e). Like our herbivory damage models, the contrast between GLMM and simple linear regression point to a nuanced role of FEF abundance and diversity in combating a pathogen. Pathogen damage significantly increased in the *E+* group as Shannon diversity increased, but the *E-* group did not (Figure S8e). González-Tauber [-@gonzalez-teuber2016] found the opposite trend when examining *in vitro* the inhibitory effects of the most abundant genera (*Mycosphaerella* sp., *Xylaria* sp., *Diaporthe* sp., and *Penicillium* sp.) in FEF communities isolated from the southern temperate tree *Embothrium coccineum* against three common pathogens (*Botrytis cinerea*, *Fusarium oxysporum* and *Ceratocystis pilifera*). In our case, it is possible that the FEF abundance and diversity acquired from spore-fall have a synergistic interaction with *Calonectria* sp., thus outweighing any benefits provided by single-species interactions, ultimately increasing pathogen damage intensity.
 
 The leaf economic spectrum (LES) allows us to interpret our results based on the functional traits that can have an important role in understanding tripartite plant-insect-pathogen interaction. The LES describes how leaf functional traits with high values are characteristic of long-lived versus short-lived leaves [@wright2004, @kitajima2013, @poorter2006]. The LES, thus acts as a host-imposed filter which FEF communities have to overcome to colonize leaf tissue, assemble, and carry out their life cycle. We did not measure leaf lifespan directly, but we interpret the values obtained for the leaf functional traits we measured as proxies for leaf lifespan, with the caveat that the traits were measured on seedlings and leaves were relatively young (\< 150 days). We saw that species with relatively low values of ACI, LMA, and LPS (Figures S2 - S5) constrained in PC1 axis (Figure 4b) experienced very little herbivory damage (i.e., *Dypteryx* sp.) or had much variability (i.e., *C. alliodora*) (Figure 5a). Species with relatively high values of ACI, LMA, and LPS like *C. cainito* experienced low to moderate herbivory damage (Figure 5a). A similar pattern was evident in the pathogen damage data set (Figure 5c). The contrast in the slopes of the regression lines in Figure 5a and 5c highlight the potential importance LES traits have to counter herbivory and pathogen damage. We view these findings and those presented in Figure S7 as support for our prediction, where leaves on the high end of the LES, are less attractive to leaf cutter-ants but the effects of FEF communities outweigh this selection factor after a certain threshold is reached, as mentioned above.
 
@@ -382,7 +380,8 @@ This study advances our understanding of the intricate interactions between plan
 
 # Author Contributions
 
-A.E.A., S.A.V. designed research study. M.S.J. and B.A.R. performed experiments and collected data. B.A.R. and M.S.J. analyzed data. B.A.R. wrote the manuscript with input from all authors. All authors gave final approval for publication.
+A.E.A., S.A.V. designed research study. M.S.J. and B.A.R. performed experiments and collected data. B.A.R. and M.S.J. analyzed data. B.A.R. wrote the manuscript with input from all authors. All authors gave final approval for publication. Our study included technicians based in the country where the study was carried out throughout the preparation phase of the project (seed collection and preparation). We recognize that more could have been done to engage local residents, students and scientists with our research as our project developed. We plan to address these caveats in future research
+
 
 # Acknowledgements
 
@@ -393,7 +392,7 @@ This research was funded by NSF DEB-1556583 to S.A.V. and NSF DEB-1556287 to A.E
 The authors declare no competing interests.
 
 # Data Availability Statement
-The genomic data that support the findings of this study will be submited to NCBI upon acceptance of this manuscript. The manuscript and code for reproducibility is available from corresponding author's GitHub:[https://github.com/bolivaraponte/endophyte-leaf-traits.git](https://github.com/bolivaraponte/endophyte-leaf-traits.git)
+The genomic data that support the findings of this study will be submited to NCBI-GenBank upon acceptance of this manuscript. The manuscript and code for reproducibility is available from corresponding author's GitHub:[https://github.com/bolivaraponte/endophyte-leaf-traits.git](https://github.com/bolivaraponte/endophyte-leaf-traits.git)
 
 # References
 
@@ -643,7 +642,7 @@ masterpat2 <- df_list_ant2 |>
 #| warning: false
 #| fig.width: 6
 #| fig.height: 6
-#| fig.cap: "Relative abundance (RA) of Ascomycota OTUs of seven tree species used in the study. (a) Box plots show individuals' RA and its distribution by species. (b) The RA of OTU's by treatment withing each tree species. Pink outlined box plots represent low endophyte (*E-*) treatment and yellow outlined represent high endophyte (*E+*) treatment. Relative abundance is the percentage of endophyte colonization within individuals of the same species. Statistical significance was calculated using a two-sided Student’s t-Test. Significance levels are represented by *ns* (not significant) and asterisks [*p* < 0.05 (\\*), *p* < 0.01 (\\**), *p* < 0.001 (\\***), and *p* < 0.0001 (\\****)]."
+#| fig.cap: "Relative abundance (RA) of Ascomycota OTUs of seven tree species used in the study. (a) Box plots show individuals' RA and its distribution by species. (b) The RA of OTU's by treatment withing each tree species. Pink outlined box plots represent low endophyte (*E-*) treatment and yellow outlined represent high endophyte (*E+*) treatment. Relative abundance is the percentage of endophyte colonization within individuals of the same species. Statistical significance was calculated using a two-sided Student’s t-Test. Significance levels are represented by *ns* (not significant) and asterisks [*p* < .05 (\\*), *p* < .01 (\\**), *p* < .001 (\\***), and *p* < .0001 (\\****)]."
 
 
 #Comparison of means of LMA between E+ and E- samples per tree species
@@ -760,7 +759,7 @@ ggsave(filename="./figures/figure1.png", plot = fig1, dpi=300, units=c("mm"), wi
 #| warning: false
 #| fig.height: 6
 #| fig.width: 6
-#| fig.cap: "Distributions of values and means of herbivory (%) damage caused by *Atta colombica* in treatment groups (*E-* and *E+*) and tree species. a) Comparison of herbivory (%) means between treatment groups across individuals of all species. Pink outlined box plots represent low FEF group (*E-*) and yellow outlined box plots represent high FEF group (*E+*). b) Comparison of pathogen (%) means between treatment groups across individuals of all species.  Maroon box plots represent control leaves and blue box plots represent pathogen treated leaves.  Statistical significance was calculated using a two-sided Student's t-Test. Significance levels are represented by *ns* (not significant) and asterisks [*p* < 0.05 (\\*), *p* < 0.01 (\\**), *p* < 0.001 (\\***), and *p* < 0.0001 (\\****)]"
+#| fig.cap: "Distributions of values and means of herbivory (%) damage caused by *Atta colombica* in treatment groups (*E-* and *E+*) and tree species. a) Comparison of herbivory (%) means between treatment groups across individuals of all species. Pink outlined box plots represent low FEF group (*E-*) and yellow outlined box plots represent high FEF group (*E+*). b) Comparison of pathogen (%) means between treatment groups across individuals of all species.  Maroon box plots represent control leaves and blue box plots represent pathogen treated leaves.  Statistical significance was calculated using a two-sided Student's t-Test. Significance levels are represented by *ns* (not significant) and asterisks [*p* < .05 (\\*), *p* < .01 (\\**), *p* < .001 (\\***), and *p* < .0001 (\\****)].."
 
 
 #Comparison of means of Herbivory(%) between E+ and E- samples per tree species
@@ -1901,7 +1900,7 @@ P3REM <- lme(logit_pathogenicity ~  LMA + Thickness, weights = varIdent(form = ~
 #     locations = cells_column_spanners(spanner = "Pathogen damage model")
 #   ) |>
 #   tab_footnote(
-#     footnote = md("Significance levels are represented by *ns* (not significant) and asterisks [*p* < 0.05 (\\*), *p* < 0.01 (\\**), *p* < 0.001 (\\***), and *p* < 0.0001 (\\****)]."),
+#     footnote = md("Significance levels are represented by *ns* (not significant) and asterisks [*p* < .05 (\\*), *p* < .01 (\\**), *p* < .001 (\\***), and *p* < .0001 (\\****)]."),
 #     locations = cells_column_labels(columns = starts_with("p"))
 #   ) |>
 #   opt_align_table_header(align = "left") |>
@@ -2023,7 +2022,7 @@ table2
 
 # Supplementary Materials
 
-## Table S1
+<!-- ## Table S1 -->
 
 ```{r, supptable_S1}
 #| echo: false
@@ -2096,7 +2095,7 @@ supptable_S1 <-  gt(
               columns = c(p, p.adj, p.format, p.signif)) |>
   tab_footnote(
     footnote = md(
-      "Significance levels are represented by *ns* (not significant) and asterisks [*p* < 0.05 (\\*), *p* < 0.01 (\\**), *p* < 0.001 (\\***), and *p* < 0.0001 (\\****)]."
+      "Significance levels are represented by *ns* (not significant) and asterisks [*p* < .05 (\\*), *p* < .01 (\\**), *p* < .001 (\\***), and *p* < .0001 (\\****)]."
     ),
     locations = cells_column_labels(columns = p.signif)
   ) |>
@@ -2110,7 +2109,7 @@ supptable_S1
 #gtsave(supptable_S1, file = "Aim3_supptable_S1_05JAN2024.docx", path = "./tables")
 ```
 
-## Table S2
+<!-- ## Table S2 -->
 
 ```{r, supptable_S2}
 #| echo: false
@@ -2181,7 +2180,7 @@ supptable_S2 <-  gt(
               columns = c(p, p.adj, p.format, p.signif)) |>
   tab_footnote(
     footnote = md(
-      "Significance levels are represented by *ns* (not significant) and asterisks [*p* < 0.05 (\\*), *p* < 0.01 (\\**), *p* < 0.001 (\\***), and *p* < 0.0001 (\\****)]."
+      "Significance levels are represented by *ns* (not significant) and asterisks [*p* < .05 (\\*), *p* < .01 (\\**), *p* < .001 (\\***), and *p* < .0001 (\\****)]."
     ),
     locations = cells_column_labels(columns = p.signif)
   ) |>
@@ -2195,7 +2194,7 @@ supptable_S2
 #gtsave(supptable_S2, file = "Aim3_supptable_S2_05JAN2024.docx", path = "./tables")
 ```
 
-## Table S3
+<!-- ## Table S3 -->
 
 ```{r, supptable_S3}
 #| echo: false
@@ -2267,7 +2266,7 @@ supptable_S3 <-  gt(
               columns = c(p, p.adj, p.format, p.signif)) |>
   tab_footnote(
     footnote = md(
-      "Significance levels are represented by *ns* (not significant) and asterisks [*p* < 0.05 (\\*), *p* < 0.01 (\\**), *p* < 0.001 (\\***), and *p* < 0.0001 (\\****)]."
+      "Significance levels are represented by *ns* (not significant) and asterisks [*p* < .05 (\\*), *p* < .01 (\\**), *p* < .001 (\\***), and *p* < .0001 (\\****)]."
     ),
     locations = cells_column_labels(columns = p.signif)
   ) |>
@@ -2281,7 +2280,7 @@ supptable_S3
 #gtsave(supptable_S3, file = "Aim3_supptable_S3_05JAN2024.docx", path = "./tables")
 ```
 
-## Table S4
+<!-- ## Table S4 -->
 
 ```{r, supptable_S4}
 #| echo: false
@@ -2353,7 +2352,7 @@ supptable_S4 <-  gt(
               columns = c(p, p.adj, p.format, p.signif)) |>
   tab_footnote(
     footnote = md(
-      "Significance levels are represented by *ns* (not significant) and asterisks: *p* = 0.05 (\\*), *p* = 0.01 (\\**), p = 0.001 (\\***), and *p* < 0.0001 (\\****)]."
+      "Significance levels are represented by *ns* (not significant) and asterisks: *p* = .05 (\\*), *p* = .01 (\\**), p = .001 (\\***), and *p* < .0001 (\\****)]."
     ),
     locations = cells_column_labels(columns = p.signif)
   ) |>
@@ -2368,7 +2367,7 @@ supptable_S4
 
 ```
 
-## Table S5
+<!-- ## Table S5 -->
 
 ```{r, Indicator_species}
 #| echo: false
@@ -2426,7 +2425,7 @@ multipatt_analysis_sign[, p.adj := p.adjust(p.value, method="BH")] #This can als
  
 # #Now we can select only the indicators with adjusted significant p-values
 
-multipatt_analysis_sign <- multipatt_analysis_sign[p.adj <= 0.05,]
+multipatt_analysis_sign <- multipatt_analysis_sign[p.adj < 0.05,]
 # 
 # #Renaming the first column
 colnames(multipatt_analysis_sign)[1]  <- "OTU" 
@@ -2438,7 +2437,7 @@ multipatt_taxonomy <-
   left_join(newpqDF, multipatt_analysis_sign, by = c("OTU"))
 
 multipatt_taxonomy <- multipatt_taxonomy |>
-  filter(p.adj <= 0.05) |>
+  filter(p.adj < 0.05) |>
   select(!c(9:164)) |>
   as.tibble()
 
@@ -2509,7 +2508,7 @@ supptable_S5 <- gt(
   )) |>
   tab_footnote(
     footnote = md(
-      "Significance levels are represented by *ns* (not significant) and asterisks [*p* < 0.05 (\\*), *p* < 0.01 (\\**), *p* < 0.001 (\\***), and *p* < 0.0001 (\\****)]."
+      "Significance levels are represented by *ns* (not significant) and asterisks [*p* < .05 (\\*), *p* < .01 (\\**), *p* < .001 (\\***), and *p* < .0001 (\\****)]."
     ),
     locations = cells_column_labels(columns = P.value)
   ) |>
@@ -2525,7 +2524,7 @@ supptable_S5
 #gtsave(supptable_S5, file = "Aim3_supptable_S5_12JAN2024.docx", path = "./tables")
 ```
 
-## Table S6
+<!-- ## Table S6 -->
 
 ```{r, Recoding_upper_lower}
 #| echo: false
@@ -2537,9 +2536,9 @@ upper_lower_damage <- master |>
   mutate(
     herbivory_level = case_when(Ant_percent_leafloss  >= 70 ~ "high",
                                 Ant_percent_leafloss %between% list(31,69) ~ "medium",
-                                 Ant_percent_leafloss <= 30 ~ "low"),
+                                 Ant_percent_leafloss < 30 ~ "low"),
     pathogen_level = case_when(Pathogen_percent_damage >= 30 ~ "high",
-                               Pathogen_percent_damage <= 29 ~ "low")) |>
+                               Pathogen_percent_damage < 29 ~ "low")) |>
   filter(!(is.na(herbivory_level) & is.na(pathogen_level))) |> #Dropping NAs in both columns
   select(c(Sample_name, Species, E_load, Treatment, herbivory_level, pathogen_level)) #Droping Ant_percent_leafloss and Pathogen_percent_damage
 #196 observations and 6 variables
@@ -2613,7 +2612,7 @@ herb_multipatt_sign[ , p.adj := p.adjust(p.value, method="BH")] #This can also b
 # It doesn't make much sense here to adjust the p-value because the groups(herb_levels) are small. 
 
 #Now can select only the indicators with significant p-values
-herb_multipatt_corrected <- herb_multipatt_sign[p.value <= 0.05,]
+herb_multipatt_corrected <- herb_multipatt_sign[p.value < 0.05,]
 
 #renaming the first column
 colnames(herb_multipatt_corrected)[1]  <- "OTU" 
@@ -2624,7 +2623,7 @@ colnames(herb_multipatt_corrected)[1]  <- "OTU"
 herb_multipatt_taxonomy <- left_join(newpqDF, herb_multipatt_corrected, join_by(OTU))
 
 herb_multipatt_taxonomy <- herb_multipatt_taxonomy |>
-  filter(p.value <= 0.05) |>
+  filter(p.value < 0.05) |>
   select(!c(9:164)) |>
   as.tibble()
 
@@ -2707,7 +2706,7 @@ supptable_S6 <- gt(herb_multipatt_taxonomy |>
     locations = cells_stubhead()
   ) |>
   tab_footnote(
-    footnote = md("Significance levels are represented by *ns* (not significant) and asterisks [*p* < 0.05 (\\*), *p* < 0.01 (\\**), *p* < 0.001 (\\***), and *p* < 0.0001 (\\****)]."),
+    footnote = md("Significance levels are represented by *ns* (not significant) and asterisks [*p* < .05 (\\*), *p* < .01 (\\**), *p* < .001 (\\***), and *p* < .0001 (\\****)]."),
     locations = cells_column_labels(columns = P.value)
   ) |>
   tab_footnote(
@@ -2726,7 +2725,7 @@ supptable_S6
 #gtsave(supptable_S6, file = "Aim3_supptable_S6_12JAN2024.docx", path = "./tables")
 ```
 
-## Table S7
+<!-- ## Table S7 -->
 
 ```{r, supptable_S7}
 #| echo: false
@@ -2743,7 +2742,7 @@ patho_multipatt_sign[, p.adj := p.adjust(p.value, method="BH")] #This can also b
 # It doesn't make much sense here to adjust the p-value because the groups(patho_levels) are small. 
 
 #Now can select only the indicators with significant p-values
-patho_multipatt_corrected <- patho_multipatt_sign[p.value <= 0.05,]
+patho_multipatt_corrected <- patho_multipatt_sign[p.value < 0.05,]
 
 #renaming the first column
 colnames(patho_multipatt_corrected)[1]  <- "OTU" 
@@ -2754,7 +2753,7 @@ colnames(patho_multipatt_corrected)[1]  <- "OTU"
 patho_multipatt_taxonomy <- left_join(newpqDF, patho_multipatt_corrected, join_by(OTU))
 
 patho_multipatt_taxonomy <- patho_multipatt_taxonomy |>
-  filter(p.value <= 0.05) |>
+  filter(p.value < 0.05) |>
   select(!c(9:164)) 
 
 #Saving table
@@ -2831,7 +2830,7 @@ supptable_S7 <- gt(patho_multipatt_taxonomy |>
     locations = cells_stubhead()
   ) |>
   tab_footnote(
-    footnote = md("Significance levels are represented by *ns* (not significant) and asterisks [*p* < 0.05 (\\*), *p* < 0.01 (\\**), *p* < 0.001 (\\***), and *p* < 0.0001 (\\****)]."),
+    footnote = md("Significance levels are represented by *ns* (not significant) and asterisks [*p* < .05 (\\*), *p* < .01 (\\**), *p* < .001 (\\***), and *p* < .0001 (\\****)]."),
     locations = cells_column_labels(columns = P.value)
   ) |>
   tab_footnote(
@@ -2850,7 +2849,7 @@ supptable_S7
 #gtsave(supptable_S7, file = "Aim3_supptable_S7_12JAN2024.docx", path = "./tables")
 ```
 
-## Table S8
+<!-- ## Table S8 -->
 
 ```{r, Eload_multipatt_analysis}
 #| echo: false
@@ -2883,7 +2882,7 @@ eload_multipatt_analysis_sign[, p.adj := p.adjust(p.value, method="BH")] #This c
   #mutate(p.value.bh = p.adjust(p.value, method = "BH"))
 
 #Now we can select only the indicators with adjusted significant p-values
-eload_multipatt_corrected <- eload_multipatt_analysis_sign[p.adj <= 0.05,]
+eload_multipatt_corrected <- eload_multipatt_analysis_sign[p.adj < 0.05,]
 
 #Renaming the first column
 colnames(eload_multipatt_corrected)[1]  <- "OTU" 
@@ -2892,7 +2891,7 @@ colnames(eload_multipatt_corrected)[1]  <- "OTU"
 eload_multipatt_taxonomy <- left_join(newpqDF, eload_multipatt_corrected, join_by(OTU))
 
 eload_multipatt_taxonomy <- eload_multipatt_taxonomy |>
-  filter(p.value <= 0.05) |>
+  filter(p.value < 0.05) |>
   select(!c(9:164)) |>
   as.tibble()
 
@@ -2967,7 +2966,7 @@ supptable_S8 <- gt(eload_multipatt_taxonomy |>
   tab_header(
     title = md("Taxonomy of significantly correlated OTUs with FEF inoculation levels")) |>
   tab_footnote(
-    footnote = md("Significance levels are represented by *ns* (not significant) and asterisks [*p* < 0.05 (\\*), *p* < 0.01 (\\**), *p* < 0.001 (\\***), and *p* < 0.0001 (\\****)]."),
+    footnote = md("Significance levels are represented by *ns* (not significant) and asterisks [*p* < .05 (\\*), *p* < .01 (\\**), *p* < .001 (\\***), and *p* < .0001 (\\****)]."),
     locations = cells_column_labels(columns = P.value)
   ) |>
   tab_footnote(
@@ -2987,7 +2986,7 @@ supptable_S8
 #gtsave(supptable_S8, file = "Aim3_supptable_S8_14JAN2024.docx", path = "./tables")
 ```
 
-## Table S9
+<!-- ## Table S9 -->
 
 ```{r, supptable_S9}
 #| echo: false
@@ -3075,7 +3074,7 @@ sterile_protocol
 #| warning: false
 #| fig.height: 6
 #| fig.width: 6
-#| fig.cap: "Foliar endophytic fungi (FEF) colonization of seven tropical tree species in malt extract agar (MEA 2%). a) Comparison of mean percent colonization of leaves by FEF measured 7 days after placing leaf pieces on plates. Statistical significance was calculated with a Student's t-Test. Violin plots show the distribution of colonization values for all tree species within treatment groups (*E-* and *E+*). b) Comparison of mean percent colonization of leaves by FEF measured 7 days after culture. Violin plots show the distribution of percent colonization values for each species per treatment group. Pink outlined box plots represent low FEF group (*E-*) and yellow outlined box plots represent high FEF group (*E+*). Significance levels are represented by *ns* (not significant) and asterisks [*p* < 0.05 (\\*), *p* < 0.01 (\\**), *p* < 0.001 (\\***), and *p* < 0.0001 (\\****)]. "
+#| fig.cap: "Foliar endophytic fungi (FEF) colonization of seven tropical tree species in malt extract agar (MEA 2%). a) Comparison of mean percent colonization of leaves by FEF measured 7 days after placing leaf pieces on plates. Statistical significance was calculated with a Student's t-Test. Violin plots show the distribution of colonization values for all tree species within treatment groups (*E-* and *E+*). b) Comparison of mean percent colonization of leaves by FEF measured 7 days after culture. Violin plots show the distribution of percent colonization values for each species per treatment group. Pink outlined box plots represent low FEF group (*E-*) and yellow outlined box plots represent high FEF group (*E+*). Significance levels are represented by *ns* (not significant) and asterisks [*p* < .05 (\\*), *p* < .01 (\\**), *p* < .001 (\\***), and *p* < .0001 (\\****)]. "
 Abun7a <- ggplot(
   data = data |>
     group_by(Species, Sample_name, E_load, Leaf_ID) |>
@@ -3200,7 +3199,7 @@ ggsave(filename="./figures/suppfig1.png", plot = suppfig_1, dpi=300, units=c("mm
 #| warning: false
 #| fig.height: 6
 #| fig.width: 6
-#| fig.cap: "Distributions of values and means of anthocyanin content (ACI) in treatment groups (*E-* and *E+*) and tree species. a) Comparison of ACI means between treatment groups across individuals of all species. Statistical significance was calculated using a two-sided Student's t-Test. b) Comparison of ACI means between treatment types of each species. Statistical significance was calculated with an analysis of variance (ANOVA). Pink outlined box plots represent low FEF group (*E-*) and yellow outlined box plots represent high FEF group (*E+*). Significance levels are represented by *ns* (not significant) and asterisks [*p* < 0.05 (\\*), *p* < 0.01 (\\**), *p* < 0.001 (\\***), and *p* < 0.0001 (\\****)]."
+#| fig.cap: "Distributions of values and means of anthocyanin content (ACI) in treatment groups (*E-* and *E+*) and tree species. a) Comparison of ACI means between treatment groups across individuals of all species. Statistical significance was calculated using a two-sided Student's t-Test. b) Comparison of ACI means between treatment types of each species. Statistical significance was calculated with an analysis of variance (ANOVA). Pink outlined box plots represent low FEF group (*E-*) and yellow outlined box plots represent high FEF group (*E+*). Significance levels are represented by *ns* (not significant) and asterisks [*p* < .05 (\\*), *p* < .01 (\\**), *p* < .001 (\\***), and *p* < .0001 (\\****)]."
 
 # Comparisons
 mycomparisons <- list(c("APEIME", "CHRYCA"), c("APEIME", "CORDAL"), c("APEIME", "DYPTE"), c("APEIME", "HEISCO"),c("APEIME", "LACPA"), c("APEIME","THEOCA"),
@@ -3350,7 +3349,7 @@ ggsave(filename="./figures/suppfig2.png", plot = suppfig_2, dpi=300, units=c("mm
 #| warning: false
 #| fig.height: 6
 #| fig.width: 6
-#| fig.cap: "Distributions of values and means of leaf thickness (LT) (\u03Bcg) in treatment groups (*E-* and *E+*) and tree species. a) Comparison of LT means between treatment groups across individuals of all species. Statistical significance was calculated using a two-sided Student's t-Test. b) Comparison of LT means between treatment types of each species. Statistical significance was calculated with an analysis of variance (ANOVA). Pink outlined box plots represent low FEF group (*E-*) and yellow outlined box plots represent high FEF group (*E+*). Statistical significance was calculated using a two-sided Student’s t-Test. Statistical significance was calculated using a two-sided Student’s t-Test. Significance levels are represented by *ns* (not significant) and asterisks [*p* < 0.05 (\\*), *p* < 0.01 (\\**), *p* < 0.001 (\\***), and *p* < 0.0001 (\\****)]."
+#| fig.cap: "Distributions of values and means of leaf thickness (LT) (\u03Bcg) in treatment groups (*E-* and *E+*) and tree species. a) Comparison of LT means between treatment groups across individuals of all species. Statistical significance was calculated using a two-sided Student's t-Test. b) Comparison of LT means between treatment types of each species. Statistical significance was calculated with an analysis of variance (ANOVA). Pink outlined box plots represent low FEF group (*E-*) and yellow outlined box plots represent high FEF group (*E+*). Statistical significance was calculated using a two-sided Student’s t-Test. Statistical significance was calculated using a two-sided Student’s t-Test. Significance levels are represented by *ns* (not significant) and asterisks [*p* < .05 (\\*), *p* < .01 (\\**), *p* < .001 (\\***), and *p* < .0001 (\\****)]."
 
 #Comparison of means of LT between E+ and E- samples per tree species
 #rstatix package used for pairwise t-test
@@ -3484,7 +3483,7 @@ ggsave(filename="./figures/suppfig3.png", plot = suppfig_3, dpi=300, units=c("mm
 #| warning: false
 #| fig.height: 6
 #| fig.width: 6
-#| fig.cap: "Distributions of values and means of leaf punch strength (LPS) (N mm^-1) in treatment groups (*E-* and *E+*) and tree species. a) Comparison of LPS means between treatment groups across individuals of all species. Statistical significance was calculated using a two-sided Student's t-Test. b) Comparison of LPS means between treatment types of each species. Statistical significance was calculated with an analysis of variance (ANOVA). Pink outlined box plots represent low FEF group (*E-*) and yellow outlined box plots represent high FEF group (*E+*). Significance levels are represented by *ns* (not significant) and asterisks [*p* < 0.05 (\\*), *p* < 0.01 (\\**), *p* < 0.001 (\\***), and *p* < 0.0001 (\\****)]."
+#| fig.cap: "Distributions of values and means of leaf punch strength (LPS) (N mm^-1) in treatment groups (*E-* and *E+*) and tree species. a) Comparison of LPS means between treatment groups across individuals of all species. Statistical significance was calculated using a two-sided Student's t-Test. b) Comparison of LPS means between treatment types of each species. Statistical significance was calculated with an analysis of variance (ANOVA). Pink outlined box plots represent low FEF group (*E-*) and yellow outlined box plots represent high FEF group (*E+*). Significance levels are represented by *ns* (not significant) and asterisks [*p* < .05 (\\*), *p* < .01 (\\**), *p* < .001 (\\***), and *p* < .0001 (\\****)]."
 
 
 #Comparison of means of LPS between E+ and E- samples per tree species
@@ -3616,7 +3615,7 @@ ggsave(filename="./figures/suppfig4.png", plot = suppfig_4, dpi=300, units=c("mm
 #| warning: false
 #| fig.height: 6
 #| fig.width: 6
-#| fig.cap: "Distributions of values and means of leaf mass per area (LMA) (mg mm^2) in treatment groups (*E-* and *E+*) and tree species. a) Comparison of LMA means between treatment groups across individuals of all species. Statistical significance was calculated using a two-sided Student's t-Test. b) Comparison of LMA means between treatment types of each species. Statistical significance was calculated with an analysis of variance (ANOVA). Pink outlined box plots represent low FEF group (*E-*) and yellow outlined box plots represent high FEF group (*E+*). Significance levels are represented by *ns* (not significant) and asterisks [*p* < 0.05 (\\*), *p* < 0.01 (\\**), and *p* < 0.001 (\\***)]."
+#| fig.cap: "Distributions of values and means of leaf mass per area (LMA) (mg mm^2) in treatment groups (*E-* and *E+*) and tree species. a) Comparison of LMA means between treatment groups across individuals of all species. Statistical significance was calculated using a two-sided Student's t-Test. b) Comparison of LMA means between treatment types of each species. Statistical significance was calculated with an analysis of variance (ANOVA). Pink outlined box plots represent low FEF group (*E-*) and yellow outlined box plots represent high FEF group (*E+*). Significance levels are represented by *ns* (not significant) and asterisks [*p* < .05 (\\*), *p* < .01 (\\**), *p* < .001 (\\***), and *p* < .0001 (\\****)]."
 
 #Comparison of means of LMA between E+ and E- samples per tree species
 #rstatix package used for pairwise t-test
@@ -3750,7 +3749,7 @@ ggsave(filename="./figures/suppfig5.png", plot = suppfig_5, dpi=300, units=c("mm
 #| warning: false
 #| fig.height: 6
 #| fig.width: 6
-#| fig.cap: "Distributions of values and means of herbivory (%) and pathogen damage caused by *Atta colombica* and *Calonectria* sp. , respectively, in treatment groups (*E-* and *E+*) per tree species. a) Comparison of herbivory (%) means between treatment groups across individuals of all species. b) Comparison of pathogen (%) means between treatment groups across individuals of all species. Pink outlined box plots represent low FEF group (*E-*) and yellow outlined box plots represent high FEF group (*E+*). Statistical significance was calculated with an analysis of variance (ANOVA). Significance levels are represented by *ns* (not significant) and asterisks [*p* < 0.05 (\\*), *p* < 0.01 (\\**), and *p* < 0.001 (\\***)]."
+#| fig.cap: "Distributions of values and means of herbivory (%) and pathogen damage caused by *Atta colombica* and *Calonectria* sp. , respectively, in treatment groups (*E-* and *E+*) per tree species. a) Comparison of herbivory (%) means between treatment groups across individuals of all species. b) Comparison of pathogen (%) means between treatment groups across individuals of all species. Pink outlined box plots represent low FEF group (*E-*) and yellow outlined box plots represent high FEF group (*E+*). Statistical significance was calculated with an analysis of variance (ANOVA). Significance levels are represented by *ns* (not significant) and asterisks [*p* < .05 (\\*), *p* < .01 (\\**), *p* < .001 (\\***), and *p* < .0001 (\\****)]."
 
 #Fig. S6a
 herb_violin_a <-
@@ -3846,7 +3845,7 @@ ggsave(filename="./figures/suppfig6.png", plot = suppfig_6, dpi=300, units=c("mm
 #| warning: false
 #| fig.height: 6
 #| fig.width: 6
-#| fig.cap: "Simple linear regressions of logit transfomed herbivory (%) and and leaf functional traits. a) Herbivory *vs.* leaf thickness (LT) (\u03Bcg) (R^2^-adjusted= 0.0811, *p* < 0.0001). b) Herbivory *vs.* LPS (N mm<sup>-1</sup>) (R^2^-adjusted= -0.0018, *p* = 0.429)). c) Herbivory *vs.* ACI (R^2^-adjusted= 0.0071, *p* = 0.116). d) Pathogen *vs.* LMA (mg mm^2) (R^2^-adjusted= -0.0008, *p* = 0.36). e) Herbivory *vs.* Shannon diversity index (R^2^-adjusted= 0.007 , *p* = 0.12). Pink filled line and shapes represent low FEF group (*E-*) and yellow filled line and shapes represent high FEF group (*E+*). Black line represents the linear regression on all observations."
+#| fig.cap: "Simple linear regressions of logit transfomed herbivory (%) and and leaf functional traits. a) Herbivory *vs.* leaf thickness (LT) (\u03Bcg) (R^2^-adjusted= 0.0811, *p* < .0001). b) Herbivory *vs.* LPS (N mm<sup>-1</sup>) (R^2^-adjusted= -0.0018, *p* = 0.429)). c) Herbivory *vs.* ACI (R^2^-adjusted= 0.0071, *p* = 0.116). d) Pathogen *vs.* LMA (mg mm^2) (R^2^-adjusted= -0.0008, *p* = 0.36). e) Herbivory *vs.* Shannon diversity index (R^2^-adjusted= 0.007 , *p* = 0.12). Pink filled line and shapes represent low FEF group (*E-*) and yellow filled line and shapes represent high FEF group (*E+*). Black line represents the linear regression on all observations."
 # Herbivory and Toughness
 #Simple linear regression
 #summary(lm(logit_herbivory ~ Toughness, data = masterant2))
@@ -4261,7 +4260,7 @@ ggsave(filename = "./figures/suppfig7.png", plot = suppfig_S7, dpi=300, units=c(
 #| warning: false
 #| fig.height: 6
 #| fig.width: 6
-#| fig.cap: "Simple linear regressions of logit transformed pathogen damage (%) and and leaf functional traits. a) Pathogen damage *vs.* leaf thickness (LT) (\u03Bcg) (R^2^-adjusted= -0.0013, *p* = 0.482). b) Pathogen damage *vs.* LPS (N mm<sup>-1</sup>) (R^2^-adjusted= 0.0782, *p* < 0.0001)). c) Pathogen damage *vs.* ACI (R^2^-adjusted= 0.0338, *p* < 0.001). d) Pathogen *vs.* LMA (mg mm^2) (R^2^-adjusted= 0.0295, *p* < 0.001). e) Pathogen damage *vs.* Shannon diversity index (R^2^-adjusted= 0.0152 , *p* < 0.001). Pink filled line and shapes represent low FEF group (*E-*) and yellow filled line and shapes represent high FEF group (*E+*). Black line represents the linear regression on all observations."
+#| fig.cap: "Simple linear regressions of logit transformed pathogen damage (%) and and leaf functional traits. a) Pathogen damage *vs.* leaf thickness (LT) (\u03Bcg) (R^2^-adjusted= -0.0013, *p* = 0.482). b) Pathogen damage *vs.* LPS (N mm<sup>-1</sup>) (R^2^-adjusted= 0.0782, *p* < .0001). c) Pathogen damage *vs.* ACI (R^2^-adjusted= 0.0338, *p* < 0.001). d) Pathogen *vs.* LMA (mg mm^2) (R^2^-adjusted= 0.0295, *p* < 0.001). e) Pathogen damage *vs.* Shannon diversity index (R^2^-adjusted= 0.0152 , *p* < 0.001). Pink filled line and shapes represent low FEF group (*E-*) and yellow filled line and shapes represent high FEF group (*E+*). Black line represents the linear regression on all observations."
 # Pathogen
 # Pathogen damage and Toughness
 #Simple linear regression
