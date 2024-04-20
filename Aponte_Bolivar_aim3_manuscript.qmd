@@ -6,7 +6,7 @@ csl: functional-ecology.csl
 author:
   - name: Bolívar Aponte Rolón
     orcid: 0000-0002-2544-4551
-    email: baponterolo@tulane.edu
+    email: baponterolon@tulane.edu
     corresponding: true
     equal-contributor: false
     affiliations:
@@ -380,7 +380,7 @@ This study advances our understanding of the intricate interactions between plan
 
 # Author Contributions
 
-A.E.A., S.A.V. designed research study. M.S.J. and B.A.R. performed experiments and collected data. B.A.R. and M.S.J. analyzed data. B.A.R. wrote the manuscript with input from all authors. All authors gave final approval for publication. Our study included technicians based in the country where the study was carried out throughout the preparation phase of the project (seed collection and preparation). We recognize that more could have been done to engage local residents, students and scientists with our research as our project developed. We plan to address these caveats in future research
+A.E.A., S.A.V. designed research study. M.S.J. and B.A.R. performed experiments and collected data. B.A.R. and M.S.J. analyzed data. B.A.R. wrote the manuscript with input from all authors. All authors gave final approval for publication. Our study included technicians based in the country where the study was carried out throughout the preparation phase of the project (seed collection and preparation). We recognize that more could have been done to engage local residents, students and scientists with our research as our project developed. We plan to address these caveats in future research.
 
 
 # Acknowledgements
@@ -1633,7 +1633,7 @@ scale_color_manual(
 #| warning: false
 #| fig.width: 9
 #| fig.height: 9
-#| fig.cap: "Simple linear regressions of herbivory and pathogen damage on PC1 and PC2 axes from PCAs of leaf traits for ant herbivory and pathogen damage assays. Linear regression of a) percent herbivory damage and PC1 axis (R^2^-adjusted= -0.0024, *p* = 0.447); b) percent herbivory damage and PC2 axis (R^2^-adjusted = 0.079, *p* = <0.001); c) percent pathogen damage and PC1 axis (R^2^-adjusted = 0.064, *p* = <0.001); and d) percent pathogen damage and PC2 axis (R^2^-adjusted  = 0.0016, *p* = 0.207). Colors represent individual species. Circle and triangles represent *E-* and *E+* treatments, respectively."
+#| fig.cap: "Simple linear regressions of herbivory and pathogen damage on PC1 and PC2 axes from PCAs of leaf traits for ant herbivory and pathogen damage assays. Linear regression of a) percent herbivory damage and PC1 axis (R^2^-adjusted= -0.0024, *p* = 0.447); b) percent herbivory damage and PC2 axis (R^2^-adjusted = 0.079, *p* = < .001); c) percent pathogen damage and PC1 axis (R^2^-adjusted = 0.064, *p* = < .001); and d) percent pathogen damage and PC2 axis (R^2^-adjusted  = 0.0016, *p* = .207). Colors represent individual species. Circle and triangles represent *E-* and *E+* treatments, respectively."
 figure5<- ggarrange(ant_pc1, ant_pc2, pat_pc1, pat_pc2,
                     nrow = 2, 
                     ncol=2, 

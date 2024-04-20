@@ -2736,7 +2736,7 @@ m3 <- dbrda(otu_e.dist ~ Anthocyanins + Thickness + Toughness + LMA, data = ndat
 
 #Assessing marginal significance of constraining variables 
 anova(m3, by = "margin")
-anova(m3, by = "axis")
+anova(m3, by = "term")
 anova(m3, by="axis", perm.max=500) 
 ```
 
@@ -2765,7 +2765,7 @@ summary(m3_dbrda_selection)
 
 #Assessing marginal significance of constraining variables 
 anova(m3_dbrda_selection, by = "margin")
-anova(m3_dbrda_selection, by = "axis")
+anova(m3_dbrda_selection, by = "term")
 anova(m3_dbrda_selection, by="axis", perm.max=500) 
 
 ## Model 3 and 5 keep species and trial type as the most significant explanatory variables. Yes, the community composition will be different across species due to the combinantion of species traits and leaf functional trait values. 
