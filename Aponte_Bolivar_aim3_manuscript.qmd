@@ -1035,61 +1035,20 @@ p_m3dbrda <- p_m3 +
   scale_shape_manual(name = "Treatment", labels = c("E-", "E+"), values = c(16, 17)) +
   stat_ellipse(aes(color=Species), geom = "path", size = 1.3, position = "identity", type = "t", linetype = 1,
                level = 0.95, segments = 51, na.rm = FALSE, show.legend = NA, inherit.aes = TRUE) +
-  #labs(caption = "ACI = anthocyanins, LPS = leaf punch strength, LMA = leaf mass per area, LT = leaf thickness")+
  
+ labs(caption = "*F*<sub>4,151</sub> = 2.56, *p* = .001") + #From simple ANOVA
   theme(plot.title = element_text(color="black", size = 12, face="bold"),
         legend.title = element_text(face = "bold"),
-        legend.text = element_markdown(color="black", size = 12))
+        legend.text = element_markdown(color="black", size = 12), 
+        plot.caption = element_markdown())
 # Rearranging the order of layers so arrows are above the points.
 p_m3dbrda$layers <- c(p_m3dbrda$layers, p_m3dbrda$layers[[2]], p_m3dbrda$layers[[5]], p_m3dbrda$layers[[6]], p_m3dbrda$layers[[7]], p_m3dbrda$layers[[8]])
 
 figure3 <- p_m3dbrda
 figure3
-ggsave(filename="./figures/figure3.png", plot=figure3, dpi=300, units=c("mm"), width=200, height=200)
+ggsave(filename="./figures/figure3.png", plot=figure3, dpi=300, units=c("mm"), width=250, height=200)
 
-e_dbrda <- ggplot(data = A.3, aes(x = dbRDA1, y = dbRDA2))+
-  geom_point(data = A.3, aes(color = E_load, shape = Species), size = rel(3), alpha = 0.8, stroke = 1) +
-  geom_segment(arrow_map, size = rel(.8), data = A.4, color = "black", arrow = arrowhead) +
-  geom_vline(xintercept = 0, color = "grey30", linetype = "dashed") + # plot vertical line
-  geom_hline(yintercept = 0, color = "grey30", linetype = "dashed") + # plot horizontal line
-  geom_text(label_map, size = rel(4), data = A4.sub1, fontface = "bold", show.legend = FALSE, hjust = 1, label = c("LT"), nudge_y = -0.15) +
-  geom_text(label_map, size = rel(4), data = A4.sub2, fontface = "bold", show.legend = FALSE, hjust = 0.2, label = c("ACI"), nudge_y = -0.2) +
-  geom_text(label_map, size = rel(4), data = A4.sub3, fontface = "bold", show.legend = FALSE, hjust = 1.2, label = c("LMA"), nudge_y = -0.05) +
-  geom_text(label_map, size = rel(4), data = A4.sub4, fontface = "bold", show.legend = FALSE, hjust = 1.2, label = c("LPS"), nudge_y = 0.05) +
-  xlab(label = paste("dbRDA1 (", round(B$concont$importance[2,1]*100, digits = 1), "%)", sep="")) +
-  ylab(label = paste("dbRDA2 (", round(B$concont$importance[2,2]*100, digits = 1), "%)", sep="")) +
-  scale_shape_manual(labels=c("*A. membranacea*", 
-                              "*C. cainito*", 
-                              "*C. alliodora*", 
-                              "*Dipteryx* sp.", 
-                              "*H. concinna*", 
-                              "*L. panamensis*", 
-                              "*T. cacao*"),
-                      values = c(15:23)) +
-                     
-  scale_color_manual(name = "Treatment", values = met.brewer(name = "Cross", n = 2, type="discrete")) +
-  stat_ellipse(
-    aes(color = E_load),
-    geom = "path",
-    size = 1.3,
-    position = "identity",
-    type = "t",
-    linetype = 1,
-    level = 0.95,
-    segments = 51,
-    na.rm = FALSE,
-    show.legend = NA,
-    inherit.aes = TRUE
-  )+
-  #labs(caption = "ACI = anthocyanins, LPS = leaf punch strength, LMA = leaf mass per area, LT = leaf thickness")+
- 
-  theme(plot.title = element_text(color="black", size = 12, face="bold"),
-        legend.title = element_text(face = "bold"),
-        legend.text = element_markdown(color="black", size = 12))
-
-e_dbrda
-
-ggsave(filename="./figures/figureX.png", plot=e_dbrda, dpi=300, units=c("mm"), width=200, height=200)
+ggsave(filename="./figures/figure3_points.png", plot=p_m3dbrda, dpi=300, units=c("mm"), width=250, height=200)
 
 # Rearranging the order of layers so arrows are above the points.
 p_m3dbrda$layers <- c(p_m3dbrda$layers, p_m3dbrda$layers[[2]], p_m3dbrda$layers[[5]], p_m3dbrda$layers[[6]], p_m3dbrda$layers[[7]], p_m3dbrda$layers[[8]])

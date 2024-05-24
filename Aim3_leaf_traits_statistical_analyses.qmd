@@ -2915,7 +2915,6 @@ NM.DS
 #By Tree Species
 beta_disp <-
   betadisper(as.dist(otu_e.dist),
-             # Matrix of Hellinger transformed data rarefied
              ndata2$Species,
              # Grouping variable
              type = "median",
@@ -2930,7 +2929,6 @@ beta_perm1 <-
             parallel = 8,
             permutations = 999,
             by = "margin")
-save(beta_perm1, file = "clean_data/statistics/beta_perm1.rda")
 
 beta_perm1 #Communities inside tree species do not differ in dispersion
 
