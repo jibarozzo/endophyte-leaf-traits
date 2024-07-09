@@ -1461,7 +1461,7 @@ suppfig_1
 #ggsave(filename="./figures/Aim3_FigS1_07JAN2024.png", plot = suppfig_1, dpi=600, units=c("mm"), width = 250, height = 200, bg ="white")
 ```
 
-## Figure S2-S7
+## Figure S2-S6
 ```{r, Functional traits violins}
 mycomparisons <- list(c("APEIME", "CHRYCA"), c("APEIME", "CORDAL"), c("APEIME", "DYPTE"), c("APEIME", "HEISCO"),c("APEIME", "LACPA"), c("APEIME","THEOCA"),
                       c("CHRYCA","CORDAL"), c("CHRYCA","DYPTE"),c("CHRYCA","HEISCO"), c("CHRYCA","LACPA"), c("CHRYCA", "THEOCA"),
@@ -1865,27 +1865,31 @@ suppfig6_pairwise_t_test <- master |>
 
 #ggpubr package used for t.tests and plotting t-test comparisons
 #E+ vs E- for all specie. To compare means of pathogen damage (%) between E+ and E- samples per species un-comment `group.by = "Species"` and change method to  "anova" in compare_means.
-suppfig6a_compare_means <- compare_means(Ant_percent_leafloss ~ E_load,
-         data = master,
-         #group.by = "Species",
-         method = "t.test",
-         p.adjust.method = "BH",
+suppfig6a_compare_means <- compare_means(
+  Ant_percent_leafloss ~ E_load,
+  data = master,
+  #group.by = "Species",
+  method = "t.test",
+  p.adjust.method = "BH",
   paired = TRUE,
-  alternative = "two.sided", 
-  mu = 0, 
+  alternative = "two.sided",
+  mu = 0,
   var.equal = FALSE,
-  conf.level = 0.95)
+  conf.level = 0.95
+)
 #Roughly the same outcome as pairwise_t_test.
-suppfig6b_compare_means <- compare_means(Ant_percent_leafloss ~ E_load,
-         data = master,
-         group.by = "Species",
-         method = "t.test",
-         p.adjust.method = "BH",
+suppfig6b_compare_means <- compare_means(
+  Ant_percent_leafloss ~ E_load,
+  data = master,
+  group.by = "Species",
+  method = "t.test",
+  p.adjust.method = "BH",
   paired = TRUE,
-  alternative = "two.sided", 
-  mu = 0, 
+  alternative = "two.sided",
+  mu = 0,
   var.equal = FALSE,
-  conf.level = 0.95)
+  conf.level = 0.95
+)
 #Report with `compare_means` because it is easier to plot with `ggpubr` package.
 
 #Since `compare_means` does not provide a test statistic, I will use `t.test` to report the test statistic.
@@ -1912,6 +1916,7 @@ suppfig6_summ_stats <- master |>
             ci = 1.96 * se) |>
   as.data.frame()
 mean(master$Ant_percent_leafloss, na.rm = TRUE)
+
 # Fig. S6a
 herb_violin_a <- ggplot(data = master, aes(x = E_load, y = Ant_percent_leafloss, fill = E_load)) +
   geom_violin() +

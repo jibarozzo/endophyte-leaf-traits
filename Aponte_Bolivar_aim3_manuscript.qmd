@@ -208,7 +208,7 @@ Plants use chemical compounds and physical barriers to defend themselves against
 Angiosperms have been successful throughout their evolutionary history by developing strategies against biotic [@feild2005] and abiotic [@leakey2012] selective pressures. Strategies against stressors that damage leaf tissue range from  production of secondary metabolites like alkaloid and jasmonic acid [@guerriero2018; @teoh2016] to structures that prevent potential attacks by pests (e.g., thorns/modified leaves)[@hanley2007]. Leaf functional traits such as shape, leaf thickness, leaf strength, leaf mass per area (LMA), and anthocyanins can confer plants with strategies to ward off foliar herbivores and pathogens, which represent key selective evolutionary pressures [@niklas2023; @anderson2010].
 
 Leaf defenses can be placed conceptually along the leaf economic spectrum (LES), which on one end has short-lived leaves with high nitrogen (N) content, low leaf mass per area (LMA), thin  leaf blades, and thin cell walls, and on the other end, long-lived leaves with low N content, high LMA, thick leaf blades and thick cell walls [@mason2015; @wright2004]. Investment in baseline constitutive defenses is associated with longer lifespans [@kitajima2012; @kitajima2013], whereas plants that invest little in leaf N content and LMA are potentially able to invest more in induced defense [@kitajima2013; @poorter2006; @wright2004]. 
-Such leaf functional traits are expressed differentially across species and are influenced by their life history and the environment they occupy [@kitajima2013; @wright2005; @wright2004]. Because they define the chemical, structural, and longevity characteristics of leaves, leaf functional traits also influence associated leaf microbial communities [@saunders2010; @tellezTraits2022]. Many leaf-associated microbes establish in leaves via horizontal transmission and are thought to alter the physical and chemical traits of leaves [reviewed in @christian2017; @chagas2018; @bael2017a]. If leaf traits confer selectivity, then plants can gain or lose potential allies in the fight against herbivores and pathogens, ultimately contributing to their ecological and evolutionary success [@friesen2011].
+Such leaf functional traits are expressed differentially across species and are influenced by their life history and the environment they occupy [@kitajima2013; @wright2005; @wright2004]. Because they define the chemical, structural, and longevity characteristics of leaves, leaf functional traits also influence associated leaf microbial communities [@saunders2010; @tellezTraits2022]. Many leaf-associated microbes establish in leaves via horizontal transmission and are thought to alter the physical and chemical traits of leaves [reviewed in @christian2017; @chagas2018; @vanbael2017a]. If leaf traits confer selectivity, then plants can gain or lose potential allies in the fight against herbivores and pathogens, ultimately contributing to their ecological and evolutionary success [@friesen2011].
 
 Leaf microbial communities, such as foliar endophytic fungi (FEF), are found inside the leaf tissue of all lineages of vascular land plants [@currie2014; @rodriguez2009]. In tropical forests, FEF transmit horizontally through ambient spore fall [@arnold2000], and newly flushed leaves of such trees are free of FEF. Although FEF generally grow asymptomatically within leaves [@porras-alfaro2011], they can modulate leaf functional traits, especially with regard to the expression of secondary metabolites, sensitivity to drought, defense against natural enemies, photosynthetic rates and efficiency [@arnold2003; @arnold2007; @friesen2011; @bittleston2011; @estrada2013; @mejia2014]. Such effects have not been examined systematically and quantitatively but are critical to understanding how species interactions in tropical forests relate to plant survival, performance, productivity, and downstream ecosystem services [@mcgill2006].
 
@@ -329,7 +329,7 @@ rep_statement
 
 We explored how leaf functional traits and FEF correlated to herbivory and pathogen damage on leaves.  We present the analyses for each tree species at the leaf and at the plant level. Leaf functional traits are presented at the leaf level, while FEF data are presented at the host species level (plant), consistent with our whole-plant inoculation approach. In analyses where leaf functional traits and FEF are combined we used averages of leaf functional traits.
 
-First, we compared the means of herbivory (%) damage, and leaf functional traits for each species and treatment groups using paired two-sided Student's t-Test and analysis of variance (ANOVA) with the `compare_means` and `stat_compare_means` functions from the `ggpubr` package in R [v.0.6.0, @kassambara2023], which wrap and extend the `anova` and `t.test` functions from the `stats` package [@rcoreteam2024] and facilitate plotting. Additionally, to facilitate comparison between group levels we used the `pairwise_t_test` function from the `rstatix` package [v.0.7.2, @kassambara2023a] when we compared pathogen (%) damage means. This function also wraps and extends base *R* functions. We adjusted *p* values to account for false discovery rates in multiple comparisons by using "BH" method [@benjamini1995].
+First, we compared the means of herbivory (%) damage, and leaf functional traits for each species and treatment groups using paired two-sided Student's t-Test and analysis of variance (ANOVA) with the `compare_means` and `stat_compare_means` functions from the `ggpubr` package in *R* [v.0.6.0, @kassambara2023], which wrap and extend the `anova` and `t.test` functions from the `stats` package [@rcoreteam2024] and facilitate plotting. Additionally, to facilitate comparison between group levels we used the `pairwise_t_test` function from the `rstatix` package [v.0.7.2, @kassambara2023a] when we compared pathogen (%) damage means. This function also wraps and extends base *R* functions. We adjusted *p* values to account for false discovery rates in multiple comparisons by using "BH" method [@benjamini1995].
 
 Secondly, we calculated a Bray-Curtis dissimilarity matrix with our OTU relative abundance data and computed a distance-based redundancy analysis (dbRDA) by applying the `dbRDA` function in the `vegan` package to our dissimilarity matrix [@oksanen2022]. We computed forward model selection for dbRDA analysis with the `ordistep` function which selects terms based on *p* values [@blanchet2008; @oksanen2022]. We started with our initial model containing only the intercept (dissimilarity_matrix \~ 1) and setting the functions arguments to the following: `scope` = formula(*m*), where *m* is the formula with a defined range including leaf functional traits, tree species and treatment groups; `Pin` = 0.5, `Pout` = 0.05, `trace` = T, `permutations` = how(nperm = 999), `steps` = 50.The dbRDA is considered analogous to a permutational analysis of variance (PERMANOVA) with non-Euclidean distance [@anderson2017; @mcardle2001]. Its corresponding visualizations appropriately illustrate underlying patterns of compositional differences [@anderson2017; @legendre1999; @mcardle2001]. We used the `anova.cca` function to assess the marginal significance of constraining variables [@oksanen2022; @legendre2012; @legendre2011], applied here to reveal associations between leaf functional traits and FEF communities in host tree species and treatment groups. To corroborate homogeneous dispersion of variances of host species and treatment groups we used a permutational analysis of multivariate dispersion (PERMDISP) using the `betadisper` with parameter `type = "median"`, and `permutest` functions from `vegan` with with 999 permutations [@oksanen2022]. We compared differences in the dispersion of the FEF communities among species and treatments with post-hoc Tukey's tests.
 
@@ -343,7 +343,7 @@ Lastly, to test how leaf functional traits and FEF communities interact to influ
 
 Inoculation of seedlings was successful. Seedlings exposed to forest spore fall (i.e., *E+*) had a significantly higher proportion of leaf segments colonized by FEF across all species (data from cultures, Fig. S1). Similarly, the  molecular data set showed that seedlings with *E+* treatment had a significantly higher FEF relative abundance (paired, two-sided *t*-tests, *p* \< .05) for all tree species when compared to the *E-* treatment (Fig. 1a). Despite these significant differences, there was a high degree of variability in FEF relative abundance within each treatment type (Fig. 1).
 
-We observed general differences in leaf functional traits among species (Table 1). Anthocyanins (ACI) and leaf punch strength (LPS) did not differ between treatments (*E-* and *E+*) when we combined all host species (Fig. S2a and Fig. S4a respectively). For LT and LMA we saw significant differences between *E-* and *E+* treatment groups when we combined all host species (Fig S3a and Fig. S5a, respectively). As predicted, we did observe lower herbivory in the *E+* treatment compared to the *E-* treatment when we combined all host species, *t*(34) = 2.23, *p* = .033 (Fig. 2a). We did not observe differences in pathogen damage between *E-* and *E+* treatments when we combined all host species (Fig. 2b). However, within the *E-* treatment group, leaves exposed to *Calonectria* sp. suffered greater damage (*M* = 17.37, *SD* = 12.57) compared to non-exposed leaves (*M* = 3.49, *SD* = 5.42), *t*(31) = -7.19, *p* \< .0001 (Fig. 2b). The same pattern arose for the *E+* treatment group: exposed leaves (*M* = 20.04, *SD* = 15.72), non-exposed leaves (*M* = 7.17, *SD* = 17.48), *t*(31) = -3.26, *p* \< .01 (Fig. 2b). At the species level, herbivory and pathogen damage did not differ between treatment groups (Fig. S6a-S6b).
+We observed general differences in leaf functional traits among species (Table 1). Anthocyanins (ACI) and leaf punch strength (LPS) did not differ between treatments (*E-* and *E+*) when we combined all host species (Fig. S2a and Fig. S4a respectively). For LT and LMA we saw significant differences between *E-* and *E+* treatment groups when we combined all host species (Fig S3a and Fig. S5a, respectively). As predicted, we did observe lower herbivory in the *E+* treatment compared to the *E-* treatment when we combined all host species, *t*(31) = 2.23, *p* = .033 (Fig. 2a). We did not observe differences in pathogen damage between *E-* and *E+* treatments when we combined all host species (Fig. 2b). However, within the *E-* treatment group, leaves exposed to *Calonectria* sp. suffered greater damage (*M* = 17.37, *SD* = 12.57) compared to non-exposed leaves (*M* = 3.49, *SD* = 5.42), *t*(31) = -7.19, *p* \< .0001 (Fig. 2b). The same pattern arose for the *E+* treatment group: exposed leaves (*M* = 20.04, *SD* = 15.72), non-exposed leaves (*M* = 7.17, *SD* = 17.48), *t*(31) = -3.26, *p* \< .01 (Fig. 2b). At the species level, herbivory and pathogen damage did not differ between treatment groups (Fig. S6a-S6b).
 
 All leaf functional traits are significantly correlated with FEF community composition (Fig.3). We used dbRDA to understand FEF community composition across host species and treatment groups. The analyses revealed that 6.34% of the overall variance in FEF communities was constrained by the leaf functional traits. The first axis (dbRDA1) explained 49% and the second axis (dbRDA2) explained 21.3% of the constrained variance (Fig. 3). We observed a high degree of overlap between FEF communities (Fig. 3), indicating that the communities are similar in composition across host species and treatment groups, at least at the degree of resolution provided by ITS data (Fig. 3). Nonetheless, we also observed tight clustering of FEF communities in *C. cainito* and *L. panamensis*, emphasizing a distinct composition of FEF OTUs within the FEF identified. Other host species showed greater variation in FEF composition. Our PERMDISP analyses showed no significant differences in host species group dispersion (*F*~6,~ ~149~ = 0.717, *p* \< .63), observed differences were due to location. Unsurprisingly, the dispersion for *E-* and *E+* treatment groups was significantly different (*F*~1,~ ~154~ = 5.09, *p* \= .03). The Tukey tests revealed dispersion of host species were not significantly different at the α \< .05 level, while treatment group dispersions were.
 
@@ -353,7 +353,7 @@ Host species leaf traits encompassed variation along the leaf economic spectrum 
 
 
 Leaf functional traits influence plants' response to herbivory and pathogen damage differentially. We examined the relationship between leaf functional traits, herbivory and pathogen damage to understand how host species on opposite ends of the LES modulate herbivory and pathogen damage. We used simple linear regressions plotting herbivory and pathogen damage with PC1 and PC2 from the PCA. Simple linear regressions of herbivory (%) against PC1 revealed no correlation (Fig. 5a; *R^2^~adj~* = -0.0024, *F*~1,~ ~208~ = 0.508, *df* = 208, *p* = .447), where positive values represent greater values of ACI, LPS and LMA. Even though we note large spread in the data (Fig. 5a and 5b), we saw that herbivory was strongly associated with PC2 (Fig. 5b; *R^2^~adj~* = 0.079, *F*~1, 208~ = 18.9, *p* \< .0001), where positive values represent greater LT. Regressions of pathogen damage (%) plotted against PC1 revealed a significant correlation (Fig. 5c; *R^2^~adj~* = 0.064, *F*~1,~ ~380~ = 26.93 *p* \< .0001), in which positive values represent greater values of ACI, LPS and LMA. We did not see a significant relationship between pathogen damage and PC2 (Fig. 5d; *R^2^~adj~* = 0.002, *F*~1,~ ~380~ = 1.60, *p* = .207). 
-We uncovered similar patterns when we performed simple linear regressions on the raw leaf functional traits and logit transformed herbivory and pathogen damage data (Fig. S7 and S8, respectively). We observed a significant positive relationship between herbivory and LT (Figure S7a; *R^2^~adj~* = 0.081, *F*~1,~ ~208~ = 19.45, *p* \< .0001) when considering the complete data set . We did not observe a significant relationship between herbivory (%) and LPS, ACI, LMA, and Shannon diversity index for FEF (Figure S7b - S7e) for the complete data set. However, we did observe a general decline in herbivory as FEF diversity increased which aligns with our first prediction. Furthermore, we saw a significant negative relationship between herbivory and Shannon diversity for the *E-* treatment group (Figure S7e; *R^2^~adj~* = 0.138, *F*~1,~ ~103~ = 17.7, *p* \< .0001). We also saw an increase in herbivory for the *E+* treatment group as Shannon diversity index for FEF increased, but this was not statistically significant (Figure S7e; *R^2^~adj~* = 0.024, *F*~1,~ ~103~ = 3.55, *p* = 0.062), a result contrary to our expectations. We noted significant negative relationships between pathogen damage and LPS (Figure S8b; *R^2^~adj~* = 0.078, *F*~1,~ ~380~ = 33.32, *p* \< .0001), ACI (Figure S8c; *R^2^~adj~* = 0.033, *F*~1,~ ~380~ = 14.34, *p* = .0002) and LMA (Figure S8d; *R^2^~adj~* = 0.030, *F*~1,~ ~380~ = 12.6, *p* \< .001) when considering the complete data set. Pathogen damage did not have a significant correlation with LT(Figure S8a; *R^2^~adj~* = -0.001, *F*~1,~ ~380~ = 0.50, *p* = .482). The *E-* and *E+* treatment groups follow the same general trend as the complete data set. Contrary to our predictions, we found a statistically significant positive relationship between pathogen damage and Shannon diversity index in the complete data set (Figure S8e; *R^2^~adj~* = 0.015, *F*~1,~ ~380~ = 6.90, *p* \< .01). Upon further scrutiny, only the *E+* treatment group had a significant positive correlation between pathogen damage and Shannon diversity index (Figure S8e;*R^2^~adj~* = 0.031, *F*~1,~ ~188~ = 7.11, *p* \< .01). 
+We uncovered similar patterns when we performed simple linear regressions on the raw leaf functional traits and logit transformed herbivory and pathogen damage data (Fig. S7 and S8, respectively). We observed a significant positive relationship between herbivory and LT (Figure S7a; *R^2^~adj~* = 0.081, *F*~1,~ ~208~ = 19.45, *p* \< .0001) when considering the complete data set . We did not observe a significant relationship between herbivory (%) and LPS, ACI, LMA, and Shannon diversity index for FEF (Figure S7b - S7e) for the complete data set. However, we did observe a general decline in herbivory as FEF diversity increased which aligns with our first prediction. Furthermore, we saw a significant negative relationship between herbivory and Shannon diversity for the *E-* treatment group (Figure S7e; *R^2^~adj~* = 0.138, *F*~1,~ ~103~ = 17.7, *p* \< .0001). We also saw an increase in herbivory for the *E+* treatment group as Shannon diversity index for FEF increased, but this was not statistically significant (Figure S7e; *R^2^~adj~* = 0.024, *F*~1,~ ~103~ = 3.55, *p* = 0.062), a result contrary to our expectations. We noted significant negative relationships between pathogen damage and LPS (Figure S8b; *R^2^~adj~* = 0.078, *F*~1,~ ~380~ = 33.32, *p* \< .0001), ACI (Figure S8c; *R^2^~adj~* = 0.033, *F*~1,~ ~380~ = 14.34, *p* = .0002) and LMA (Figure S8d; *R^2^~adj~* = 0.030, *F*~1,~ ~380~ = 12.6, *p* \< .001) when considering the complete data set. Pathogen damage did not have a significant correlation with LT (Figure S8a; *R^2^~adj~* = -0.001, *F*~1,~ ~380~ = 0.50, *p* = .482). The *E-* and *E+* treatment groups follow the same general trend as the complete data set. Contrary to our predictions, we found a statistically significant positive relationship between pathogen damage and Shannon diversity index in the complete data set (Figure S8e; *R^2^~adj~* = 0.015, *F*~1,~ ~380~ = 6.90, *p* \< .01). Upon further scrutiny, only the *E+* treatment group had a significant positive correlation between pathogen damage and Shannon diversity index (Figure S8e;*R^2^~adj~* = 0.031, *F*~1,~ ~188~ = 7.11, *p* \< .01). 
 
 Leaf thickness and LMA have opposite outcomes in plants' response to herbivory. The best-fit for our GLMMs showed that fixed effects LT, LMA, and *E+* treatment group were statistically significant predictors of herbivory damage (Table 2). No measure of FEF abundance or diversity was present in the final model. Leaf mass per area was a significant positive predictor of herbivory with the greatest effect size (estimate = 1741, *t*(200) = 3.53 *p* \< .001). While LT is a significant negative predictor of herbivory damage (estimate = -0.01, *t*(200) = -2.52, *p* = .01) and *E+* as well (estimate = -0.78, *t*(200) = -4.62, *p* \< .001). The best fit model for pathogen damage did not reveal any of the leaf functional traits as significant predictors (Table 2). Like our previous model, no measure of FEF abundance or diversity was present in final model. Even though it was not significant, LMA showed the greatest effect size (estimate = 171.7, *t*(352) = 0.96, *p* = .34).
 
@@ -757,23 +757,39 @@ ggsave(filename="./figures/figure1.png", plot = fig1, dpi=300, units=c("mm"), wi
 #| fig.cap: "Distributions of values and means of herbivory (%) damage caused by *Atta colombica* in treatment groups (*E-* and *E+*) and tree species. a) Comparison of herbivory (%) means between treatment groups across individuals of all species. Pink represents low FEF group (*E-*) and yellow outlined box plots represent high FEF group (*E+*). b) Comparison of pathogen (%) means between treatment groups across individuals of all species. Maroon box plots represent control leaves and blue box plots represent pathogen treated leaves. Statistical significance was calculated using a two-sided Student's t-Test. Significance levels are represented by *ns* (not significant) and asterisks [*p* < .05 (\\*), *p* < .01 (\\**), *p* < .001 (\\***), and *p* < .0001 (\\****)].."
 
 
+# Fig. 2a
+
+# Summarize statistics
+fig2a_summ_stats <-  master |>
+  group_by(E_load) |>
+  summarise(
+    count = n(),
+    mean = mean(Ant_percent_leafloss, na.rm = TRUE),
+    sd = sd(Ant_percent_leafloss, na.rm = TRUE),
+    se = sd(Ant_percent_leafloss, na.rm = TRUE) / sqrt(n()),
+    ci = 1.96 * se
+  ) |>
+  as.data.frame()
+
 #Comparison of means of Herbivory(%) between E+ and E- samples per tree species
 #rstatix package used for pairwise t-test
-fig2_pairwise_t_test <- master |>
+# This is the test that provides a test statistic, compare_means does not.
+fig2a_pairwise_t_test <- master |>
   group_by(Species) |>
   pairwise_t_test(
     Ant_percent_leafloss ~ E_load,
     p.adjust.method = "BH",
     paired = TRUE,
-    #var.equal = F,
     alternative = "two.sided",
     mu = 0,
     conf.level = 0.95,
     detailed = TRUE
   )
 
-#ggpubr package used for t.tests and plotting t-test comparisons
-#E+ vs E- for all specie. To compare means of pathogen damage (%) between E+ and E- samples per species un-comment `group.by = "Species"` and change method to  "anova" in compare_means.
+# ggpubr package used for t.tests and plotting t-test comparisons
+# E+ vs E- for all specie. 
+# To compare means of herbivory damage (%) between E+ and E- samples per species un-comment `group.by = "Species"` and change method to  "anova" in compare_means. Result is similar to `pairwise_t_test`.
+
 fig2a_compare_means <- compare_means(
   Ant_percent_leafloss ~ E_load,
   data = master,
@@ -790,9 +806,7 @@ fig2a_compare_means <- compare_means(
 
 #Report with `compare_means` because it is easier to plot with `ggpubr` package.
 
-#Since `compare_means` does not provide a test statistic, I will use `t.test` to report the test statistic.
- 
-  
+# T.test to get test statistic of E- and E+ comparison
 x <- subset(master, E_load == "E-", na.rm = TRUE)
 y <- subset(master, E_load == "E+", na.rm = TRUE)
   
@@ -807,16 +821,7 @@ fig2a_t_test <- t.test(
   conf.level = 0.95
 )
 
-fig2a_summ_stats <-  master |>
-  group_by(E_load) |>
-  summarise(count = n(),
-    mean = mean(Ant_percent_leafloss, na.rm = TRUE),
-            sd = sd(Ant_percent_leafloss, na.rm = TRUE),
-            se = sd(Ant_percent_leafloss, na.rm = TRUE)/sqrt(n()),
-            ci = 1.96 * se) |>
-  as.data.frame()
-
-# Fig. 2a
+# Plot
 herb_violin <-
   ggplot(data = master, aes(x = E_load, y = Ant_percent_leafloss)) +
   #geom_violin() +
@@ -855,23 +860,38 @@ herb_violin <-
 
 # Fig. 2b
 
-#Comparison of means of Pathogen damage (%) between E+ and E- samples per tree species. To obtain the comparison between control and pathogen treatments within E= and E- groups, grou_by("E_load") and change the formula to Pathogen_percent_damage ~ Treatment.
+# Summarize statistics
+fig2b_summ_stats <- master |>
+  group_by(E_load, Treatment) |>
+  summarise(
+    count = n(),
+    mean = mean(Pathogen_percent_damage),
+    sd = sd(Pathogen_percent_damage),
+    se = sd(Pathogen_percent_damage) / sqrt(n()),
+    ci = 1.96 * se
+  ) |> 
+  as.data.frame()
+
+# Comparison of means of Pathogen damage (%) between E+ and E- samples per tree species. 
+# To obtain the comparison between control and pathogen treatments within E+ and E- groups, group_by("E_load") and change the formula to Pathogen_percent_damage ~ Treatment.
 #rstatix package used for pairwise t-test
-# fig2b_pairwise_t_test <- master |>
-#   group_by(E_load) |>
-#   pairwise_t_test(
-#     Pathogen_percent_damage ~ Treatment,
-#     p.adjust.method = "BH",
-#     paired = TRUE,
-#     #var.equal = F,
-#     alternative = "two.sided",
-#     mu = 0,
-#     conf.level = 0.95,
-#     detailed = TRUE
-#   )
+
+# This is the test that provides a test statistic for pathogen damage data, compare_means does not. 
+fig2b_pairwise_t_test <- master |>
+  group_by(E_load) |>
+  pairwise_t_test(
+    Pathogen_percent_damage ~ Treatment,
+    p.adjust.method = "BH",
+    paired = TRUE,
+    #var.equal = F,
+    alternative = "two.sided",
+    mu = 0,
+    conf.level = 0.95,
+    detailed = TRUE
+  )
 
 #ggpubr package used for t.tests and plotting t-test comparisons
-#E+ vs E- for all specie. To compare means of pathogen damage (%) between E+ and E- samples per species un-comment `group.by = "Species"` and change method to  "anova" in compare_means.
+#E+ vs E- for all species. To compare means of pathogen damage (%) between E+ and E- samples per species un-comment `group.by = "Species"` and change method to  "anova" in compare_means.
 
 # Comparing E+ and E- for all species
 fig2b_compare_means <-
@@ -888,46 +908,7 @@ fig2b_compare_means <-
     conf.level = 0.95
   )
 
-# Compating control and pathogen treatments within E- and E+ groups
-fig2b_compare_means_treatment <-
-  compare_means(
-    Pathogen_percent_damage ~ Treatment,,
-    data = master,
-    group.by = "E_load",
-    method = "t.test",
-    p.adjust.method = "BH",
-    paired = TRUE,
-    alternative = "two.sided",
-    mu = 0,
-    var.equal = FALSE,
-    conf.level = 0.95
-  )
-
-#Roughly the same outcome as pairwise_t_test.
-x <- subset(master, Treatment == "control", na.rm = TRUE)
-y <- subset(master, Treatment == "pathogen", na.rm = TRUE)
-  
-fig2b_t_test <- t.test(
-  x$Pathogen_percent_damage, y$Pathogen_percent_damage,
-  #group = "E_load",
-  method = "t.test",
-  p.adjust.method = "BH",
-  paired = TRUE,
-  alternative = "two.sided",
-  mu = 0,
-  var.equal = FALSE,
-  conf.level = 0.95
-)
-
-fig2b_summ_stats <- master |>
-  group_by(E_load, Treatment) |>
-  summarise(count = n(),
-    mean = mean(Pathogen_percent_damage),
-            sd = sd(Pathogen_percent_damage),
-            se = sd(Pathogen_percent_damage)/sqrt(n()),
-            ci = 1.96 * se) |>
-  as.data.frame()
-
+# Plot
 patho_violin <-
   ggplot(data = master |>
            filter(!is.na(Treatment)),
@@ -941,8 +922,7 @@ patho_violin <-
     size = 1.7,
     position = position_jitter(w = 0.2)
   ) +
-  geom_boxplot(alpha = 0.5,
-               outlier.alpha = 0.0) +
+  geom_boxplot(alpha = 0.5, outlier.alpha = 0.0) +
   scale_fill_manual(
     name = "Pathogen treatment ",
     labels = c("Control", "Pathogen"),
@@ -972,7 +952,6 @@ patho_violin <-
   ) +
   guides(color = "none")
 #patho_violin
-
 
 
 # Figure 2a-2b
@@ -1632,7 +1611,7 @@ scale_color_manual(
 #| warning: false
 #| fig.width: 9
 #| fig.height: 9
-#| fig.cap: "Simple linear regressions of herbivory and pathogen damage on PC1 and PC2 axes from PCAs of leaf traits for ant herbivory and pathogen damage assays. Linear regression of a) percent herbivory damage and PC1 axis (R^2^-adjusted= -0.0024, *p* = 0.447); b) percent herbivory damage and PC2 axis (R^2^-adjusted = 0.079, *p* = < .001); c) percent pathogen damage and PC1 axis (R^2^-adjusted = 0.064, *p* = < .001); and d) percent pathogen damage and PC2 axis (R^2^-adjusted  = 0.0016, *p* = .207). Colors represent individual species. Circle and triangles represent *E-* and *E+* treatments, respectively."
+#| fig.cap: "Simple linear regressions of herbivory and pathogen damage on PC1 and PC2 axes from PCAs of leaf traits for ant herbivory and pathogen damage assays. Linear regression of a) percent herbivory damage and PC1 axis (*R^2^~adj~* = -0.0024, *p* = 0.447); b) percent herbivory damage and PC2 axis (*R^2^~adj~* = 0.079, *p* = < .001); c) percent pathogen damage and PC1 axis (R^2^-adjusted = 0.064, *p* = < .001); and d) percent pathogen damage and PC2 axis (*R^2^~adj~* = 0.0016, *p* = .207). Colors represent individual species. Circle and triangles represent *E-* and *E+* treatments, respectively."
 figure5<- ggarrange(ant_pc1, ant_pc2, pat_pc1, pat_pc2,
                     nrow = 2, 
                     ncol=2, 
@@ -3844,7 +3823,8 @@ ggsave(filename="./figures/suppfig6.png", plot = suppfig_6, dpi=300, units=c("mm
 #| warning: false
 #| fig.height: 6
 #| fig.width: 6
-#| fig.cap: "Simple linear regressions of logit transfomed herbivory (%) and and leaf functional traits. a) Herbivory *vs.* leaf thickness (LT) (\u03Bcg) (R^2^-adjusted= 0.0811, *p* < .0001). b) Herbivory *vs.* LPS (N mm<sup>-1</sup>) (R^2^-adjusted= -0.0018, *p* = 0.429)). c) Herbivory *vs.* ACI (R^2^-adjusted= 0.0071, *p* = 0.116). d) Pathogen *vs.* LMA (mg mm^2) (R^2^-adjusted= -0.0008, *p* = 0.36). e) Herbivory *vs.* Shannon diversity index (R^2^-adjusted= 0.007 , *p* = 0.12). Pink filled line and shapes represent low FEF group (*E-*) and yellow filled line and shapes represent high FEF group (*E+*). Black line represents the linear regression on all observations."
+#| fig.cap: "Simple linear regressions of logit transfomed herbivory (%) and and leaf functional traits. a) Herbivory *vs.* leaf thickness (LT) (\u03Bcg) (*R^2^~adj~* = 0.0811, *p* < .0001). b) Herbivory *vs.* LPS (N mm<sup>-1</sup>) (*R^2^~adj~* = -0.0018, *p* = .429)). c) Herbivory *vs.* ACI (*R^2^~adj~* = 0.0071, *p* = .116). d) Pathogen *vs.* LMA (mg mm^2) (*R^2^~adj~* = -0.0008, *p* = .36). e) Herbivory *vs.* Shannon diversity index (*R^2^~adj~* = 0.007 , *p* = .12). Pink filled line and shapes represent low FEF group (*E-*) and yellow filled line and shapes represent high FEF group (*E+*). Black line represents the linear regression on all observations. Solid lines represent significant correlations and dashed lines represent non-significant correlations at the α < .05 level."
+
 # Herbivory and Toughness
 #Simple linear regression
 #summary(lm(logit_herbivory ~ Toughness, data = masterant2))
@@ -3853,14 +3833,17 @@ herb_lps <-
   ggplot(data = masterant2, aes(y = logit_herbivory, x = Toughness, color = E_load)) +
   geom_jitter(aes(color = E_load, shape = Species),
               size = 3,
-              alpha = 0.7) +
-  geom_smooth(method = lm, se = F) +
+              alpha = 0.5) +
+  geom_smooth(method = lm,
+              se = F,
+              linetype = "dashed")+
   geom_smooth(
     method = lm,
     se = T ,
     level = 0.95,
     na.rm = F,
     color = "black",
+    linetype = "dashed",
     size = 0.75
   ) +
   scale_shape_manual(# labels = c(
@@ -3927,14 +3910,17 @@ herb_aci <-
   ggplot(data = masterant2, aes(y = logit_herbivory, x = Anthocyanins, color = E_load)) +
   geom_jitter(aes(color = E_load, shape = Species),
               size = 3,
-              alpha = 0.7) +
-  geom_smooth(method = lm, se = F) +
+              alpha = 0.5) +
+  geom_smooth(method = lm,
+              se = F,
+              linetype = "dashed")+
   geom_smooth(
     method = lm,
     se = T ,
     level = 0.95,
     na.rm = F,
     color = "black",
+    linetype = "dashed",
     size = 0.75
   ) +
   scale_shape_manual(# labels = c(
@@ -4004,7 +3990,7 @@ herb_lt <-
   ggplot(data = masterant2, aes(y = logit_herbivory, x = Thickness, color = E_load)) +
   geom_jitter(aes(color = E_load, shape = Species),
               size = 3,
-              alpha = 0.7) +
+              alpha = 0.5) +
   geom_smooth(method = lm, se = F) +
   geom_smooth(
     method = lm,
@@ -4079,14 +4065,17 @@ herb_lma <-
   ggplot(data = masterant2, aes(y = logit_herbivory, x = LMA, color = E_load)) +
   geom_jitter(aes(color = E_load, shape = Species),
               size = 3,
-              alpha = 0.7) +
-  geom_smooth(method = lm, se = F) +
+              alpha = 0.5) +
+  geom_smooth(method = lm,
+              se = F,
+              linetype = "dashed")+
   geom_smooth(
     method = lm,
     se = T ,
     level = 0.95,
     na.rm = F,
     color = "black",
+    linetype = "dashed",
     size = 0.75
   ) +
   scale_shape_manual(# labels = c(
@@ -4163,7 +4152,7 @@ herb_shannon <-
   ggplot(data = masterant2, aes(y = logit_herbivory, x = Shannon, color = E_load)) +
   geom_jitter(aes(color = E_load, shape = Species),
               size = 3,
-              alpha = 0.7) +
+              alpha = 0.5) +
   geom_smooth(method = lm, se = F) +
   geom_smooth(
     method = lm,
@@ -4171,6 +4160,7 @@ herb_shannon <-
     level = 0.95,
     na.rm = F,
     color = "black",
+    linetype = "dashed",
     size = 0.75
   ) +
   scale_shape_manual(
@@ -4226,8 +4216,9 @@ herb_shannon <-
     axis.text.y = element_text(size = 7)
   )
 
+#herb_shannon
 
- # Multiples plots together
+# Multiples plots together
 
 suppfig_S7 <-
   ggarrange(
@@ -4238,7 +4229,7 @@ suppfig_S7 <-
     herb_shannon,
     nrow = 2,
     ncol = 3,
-    label.x = -0.015,
+    label.x = -0.035,
     common.legend = TRUE,
     labels = c("(a)", "(b)", "(c)", "(d)", "(e)"),
     legend = "bottom"
@@ -4259,7 +4250,8 @@ ggsave(filename = "./figures/suppfig7.png", plot = suppfig_S7, dpi=300, units=c(
 #| warning: false
 #| fig.height: 6
 #| fig.width: 6
-#| fig.cap: "Simple linear regressions of logit transformed pathogen damage (%) and and leaf functional traits. a) Pathogen damage *vs.* leaf thickness (LT) (\u03Bcg) (R^2^-adjusted= -0.0013, *p* = 0.482). b) Pathogen damage *vs.* LPS (N mm<sup>-1</sup>) (R^2^-adjusted= 0.0782, *p* < .0001). c) Pathogen damage *vs.* ACI (R^2^-adjusted= 0.0338, *p* < 0.001). d) Pathogen *vs.* LMA (mg mm^2) (R^2^-adjusted= 0.0295, *p* < 0.001). e) Pathogen damage *vs.* Shannon diversity index (R^2^-adjusted= 0.0152 , *p* < 0.001). Pink filled line and shapes represent low FEF group (*E-*) and yellow filled line and shapes represent high FEF group (*E+*). Black line represents the linear regression on all observations."
+#| fig.cap: "Simple linear regressions of logit transformed pathogen damage (%) and and leaf functional traits. a) Pathogen damage *vs.* leaf thickness (LT) (\u03Bcg) (*R^2^~adj~* = -0.0013, *p* = .482). b) Pathogen damage *vs.* LPS (N mm<sup>-1</sup>) (*R^2^~adj~* = 0.0782, *p* < .0001). c) Pathogen damage *vs.* ACI (*R^2^~adj~* = 0.0338, *p* < .001). d) Pathogen *vs.* LMA (mg mm^2) (*R^2^~adj~* = 0.0295, *p* < .001). e) Pathogen damage *vs.* Shannon diversity index (*R^2^~adj~* = 0.0152 , *p* < .001). Pink filled line and shapes represent low FEF group (*E-*) and yellow filled line and shapes represent high FEF group (*E+*). Black line represents the linear regression on all observations. Solid lines represent significant correlations and dashed lines represent non-significant correlations at the α < .05 level."
+
 # Pathogen
 # Pathogen damage and Toughness
 #Simple linear regression
@@ -4269,7 +4261,7 @@ patho_lps <-
   ggplot(data = masterpat2, aes(y = logit_pathogenicity, x = Toughness, color = E_load)) +
   geom_jitter(aes(color = E_load, shape = Species),
               size = 3,
-              alpha = 0.7) +
+              alpha = 0.5) +
   geom_smooth(method = lm, se = F) +
   geom_smooth(
     method = lm,
@@ -4338,8 +4330,26 @@ patho_aci <-
          aes(y = logit_pathogenicity, x = Anthocyanins, color = E_load)) +
   geom_jitter(aes(color = E_load, shape = Species),
               size = 3,
-              alpha = 0.7) +
-  geom_smooth(method = lm, se = F) +
+              alpha = 0.5)+
+  geom_smooth(
+    data = subset(masterpat2, E_load == "E+"),
+    method = lm,
+    se = F,
+    level = 0.95,
+    na.rm = F,
+    color = "#ffbb44",
+    size = 0.75
+  ) +
+  geom_smooth(
+    data = subset(masterpat2, E_load == "E-"),
+    method = lm,
+    se = F,
+    level = 0.95,
+    na.rm = F,
+    color = "#ee8577",
+    linetype = "dashed",
+    size = 0.75
+  )+
   geom_smooth(
     method = lm,
     se = T ,
@@ -4347,7 +4357,7 @@ patho_aci <-
     na.rm = F,
     color = "black",
     size = 0.75
-  ) +
+  )+
   scale_shape_manual(
     # labels = c(
     #   "A. membranacea",
@@ -4408,14 +4418,33 @@ patho_lt <-
   ggplot(data = masterpat2, aes(y = logit_pathogenicity, x = Thickness, color = E_load)) +
   geom_jitter(aes(color = E_load, shape = Species),
               size = 3,
-              alpha = 0.7) +
-  geom_smooth(method = lm, se = F) +
+              alpha = 0.5) +
+  geom_smooth(
+    data = subset(masterpat2, E_load == "E+"),
+    method = lm,
+    se = F,
+    level = 0.95,
+    na.rm = F,
+    color = "#ffbb44",
+    size = 0.75
+  ) +
+  geom_smooth(
+    data = subset(masterpat2, E_load == "E-"),
+    method = lm,
+    se = F,
+    level = 0.95,
+    na.rm = F,
+    color = "#ee8577",
+    linetype = "dashed",
+    size = 0.75
+  )+
   geom_smooth(
     method = lm,
     se = T ,
     level = 0.95,
     na.rm = F,
     color = "black",
+    linetype = "dashed",
     size = 0.75
   ) +
   scale_shape_manual(
@@ -4482,7 +4511,7 @@ patho_lma <-
   ggplot(data = masterpat2, aes(y = logit_pathogenicity, x = LMA, color = E_load)) +
   geom_jitter(aes(color = E_load, shape = Species),
               size = 3,
-              alpha = 0.7) +
+              alpha = 0.5) +
   geom_smooth(method = lm, se = F) +
   geom_smooth(
     method = lm,
@@ -4556,8 +4585,26 @@ patho_shannon <-
   ggplot(data = masterpat2, aes(y = logit_pathogenicity, x = Shannon, color = E_load)) +
   geom_jitter(aes(color = E_load, shape = Species),
               size = 3,
-              alpha = 0.7) +
-  geom_smooth(method = lm, se = F) +
+              alpha = 0.5) +
+   geom_smooth(
+    data = subset(masterpat2, E_load == "E+"),
+    method = lm,
+    se = F,
+    level = 0.95,
+    na.rm = F,
+    color = "#ffbb44",
+    size = 0.75
+  ) +
+  geom_smooth(
+    data = subset(masterpat2, E_load == "E-"),
+    method = lm,
+    se = F,
+    level = 0.95,
+    na.rm = F,
+    color = "#ee8577",
+    linetype = "dashed",
+    size = 0.75
+  )+
   geom_smooth(
     method = lm,
     se = T ,
@@ -4624,7 +4671,7 @@ suppfig_S8 <-
     patho_shannon,
     nrow = 2,
     ncol = 3,
-    label.x = -0.015,
+    label.x = -0.035,
     common.legend = TRUE,
     labels = c("(a)", "(b)", "(c)", "(d)", "(e)"),
     legend = "bottom"
@@ -4634,7 +4681,7 @@ suppfig_S8
 #Saving
 ggsave(filename ="./figures/suppfig8.png", plot = suppfig_S8, dpi= 300, units=c("mm"), width=250, height=200, bg = "white")
 
-showtext_auto(FALSE)
+#showtext_auto(FALSE)
 ```
 
 ## Figure S9
