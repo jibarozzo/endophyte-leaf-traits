@@ -1879,7 +1879,7 @@ suppfig6a_compare_means <- compare_means(Ant_percent_leafloss ~ E_load,
 suppfig6b_compare_means <- compare_means(Ant_percent_leafloss ~ E_load,
          data = master,
          group.by = "Species",
-         method = "anova",
+         method = "t.test",
          p.adjust.method = "BH",
   paired = TRUE,
   alternative = "two.sided", 
@@ -1889,17 +1889,29 @@ suppfig6b_compare_means <- compare_means(Ant_percent_leafloss ~ E_load,
 #Report with `compare_means` because it is easier to plot with `ggpubr` package.
 
 #Since `compare_means` does not provide a test statistic, I will use `t.test` to report the test statistic.
-suppfig6_t_test <-t.test(Ant_percent_leafloss ~ E_load,
-         data = master,
-         #group.by = "Species",
-         method = "t.test",
-         p.adjust.method = "BH",
+x <- subset(master, E_load == "E-", na.rm = TRUE)
+y <- subset(master, E_load == "E+", na.rm = TRUE)
+  
+t.test(
+  x$Ant_percent_leafloss, y$Ant_percent_leafloss,
+  method = "t.test",
+  p.adjust.method = "BH",
   paired = TRUE,
-  alternative = "two.sided", 
-  mu = 0, 
+  alternative = "two.sided",
+  mu = 0,
   var.equal = FALSE,
-  conf.level = 0.95)
+  conf.level = 0.95
+)
 
+suppfig6_summ_stats <- master |>
+  group_by(E_load) |>
+  summarise(count = n(),
+    mean = mean(Ant_percent_leafloss, na.rm = TRUE),
+            sd = sd(Ant_percent_leafloss, na.rm = TRUE),
+            se = sd(Ant_percent_leafloss, na.rm = TRUE)/sqrt(n()),
+            ci = 1.96 * se) |>
+  as.data.frame()
+mean(master$Ant_percent_leafloss, na.rm = TRUE)
 # Fig. S6a
 herb_violin_a <- ggplot(data = master, aes(x = E_load, y = Ant_percent_leafloss, fill = E_load)) +
   geom_violin() +
@@ -2035,7 +2047,12 @@ suppfig7b_compare_means <- compare_means(Pathogen_percent_damage ~ E_load,
 
 suppfig7_summ_stats <- master |>
   group_by(E_load, Treatment) |>
-  get_summary_stats(Pathogen_percent_damage, type = "common")
+  summarise(count = n(),
+    mean = mean(Pathogen_percent_damage),
+            sd = sd(Pathogen_percent_damage),
+            se = sd(Pathogen_percent_damage)/sqrt(n()),
+            ci = 1.96 * se) |>
+  as.data.frame()
 #Report with `compare_means` because it is easier to plot with `ggpubr` package.
 #Since `compare_means` does not provide a test statistic, I will use `pairwise_t_test` to report the test statistic.
 
@@ -2049,7 +2066,7 @@ patho_violin_a <- ggplot(data = master, aes(x = E_load, y = Pathogen_percent_dam
                fun.max = mean,
                fun.min = mean,
                alpha = 0.3,
-               size = 0.3,
+               linewidth = 0.3,
                width = 0.7,
                position = position_dodge(width = 0.9)) +
   scale_fill_manual(name = "Pathogen treatment ", values= met.brewer("Egypt", n = 2, type = "discrete")) +
@@ -2078,7 +2095,7 @@ patho_violin_a <- ggplot(data = master, aes(x = E_load, y = Pathogen_percent_dam
                      comparisons =list(c("E-", "E+")),
                      bracket.size = 0.8)
 
-#patho_violin_a
+patho_violin_a
 
 #Fig. S7b
 patho_violin_b <-  ggplot(data = master, aes( x = Species, y = Pathogen_percent_damage, fill = E_load)) +
