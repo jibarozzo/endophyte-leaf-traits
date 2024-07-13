@@ -2,7 +2,8 @@
 title: "Evaluating the Role of Endophyte-Rich Leaves in Protecting Tropical Trees Against a Generalist Herbivore and a Pathogen"
 date: today
 bibliography: references.bib
-csl: functional-ecology.csl
+#csl: functional-ecology.csl
+csl: apa.csl
 author:
   - name: Bolívar Aponte Rolón
     orcid: 0000-0002-2544-4551
@@ -387,7 +388,7 @@ This research was funded by NSF DEB-1556583 to S.A.V. and NSF DEB-1556287 to A.E
 The authors declare no competing interests.
 
 # Data Availability Statement
-The genomic data that support the findings of this study will be submitted to NCBI-GenBank upon acceptance of this manuscript. The manuscript and code for reproducibility is available from corresponding author's GitHub:[https://github.com/bolivaraponte/endophyte-leaf-traits.git](https://github.com/bolivaraponte/endophyte-leaf-traits.git)
+The genomic data that support the findings of this study will be submitted to NCBI-GenBank upon acceptance of this manuscript. The manuscript and code for reproducibility is available from corresponding author's GitHub:[https://github.com/jibarozzo/endophyte-leaf-traits.git](https://github.com/jibarozzo/endophyte-leaf-traits.git)
 
 # References
 
@@ -637,7 +638,7 @@ masterpat2 <- df_list_ant2 |>
 #| warning: false
 #| fig.width: 6
 #| fig.height: 6
-#| fig.cap: "Relative abundance (RA) of Ascomycota OTUs of seven tree species used in the study. (a) Box plots show individuals' RA and its distribution by species. (b) The RA of OTU's by treatment withing each tree species. Pink boxes represent low endophyte (*E-*) treatment and yellow outlined represent high endophyte (*E+*) treatment. Relative abundance is the percentage of endophyte colonization within individuals of the same species. Statistical significance was calculated using a two-sided Student’s t-Test. Significance levels are represented by *ns* (not significant) and asterisks [*p* < .05 (\\*), *p* < .01 (\\**), *p* < .001 (\\***), and *p* < .0001 (\\****)]."
+#| fig.cap: "Relative abundance (RA) of Ascomycota OTUs of seven tree species used in the study. (a) Box plots show individuals' RA and its distribution by species. (b) The RA of OTU's by treatment withing each tree species. Pink boxes represent low endophyte (*E-*) treatment and yellow outlined represent high endophyte (*E+*) treatment. Relative abundance is the percentage of endophyte colonization within individuals of the same species. Statistical significance was calculated using a two-sided Student’s t-Test. Significance levels are represented by *ns* (not significant) and asterisks [*p* < .05 (\\*), *p* < .01 (\\*\\*), *p* < .001 (\\*\\*\\*), and *p* < .0001 (\\*\\*\\*\\*)]."
 
 
 #Comparison of means of LMA between E+ and E- samples per tree species
@@ -754,7 +755,7 @@ ggsave(filename="./figures/figure1.png", plot = fig1, dpi=300, units=c("mm"), wi
 #| warning: false
 #| fig.height: 6
 #| fig.width: 6
-#| fig.cap: "Distributions of values and means of herbivory (%) damage caused by *Atta colombica* in treatment groups (*E-* and *E+*) and tree species. a) Comparison of herbivory (%) means between treatment groups across individuals of all species. Pink represents low FEF group (*E-*) and yellow outlined box plots represent high FEF group (*E+*). b) Comparison of pathogen (%) means between treatment groups across individuals of all species. Maroon box plots represent control leaves and blue box plots represent pathogen treated leaves. Statistical significance was calculated using a two-sided Student's t-Test. Significance levels are represented by *ns* (not significant) and asterisks [*p* < .05 (\\*), *p* < .01 (\\**), *p* < .001 (\\***), and *p* < .0001 (\\****)].."
+#| fig.cap: "Distributions of values and means of herbivory (%) damage caused by *Atta colombica* in treatment groups (*E-* and *E+*) and tree species. a) Comparison of herbivory (%) means between treatment groups across individuals of all species. Pink represents low FEF group (*E-*) and yellow outlined box plots represent high FEF group (*E+*). b) Comparison of pathogen (%) means between treatment groups across individuals of all species. Maroon box plots represent control leaves and blue box plots represent pathogen treated leaves. Statistical significance was calculated using a two-sided Student's t-Test. Significance levels are represented by *ns* (not significant) and asterisks [*p* < .05 (\\*), *p* < .01 (\\*\\*), *p* < .001 (\\*\\*\\*), and *p* < .0001 (\\*\\*\\*\\*)].."
 
 
 # Fig. 2a
@@ -991,13 +992,18 @@ otu_e.dist <- vegdist(t(rabun), method="bray", binary=FALSE)
 #dbRDa with `dbrda` function. it can be calculated with `capscale` function too. VERY similar.
 #Best model selected with `ordistep` function 
 #Terms: otu_e.dist ~ Thickness + Toughness + Anthocyanins + LMA
-m3dbRDA <- dbrda(otu_e.dist ~ Anthocyanins + Toughness + Thickness + LMA, data= ndata2, dist="bray", na.action = na.omit)
+m3dbRDA <- dbrda(
+  otu_e.dist ~ Anthocyanins + Toughness + Thickness + LMA,
+  data = ndata2,
+  dist = "bray",
+  na.action = na.omit
+)
 m3dbrda_summary <- summary(m3dbRDA)
 
-#Assessing marginal significance of constraining variables 
+#Assessing marginal significance of constraining variables
 #anova(m3dbRDA, by = "margin")
 #anova(m3dbRDA, by = "axis")
-#anova(m3dbRDA, by="axis", perm.max=500) 
+#anova(m3dbRDA, by="axis", perm.max=500)
 
 #Correlation of constrained and unconstrained axes
 # cor(m3dbrda_summary$constraints) |>
@@ -1016,66 +1022,181 @@ A.3 <- cbind(A.2, ndata2)
 A.4 <- data.frame(vegan::scores(m3dbRDA, display = "bp"))
 
 # Define the arrow aesthetic mapping
-arrow_map <- aes(xend = (dbRDA1*2), yend = (dbRDA2*2), x = 0, y = 0, shape = NULL, color = NULL, fill = NULL)
-label_map <- aes(x = 2*dbRDA1, y = 2*dbRDA2, label = row.names(A.4), shape = NULL, color = NULL, fill = NULL)
+arrow_map <- aes(
+  xend = (dbRDA1 * 2),
+  yend = (dbRDA2 * 2),
+  x = 0,
+  y = 0,
+  shape = NULL,
+  color = NULL,
+  fill = NULL
+)
+label_map <- aes(
+  x = 2 * dbRDA1,
+  y = 2 * dbRDA2,
+  label = row.names(A.4),
+  shape = NULL,
+  color = NULL,
+  fill = NULL
+)
 arrowhead = arrow(length = unit(0.02, "npc"))
 
 #subset A4 for labeling
-A.4 <- A.4[sort(rownames(A.4)),]
+A.4 <- A.4[sort(rownames(A.4)), ]
 
-A4.sub1 <- A.4[3,] #Thickness
-A4.sub2 <- A.4[1,] #Anthocyanins
-A4.sub3 <- A.4[2,] #LMA
-A4.sub4 <- A.4[4,] #Toughness
+A4.sub1 <- A.4[3, ] #Thickness
+A4.sub2 <- A.4[1, ] #Anthocyanins
+A4.sub3 <- A.4[2, ] #LMA
+A4.sub4 <- A.4[4, ] #Toughness
 
 #A4.sub4
 
 # Make plot
 p_m3 <- ggplot(data = A.3, aes(x = dbRDA1, y = dbRDA2))
 p_m3dbrda <- p_m3 +
-  geom_point(data = A.3, aes(color = Species, shape = E_load), size = rel(3), alpha = 0.8, stroke = 1) +
-  geom_segment(arrow_map, size = rel(.8), data = A.4, color = "black", arrow = arrowhead) +
-  geom_vline(xintercept = 0, color = "grey30", linetype = "dashed") + # plot vertical line
-  geom_hline(yintercept = 0, color = "grey30", linetype = "dashed") + # plot horizontal line
-  geom_text(label_map, size = rel(4), data = A4.sub1, fontface = "bold", show.legend = FALSE, hjust = 1, label = c("LT"), nudge_y = -0.15) +
-  geom_text(label_map, size = rel(4), data = A4.sub2, fontface = "bold", show.legend = FALSE, hjust = 0.2, label = c("ACI"), nudge_y = -0.2) +
-  geom_text(label_map, size = rel(4), data = A4.sub3, fontface = "bold", show.legend = FALSE, hjust = 1.2, label = c("LMA"), nudge_y = -0.05) +
-  geom_text(label_map, size = rel(4), data = A4.sub4, fontface = "bold", show.legend = FALSE, hjust = 1.2, label = c("LPS"), nudge_y = 0.05) +
-  xlab(label = paste("dbRDA1 (", round(B$concont$importance[2,1]*100, digits = 1), "%)", sep="")) +
-  ylab(label = paste("dbRDA2 (", round(B$concont$importance[2,2]*100, digits = 1), "%)", sep="")) +
-  scale_color_manual(labels=c("*A. membranacea*", 
-                              "*C. cainito*", 
-                              "*C. alliodora*", 
-                              "*Dipteryx* sp.", 
-                              "*H. concinna*", 
-                              "*L. panamensis*", 
-                              "*T. cacao*"),
-                     values = met.brewer(name = "Cross", n = 8, type="discrete")) +
-  scale_shape_manual(name = "Treatment", labels = c("E-", "E+"), values = c(16, 17)) +
-  stat_ellipse(aes(color=Species), geom = "path", size = 1.3, position = "identity", type = "t", linetype = 1,
-               level = 0.95, segments = 51, na.rm = FALSE, show.legend = NA, inherit.aes = TRUE) +
- 
- labs(caption = "*F*<sub>4,151</sub> = 2.56, *p* = .001") + #From simple ANOVA
-  theme(plot.title = element_text(color="black", size = 12, face="bold"),
-        legend.title = element_text(face = "bold"),
-        legend.text = element_markdown(color="black", size = 12), 
-        plot.caption = element_markdown())
+  geom_point(
+    data = A.3,
+    aes(color = Species, shape = E_load),
+    size = rel(3),
+    alpha = 0.8,
+    stroke = 1
+  ) +
+  geom_segment(
+    arrow_map,
+    size = rel(.8),
+    data = A.4,
+    color = "black",
+    arrow = arrowhead
+  ) +
+  geom_vline(xintercept = 0,
+             color = "grey30",
+             linetype = "dashed") + # plot vertical line
+  geom_hline(yintercept = 0,
+             color = "grey30",
+             linetype = "dashed") + # plot horizontal line
+  geom_text(
+    label_map,
+    size = rel(4),
+    data = A4.sub1,
+    fontface = "bold",
+    show.legend = FALSE,
+    hjust = 1,
+    label = c("LT"),
+    nudge_y = -0.15
+  ) +
+  geom_text(
+    label_map,
+    size = rel(4),
+    data = A4.sub2,
+    fontface = "bold",
+    show.legend = FALSE,
+    hjust = 0.2,
+    label = c("ACI"),
+    nudge_y = -0.2
+  ) +
+  geom_text(
+    label_map,
+    size = rel(4),
+    data = A4.sub3,
+    fontface = "bold",
+    show.legend = FALSE,
+    hjust = 1.2,
+    label = c("LMA"),
+    nudge_y = -0.05
+  ) +
+  geom_text(
+    label_map,
+    size = rel(4),
+    data = A4.sub4,
+    fontface = "bold",
+    show.legend = FALSE,
+    hjust = 1.2,
+    label = c("LPS"),
+    nudge_y = 0.05
+  ) +
+  xlab(label = paste(
+    "dbRDA1 (",
+    round(B$concont$importance[2, 1] * 100, digits = 1),
+    "%)",
+    sep = ""
+  )) +
+  ylab(label = paste(
+    "dbRDA2 (",
+    round(B$concont$importance[2, 2] * 100, digits = 1),
+    "%)",
+    sep = ""
+  )) +
+  scale_color_manual(
+    labels = c(
+      "*A. membranacea*",
+      "*C. cainito*",
+      "*C. alliodora*",
+      "*Dipteryx* sp.",
+      "*H. concinna*",
+      "*L. panamensis*",
+      "*T. cacao*"
+    ),
+    values = met.brewer(name = "Cross", n = 8, type = "discrete")
+  ) +
+  scale_shape_manual(
+    name = "Treatment",
+    labels = c("E-", "E+"),
+    values = c(16, 17)
+  ) +
+  stat_ellipse(
+    aes(color = Species),
+    geom = "path",
+    size = 1.3,
+    position = "identity",
+    type = "t",
+    linetype = 1,
+    level = 0.95,
+    segments = 51,
+    na.rm = FALSE,
+    show.legend = NA,
+    inherit.aes = TRUE
+  ) +
+  
+  labs(caption = "PERMDISP: *F*<sub>4,151</sub> = 2.56, *p* = .001") + #From simple ANOVA
+  theme(
+    plot.title = element_text(
+      color = "black",
+      size = 12,
+      face = "bold"
+    ),
+    legend.title = element_text(face = "bold"),
+    legend.text = element_markdown(color = "black", size = 12),
+    plot.caption = element_markdown()
+  )
 # Rearranging the order of layers so arrows are above the points.
-p_m3dbrda$layers <- c(p_m3dbrda$layers, p_m3dbrda$layers[[2]], p_m3dbrda$layers[[5]], p_m3dbrda$layers[[6]], p_m3dbrda$layers[[7]], p_m3dbrda$layers[[8]])
+p_m3dbrda$layers <- c(
+  p_m3dbrda$layers,
+  p_m3dbrda$layers[[2]],
+  p_m3dbrda$layers[[5]],
+  p_m3dbrda$layers[[6]],
+  p_m3dbrda$layers[[7]],
+  p_m3dbrda$layers[[8]]
+)
 
 figure3 <- p_m3dbrda
 figure3
-ggsave(filename="./figures/figure3.png", plot=figure3, dpi=300, units=c("mm"), width=250, height=200)
+ggsave(
+  filename = "./figures/figure3.png",
+  plot = figure3,
+  dpi = 300,
+  units = c("mm"),
+  width = 250,
+  height = 200
+)
 
-ggsave(filename="./figures/figure3_points.png", plot=p_m3dbrda, dpi=300, units=c("mm"), width=250, height=200)
-
-# Rearranging the order of layers so arrows are above the points.
-p_m3dbrda$layers <- c(p_m3dbrda$layers, p_m3dbrda$layers[[2]], p_m3dbrda$layers[[5]], p_m3dbrda$layers[[6]], p_m3dbrda$layers[[7]], p_m3dbrda$layers[[8]])
-
-figure3 <- p_m3dbrda
-figure3
-
-
+# ggsave(
+#   filename = "./figures/figure3_points.png",
+#   plot = p_m3dbrda,
+#   dpi = 300,
+#   units = c("mm"),
+#   width = 250,
+#   height = 200
+# )
 ```
 
 ## Figure 4
@@ -3052,7 +3173,7 @@ sterile_protocol
 #| warning: false
 #| fig.height: 6
 #| fig.width: 6
-#| fig.cap: "Foliar endophytic fungi (FEF) colonization of seven tropical tree species in malt extract agar (MEA 2%). a) Comparison of mean percent colonization of leaves by FEF measured 7 days after placing leaf pieces on plates. Statistical significance was calculated with a Student's t-Test. Violin plots show the distribution of colonization values for all tree species within treatment groups (*E-* and *E+*). b) Comparison of mean percent colonization of leaves by FEF measured 7 days after culture. Violin plots show the distribution of percent colonization values for each species per treatment group. Pink outlined box plots represent low FEF group (*E-*) and yellow outlined box plots represent high FEF group (*E+*). Significance levels are represented by *ns* (not significant) and asterisks [*p* < .05 (\\*), *p* < .01 (\\**), *p* < .001 (\\***), and *p* < .0001 (\\****)]. "
+#| fig.cap: "Foliar endophytic fungi (FEF) colonization of seven tropical tree species in malt extract agar (MEA 2%). a) Comparison of mean percent colonization of leaves by FEF measured 7 days after placing leaf pieces on plates. Statistical significance was calculated with a Student's t-Test. Violin plots show the distribution of colonization values for all tree species within treatment groups (*E-* and *E+*). b) Comparison of mean percent colonization of leaves by FEF measured 7 days after culture. Violin plots show the distribution of percent colonization values for each species per treatment group. Pink outlined box plots represent low FEF group (*E-*) and yellow outlined box plots represent high FEF group (*E+*). Significance levels are represented by *ns* (not significant) and asterisks [*p* < .05 (\\*), *p* < .01 (\\*\\*), *p* < .001 (\\*\\*\\*), and *p* < .0001 (\\*\\*\\*\\*)]. "
 Abun7a <- ggplot(
   data = data |>
     group_by(Species, Sample_name, E_load, Leaf_ID) |>
@@ -3177,7 +3298,7 @@ ggsave(filename="./figures/suppfig1.png", plot = suppfig_1, dpi=300, units=c("mm
 #| warning: false
 #| fig.height: 6
 #| fig.width: 6
-#| fig.cap: "Distributions of values and means of anthocyanin content (ACI) in treatment groups (*E-* and *E+*) and tree species. a) Comparison of ACI means between treatment groups across individuals of all species. Statistical significance was calculated using a two-sided Student's t-Test. b) Comparison of ACI means between treatment types of each species. Statistical significance was calculated with an analysis of variance (ANOVA). Pink outlined box plots represent low FEF group (*E-*) and yellow outlined box plots represent high FEF group (*E+*). Significance levels are represented by *ns* (not significant) and asterisks [*p* < .05 (\\*), *p* < .01 (\\**), *p* < .001 (\\***), and *p* < .0001 (\\****)]."
+#| fig.cap: "Distributions of values and means of anthocyanin content (ACI) in treatment groups (*E-* and *E+*) and tree species. a) Comparison of ACI means between treatment groups across individuals of all species. Statistical significance was calculated using a two-sided Student's t-Test. b) Comparison of ACI means between treatment types of each species. Statistical significance was calculated with an analysis of variance (ANOVA). Pink outlined box plots represent low FEF group (*E-*) and yellow outlined box plots represent high FEF group (*E+*). Significance levels are represented by *ns* (not significant) and asterisks [*p* < .05 (\\*), *p* < .01 (\\*\\*), *p* < .001 (\\*\\*\\*), and *p* < .0001 (\\*\\*\\*\\*)]."
 
 # Comparisons
 mycomparisons <- list(c("APEIME", "CHRYCA"), c("APEIME", "CORDAL"), c("APEIME", "DYPTE"), c("APEIME", "HEISCO"),c("APEIME", "LACPA"), c("APEIME","THEOCA"),
@@ -3327,7 +3448,7 @@ ggsave(filename="./figures/suppfig2.png", plot = suppfig_2, dpi=300, units=c("mm
 #| warning: false
 #| fig.height: 6
 #| fig.width: 6
-#| fig.cap: "Distributions of values and means of leaf thickness (LT) (\u03Bcg) in treatment groups (*E-* and *E+*) and tree species. a) Comparison of LT means between treatment groups across individuals of all species. Statistical significance was calculated using a two-sided Student's t-Test. b) Comparison of LT means between treatment types of each species. Statistical significance was calculated with an analysis of variance (ANOVA). Pink outlined box plots represent low FEF group (*E-*) and yellow outlined box plots represent high FEF group (*E+*). Statistical significance was calculated using a two-sided Student’s t-Test. Statistical significance was calculated using a two-sided Student’s t-Test. Significance levels are represented by *ns* (not significant) and asterisks [*p* < .05 (\\*), *p* < .01 (\\**), *p* < .001 (\\***), and *p* < .0001 (\\****)]."
+#| fig.cap: "Distributions of values and means of leaf thickness (LT) (\u03Bcg) in treatment groups (*E-* and *E+*) and tree species. a) Comparison of LT means between treatment groups across individuals of all species. Statistical significance was calculated using a two-sided Student's t-Test. b) Comparison of LT means between treatment types of each species. Statistical significance was calculated with an analysis of variance (ANOVA). Pink outlined box plots represent low FEF group (*E-*) and yellow outlined box plots represent high FEF group (*E+*). Statistical significance was calculated using a two-sided Student’s t-Test. Statistical significance was calculated using a two-sided Student’s t-Test. Significance levels are represented by *ns* (not significant) and asterisks [*p* < .05 (\\*), *p* < .01 (\\*\\*), *p* < .001 (\\*\\*\\*), and *p* < .0001 (\\*\\*\\*\\*)]."
 
 #Comparison of means of LT between E+ and E- samples per tree species
 #rstatix package used for pairwise t-test
@@ -3461,7 +3582,7 @@ ggsave(filename="./figures/suppfig3.png", plot = suppfig_3, dpi=300, units=c("mm
 #| warning: false
 #| fig.height: 6
 #| fig.width: 6
-#| fig.cap: "Distributions of values and means of leaf punch strength (LPS) (N mm^-1) in treatment groups (*E-* and *E+*) and tree species. a) Comparison of LPS means between treatment groups across individuals of all species. Statistical significance was calculated using a two-sided Student's t-Test. b) Comparison of LPS means between treatment types of each species. Statistical significance was calculated with an analysis of variance (ANOVA). Pink outlined box plots represent low FEF group (*E-*) and yellow outlined box plots represent high FEF group (*E+*). Significance levels are represented by *ns* (not significant) and asterisks [*p* < .05 (\\*), *p* < .01 (\\**), *p* < .001 (\\***), and *p* < .0001 (\\****)]."
+#| fig.cap: "Distributions of values and means of leaf punch strength (LPS) (N mm^-1) in treatment groups (*E-* and *E+*) and tree species. a) Comparison of LPS means between treatment groups across individuals of all species. Statistical significance was calculated using a two-sided Student's t-Test. b) Comparison of LPS means between treatment types of each species. Statistical significance was calculated with an analysis of variance (ANOVA). Pink outlined box plots represent low FEF group (*E-*) and yellow outlined box plots represent high FEF group (*E+*). Significance levels are represented by *ns* (not significant) and asterisks [*p* < .05 (\\*), *p* < .01 (\\*\\*), *p* < .001 (\\*\\*\\*), and *p* < .0001 (\\*\\*\\*\\*)]."
 
 
 #Comparison of means of LPS between E+ and E- samples per tree species
@@ -3593,7 +3714,7 @@ ggsave(filename="./figures/suppfig4.png", plot = suppfig_4, dpi=300, units=c("mm
 #| warning: false
 #| fig.height: 6
 #| fig.width: 6
-#| fig.cap: "Distributions of values and means of leaf mass per area (LMA) (mg mm^2) in treatment groups (*E-* and *E+*) and tree species. a) Comparison of LMA means between treatment groups across individuals of all species. Statistical significance was calculated using a two-sided Student's t-Test. b) Comparison of LMA means between treatment types of each species. Statistical significance was calculated with an analysis of variance (ANOVA). Pink outlined box plots represent low FEF group (*E-*) and yellow outlined box plots represent high FEF group (*E+*). Significance levels are represented by *ns* (not significant) and asterisks [*p* < .05 (\\*), *p* < .01 (\\**), *p* < .001 (\\***), and *p* < .0001 (\\****)]."
+#| fig.cap: "Distributions of values and means of leaf mass per area (LMA) (mg mm^2) in treatment groups (*E-* and *E+*) and tree species. a) Comparison of LMA means between treatment groups across individuals of all species. Statistical significance was calculated using a two-sided Student's t-Test. b) Comparison of LMA means between treatment types of each species. Statistical significance was calculated with an analysis of variance (ANOVA). Pink outlined box plots represent low FEF group (*E-*) and yellow outlined box plots represent high FEF group (*E+*). Significance levels are represented by *ns* (not significant) and asterisks [*p* < .05 (\\*), *p* < .01 (\\*\\*), *p* < .001 (\\*\\*\\*), and *p* < .0001 (\\*\\*\\*\\*)]."
 
 #Comparison of means of LMA between E+ and E- samples per tree species
 #rstatix package used for pairwise t-test
@@ -3727,7 +3848,7 @@ ggsave(filename="./figures/suppfig5.png", plot = suppfig_5, dpi=300, units=c("mm
 #| warning: false
 #| fig.height: 6
 #| fig.width: 6
-#| fig.cap: "Distributions of values and means of herbivory (%) and pathogen damage caused by *Atta colombica* and *Calonectria* sp. , respectively, in treatment groups (*E-* and *E+*) per tree species. a) Comparison of herbivory (%) means between treatment groups across individuals of all species. b) Comparison of pathogen (%) means between treatment groups across individuals of all species. Pink outlined box plots represent low FEF group (*E-*) and yellow outlined box plots represent high FEF group (*E+*). Statistical significance was calculated with an analysis of variance (ANOVA). Significance levels are represented by *ns* (not significant) and asterisks [*p* < .05 (\\*), *p* < .01 (\\**), *p* < .001 (\\***), and *p* < .0001 (\\****)]."
+#| fig.cap: "Distributions of values and means of herbivory (%) and pathogen damage caused by *Atta colombica* and *Calonectria* sp. , respectively, in treatment groups (*E-* and *E+*) per tree species. a) Comparison of herbivory (%) means between treatment groups across individuals of all species. b) Comparison of pathogen (%) means between treatment groups across individuals of all species. Pink outlined box plots represent low FEF group (*E-*) and yellow outlined box plots represent high FEF group (*E+*). Significance levels are represented by *ns* (not significant) and asterisks [*p* < .05 (\\*), *p* < .01 (\\*\\*), *p* < .001 (\\*\\*\\*), and *p* < .0001 (\\*\\*\\*\\*)]."
 
 #Fig. S6a
 herb_violin_a <-
