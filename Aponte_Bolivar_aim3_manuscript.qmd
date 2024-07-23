@@ -1860,6 +1860,8 @@ M3REM <- lme(logit_herbivory ~ Thickness  + LMA + E_load, weights = varIdent(for
 P3REM <- lme(logit_pathogenicity ~  LMA + Thickness, weights = varIdent(form = ~ 1|Species),  random = ~ 1 | Species/E_load/Treatment, method = "REML", control = ctrl, data = masterpat2, na.action = na.exclude)
 #summary(P3REM)
 #AIC(P3REM) #1011.239 as of 30/OCT/2023
+
+save(M3REM, P3REM, file = "./clean_data/glmm_models.rda")
 ```
 
 ```{r, Table2, tidy = TRUE}
