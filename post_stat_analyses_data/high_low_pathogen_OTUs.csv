@@ -1,0 +1,14 @@
+"","OTU","kingdom","phylum","class","order","family","genus","species","s.high","s.low","index","stat","p.value","p.value.bh"
+"1","OTU_1","Fungi","Ascomycota","Sordariomycetes","Glomerellales","Glomerellaceae","Colletotrichum","Colletotrichum_fructicola",1,0,1,0.22219831569968,0.017,0.984075471698113
+"2","OTU_18","Fungi","Ascomycota","Dothideomycetes","Capnodiales","Dissoconiaceae","Ramichloridium","Ramichloridium_apiculatum",1,0,1,0.238972324593614,0.013,0.984075471698113
+"3","OTU_70","Fungi","Ascomycota","Dothideomycetes","Pleosporales","unidentified","unidentified","Pleosporales_sp",1,0,1,0.225799377316822,0.032,0.984075471698113
+"4","OTU_114","Fungi","Ascomycota","Sordariomycetes","unidentified","unidentified","unidentified","Sordariomycetes_sp",1,0,1,0.187353724434627,0.028,0.984075471698113
+"5","OTU_108","Fungi","Ascomycota","Dothideomycetes","Pleosporales","Leptosphaeriaceae","Leptosphaeria","Leptosphaeria_modesta",1,0,1,0.235796354965501,0.028,0.984075471698113
+"6","OTU_226","Fungi","Ascomycota","Dothideomycetes","Botryosphaeriales","Phyllostictaceae","Phyllosticta","Phyllosticta_sp",1,0,1,0.194313585684994,0.043,0.984075471698113
+"7","OTU_244","Fungi","Ascomycota","Sordariomycetes","Xylariales","Xylariaceae","Hypoxylon","Hypoxylon_sp",1,0,1,0.205101997789969,0.041,0.984075471698113
+"8","OTU_196","Fungi","Ascomycota","Sordariomycetes","Hypocreales","unidentified","unidentified","Hypocreales_sp",1,0,1,0.22728525022104,0.044,0.984075471698113
+"9","OTU_447","Fungi","Ascomycota","Sordariomycetes","Xylariales","Diatrypaceae","Anthostoma","Anthostoma_gastrinum",1,0,1,0.219546506188182,0.047,0.984075471698113
+"10","OTU_258","Fungi","Ascomycota","Sordariomycetes","Sordariales","Lasiosphaeriaceae","unidentified","Lasiosphaeriaceae_sp",1,0,1,0.224575118671952,0.023,0.984075471698113
+"11","OTU_352","Fungi","Ascomycota","Sordariomycetes","Boliniales","Boliniales_fam_Incertae_sedis","Paramicrothyrium","Paramicrothyrium_sp",1,0,1,0.211325492334879,0.047,0.984075471698113
+"12","OTU_637","Fungi","Ascomycota","Sordariomycetes","Phomatosporales","Phomatosporaceae","Phomatospora","Phomatospora_sp",1,0,1,0.208608358163755,0.049,0.984075471698113
+"13","OTU_679","Fungi","Ascomycota","unidentified","unidentified","unidentified","unidentified","Ascomycota_sp",1,0,1,0.188631687567118,0.045,0.984075471698113

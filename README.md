@@ -13,19 +13,19 @@ This repository contains the R code and notebooks used for bioinformatic pipelin
 2. [Contributing](#contributing)
 
 # Project Structure
-field_data/: Contains the raw data collect in field experiments.
+`field_data/`: Contains the raw data collect in field experiments.
 
-clean_data/: Contains the cleaned microbial data frames used for taxonomic and statistical analyses.
+`clean_data/`: Contains the cleaned microbial data frames used for taxonomic and statistical analyses.
 
-post_stat_analysis_data: Contains the OTU data obtained after `multipatt` analysis and selection cut-offs.
+`post_stat_analysis_data/`: Contains the OTU data obtained after `multipatt` analysis and selection cut-offs.
 
-R_objects/: Contains the R objects generated during the analysis. Used for accelerating the project workflow after completion of analyses.
+`R_objects/`: Contains the R objects generated during the analysis. Used for accelerating the project workflow after completion of analyses.
 
-filters/: Contains the filter joins for sub-setting data.
+`filters/`: Contains the filter joins for sub-setting data.
 
-tables/: Output directory for generated tables.
+`tables/`: Output directory for generated tables.
 
-figures/: Output directory for generated figures.
+`figures/`: Output directory for generated figures.
 
 # Contributing
 Feel free to contribute by opening issues, providing feedback, or submitting pull requests.
