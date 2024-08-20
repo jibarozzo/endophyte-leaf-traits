@@ -910,9 +910,7 @@ masterpat2 <- df_list_ant2 |>
   mutate(logit_pathogenicity = logit(Pathogen_percent_damage)) 
 ```
 
-
-The `masterant2` and `masterpat2` data frames can be a little counter-intuitive if you are not familiar with the experimental design. The `masterant2` data frame includes all the leaves of the plants that were used in the ant assay. All measurements were taken in triplicate leaves per plant per E+ and E- treatment. Hence, 70 plants (35 E+ and 35 E-) x 3 leaves per plant = 210 leaves measured. The `masterpat2` data frame includes all the leaves of the plants that were used in the pathogen assay. All measurements were taken in triplicate leaves per plant with nested treatments E+ with control and pathogen and E- with control and pathogen. This means 64 plants with the control and pathogen levels equals 128 [(32 E+ x 2) and (32 E- *2)] leaves. The pathogen damage data is at the control and pathogen leaf level and the functional trait data is at the level of the other 3 leaves. We extrapolated the functional trait data to their corresponding control and pathogen leaves. This means that the `masterpat2` data frame has 384 rows of data.
-
+The `masterant2` and `masterpat2` data frames can be a little counter-intuitive if you are not familiar with the experimental design. The `masterant2` data frame includes all the leaves of the plants that were used in the ant assay. All measurements were taken in triplicate leaves per plant per E+ and E- treatment. Hence, 70 plants (35 E+ and 35 E-) x 3 leaves per plant = 210 leaves measured. The `masterpat2` data frame includes all the leaves of the plants that were used in the pathogen assay. All measurements were taken in triplicate leaves per plant with nested treatments E+ with control and pathogen and E- with control and pathogen. This means 64 plants with the control and pathogen levels equals 128 \[(32 E+ x 2) and (32 E- \*2)\] leaves. The pathogen damage data is at the control and pathogen leaf level and the functional trait data is at the level of the other 3 leaves. We extrapolated the functional trait data to their corresponding control and pathogen leaves. This means that the `masterpat2` data frame has 384 rows of data.
 
 # Descriptive statistics
 
@@ -977,10 +975,12 @@ shapiro.test(masterant$Shannon) #Normal p-value = 0.4886
 hist(masterant$Shannon)
 ```
 
-Somewhat better distributions. Ant_percent_leafloss is not normally distributed. It looks more like a binomial distribution. Evaluate accordingly. Conclusion from the Shapiro-Wilk tests: Some of the independent variables are not normally distributed. 
+Somewhat better distributions. Ant_percent_leafloss is not normally distributed. It looks more like a binomial distribution. Evaluate accordingly. Conclusion from the Shapiro-Wilk tests: Some of the independent variables are not normally distributed.
 
 ## Table 1: Summary Table
-Two packages to visualize summary statistics in a table. 
+
+Two packages to visualize summary statistics in a table.
+
 ```{r, table1}
 # Using `gtsummary` and 'flextable' packages
 summa_t1 <- tbl_summary(data |>
@@ -1101,6 +1101,7 @@ summa_t1
 ```
 
 ## Variance Inflation Factor
+
 ### Correlations, autocorrelations, and network plots of explanatory variables
 
 Variance inflation factors range from 1 upwards. The numerical value for VIF tells you (in decimal form) what percentage the variance (i.e. the standard error squared) is inflated for each coefficient. For example, a VIF of 1.9 tells you that the variance of a particular coefficient is 90% bigger than what you would expect if there was no multicollinearity — if there was no correlation with other predictors.
@@ -1213,7 +1214,6 @@ References
 -   https://drsimonj.svbtle.com/how-to-create-correlation-network-plots-with-corrr-and-ggraph
 
 -   https://jamesmarquezportfolio.com/correlation_matrices_in_r.html
-
 
 # Leaf traits and relative abundance and total reads of OTUs
 
@@ -1369,6 +1369,7 @@ fig1
 ```
 
 ## Figure S1
+
 ```{r, suppfig_1}
 Abun7a <- ggplot(data= data |>
                       group_by(Species, Sample_name, E_load, Leaf_ID) |>
@@ -1462,6 +1463,7 @@ suppfig_1
 ```
 
 ## Figure S2-S6
+
 ```{r, Functional traits violins}
 mycomparisons <- list(c("APEIME", "CHRYCA"), c("APEIME", "CORDAL"), c("APEIME", "DYPTE"), c("APEIME", "HEISCO"),c("APEIME", "LACPA"), c("APEIME","THEOCA"),
                       c("CHRYCA","CORDAL"), c("CHRYCA","DYPTE"),c("CHRYCA","HEISCO"), c("CHRYCA","LACPA"), c("CHRYCA", "THEOCA"),
@@ -2002,7 +2004,6 @@ suppfig_6
 #ggsave(filename="./figures/Aim3_FigS6_15JAN2024.png", plot = suppfig_6, dpi=600, units=c("mm"), width = 250, height = 200, bg ="white")
 ```
 
-
 ```{r, suppfig_7}
 
 #| echo: false
@@ -2157,6 +2158,7 @@ suppfig_7
 The idea here is to see which leaf functional trait and community diversity traits (relative abundance, richness and diversity) impact herbivory and pathogenicity. Only using LMA, thickness and toughness, as these covariates are orthagonal to each other in PCA analysis. Reminder that de `ndata`'s experimental unit is the leaf, not the plant.
 
 ## Fig. 4: Grid PCA plot
+
 ### Full PCA
 
 ```{r, Full PCA, tidy = FALSE}
@@ -2298,8 +2300,8 @@ auto_pat
 #ggsave(filename="./figures/Aim3_Pathogen_PCA_08162023.png", plot = auto_pat, dpi=600, units=c("mm"), width = 180, height = 180, bg = "white")
 ```
 
-
 ### Grid PCA
+
 ```{r, Grid PCA}
 #| eval: false
 #| tidy: true
@@ -2537,6 +2539,7 @@ pat_pc2 <- ggplot(pat_pcalm, aes(PC2, Pathogen_percent_damage)) +
 ```
 
 ### Fig 5
+
 Ant and Pathogen PC-LMs Grid plot
 
 ```{r, Ant & Pathogen PC1-2}
@@ -2558,7 +2561,6 @@ figure3
 #ggsave(filename = "./figures/Aim3_Fig3_04JAN2024.png", plot = figure3, dpi=600, units=c("mm"), width = 300, height = 225, bg = "white")
 #Previously named Aim3_AntPCS_SEPT252023.png
 ```
-
 
 # Phyloseq:
 
@@ -2715,7 +2717,6 @@ After meddling with this for a little bit, I do not like how this plots my data.
 
 # FEF Community Analysis
 
-
 ## Distance-based redundancy analyses (dbRDA)
 
 Code written by Mareli Sánchez Juliá. Modified by Bolívar Aponte Rolón- March 2022 Partial dbRDA was eliminated. Due to my experimental set up, performing a partial dbRDA does not make much sense. This is useful when looking at change over time in a categorical manner (e.g. sampling every two weeks). My data set does not test for anything similar.
@@ -2735,7 +2736,9 @@ otu_e.dist <- vegdist(t(rabun), method="bray", binary=FALSE)
 ### Leaf trait selection
 
 #### Choosing traits for dbRDA model
-The `capscale` and `dbrda` function are very similar [see here](https://uw.pressbooks.pub/appliedmultivariatestatistics/chapter/rda-and-dbrda/#distance-based%20ReDundancy%20Analysis%20(dbRDA)). 
+
+The `capscale` and `dbrda` function are very similar [see here](https://uw.pressbooks.pub/appliedmultivariatestatistics/chapter/rda-and-dbrda/#distance-based%20ReDundancy%20Analysis%20(dbRDA)).
+
 ```{r}
 # Model with intercept only ####
 m0 <- dbrda(otu_e.dist ~ 1, data = ndata2, na.action = na.omit) #Model with intercept only.
@@ -2763,8 +2766,8 @@ anova(m3, by="axis", perm.max=500)
 ```
 
 ### Forward and backward selection with `ordistep` - just leaf traits
- 
- I used m2 as the "scope" because it does not contain Trial_type and Trial_Code. This is a factor that is only relevant for the details of the herbivory and pathogen assays. Differences detected between the trial types and trial_code are not important or unrealistic for the question at hand. 
+
+I used m2 as the "scope" because it does not contain Trial_type and Trial_Code. This is a factor that is only relevant for the details of the herbivory and pathogen assays. Differences detected between the trial types and trial_code are not important or unrealistic for the question at hand.
 
 ```{r}
 #Both, forward and backward selection. This way I can see the step by step.
@@ -2928,8 +2931,6 @@ NM.DS
 #
 ```
 
-
-
 ## PERMDISP
 
 ```{r}
@@ -2975,6 +2976,7 @@ beta_perm2 # We see differences in dispersion of E_load
 TukeyHSD(beta_disp2, conf.level = 0.95)
 
 ```
+
 ## ANOSIM
 
 ```{r}
@@ -2984,7 +2986,6 @@ otu.anosim <- anosim(otu_e.dist, ndata2$Species, permutations = 999, distance = 
 summary(otu.anosim)
 plot(otu.anosim) 
 ```
-
 
 # GLLMs: How do leaf traits influence herbivory and pathogenicity?
 
@@ -3163,7 +3164,6 @@ AIC(M2REM) #594.0651 # 1934.192 as of 5/23/23 # 752.4332 as of 30/OCT/2023
 ```
 
 -   The spread of residuals vs. fitted values improves so does AIC value.
-
 
 Maybe there is some variance structure...
 
@@ -3632,9 +3632,9 @@ corrplot::corrplot(corr, method = "color", type = "upper", order = "hclust",addC
          )
 ```
 
-From this autocorrelation matrix I can see that the Observed richness, Shannon diversity and Total_reads have low autocorrelation the physical leaf functional traits. These three measures of community composition are somewhat correlated. Especially the Observed species richness and the Shannon diversity index (0.719735754) and Total_reads*Shannon(-0.3244523). For this reason I am going to stick to using Shannon diversity are a community traits for predicting leaf herbivory and pathogenicity. 
+From this autocorrelation matrix I can see that the Observed richness, Shannon diversity and Total_reads have low autocorrelation the physical leaf functional traits. These three measures of community composition are somewhat correlated. Especially the Observed species richness and the Shannon diversity index (0.719735754) and Total_reads\*Shannon(-0.3244523). For this reason I am going to stick to using Shannon diversity are a community traits for predicting leaf herbivory and pathogenicity.
 
-LMA is highly collinear with Anthocyanins and Toughness, while it has very low correlation with Ant_percent_leafloss. I will not include Anthocyanins in the linear models. Thickness and toughness are inversely correlated with each other. Toughness seems to have a low negative correlation with Ant_percent_leafloss. I will not include it in the linear models. 
+LMA is highly collinear with Anthocyanins and Toughness, while it has very low correlation with Ant_percent_leafloss. I will not include Anthocyanins in the linear models. Thickness and toughness are inversely correlated with each other. Toughness seems to have a low negative correlation with Ant_percent_leafloss. I will not include it in the linear models.
 
 ## Paired T-tests
 
@@ -3723,7 +3723,7 @@ AIC(P2AIC) #1249.769 as of 30/OCT/2023
 plot(P2AIC)
 ```
 
-The final model from this section (P2AIC): `logit_pathogenicity ~ Species + E_load + Thickness`. LMA was removed from the model. It does not seem to be a good predictor of pathogenicity. 
+The final model from this section (P2AIC): `logit_pathogenicity ~ Species + E_load + Thickness`. LMA was removed from the model. It does not seem to be a good predictor of pathogenicity.
 
 ## Random effect models with fixed terms
 
@@ -3771,8 +3771,7 @@ There is not much improvement of P4 over P1-P2. The AIC score is higher than P1-
 
 ### REML: fixed terms
 
-No interactions yet, checking random effects. \*\*Notice the use of `Treatment` as one of the fixed terms. This is a level that is not present in the Ant dataset.
-I am including LMA and Treatment as fixed terms to see if they are significant. 
+No interactions yet, checking random effects. \*\*Notice the use of `Treatment` as one of the fixed terms. This is a level that is not present in the Ant dataset. I am including LMA and Treatment as fixed terms to see if they are significant.
 
 ```{r, Restricted Maximum Likelihood (REML)}
 # REML
@@ -3815,7 +3814,7 @@ plot_model(P2ML, type = "diag")
 
 ### REML: interactions
 
-Using Restricted Maximum Likelihood (REML) to model. Maximum likelihood tends to be biased with high dimensional data. LMA is a significant predictor of pathogenicity (p \<= 0.05). 
+Using Restricted Maximum Likelihood (REML) to model. Maximum likelihood tends to be biased with high dimensional data. LMA is a significant predictor of pathogenicity (p \<= 0.05).
 
 Let's model with interactions and remove variance structure. Having Treatment and E_load as fixed effect reduces AIC score.
 
@@ -3860,6 +3859,7 @@ MuMIn::model.sel(P1REM, P3REM, P4REM, P5REM)[, c("df", "logLik", "AICc", "delta"
 Model `P3REM` has the lowest AIC score. It has variance structure (`varIdent()`) nested in Species/E_load/Treatment. It also uses an optimizer `lmeControl(opt='optim')`. It is the best model for the pathogen data set, at the moment.
 
 # Figure S8
+
 ## Plots: Pathogen
 
 ### LM plot
@@ -4132,6 +4132,7 @@ suppfig_S8
 ```
 
 # Table 3
+
 # GLMM tables and estimates for ant and pathogen GLMMs with `logit_herbivory` and `logit_pathogenicity`
 
 ### Plotting Estimates (Fixed Effects) of Best Fit model for Ant and Pathogen data sets
@@ -4211,6 +4212,51 @@ P3REM_coeff
 
 I believe the best way to represent the model coefficients if through a table no an estimate plot.
 
+# GLMMs with correction for host species phylogeny
+
+Reviewers from Functional Ecology Journal requested that we include a correction for host species phylogeny given that some of the host species are more related than other (are within the same family). This suggestion was given on 07-15-2024.
+
+The approach is the following:
+
+1.  Find a recent angiosperm phylogenetic tree.
+
+    -   From the [Royal Botanic Gardens Kew Tree of Life](https://treeoflife.kew.org/tree-of-life)
+
+    -   [General Information](https://sftp.kew.org/pub/treeoflife/).
+
+    -   Release information for [treeoflife.all_support_values.3.0.tree](https://sftp.kew.org/pub/paftol/current_release/tree/species/treeoflife.all_support_values.3.0.tree) 2023-05-02 10:10 2.9M.
+
+2.  Corroborate that it includes the species we need:
+
+  In Kew Tree of Life
+
+    -   *Theobroma cacao* (Malvaceae) -> Yes
+    -   *Dipteryx* sp. (Fabaceae) -> Yes (Dipteryx odorata is present)
+    -   *Lacmellea panamensis* (Apocynaceae) -> Yes
+    -   *Apeiba membranacea* (Malvaceae) -> No (Apeiba schomburgkii is present)
+    -   *Heisteria concinna* (Olacaceae) -> No (Heisteria parvifolia is present)
+    -   *Chrysophyllum cainito* (Sapotaceae) -> Yes
+    -   *Cordia alliodora* (Cordiaceae) -> No (Cordia myxa is present which is the type species. Is is also under Boraginaceae)
+    
+  In @janssens2020
+  
+      -   *Theobroma cacao* (Malvaceae) -> Yes
+    -   *Dipteryx* sp. (Fabaceae) -> Yes (Dipteryx odorata is present and others are included)
+    -   *Lacmellea panamensis* (Apocynaceae) -> Yes
+    -   *Apeiba membranacea* (Malvaceae) -> Yes
+    -   *Heisteria concinna* (Olacaceae) -> Yes
+    -   *Chrysophyllum cainito* (Sapotaceae) -> Yes (Other spp. are included)
+    -   *Cordia alliodora* (Cordiaceae) -> No (Cordia myxa and other Cordia spp. are included)
+
+3.  Compute covariance matrix of tree.
+
+4.  Include covariance matrix in the model.
+
+```{r}
+read.tree(file = "clean_data/phylogeny/treeoflife.all_support_values.3.0.tree")
+
+```
+
 # Indicator species analysis
 
 This analysis allows us to determine what endophytes are associated with particular groups (e.g. tree species). According to this vignette from Cáceres ([2022](https://cran.r-project.org/web/packages/indicspecies/vignettes/IndicatorSpeciesAnalysis.html)) `multipatt` function can provides us with Indicators Value Index and correlation index. Both are similar, but the differences lies in the question they help answer. Indicator value index "\[...\]are used for assessing the predictive values of species as indicators of the conditions prevailing in site groups, e.g. for field determination of community types or ecological monitoring." While the correlation index can be used for "\[...\] determining the ecological preferences of species among a set of alternative site groups or site group combinations."
@@ -4269,9 +4315,10 @@ P-value adjustments are computed with the "BH" method. Which "\[...\] control th
 
 Table with taxonomic information. These are OTUs that are significantly correlated with tree species across the whole data set *n* = 156 (individuals that where used for ant and pathogen assay).
 
-
 ### Table of significantly correlated species
+
 #### Table S5
+
 ```{r, supptable_S5}
 #Table with taxonomic information
 multipatt_taxonomy <- left_join(newpqDF, multipatt_analysis_sign, by= c("OTU"))
@@ -4409,10 +4456,9 @@ After trying to capture the samples with the top 10% diversity I realize that on
 
 We see that 4/21 are E-:E+ are selected as the top 3 with the highest diversity. While, the lowest diversity plants are split 11/21 E-:E+. We are selecting the top 3 of the data frame for ant and pathogen assays respectively.
 
-
 # Recoding upper and lower 30% herbivory and pathogen damage as High and Low
- 
-The idea is to use this data frame for a new `multipatt` analysis where we compare the groups. Point biserial correlation coefficient analysis require a discrete variable, hence the new High and Low categories. 
+
+The idea is to use this data frame for a new `multipatt` analysis where we compare the groups. Point biserial correlation coefficient analysis require a discrete variable, hence the new High and Low categories.
 
 ```{r, Recoding upper/lower}
 # 
@@ -4428,7 +4474,7 @@ upper_lower_damage <- master |>
 #196 observations and 6 variables
 ```
 
-Some species had about half the individuals experience less that 30% leaf damage. For the highest 70% damaged, 5/13 are E+ plants. <- Was this for ant herbivory damage?
+Some species had about half the individuals experience less that 30% leaf damage. For the highest 70% damaged, 5/13 are E+ plants. \<- Was this for ant herbivory damage?
 
 The pathogen data shows less than 40% leaf damage for almost all plants, controls and treatments (114/128). The focus here is comparing control and treatment leaf across E+ and E- treatments. The cut off here will be 30%. What is below? The E+ samples or the E-? It looks like 14 trees have more than 30% leaf damage and 5/14 are E-. We expected the opposite: more damage on tree with less FEF abundance.
 
@@ -4485,13 +4531,12 @@ patho_multipatt = multipatt(patho_recoded_filtered, patho_level, func = "r.g", c
 summary(patho_multipatt, indvalcomp = TRUE)
 ```
 
-For herbivory damaged leaves:
-Indicator/correlation species analysis for samples with the highest leaf damage (\>70%) we see 13 OTUs siginificantly assciated, while only 1 OTU for the lowest leaf damage (\<30%). For samples in the medium range we see that 3 OTUs are significantly correlated with the group.
+For herbivory damaged leaves: Indicator/correlation species analysis for samples with the highest leaf damage (\>70%) we see 13 OTUs siginificantly assciated, while only 1 OTU for the lowest leaf damage (\<30%). For samples in the medium range we see that 3 OTUs are significantly correlated with the group.
 
-For pathogen damaged leaves:
-Zero OTUs significantly correlated with the leaves that were damaged \<30% by pathogen. On the other hand, 13 OTUs are significantly correlated with plants that experienced \>30% leaf damage.
+For pathogen damaged leaves: Zero OTUs significantly correlated with the leaves that were damaged \<30% by pathogen. On the other hand, 13 OTUs are significantly correlated with plants that experienced \>30% leaf damage.
 
 #### Herbivory damage
+
 ```{r, Type I error and data table for herbivory damage}
 #Herbivory results
 #Extract table of stats
@@ -4509,6 +4554,7 @@ colnames(herb_multipatt_corrected)[1]  <- "OTU"
 ```
 
 ##### Table S6
+
 ```{r, supptable_S6}
 #Table of OTUs and respective taxonomic information that are significantly correlated to high and low leaf herbivory damage
 herb_multipatt_taxonomy <- left_join(newpqDF, herb_multipatt_corrected, join_by(OTU))
@@ -4608,6 +4654,7 @@ supptable_S6
 ```
 
 #### Pathogen damage
+
 ```{r, Type I error and data table for pathogen damage}
 #Pathogen damage results
 #Extract table of stats
@@ -4625,6 +4672,7 @@ colnames(patho_multipatt_corrected)[1]  <- "OTU"
 ```
 
 ##### Table S7
+
 ```{r, supptable_S7}
 #Table of OTUs and respective taxonomic information that are significantly correlated to high and low leaf pathoivory damage
 patho_multipatt_taxonomy <- left_join(newpqDF, patho_multipatt_corrected, join_by(OTU))
@@ -4719,11 +4767,10 @@ supptable_S7
 
 #gtsave(supptable_S7, file = "Aim3_supptable_S7_12JAN2024.docx", path = "./tables")
 ```
+
 The plants least damaged by pathogen have 92 OTUs significantly correlated with them (*p-value* \< 0.05). When adjusted for multiples comparison ("bh") the result is 20 OTUs.
 
-#EXTRA
-Lines of inquiry not pursued in the paper but that may be of interest for further analyses.
-# Dimensionality Reduction of leaf traits
+#EXTRA Lines of inquiry not pursued in the paper but that may be of interest for further analyses. \# Dimensionality Reduction of leaf traits
 
 ## LDA: Linear Discriminant Analyses
 

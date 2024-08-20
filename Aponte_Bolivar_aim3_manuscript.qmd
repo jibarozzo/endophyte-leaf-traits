@@ -128,17 +128,15 @@ knitr::opts_chunk$set(ft.tabcolsep=0)
 #| warning: false
 # Data manipulation and visualizations ####
 library("tidyverse")
-library("rmarkdown")
 library("conflicted")
 library("devtools")
-#library("DiagrammeR")
 library("ggfortify")
 library("ggiraph")
 library("ggiraphExtra")
 library("ggpubr")
 library("gridExtra")
 library("ggthemes")
-library("showtext")
+library("showtext") # For special characters in ggplot2
 library("ggtext")
 library("ggpmisc")
 library("plotrix")
