@@ -126,67 +126,81 @@ knitr::opts_chunk$set(ft.tabcolsep=0)
 #| echo: false
 #| eval: true
 #| warning: false
-# Data manipulation and visualizations ####
-library("tidyverse")
-library("conflicted")
-library("devtools")
-library("ggfortify")
-library("ggiraph")
-library("ggiraphExtra")
-library("ggpubr")
-library("gridExtra")
-library("ggthemes")
-library("showtext") # For special characters in ggplot2
-library("ggtext")
-library("ggpmisc")
-library("plotrix")
-library("MetBrewer")
-library("lattice")
 
+## Development Tools
+library(devtools)
 
-# Tables and housekeeping
-library("janitor")
-library("flextable")
-library("huxtable")
-library("gt")
-library("gtsummary")
-library("officer")
-library("broom")
-library("broom.mixed")
-library("broom.helpers")
-library("formatR")
-library("data.table")
-library("kableExtra")
+## Data Manipulation and Visualizations
+### Data Wrangling & Manipulation:
+library(tidyverse)
+library(data.table)
+library(janitor)
 
-# Stats ####
+## Visualization:
+library(ggfortify)
+library(ggiraph)
+library(ggiraphExtra)
+library(ggpubr)
+library(gridExtra)
+library(ggthemes)
+library(showtext) # For special characters in ggplot2
+library(ggtext)
+library(ggpmisc)
+library(plotrix)
+library(MetBrewer)
+library(lattice)
 
-library("vegan")
-library("nlme")
-library("MASS")
-library("MuMIn")
-library("car") #For type 3 Anova with Anova() function.
-library("PerformanceAnalytics")
-library("corrr")
-library("permute")
+## Tables
+### Table Creation & Formatting:
+library(flextable)
+library(huxtable)
+library(gt)
+library(gtsummary)
+library(kableExtra)
+  
+## Document and Script Formatting:
+library(officer)
+library(broom)
+library(broom.mixed)
+library(broom.helpers)
+library(formatR)
 
-library("pls")
-library("buildmer")
-library("lme4")
-library("sjPlot")
-library("indicspecies")
-library("rstatix")
+## Statistical Analysis
+### General Statistics:**
+library(vegan)
+library(nlme)
+library(MASS)
+library(MuMIn)
+library(car) # For type 3 ANOVA with )Anova()) function
+library(PerformanceAnalytics)
+library(corrr)
+library(permute)
+  
+## Modeling:**
+library(pls)
+library(buildmer)
+library(lme4)
+library(sjPlot)
 
-# Phylogenetic analyses #source("https://raw.githubusercontent.com/joey711/phyloseq/master/inst/scripts/installer.R",local = TRUE)
-library("mgcv")
-library("phyloseq")
-library("ape")
-library("metagMisc")
-#remotes::install_github("vmikk/metagMisc")
-#library("speedyseq")
-#source("http://bioconductor.org/biocLite.R")
+### Specialized Statistical Packages:
+library(indicspecies)
+library(rstatix)
 
-
-# Preference of conflicted functions among packages ####
+## Phylogenetic Analyses
+### Phylogenetic & Ecological Analysis:
+library(mgcv)
+library(phyloseq)
+library(ape)
+library(metagMisc)
+# remotes::install_github("vmikk/metagMisc")
+# library(speedyseq)
+# source("http://bioconductor.org/biocLite.R")
+  
+## Preference of Conflicted Functions Among Packages
+### Conflict Management:
+library(conflicted)
+  
+### Conflict Resolution Preferences:
 conflict_prefer("select", "dplyr")
 conflict_prefer("filter", "dplyr")
 conflict_prefer_all("phyloseq")

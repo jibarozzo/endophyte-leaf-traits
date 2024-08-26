@@ -49,64 +49,80 @@ Not all of these packages are used. They are here just in case need further alon
 ```{r}
 #| echo: false
 #| warning: false
-# Data manipulation and visualizations ####
-library("rmarkdown")
-library("conflicted")
-library("devtools")
-#library("DiagrammeR")
-library("factoextra")
-library("ggfortify")
-library("ggiraph")
-library("ggiraphExtra")
-library("ggplot2")
-library("ggpubr")
-library("gridExtra")
-library("ggthemes")
-library("hrbrthemes")
-library("igraph")
-library("tidyverse")
-library("plotrix")
-#library("viridis")
-library("MetBrewer")
-library("formatR")
-library("wesanderson")
-#library("knitr")
-library("data.table")
-library("kableExtra")
-library("janitor")
-library("flextable")
-library("vtable")
+## Development Tools
+library(devtools)
 
-# Stats ####
-library("broom")
-library("vegan")
-library("nlme")
-library("MASS")
-library("MuMIn")
-library("car") #For type 3 Anova with Anova() function.
-library("PerformanceAnalytics")
-library("corrr")
-library("permute")
-library("lattice")
-library("pls")
-library("buildmer")
-library("lme4")
-library("sjPlot")
-library("glmmTMB")
-library("indicspecies")
+## Data Manipulation and Visualizations
+### Data Wrangling & Manipulation:
+library(tidyverse)
+library(data.table)
+library(janitor)
 
-# Phylogenetic analyses #source("https://raw.githubusercontent.com/joey711/phyloseq/master/inst/scripts/installer.R",local = TRUE)
-library("mgcv")
-library("phyloseq")
-library("ape")
-library("metagMisc")
-#remotes::install_github("vmikk/metagMisc")
-#library("speedyseq")
-library("picante")
-#source("http://bioconductor.org/biocLite.R")
+## Visualization:
+library(ggfortify)
+library(ggiraph)
+library(ggiraphExtra)
+library(ggpubr)
+library(gridExtra)
+library(ggthemes)
+library(showtext) # For special characters in ggplot2
+library(ggtext)
+library(ggpmisc)
+library(plotrix)
+library(MetBrewer)
+library(lattice)
 
+## Tables
+### Table Creation & Formatting:
+library(flextable)
+library(huxtable)
+library(gt)
+library(gtsummary)
+library(kableExtra)
+  
+## Document and Script Formatting:
+library(officer)
+library(broom)
+library(broom.mixed)
+library(broom.helpers)
+library(formatR)
 
-# Preference of conflicted functions among packages ####
+## Statistical Analysis
+### General Statistics:**
+library(vegan)
+library(nlme)
+library(MASS)
+library(MuMIn)
+library(car) # For type 3 ANOVA with )Anova()) function
+library(PerformanceAnalytics)
+library(corrr)
+library(permute)
+  
+## Modeling:**
+library(pls)
+library(buildmer)
+library(lme4)
+library(sjPlot)
+
+### Specialized Statistical Packages:
+library(indicspecies)
+library(rstatix)
+
+## Phylogenetic Analyses
+### Phylogenetic & Ecological Analysis:
+library(mgcv)
+library(phyloseq)
+library(ape)
+library(metagMisc)
+# remotes::install_github("vmikk/metagMisc")
+# library(speedyseq)
+# source("http://bioconductor.org/biocLite.R")
+  
+## Preference of Conflicted Functions Among Packages
+### Conflict Management:
+library(conflicted)
+  
+### Conflict Resolution Preferences:
 conflict_prefer("select", "dplyr")
 conflict_prefer("filter", "dplyr")
 conflict_prefer_all("phyloseq")
@@ -116,12 +132,6 @@ conflict_prefer_all("phyloseq")
 
 ```{r}
 rm(list = ls()) 
-#setwd("H:/.shortcut-targets-by-id/0B9v0CdUUCqU5VVR4a3BvNHM1Z28/VBL_users/Grad_Students/Bolivar/Dissertation/Leaf_Traits_Panama/Data/Sequence_analyses")
-
-#Working Directory and Path for Windows
-#setwd("C:/Users/boloq/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses")
-#save.path <- "C:/Users/boloq/Box/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses"
-
 #Working Directory and Path for Linux
 setwd("/home/baponte/Boxx/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses/")
 # 
@@ -4228,33 +4238,98 @@ The approach is the following:
 
 2.  Corroborate that it includes the species we need:
 
-  In Kew Tree of Life
+In Kew Tree of Life
 
-    -   *Theobroma cacao* (Malvaceae) -> Yes
-    -   *Dipteryx* sp. (Fabaceae) -> Yes (Dipteryx odorata is present)
-    -   *Lacmellea panamensis* (Apocynaceae) -> Yes
-    -   *Apeiba membranacea* (Malvaceae) -> No (Apeiba schomburgkii is present)
-    -   *Heisteria concinna* (Olacaceae) -> No (Heisteria parvifolia is present)
-    -   *Chrysophyllum cainito* (Sapotaceae) -> Yes
-    -   *Cordia alliodora* (Cordiaceae) -> No (Cordia myxa is present which is the type species. Is is also under Boraginaceae)
-    
-  In @janssens2020
-  
-      -   *Theobroma cacao* (Malvaceae) -> Yes
-    -   *Dipteryx* sp. (Fabaceae) -> Yes (Dipteryx odorata is present and others are included)
-    -   *Lacmellea panamensis* (Apocynaceae) -> Yes
-    -   *Apeiba membranacea* (Malvaceae) -> Yes
-    -   *Heisteria concinna* (Olacaceae) -> Yes
-    -   *Chrysophyllum cainito* (Sapotaceae) -> Yes (Other spp. are included)
-    -   *Cordia alliodora* (Cordiaceae) -> No (Cordia myxa and other Cordia spp. are included)
+```         
+-   *Theobroma cacao* (Malvaceae) -> Yes
+-   *Dipteryx* sp. (Fabaceae) -> Yes (Dipteryx odorata is present)
+-   *Lacmellea panamensis* (Apocynaceae) -> Yes
+-   *Apeiba membranacea* (Malvaceae) -> No (Apeiba schomburgkii is present)
+-   *Heisteria concinna* (Olacaceae) -> No (Heisteria parvifolia is present)
+-   *Chrysophyllum cainito* (Sapotaceae) -> Yes
+-   *Cordia alliodora* (Cordiaceae) -> No (Cordia myxa is present which is the type species. Is is also under Boraginaceae)
+```
+
+In @janssens2020
+
+```         
+-   *Theobroma cacao* (Malvaceae) -> Yes
+-   *Dipteryx* sp. (Fabaceae) -> Yes (Dipteryx odorata is present and others are included)
+-   *Lacmellea panamensis* (Apocynaceae) -> Yes
+-   *Apeiba membranacea* (Malvaceae) -> Yes
+-   *Heisteria concinna* (Olacaceae) -> Yes
+-   *Chrysophyllum cainito* (Sapotaceae) -> Yes (Other spp. are included)
+-   *Cordia alliodora* (Cordiaceae) -> No (Cordia myxa and other Cordia spp. are included)
+```
 
 3.  Compute covariance matrix of tree.
 
 4.  Include covariance matrix in the model.
 
-```{r}
-read.tree(file = "clean_data/phylogeny/treeoflife.all_support_values.3.0.tree")
+Finding a recent angiosperm phylogenetic tree that included all the species in this study is hard. I will opt to build my own phylogenetic tree by downloading reference genomes and using `fastreeR` package to build tree and calculate the covariance matrix. I be following this [vignette](https://bioconductor.riken.jp/packages/3.15/bioc/vignettes/fastreeR/inst/doc/fastreeR_vignette.html) as a reference.
 
+**FASTA files**
+
+From NCBI:
+
+-   Theobroma cacao:
+
+    - *rbcL*: https://www.ncbi.nlm.nih.gov/nuccore/GQ981898.1
+
+-   Dipteryx sp. (loeifera): 
+    - *rbcL*: https://www.ncbi.nlm.nih.gov/nuccore/GQ981725.1
+    
+- Chrysophyllum cainito:
+    - *rbcL*:https://www.ncbi.nlm.nih.gov/nuccore/GQ981702.1
+
+- Cordia alliodora:
+    - https://www.ncbi.nlm.nih.gov/nuccore/GQ982196
+    - https://www.ncbi.nlm.nih.gov/nuccore/GQ981972
+    - *rbcL*: https://www.ncbi.nlm.nih.gov/nuccore/GQ981712
+
+- Lacmellea panamensis: 
+    - GQ982266
+    - GQ982028
+    - *rbcL*: https://www.ncbi.nlm.nih.gov/nuccore/GQ981782.1
+
+- Apeiba membranacea:
+    - *rbcL*: https://www.ncbi.nlm.nih.gov/nuccore/GQ981666.1?report=fasta
+
+- Heisteria concinna:
+    - *rbcL*: https://www.ncbi.nlm.nih.gov/nuccore/GQ981761.1
+    
+
+#### MUSCLE alignment of slow evolving coding gene *rbcL*
+
+```
+muscle -align all_species_rbcL.fasta -output all_species_rbcL_aligned.fasta
+```
+
+#### IQ-TREE
+
+Using IQ-TREE to build a phylogenetic tree through the web browser. I ran a couple of tests to understand how it works. Then I proceed to run commands on CLI locally. 
+
+
+**set seed 317582
+```
+iqtree -s all_species_rbcL_aligned.fasta -m TESTNEW -bb 1000 -alrt 1000 -seed 317582 --undo -safe
+```
+Parameters `--undo` was used to repeat analysis and `-safe` to avoid outpust warnings.
+
+#### FastreeR
+```{r}
+library(fastreeR)
+tree_test <- read.tree(file = "clean_data/phylogeny/genome_datasets/all_species_rbcL_aligned.fasta.treefile")
+
+myFastaDist <- fastreeR::fasta2dist("/home/baponte/Boxx/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses/clean_data/phylogeny/genome_datasets/all_species_rbcL_aligned.fasta", kmer = 6)
+
+myFastaTree <- fastreeR::dist2tree(inputDist = myFastaDist)
+plot(ape::read.tree(text = myFastaTree), direction = "right", cex = 1)
+ape::add.scale.bar()
+ape::axisPhylo(side = 1)
+
+myFastaTreeStats <- stats::hclust(myFastaDist)
+plot(myFastaTreeStats, ann = FALSE, cex = 01)
 ```
 
 # Indicator species analysis
@@ -4770,7 +4845,7 @@ supptable_S7
 
 The plants least damaged by pathogen have 92 OTUs significantly correlated with them (*p-value* \< 0.05). When adjusted for multiples comparison ("bh") the result is 20 OTUs.
 
-#EXTRA Lines of inquiry not pursued in the paper but that may be of interest for further analyses. \# Dimensionality Reduction of leaf traits
+# EXTRA Lines of inquiry not pursued in the paper but that may be of interest for further analyses. \# Dimensionality Reduction of leaf traits
 
 ## LDA: Linear Discriminant Analyses
 
