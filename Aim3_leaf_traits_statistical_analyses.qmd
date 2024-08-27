@@ -114,6 +114,7 @@ library(mgcv)
 library(phyloseq)
 library(ape)
 library(metagMisc)
+library(fastreeR)
 # remotes::install_github("vmikk/metagMisc")
 # library(speedyseq)
 # source("http://bioconductor.org/biocLite.R")
@@ -4235,40 +4236,55 @@ The approach is the following:
     -   [General Information](https://sftp.kew.org/pub/treeoflife/).
 
     -   Release information for [treeoflife.all_support_values.3.0.tree](https://sftp.kew.org/pub/paftol/current_release/tree/species/treeoflife.all_support_values.3.0.tree) 2023-05-02 10:10 2.9M.
+    - @kress2009: https://pnas.org/doi/full/10.1073/pnas.0909820106
+    - @janssens2020: https://bdj.pensoft.net/article/39677/
 
 2.  Corroborate that it includes the species we need:
 
 In Kew Tree of Life
 
-```         
--   *Theobroma cacao* (Malvaceae) -> Yes
--   *Dipteryx* sp. (Fabaceae) -> Yes (Dipteryx odorata is present)
--   *Lacmellea panamensis* (Apocynaceae) -> Yes
--   *Apeiba membranacea* (Malvaceae) -> No (Apeiba schomburgkii is present)
--   *Heisteria concinna* (Olacaceae) -> No (Heisteria parvifolia is present)
--   *Chrysophyllum cainito* (Sapotaceae) -> Yes
--   *Cordia alliodora* (Cordiaceae) -> No (Cordia myxa is present which is the type species. Is is also under Boraginaceae)
-```
+        
+    -   *Theobroma cacao* (Malvaceae) -> Yes
+    -   *Dipteryx* sp. (Fabaceae) -> Yes (Dipteryx odorata is present)
+    -   *Lacmellea panamensis* (Apocynaceae) -> Yes
+    -   *Apeiba membranacea* (Malvaceae) -> No (Apeiba schomburgkii is present)
+    -   *Heisteria concinna* (Olacaceae) -> No (Heisteria parvifolia is present)
+    -   *Chrysophyllum cainito* (Sapotaceae) -> Yes
+    -   *Cordia alliodora* (Cordiaceae) -> No (Cordia myxa is present which is the type species. Is is also under Boraginaceae)
+
+
+In @kress2009
+
+| **Species**                   | **Family**        | **Gene:**                         | **Notes**           |
+|-------------------------------|-------------------|-----------------------------------|---------------------|
+| *Theobroma cacao*             | Malvaceae         | rbcL, matK, psbA                  |                     |
+| *Dipteryx* sp.                | Fabaceae          | rbcL, matK, psbA                  | *Dipteryx oleifera* |
+| *Lacmellea panamensis*        | Apocynaceae       | rbcL, matK, psbA                  |                     |
+| *Apeiba membranacea*          | Malvaceae         | rbcL                              |                     |
+| *Heisteria concinna*          | Olacaceae         | rbcL, matK, psbA                  |                     |
+| *Chrysophyllum cainito*       | Sapotaceae        | rbcL, matK, psbA                  |                     |
+| *Cordia alliodora*            | Cordiaceae        | rbcL, matK, psbA                  |                     |
+
+
 
 In @janssens2020
 
-```         
--   *Theobroma cacao* (Malvaceae) -> Yes
--   *Dipteryx* sp. (Fabaceae) -> Yes (Dipteryx odorata is present and others are included)
--   *Lacmellea panamensis* (Apocynaceae) -> Yes
--   *Apeiba membranacea* (Malvaceae) -> Yes
--   *Heisteria concinna* (Olacaceae) -> Yes
--   *Chrysophyllum cainito* (Sapotaceae) -> Yes (Other spp. are included)
--   *Cordia alliodora* (Cordiaceae) -> No (Cordia myxa and other Cordia spp. are included)
-```
+    -   *Theobroma cacao* (Malvaceae) -> Yes
+    -   *Dipteryx* sp. (Fabaceae) -> Yes (Dipteryx odorata is present and others are included)
+    -   *Lacmellea panamensis* (Apocynaceae) -> Yes
+    -   *Apeiba membranacea* (Malvaceae) -> Yes
+    -   *Heisteria concinna* (Olacaceae) -> Yes
+    -   *Chrysophyllum cainito* (Sapotaceae) -> Yes (Other spp. are included)
+    -   *Cordia alliodora* (Cordiaceae) -> No (Cordia myxa and other Cordia spp. are included)
+
 
 3.  Compute covariance matrix of tree.
 
 4.  Include covariance matrix in the model.
 
-Finding a recent angiosperm phylogenetic tree that included all the species in this study is hard. I will opt to build my own phylogenetic tree by downloading reference genomes and using `fastreeR` package to build tree and calculate the covariance matrix. I be following this [vignette](https://bioconductor.riken.jp/packages/3.15/bioc/vignettes/fastreeR/inst/doc/fastreeR_vignette.html) as a reference.
+I opted to build my own phylogenetic tree by downloading reference genomes from @kress2009 and using `fastreeR` package to build tree and calculate the covariance matrix. I will use the *rbcL* gene to build phylogeny since it is highly conserved (and slowe evvolving) and it is available for all species. I be following this [vignette](https://bioconductor.riken.jp/packages/3.15/bioc/vignettes/fastreeR/inst/doc/fastreeR_vignette.html) as a reference.
 
-**FASTA files**
+**FASTA files from @kress2009**
 
 From NCBI:
 
@@ -4299,13 +4315,13 @@ From NCBI:
     - *rbcL*: https://www.ncbi.nlm.nih.gov/nuccore/GQ981761.1
     
 
-#### MUSCLE alignment of slow evolving coding gene *rbcL*
+#### MUSCLE (v.5.1.0-1) alignment of slow evolving coding gene *rbcL*
 
 ```
 muscle -align all_species_rbcL.fasta -output all_species_rbcL_aligned.fasta
 ```
 
-#### IQ-TREE
+#### IQ-TREE (v.2.3.6-1)
 
 Using IQ-TREE to build a phylogenetic tree through the web browser. I ran a couple of tests to understand how it works. Then I proceed to run commands on CLI locally. 
 
@@ -4318,18 +4334,68 @@ Parameters `--undo` was used to repeat analysis and `-safe` to avoid outpust war
 
 #### FastreeR
 ```{r}
-library(fastreeR)
-tree_test <- read.tree(file = "clean_data/phylogeny/genome_datasets/all_species_rbcL_aligned.fasta.treefile")
+# Calculating distances from fasta file
+myFastaDist <- fastreeR::fasta2dist(
+  "/home/baponte/Boxx/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses/clean_data/phylogeny/all_species_rbcL_aligned.fasta",
+  kmer = 6
+)
 
-myFastaDist <- fastreeR::fasta2dist("/home/baponte/Boxx/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequence_analyses/clean_data/phylogeny/genome_datasets/all_species_rbcL_aligned.fasta", kmer = 6)
+# Histogram of distances
+graphics::hist(
+  myFastaDist,
+  breaks = 100,
+  main = NULL,
+  xlab = "Distance",
+  xlim = c(0, max(myFastaDist))
+)
 
+# Plot tree from distance matrix
 myFastaTree <- fastreeR::dist2tree(inputDist = myFastaDist)
-plot(ape::read.tree(text = myFastaTree), direction = "right", cex = 1)
+plot(ape::read.tree(text = myFastaTree),
+     direction = "right",
+     cex = 1)
 ape::add.scale.bar()
 ape::axisPhylo(side = 1)
 
 myFastaTreeStats <- stats::hclust(myFastaDist)
 plot(myFastaTreeStats, ann = FALSE, cex = 01)
+
+# Rename column and row names of distance matrix
+
+species_list <- masterant2 %>%
+  select(Species) %>%
+  unique() %>%
+  pull()
+
+myFastaDist2 <- as.matrix(myFastaDist) %>%
+  as.data.frame() %>%
+  rownames_to_column(var = "Species") %>%
+  mutate(
+    Species = case_match(
+      Species,
+      "Apeiba" ~ "APEIME",
+      "Chrysophyllum" ~ "CHRYCA",
+      "Cordia" ~ "CORDAL",
+      "Dipteryx" ~ "DYPTE",
+      "Heisteria" ~ "HEISCO",
+      "Lacmellea" ~ "LACPA",
+      "Theobroma" ~ "THEOCA"
+    )
+  ) %>%
+  rename(
+    APEIME = Apeiba,
+    CHRYCA = Chrysophyllum,
+    CORDAL = Cordia,
+    DYPTE = Dipteryx,
+    HEISCO = Heisteria,
+    LACPA = Lacmellea,
+    THEOCA = Theobroma
+  ) %>%
+  column_to_rownames(var = "Species") 
+  
+
+
+
 ```
 
 # Indicator species analysis
