@@ -1,0 +1,12 @@
+
+1. Chrysophyllum cainito voucher STRI:BCI 192453 photosystem II protein D1 (psbA) gene, partial sequence; psbA-trnH intergenic spacer, complete sequence; and tRNA-His gene, partial sequence; chloroplast
+522 bp linear DNA 
+GQ982186.1 GI:261864092
+
+2. Chrysophyllum cainito maturase K (matK) gene, partial cds; chloroplast
+776 bp linear DNA 
+GQ981966.1 GI:261347791
+
+3. Chrysophyllum cainito ribulose-1,5-bisphosphate carboxylase/oxygenase large subunit (rbcL) gene, partial cds; chloroplast
+519 bp linear DNA 
+GQ981702.1 GI:261279243

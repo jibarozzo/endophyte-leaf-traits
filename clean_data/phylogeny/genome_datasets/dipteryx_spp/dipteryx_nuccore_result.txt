@@ -1,0 +1,44 @@
+
+1. Dipteryx odorata isolate S70DipO224 voucher Diaz 6429 (MO) authority Dipteryx odorata Willd. atpB-rbcL intergenic spacer, partial sequence; and ribulose-1,5-bisphosphate carboxylase/oxygenase large subunit (rbcL) gene, partial cds; chloroplast
+692 bp linear DNA 
+EF466158.1 GI:154269027
+
+2. Dipteryx odorata voucher Diaz 6429 (MO) authority Dipteryx odorata Willd. trnL-trnF intergenic spacer, partial sequence; chloroplast
+344 bp linear DNA 
+EF527489.1 GI:155008070
+
+3. Dipteryx odorata isolate S70DipO224 voucher Diaz 6429 (MO) authority Dipteryx odorata Willd. tRNA-Leu (trnL) gene, intron; chloroplast
+556 bp linear DNA 
+EF466268.1 GI:149777759
+
+4. Dipteryx oleifera voucher STRI:BCI 236893 photosystem II protein D1 (psbA) gene, partial sequence; psbA-trnH intergenic spacer, complete sequence; and tRNA-His gene, partial sequence; chloroplast
+489 bp linear DNA 
+GQ982209.1 GI:261864123
+
+5. Dipteryx oleifera maturase K (matK) gene, partial cds; chloroplast
+783 bp linear DNA 
+GQ981983.1 GI:261347824
+
+6. Dipteryx alata maturase K (matK) gene, complete cds; chloroplast
+1,521 bp linear DNA 
+AY553717.1 GI:45439514
+
+7. Dipteryx oleifera ribulose-1,5-bisphosphate carboxylase/oxygenase large subunit (rbcL) gene, partial cds; chloroplast
+553 bp linear DNA 
+GQ981725.1 GI:261279289
+
+8. Dipteryx alata voucher R.T. Pennington 494 (E) trnK gene, partial sequence; and maturase (matK) gene, partial cds; chloroplast
+2,400 bp linear DNA 
+AH009911.2 GI:1036030922
+
+9. Dipteryx odorata ribulose 1,5-bisphosphate carboxylase-oxygenase large subunit (rbcL) gene, choloroplast gene encoding chloroplast protein, partial cds
+1,407 bp linear DNA 
+U74245.1 GI:2342941
+
+10. Dipteryx panamensis tRNA-Leu (trnL) gene, partial intron sequence; chloroplast gene for chloroplast product
+468 bp linear DNA 
+AF309856.1 GI:12597362
+
+11. Dipteryx alata tRNA-Leu (trnL) gene, partial intron sequence; chloroplast gene for chloroplast product
+573 bp linear DNA 
+AF208896.1 GI:6983975

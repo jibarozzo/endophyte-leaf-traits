@@ -374,10 +374,10 @@ set.seed(123)
 #   as.matrix()
 
 # Saving
-# saveRDS(csamp, file.path(save.path, "R_objects/clean_sequences.rds"))
+# saveRDS(csamp, file.path(save.path, "clean_data/clean_sequences.rds"))
 
 # Reading
-csamp <- readRDS(file.path(save.path, "R_objects/clean_sequences.rds"))
+csamp <- readRDS(file.path(save.path, "clean_data/clean_sequences.rds"))
 ```
 
 ### T-BAS
@@ -397,10 +397,10 @@ csamp <- readRDS(file.path(save.path, "R_objects/clean_sequences.rds"))
 #   as.matrix()
 
 # Saving
-#saveRDS(tbas, file.path(save.path, "R_objects/tbas_filtered.rds"))
+#saveRDS(tbas, file.path(save.path, "clean_data/tbas_filtered.rds"))
 
 # Reading
-tbas <- readRDS(file.path(save.path, "R_objects/tbas_filtered.rds"))
+tbas <- readRDS(file.path(save.path, "clean_data/tbas_filtered.rds"))
 ```
 
 ### Leaf traits measurements
@@ -425,10 +425,10 @@ data <- data |>
           Abun_7 = Abundance_Proportion_day7)
 
 # Saving
-# saveRDS(data, file.path(save.path, "R_objects/leaf_data_raw_analyses.rds"))
+# saveRDS(data, file.path(save.path, "clean_data/leaf_data_raw_analyses.rds"))
 
 # Reading
-data <- readRDS(file.path(save.path, "R_objects/leaf_data_raw_analyses.rds"))
+data <- readRDS(file.path(save.path, "clean_data/leaf_data_raw_analyses.rds"))
 
 # ndata (new_data)
 # This data set can also be used to conduct analyses summarized by leaf.
@@ -447,10 +447,10 @@ data <- readRDS(file.path(save.path, "R_objects/leaf_data_raw_analyses.rds"))
 #   na.fail()
 
 # Saving
-# saveRDS(ndata, file.path(save.path, "R_objects/new_leaf_data.rds"))
+# saveRDS(ndata, file.path(save.path, "clean_data/new_leaf_data.rds"))
 
 # Reading
-ndata <- readRDS(file.path(save.path, "R_objects/new_leaf_data.rds"))
+ndata <- readRDS(file.path(save.path, "clean_data/new_leaf_data.rds"))
 
 # Splitting and relocating Unique_ID column 
 # Extract names to match to phyloseq objects separate(Species2, c("Species3", "Numbers"), sep = "(?<=[A-Za-z])(?=[0-9])")
@@ -468,10 +468,10 @@ ndata <- readRDS(file.path(save.path, "R_objects/new_leaf_data.rds"))
 #             LMA = mean(LMA, na.rm = TRUE)) 
 
 # Saving
-# saveRDS(ndata2, file.path(save.path, "R_objects/new_leaf_data2.rds"))
+# saveRDS(ndata2, file.path(save.path, "clean_data/new_leaf_data2.rds"))
 
 # Reading
-ndata2 <- readRDS(file.path(save.path, "R_objects/new_leaf_data2.rds"))
+ndata2 <- readRDS(file.path(save.path, "clean_data/new_leaf_data2.rds"))
 
 # Glimpse
 glimpse(data)
@@ -517,10 +517,10 @@ The code below cleans the `ants` data set by removing all the variables with inc
 #   mutate_if(is.character, as.factor)
 
 # Saving
-# saveRDS(ants, file.path(save.path, "R_objects/ants_data.rds"))
+# saveRDS(ants, file.path(save.path, "clean_data/ants_data.rds"))
 
 # Reading
-ants <- readRDS(file.path(save.path, "R_objects/ants_data.rds"))
+ants <- readRDS(file.path(save.path, "clean_data/ants_data.rds"))
 
 
 # Just the area loss
@@ -559,10 +559,10 @@ I removed rows for trials T1-T2 of THEO samples and T5 of APEIME samples (rows 4
 #   mutate_if(is.character, as.factor)
 
 # Saving
-# saveRDS(patho, file.path(save.path, "R_objects/pathogen_data.rds"))
+# saveRDS(patho, file.path(save.path, "clean_data/pathogen_data.rds"))
 
 # Reading
-patho <- readRDS(file.path(save.path, "R_objects/pathogen_data.rds"))
+patho <- readRDS(file.path(save.path, "clean_data/pathogen_data.rds"))
 
 
 #Just the area damaged
@@ -591,13 +591,13 @@ The taxonomic assignment was completed with T-BAS. The file `unite_report2BSDHQZ
 # OTU
 
 # Saving
-# saveRDS(OTU, file.path(save.path, "R_objects/otu_table.rds"))
+# saveRDS(OTU, file.path(save.path, "clean_data/otu_table.rds"))
 
 # Taxonomic Table: 1473 OTU by 7 taxonomic ranks
 # TAX <- tax_table(tbas)
 
 # Saving
-# saveRDS(TAX, file.path(save.path, "R_objects/taxonomy_table.rds"))
+# saveRDS(TAX, file.path(save.path, "clean_data/taxonomy_table.rds"))
 
 # SAMP (sample metadata)
 
@@ -606,17 +606,17 @@ The taxonomic assignment was completed with T-BAS. The file `unite_report2BSDHQZ
 # SAMP <- sample_data(SAMP)
 
 # Saving
-# saveRDS(SAMP, file.path(save.path, "R_objects/samp_data.rds"))
+# saveRDS(SAMP, file.path(save.path, "clean_data/samp_data.rds"))
 
 
 # Merging phyloseq objects ####
 # pq1 <- phyloseq(OTU, TAX, SAMP)
 
 # Saving
-# saveRDS(pq1, file.path(save.path, "R_objects/phyloseq_main.rds"))
+# saveRDS(pq1, file.path(save.path, "clean_data/phyloseq_main.rds"))
 
 # Reading
-pq1 <- readRDS(file.path(save.path, "R_objects/phyloseq_main.rds"))
+pq1 <- readRDS(file.path(save.path, "clean_data/phyloseq_main.rds"))
 
 # Random tree ####
 #random_tree <- rtree(ntaxa(pq), rooted=TRUE, tip.label=taxa_names(pq))
@@ -635,10 +635,10 @@ Are there any taxa with no (0) reads? \#
 # ntaxa(pq2) #There are 488 taxa with 0 reads.
 
 # Saving
-# saveRDS(pq2, file.path(save.path, "R_objects/phyloseq_pq2.rds"))
+# saveRDS(pq2, file.path(save.path, "clean_data/phyloseq_pq2.rds"))
 
 # Reading
-pq2 <- readRDS(file.path(save.path, "R_objects/phyloseq_pq2.rds"))
+pq2 <- readRDS(file.path(save.path, "clean_data/phyloseq_pq2.rds"))
 
 # Subset of pq1 -- only E+ samples and OTUs.
 #Important -- don't remove OTUs with 0 reads here, because we want to know which ones have no reads in E+ but DO have reads in E-.
@@ -740,10 +740,10 @@ newpqDF <- newpqDF |>  # Code from the Taxonomical assginment section dopes the 
 #   rename(Sample_name = rowname)
 
 # Saving
-#saveRDS(eOTU2, file.path(save.path, "R_objects/eOTU2.rds"))
+#saveRDS(eOTU2, file.path(save.path, "clean_data/eOTU2.rds"))
 
 # Reading
-eOTU2 <- readRDS(file.path(save.path, "R_objects/eOTU2.rds"))
+eOTU2 <- readRDS(file.path(save.path, "clean_data/eOTU2.rds"))
 
 
 # Just 569 OTUs and 156 samples (total abundances)
@@ -757,10 +757,10 @@ eOTU2 <- readRDS(file.path(save.path, "R_objects/eOTU2.rds"))
 #   rename(Sample_name = rowname)
 
 # Saving
-# saveRDS(cOTU, file.path(save.path, "R_objects/clean_OTU.rds"))
+# saveRDS(cOTU, file.path(save.path, "clean_data/clean_OTU.rds"))
 
 # Reading
-cOTU <- readRDS(file.path(save.path, "R_objects/clean_OTU.rds"))
+cOTU <- readRDS(file.path(save.path, "clean_data/clean_OTU.rds"))
 
 # Relative Abundance matrix (trimmed to 569 OTUs)
 # rabun <- read.csv("clean_data/otu_data/Aim3_OTU_Relative_Abundance_singletons_trimmed.csv")
@@ -772,10 +772,10 @@ cOTU <- readRDS(file.path(save.path, "R_objects/clean_OTU.rds"))
 #   as.matrix()
 
 # Saving
-# saveRDS(rabun, file.path(save.path, "R_objects/rabun_tidy.rds"))
+# saveRDS(rabun, file.path(save.path, "clean_data/rabun_tidy.rds"))
 
 # Reading
-rabun <- readRDS(file.path(save.path, "R_objects/rabun_tidy.rds"))
+rabun <- readRDS(file.path(save.path, "clean_data/rabun_tidy.rds"))
 
 # Relative Abundance matrix (singletons untrimmed Ascomycota 959 OTUs)
 # rawra <- read.csv("clean_data/otu_data/Aim3_OTU_Relative_Abundance_singletons_untrimmed.csv")
@@ -787,10 +787,10 @@ rabun <- readRDS(file.path(save.path, "R_objects/rabun_tidy.rds"))
 #   as.matrix()
 
 # Saving
-# saveRDS(rawra, file.path(save.path, "R_objects/rawra_tidy.rds"))
+# saveRDS(rawra, file.path(save.path, "clean_data/rawra_tidy.rds"))
 
 # Reading
-rawra <- readRDS(file.path(save.path, "R_objects/rawra_tidy.rds"))
+rawra <- readRDS(file.path(save.path, "clean_data/rawra_tidy.rds"))
 
 ```
 
@@ -4142,7 +4142,8 @@ suppfig_S8
 
 ```
 
-# Table 3
+# Table 2 
+*this is table 2 in manuscript
 
 # GLMM tables and estimates for ant and pathogen GLMMs with `logit_herbivory` and `logit_pathogenicity`
 
@@ -4221,7 +4222,7 @@ P3REM_coeff
 
 ```
 
-I believe the best way to represent the model coefficients if through a table no an estimate plot.
+I believe the best way to represent the model coefficients is through a table, not an estimate plot.
 
 # GLMMs with correction for host species phylogeny
 
@@ -4332,7 +4333,7 @@ iqtree -s all_species_rbcL_aligned.fasta -m TESTNEW -bb 1000 -alrt 1000 -seed 31
 ```
 Parameters `--undo` was used to repeat analysis and `-safe` to avoid outpust warnings.
 
-#### FastreeR
+#### FastreeR: Calculating distance and arranging DF
 ```{r}
 # Calculating distances from fasta file
 myFastaDist <- fastreeR::fasta2dist(
@@ -4360,43 +4361,124 @@ ape::axisPhylo(side = 1)
 myFastaTreeStats <- stats::hclust(myFastaDist)
 plot(myFastaTreeStats, ann = FALSE, cex = 01)
 
+
+
 # Rename column and row names of distance matrix
+# Pulled species list acronyms
+# species_list <- master %>%
+#   select(Species) %>%
+#   unique() %>%
+#   pull()
 
-species_list <- masterant2 %>%
-  select(Species) %>%
-  unique() %>%
-  pull()
+# Species list organized by matrix order
+species_list <- c("CORDAL",
+                  "HEISCO",
+                  "THEOCA",
+                  "CHRYCA",
+                  "DYPTE",
+                  "LACPA",
+                  "APEIME")
 
-myFastaDist2 <- as.matrix(myFastaDist) %>%
-  as.data.frame() %>%
-  rownames_to_column(var = "Species") %>%
-  mutate(
-    Species = case_match(
-      Species,
-      "Apeiba" ~ "APEIME",
-      "Chrysophyllum" ~ "CHRYCA",
-      "Cordia" ~ "CORDAL",
-      "Dipteryx" ~ "DYPTE",
-      "Heisteria" ~ "HEISCO",
-      "Lacmellea" ~ "LACPA",
-      "Theobroma" ~ "THEOCA"
-    )
-  ) %>%
-  rename(
-    APEIME = Apeiba,
-    CHRYCA = Chrysophyllum,
-    CORDAL = Cordia,
-    DYPTE = Dipteryx,
-    HEISCO = Heisteria,
-    LACPA = Lacmellea,
-    THEOCA = Theobroma
-  ) %>%
-  column_to_rownames(var = "Species") 
-  
+myFastaDist_clean <- as.matrix(myFastaDist)
+
+# New row names
+rownames(myFastaDist_clean) <- species_list
+
+# New column names
+colnames(myFastaDist_clean) <- species_list
+```
+
+Using `fastreeR::fasta2dist` function calculates "d2_S type dissimilarity measurement between the n sequences (which can represent samples) of a FASTA file. See doi:10.1186/s12859-016-1186-3 for more details." Upon further scrutiny, the algorithm employed by this function is adequate for unaligned sequences. From the authors:
+```
+We describe a scalable multi-tiered binning algorithm that combines frequency and compositional features to cluster unassembled reads, and demonstrate i) significant runtime performance gains of the developed modules against state of the art software, obtained through parallelization and the efficient use of large lock-free concurrent hash maps, ii) its relevance for clustering unassembled reads from high complexity (e.g., harboring 700 distinct genomes) samples, iii) its relevance to experimental setups involving multiple samples, through a use case consisting in the “de novo” identification of sequences from a target genome (e.g., a pathogenic strain) segregating at low levels in a cohort of 50 complex microbiomes (harboring 100 distinct genomes each), in the background of closely related strains and the absence of reference genome
+```
+
+I have aligned my sequences so it is probably not the best application. I  think `ape::vcv` function is more adequate for caculation covariance matrix and incorporating in GLMMs. 
 
 
+## GLMMs with phylogenetic correction
+
+```{r, Phylogenetic correlation}
+
+phylo_tree <- ape::read.tree("clean_data/phylogeny/iqtree_results/all_species_rbcL_aligned.fasta.treefile")  # Load your phylogenetic tree
+
+# Change tip labels to species acronyms
+phylo_tree[["tip.label"]] <- species_list
+
+# Compute the covariance matrix
+phylo_vcv <- vcv(phylo_tree, corr = TRUE)  # Compute the covariance matrix
+
+phylo_vcv_clean <- as.matrix(phylo_vcv) %>%
+  as.data.frame
+
+# Create a phylogenetic correlation structure (Pagel's “lambda” Correlation Structure)
+phylo_cor <- corPagel(1, phy = phylo_tree, form = ~ Species)
+# Assuming a λ  of 1 (full phylogenetic effect)
+```
+
+Asking ChatGPT what are the differences between `ape:vcv` and `ape:corPagel` and their different use cases: 
+| **Aspect**              | **`ape::vcv`**                                                   | **`ape::corPagel`**                                               |
+|-------------------------|------------------------------------------------------------------|-------------------------------------------------------------------|
+| **Purpose**             | Computes the variance-covariance matrix of a phylogenetic tree    | Creates a phylogenetic correlation structure using Pagel's lambda |
+| **Output**              | Variance-covariance matrix                                        | Correlation matrix or structure usable in mixed models            |
+| **Phylogenetic Signal** | Assumes full phylogenetic signal (based on tree topology)         | Allows varying levels of phylogenetic signal (0 ≤ λ ≤ 1)          |
+| **Typical Use Case**    | Generalized Least Squares (GLS), phylogenetic independent contrasts | Phylogenetic GLS (PGLS), mixed-effects models                     |
+| **Flexibility**         | Less flexible, assumes tree fully explains covariance             | More flexible, adjusts for different degrees of phylogenetic dependence |
+
+
+This gives me a good idea of how I can use them for GLMMs analyses. 
+
+
+```{r, Phylogenetic GLMM}
+# Starting with model M3REM: the best fit model before including phylogeny
+#Optimizers
+ctrl <- lmeControl(opt='optim')
+
+# Hebivory models
+## Fit the model
+PHY_HREM <- lme(
+  logit_herbivory ~ Thickness + LMA + E_load,
+  weights = varIdent(form = ~ 1|Species),
+  random = ~ 1 | Species,
+  correlation = phylo_cor,
+  method = "REML",
+  control = ctrl,
+  data = masterant2,
+  na.action = na.exclude
+)
+
+## Evaluating models
+AIC(PHY_HREM)
+AIC(M3REM)
+
+plot_model(PHY_REM, type = "diag")
+plot_model(M3REM, type = "diag")
+plot_models(PHY_REM, M3REM)
+
+
+# Pathogen models
+## Fit the model
+PHY_PREM <- lme(
+  logit_pathogenicity ~  LMA + Thickness,
+  #weights = varIdent(form = ~ 1 | Species),
+  random = ~ 1 | Species / E_load / Treatment,
+  correlation = phylo_cor,
+  method = "REML",
+  control = ctrl,
+  data = masterpat2,
+  na.action = na.exclude
+)
+
+## Evaluating models
+AIC(PHY_PREM)
+AIC(P3REM)
+
+plot_model(PHY_PREM, type = "diag")
+plot_model(P3REM, type = "diag")
+plot_models(PHY_PREM, P3REM)
 
 ```
+
 
 # Indicator species analysis
 

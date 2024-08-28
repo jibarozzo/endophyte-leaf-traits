@@ -1,0 +1,12 @@
+
+1. Lacmellea panamensis voucher STRI:BCI 168474 photosystem II protein D1 (psbA) gene, partial sequence; psbA-trnH intergenic spacer, complete sequence; and tRNA-His gene, partial sequence; chloroplast
+438 bp linear DNA 
+GQ982266.1 GI:261864188
+
+2. Lacmellea panamensis maturase K (matK) gene, partial cds; chloroplast
+777 bp linear DNA 
+GQ982028.1 GI:261347914
+
+3. Lacmellea panamensis ribulose-1,5-bisphosphate carboxylase/oxygenase large subunit (rbcL) gene, partial cds; chloroplast
+553 bp linear DNA 
+GQ981782.1 GI:261279403

@@ -1,0 +1,12 @@
+
+1. Heisteria concinna ribulose-1,5-bisphosphate carboxylase/oxygenase large subunit (rbcL) gene, partial cds; chloroplast
+553 bp linear DNA 
+GQ981761.1 GI:261279361
+
+2. Heisteria concinna voucher STRI:BCI 137255 photosystem II protein D1 (psbA) gene, partial sequence; psbA-trnH intergenic spacer, complete sequence; and tRNA-His gene, partial sequence; chloroplast
+436 bp linear DNA 
+GQ982244.1 GI:261864166
+
+3. Heisteria concinna maturase K (matK) gene, partial cds; chloroplast
+792 bp linear DNA 
+GQ982010.1 GI:261347878

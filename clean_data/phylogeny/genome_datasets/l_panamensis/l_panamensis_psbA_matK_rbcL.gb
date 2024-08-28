@@ -1,0 +1,182 @@
+LOCUS       GQ982266                 438 bp    DNA     linear   PLN 10-NOV-2009
+DEFINITION  Lacmellea panamensis voucher STRI:BCI 168474 photosystem II protein
+            D1 (psbA) gene, partial sequence; psbA-trnH intergenic spacer,
+            complete sequence; and tRNA-His gene, partial sequence;
+            chloroplast.
+ACCESSION   GQ982266
+VERSION     GQ982266.1
+KEYWORDS    .
+SOURCE      chloroplast Lacmellea panamensis
+  ORGANISM  Lacmellea panamensis
+            Eukaryota; Viridiplantae; Streptophyta; Embryophyta; Tracheophyta;
+            Spermatophyta; Magnoliopsida; eudicotyledons; Gunneridae;
+            Pentapetalae; asterids; lamiids; Gentianales; Apocynaceae;
+            Rauvolfioideae; Willughbeieae; Lacmelleinae; Lacmellea.
+REFERENCE   1  (bases 1 to 438)
+  AUTHORS   Kress,W.J., Erickson,D.L., Jones,F.A., Swenson,N.G., Perez,R.,
+            Sanjur,O. and Bermingham,E.
+  TITLE     Plant DNA barcodes and a community phylogeny of a tropical forest
+            dynamics plot in Panama
+  JOURNAL   Proc. Natl. Acad. Sci. U.S.A. 106 (44), 18621-18626 (2009)
+   PUBMED   19841276
+REFERENCE   2  (bases 1 to 438)
+  AUTHORS   Erickson,D.L.
+  TITLE     Direct Submission
+  JOURNAL   Submitted (22-SEP-2009) Department of Botany, Smithsonian
+            Institution, Washington, DC 20013, USA
+FEATURES             Location/Qualifiers
+     source          1..438
+                     /organism="Lacmellea panamensis"
+                     /organelle="plastid:chloroplast"
+                     /mol_type="genomic DNA"
+                     /specimen_voucher="STRI:BCI 168474"
+                     /db_xref="taxon:681449"
+                     /geo_loc_name="Panama"
+                     /collection_date="2007"
+                     /collected_by="R. Perez"
+                     /PCR_primers="fwd_name: psbA3'F, fwd_seq:
+                     gttatgcatgaacgtaatgctc, rev_name: trnH, rev_seq:
+                     cgcgcatggtggattcacaatcc"
+     gene            <1..4
+                     /gene="psbA"
+                     /note="photosystem II protein D1; contains stop codon"
+     misc_feature    5..409
+                     /note="psbA-trnH intergenic spacer"
+     tRNA            410..>438
+                     /product="tRNA-His"
+ORIGIN      
+        1 ctaaggccct ggttttagtg tataggagtt attgaaaaat aaaggagtaa taataacctt
+       61 cttgttctat caagagggtg ctattgctcc tttattttct tttgatttat tgtagtattt
+      121 tatagaaatt ttgattcttt tcttttcttt gcattacaca gagagcaaag gacttttttt
+      181 tttgaatttg taattaatat tctatttgat tttgaatctt tgtatcttag aaatagaaat
+      241 aaaaaataga aataataata agaaagaaaa tggtcaaaat gaaattctaa atagaataga
+      301 attgaaaatt aaattttcaa tattctaaat aaattagaat aggaaataga aattagaata
+      361 ggaaataaat ataagaaata aatagaaata gagtgaaggg gcgaaggggg cggatgtagc
+      421 caagtggatc aaggcagt
+//
+
+LOCUS       GQ982028                 777 bp    DNA     linear   PLN 24-JUL-2016
+DEFINITION  Lacmellea panamensis maturase K (matK) gene, partial cds;
+            chloroplast.
+ACCESSION   GQ982028
+VERSION     GQ982028.1
+KEYWORDS    .
+SOURCE      chloroplast Lacmellea panamensis
+  ORGANISM  Lacmellea panamensis
+            Eukaryota; Viridiplantae; Streptophyta; Embryophyta; Tracheophyta;
+            Spermatophyta; Magnoliopsida; eudicotyledons; Gunneridae;
+            Pentapetalae; asterids; lamiids; Gentianales; Apocynaceae;
+            Rauvolfioideae; Willughbeieae; Lacmelleinae; Lacmellea.
+REFERENCE   1  (bases 1 to 777)
+  AUTHORS   Kress,W.J., Erickson,D.L., Jones,F.A., Swenson,N.G., Perez,R.,
+            Sanjur,O. and Bermingham,E.
+  TITLE     Plant DNA barcodes and a community phylogeny of a tropical forest
+            dynamics plot in Panama
+  JOURNAL   Proc. Natl. Acad. Sci. U.S.A. 106 (44), 18621-18626 (2009)
+   PUBMED   19841276
+REFERENCE   2  (bases 1 to 777)
+  AUTHORS   Erickson,D.L.
+  TITLE     Direct Submission
+  JOURNAL   Submitted (22-SEP-2009) Department of Botany, Smithsonian
+            Institution, Washington, DC 20013, USA
+FEATURES             Location/Qualifiers
+     source          1..777
+                     /organism="Lacmellea panamensis"
+                     /organelle="plastid:chloroplast"
+                     /mol_type="genomic DNA"
+                     /specimen_voucher="STRI:BCI 168474"
+                     /db_xref="taxon:681449"
+                     /geo_loc_name="Panama"
+                     /collection_date="2007"
+     gene            <1..>777
+                     /gene="matK"
+     CDS             <1..>777
+                     /gene="matK"
+                     /codon_start=3
+                     /transl_table=11
+                     /product="maturase K"
+                     /protein_id="ACX70298.1"
+                     /translation="SLHLLRFFLREYCNWNNLIATNKPSFDFLTKRNQRLFFFLYNFY
+                     VCEYESIFVFLHNQSSHLRSTSFGVLLERIYFYGKIERLVEVFAKDFQANLDLFKDPF
+                     MHYVRYQGKSILVSKGTALLMNKWKSYLVNFWQCNFDLWFHSERVYIKQLSNHSLDFM
+                     SYLSSVRLNPSMVRSQMLENAFLIKNAIKKFDTLVPIIPLIGSLAKAKFCNLSGHPIS
+                     KPVRTDLSDSDIMDRFGRICRNLSHYHSGSSKKKSLYRIK"
+ORIGIN      
+        1 cttctttgca cttattacga ttctttctcc gcgagtattg taattggaat aatcttattg
+       61 ctacaaacaa acccagtttt gattttttaa caaaaagaaa tcaaagatta ttcttcttct
+      121 tatataattt ttatgtatgt gaatacgaat ccattttcgt ctttctccat aaccaatctt
+      181 ctcatttacg atcaacatcc tttggagtcc ttcttgaacg aatctatttc tatggaaaaa
+      241 tagaacgtct tgtcgaagtc tttgctaagg attttcaggc caacttagac ttgttcaaag
+      301 atcctttcat gcattatgtt agatatcaag gaaaatccat tctggtttca aaggggacgg
+      361 ctcttttgat gaataaatgg aaatcttacc ttgtcaattt ttggcaatgt aattttgacc
+      421 tgtggtttca ctcggaaagg gtctatataa agcaattgtc caatcattcc cttgacttta
+      481 tgagttatct ttcaagtgtg cgactaaacc cgtcaatggt acggagtcaa atgctagaaa
+      541 atgcatttct aatcaaaaat gctattaaga aattcgatac ccttgttcca attattcctc
+      601 tgattggatc attggctaaa gcgaaatttt gtaacctatc agggcatccc attagtaagc
+      661 cggttcggac ggatttatca gattctgata ttatggacag atttgggcgt atatgcagaa
+      721 acctttctca ttatcatagc ggatcttcca aaaaaaagag tttgtatcga ataaagt
+//
+
+LOCUS       GQ981782                 553 bp    DNA     linear   PLN 24-JUL-2016
+DEFINITION  Lacmellea panamensis ribulose-1,5-bisphosphate
+            carboxylase/oxygenase large subunit (rbcL) gene, partial cds;
+            chloroplast.
+ACCESSION   GQ981782
+VERSION     GQ981782.1
+KEYWORDS    .
+SOURCE      chloroplast Lacmellea panamensis
+  ORGANISM  Lacmellea panamensis
+            Eukaryota; Viridiplantae; Streptophyta; Embryophyta; Tracheophyta;
+            Spermatophyta; Magnoliopsida; eudicotyledons; Gunneridae;
+            Pentapetalae; asterids; lamiids; Gentianales; Apocynaceae;
+            Rauvolfioideae; Willughbeieae; Lacmelleinae; Lacmellea.
+REFERENCE   1  (bases 1 to 553)
+  AUTHORS   Kress,W.J., Erickson,D.L., Jones,F.A., Swenson,N.G., Perez,R.,
+            Sanjur,O. and Bermingham,E.
+  TITLE     Plant DNA barcodes and a community phylogeny of a tropical forest
+            dynamics plot in Panama
+  JOURNAL   Proc. Natl. Acad. Sci. U.S.A. 106 (44), 18621-18626 (2009)
+   PUBMED   19841276
+REFERENCE   2  (bases 1 to 553)
+  AUTHORS   Erickson,D.L.
+  TITLE     Direct Submission
+  JOURNAL   Submitted (22-SEP-2009) Department of Botany, Smithsonian
+            Institution, Washington, DC 20013, USA
+FEATURES             Location/Qualifiers
+     source          1..553
+                     /organism="Lacmellea panamensis"
+                     /organelle="plastid:chloroplast"
+                     /mol_type="genomic DNA"
+                     /specimen_voucher="STRI:BCI 168474"
+                     /db_xref="taxon:681449"
+                     /geo_loc_name="Panama"
+                     /collection_date="2007"
+                     /collected_by="R. Perez"
+                     /PCR_primers="fwd_seq: atgtcaccacaaacagagact, rev_seq:
+                     gtaaaatcaagtccaccrcg"
+     gene            <1..>553
+                     /gene="rbcL"
+     CDS             <1..>553
+                     /gene="rbcL"
+                     /codon_start=1
+                     /transl_table=11
+                     /product="ribulose-1,5-bisphosphate carboxylase/oxygenase
+                     large subunit"
+                     /protein_id="ACX61855.1"
+                     /translation="SVGFKAGVKEYKLTYYTPEYETKDTDILAAFRVTPQPGVPPEEA
+                     GAAVAAESSTGTWTTVWTDGLTSLDRYKGRCYHIEPVPGEEDQYIAYVAYPLDLFEEG
+                     SVTNMFTSIVGNVFGFKALRALRLEDLRIPKAYIKTFQGPPHGIQVERDKLNKYGRPL
+                     LGCTIKPKLGLSAKNYGRAVYECL"
+ORIGIN      
+        1 agtgttggat tcaaagctgg tgttaaagag tacaaattga cttattatac tcctgaatac
+       61 gaaaccaaag atactgatat cttggcagca ttccgagtaa ctcctcagcc cggagttcca
+      121 cccgaagaag caggggctgc ggtagctgcc gaatcttcta ctggtacatg gacaactgtg
+      181 tggaccgatg gacttaccag ccttgatcgt tacaaagggc gatgctacca catcgagccc
+      241 gttcctggag aagaagatca atatattgct tatgtagctt accccttaga cctttttgaa
+      301 gaaggttctg ttactaacat gtttacttcc attgtaggta atgtatttgg gttcaaagcc
+      361 ctacgcgctc tacgtctgga agatttgcga atccctaagg cttatattaa aaccttccaa
+      421 ggcccgcctc atggcatcca ggttgagaga gataaattga acaaatatgg tcgtcccctg
+      481 ttgggctgta ctattaaacc taaattgggg ttatccgcta aaaactacgg tagggcagtt
+      541 tatgaatgtc ttc
+//
+

@@ -1,0 +1,179 @@
+LOCUS       GQ982244                 436 bp    DNA     linear   PLN 10-NOV-2009
+DEFINITION  Heisteria concinna voucher STRI:BCI 137255 photosystem II protein
+            D1 (psbA) gene, partial sequence; psbA-trnH intergenic spacer,
+            complete sequence; and tRNA-His gene, partial sequence;
+            chloroplast.
+ACCESSION   GQ982244
+VERSION     GQ982244.1
+KEYWORDS    .
+SOURCE      chloroplast Heisteria concinna
+  ORGANISM  Heisteria concinna
+            Eukaryota; Viridiplantae; Streptophyta; Embryophyta; Tracheophyta;
+            Spermatophyta; Magnoliopsida; eudicotyledons; Gunneridae;
+            Pentapetalae; Santalales; Erythropalaceae; Heisteria.
+REFERENCE   1  (bases 1 to 436)
+  AUTHORS   Kress,W.J., Erickson,D.L., Jones,F.A., Swenson,N.G., Perez,R.,
+            Sanjur,O. and Bermingham,E.
+  TITLE     Plant DNA barcodes and a community phylogeny of a tropical forest
+            dynamics plot in Panama
+  JOURNAL   Proc. Natl. Acad. Sci. U.S.A. 106 (44), 18621-18626 (2009)
+   PUBMED   19841276
+REFERENCE   2  (bases 1 to 436)
+  AUTHORS   Erickson,D.L.
+  TITLE     Direct Submission
+  JOURNAL   Submitted (22-SEP-2009) Department of Botany, Smithsonian
+            Institution, Washington, DC 20013, USA
+FEATURES             Location/Qualifiers
+     source          1..436
+                     /organism="Heisteria concinna"
+                     /organelle="plastid:chloroplast"
+                     /mol_type="genomic DNA"
+                     /specimen_voucher="STRI:BCI 137255"
+                     /db_xref="taxon:50126"
+                     /geo_loc_name="Panama"
+                     /collection_date="2007"
+                     /collected_by="R. Perez"
+                     /PCR_primers="fwd_name: psbA3'F, fwd_seq:
+                     gttatgcatgaacgtaatgctc, rev_name: trnH, rev_seq:
+                     cgcgcatggtggattcacaatcc"
+     gene            <1..4
+                     /gene="psbA"
+                     /note="photosystem II protein D1; contains stop codon"
+     misc_feature    5..407
+                     /note="psbA-trnH intergenic spacer"
+     tRNA            408..>436
+                     /product="tRNA-His"
+ORIGIN      
+        1 ataaaacttc tatcttagtg tatacgagtt tttgaaagta aaaataaagg agcaataaca
+       61 attatcttga tagaacaaga aattgttatt gctcctttat ttagtaccat aatcataagt
+      121 tttttttatt tacttcaact taacaaaaag tatttttata ggttgattca ttattattat
+      181 tgtgtatcat acttccgttt tgtactaatt tttttttatc ttttgtgaaa ttatacattt
+      241 gaaataaaat tcaaaacaaa ataaagattg gaattttttt cctaattttt atatttcaga
+      301 agtaagataa gaaagaaatt tcaaaagact taatttatac ataccattaa tcattatttc
+      361 tttcttaaat attaaatata agaataagat taagatttag tagaggggcg gatgtagcca
+      421 agtggatcaa ggcagt
+//
+
+LOCUS       GQ982010                 792 bp    DNA     linear   PLN 24-JUL-2016
+DEFINITION  Heisteria concinna maturase K (matK) gene, partial cds;
+            chloroplast.
+ACCESSION   GQ982010
+VERSION     GQ982010.1
+KEYWORDS    .
+SOURCE      chloroplast Heisteria concinna
+  ORGANISM  Heisteria concinna
+            Eukaryota; Viridiplantae; Streptophyta; Embryophyta; Tracheophyta;
+            Spermatophyta; Magnoliopsida; eudicotyledons; Gunneridae;
+            Pentapetalae; Santalales; Erythropalaceae; Heisteria.
+REFERENCE   1  (bases 1 to 792)
+  AUTHORS   Kress,W.J., Erickson,D.L., Jones,F.A., Swenson,N.G., Perez,R.,
+            Sanjur,O. and Bermingham,E.
+  TITLE     Plant DNA barcodes and a community phylogeny of a tropical forest
+            dynamics plot in Panama
+  JOURNAL   Proc. Natl. Acad. Sci. U.S.A. 106 (44), 18621-18626 (2009)
+   PUBMED   19841276
+REFERENCE   2  (bases 1 to 792)
+  AUTHORS   Erickson,D.L.
+  TITLE     Direct Submission
+  JOURNAL   Submitted (22-SEP-2009) Department of Botany, Smithsonian
+            Institution, Washington, DC 20013, USA
+FEATURES             Location/Qualifiers
+     source          1..792
+                     /organism="Heisteria concinna"
+                     /organelle="plastid:chloroplast"
+                     /mol_type="genomic DNA"
+                     /specimen_voucher="STRI:BCI 137255"
+                     /db_xref="taxon:50126"
+                     /geo_loc_name="Panama"
+                     /collection_date="2007"
+     gene            <1..>792
+                     /gene="matK"
+     CDS             <1..>792
+                     /gene="matK"
+                     /codon_start=3
+                     /transl_table=11
+                     /product="maturase K"
+                     /protein_id="ACX70280.1"
+                     /translation="EDTSSLHLLRLFLHEYRNWNSLITPKKSISILSKTKKNQRFFLF
+                     LYNSHVCEYESIFIFLRNQSSHLRSTSSGTLLERIYFYGKIEHLVEVFAKDFQAIPCL
+                     FKDPFIHYVRYQGKSILASKGTLLLMNKWKYYLVNFWQCHFYVWAQPRRIYINRLSNH
+                     SLDFLGYLSSVRLNPSVVRSQMLENSFIIDNAIKKFDTTVPIRGIIGSLAKAKFCNVL
+                     GHPISKSVRANLSDSDIIDRFWRICRNFSHYHSGSSQKKSLYRIK"
+ORIGIN      
+        1 gcgaagatac ctcttctttg catttattac gactttttct ccacgagtat cgtaattgga
+       61 atagtcttat tactccaaag aaatctattt ccatcctttc aaaaacaaaa aagaatcaaa
+      121 gattcttttt gttcctatat aattctcatg tatgtgaata cgaatccatc ttcatttttc
+      181 tccgtaatca atcttctcat ttacgatcaa catcttctgg aacccttctt gagcgaatct
+      241 atttctatgg aaaaatagaa catcttgtcg aagtttttgc taaggatttt caggccatcc
+      301 catgtttgtt caaggatcct tttatacatt atgttaggta tcaaggaaaa tcaattctgg
+      361 cttcaaaagg aacgcttctt ctgatgaata aatggaaata ttaccttgtc aatttctggc
+      421 aatgtcattt ttatgtgtgg gctcaaccaa gaaggatcta tataaaccga ttatccaatc
+      481 attccctcga ctttctaggc tatctttcaa gtgtgcgact aaatccttca gtggttcgga
+      541 gtcaaatgct agaaaattca tttataatag ataatgctat taagaagttc gataccacag
+      601 ttccaattcg aggaataatt ggatcattgg ctaaagcgaa attttgtaac gtattagggc
+      661 atcccattag taagtcggtc cgggccaatt tatcagattc tgatattatt gaccgatttt
+      721 ggcgtatatg cagaaatttt tctcattatc acagcggatc ctcacaaaaa aagagtttgt
+      781 atcgaataaa gt
+//
+
+LOCUS       GQ981761                 553 bp    DNA     linear   PLN 24-JUL-2016
+DEFINITION  Heisteria concinna ribulose-1,5-bisphosphate carboxylase/oxygenase
+            large subunit (rbcL) gene, partial cds; chloroplast.
+ACCESSION   GQ981761
+VERSION     GQ981761.1
+KEYWORDS    .
+SOURCE      chloroplast Heisteria concinna
+  ORGANISM  Heisteria concinna
+            Eukaryota; Viridiplantae; Streptophyta; Embryophyta; Tracheophyta;
+            Spermatophyta; Magnoliopsida; eudicotyledons; Gunneridae;
+            Pentapetalae; Santalales; Erythropalaceae; Heisteria.
+REFERENCE   1  (bases 1 to 553)
+  AUTHORS   Kress,W.J., Erickson,D.L., Jones,F.A., Swenson,N.G., Perez,R.,
+            Sanjur,O. and Bermingham,E.
+  TITLE     Plant DNA barcodes and a community phylogeny of a tropical forest
+            dynamics plot in Panama
+  JOURNAL   Proc. Natl. Acad. Sci. U.S.A. 106 (44), 18621-18626 (2009)
+   PUBMED   19841276
+REFERENCE   2  (bases 1 to 553)
+  AUTHORS   Erickson,D.L.
+  TITLE     Direct Submission
+  JOURNAL   Submitted (22-SEP-2009) Department of Botany, Smithsonian
+            Institution, Washington, DC 20013, USA
+FEATURES             Location/Qualifiers
+     source          1..553
+                     /organism="Heisteria concinna"
+                     /organelle="plastid:chloroplast"
+                     /mol_type="genomic DNA"
+                     /specimen_voucher="STRI:BCI 137255"
+                     /db_xref="taxon:50126"
+                     /geo_loc_name="Panama"
+                     /collection_date="2007"
+                     /collected_by="R. Perez"
+                     /PCR_primers="fwd_seq: atgtcaccacaaacagagact, rev_seq:
+                     gtaaaatcaagtccaccrcg"
+     gene            <1..>553
+                     /gene="rbcL"
+     CDS             <1..>553
+                     /gene="rbcL"
+                     /codon_start=1
+                     /transl_table=11
+                     /product="ribulose-1,5-bisphosphate carboxylase/oxygenase
+                     large subunit"
+                     /protein_id="ACX61834.1"
+                     /translation="SVGFKAGVKDYKLTYYTPDYETKDTDILAAFRVTPQPGVPPEEA
+                     GAAVAAESSTGTWTTVWTDGLTSLDRYKGRCYHIEPVAGEESQFIAYVAYPLDLFEEG
+                     SVTNMFTSIVGNVFGFKALRALRLEDLRIPPAYSKTFQGPPHGIQVERDKLNKYGRPL
+                     LGCTIKPKLGLSAKNYGRAVYECL"
+ORIGIN      
+        1 agtgttggat tcaaagctgg tgttaaagat tacaaattga cttattatac tcctgactat
+       61 gaaaccaaag atactgatat cttggcagca tttcgagtaa ctcctcaacc tggagttccc
+      121 cctgaggaag caggggccgc ggtagctgcc gaatcttcta ctggtacatg gacaactgtg
+      181 tggaccgatg gacttaccag ccttgatcgt tacaaaggac gatgctacca catcgagccc
+      241 gttgctggag aagaaagtca atttattgct tatgtagctt accccttaga cctttttgaa
+      301 gaaggttctg ttactaacat gtttacttcc attgtgggta atgtatttgg gttcaaagcc
+      361 ctgcgcgctc tacgtctgga ggatctgcga atccctcctg cttattctaa aactttccaa
+      421 ggtccgcctc atggcatcca agttgagaga gataaattga acaagtatgg ccgtccccta
+      481 ttgggatgta ctattaaacc taaattgggg ttatctgcta agaattacgg tagagcagtt
+      541 tatgaatgtc tcc
+//
+

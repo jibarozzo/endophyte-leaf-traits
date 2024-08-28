@@ -1,0 +1,4 @@
+
+1. Cordia alliodora ribulose-1,5-bisphosphate carboxylase/oxygenase large subunit (rbcL) gene, partial cds; chloroplast
+553 bp linear DNA 
+GQ981712.1 GI:261279263

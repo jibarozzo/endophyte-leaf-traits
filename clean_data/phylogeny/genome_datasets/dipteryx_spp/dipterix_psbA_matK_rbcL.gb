@@ -1,0 +1,703 @@
+LOCUS       EF466158                 692 bp    DNA     linear   PLN 26-JUL-2016
+DEFINITION  Dipteryx odorata isolate S70DipO224 voucher Diaz 6429 (MO)
+            authority Dipteryx odorata Willd. atpB-rbcL intergenic spacer,
+            partial sequence; and ribulose-1,5-bisphosphate
+            carboxylase/oxygenase large subunit (rbcL) gene, partial cds;
+            chloroplast.
+ACCESSION   EF466158
+VERSION     EF466158.1
+KEYWORDS    .
+SOURCE      chloroplast Dipteryx odorata
+  ORGANISM  Dipteryx odorata
+            Eukaryota; Viridiplantae; Streptophyta; Embryophyta; Tracheophyta;
+            Spermatophyta; Magnoliopsida; eudicotyledons; Gunneridae;
+            Pentapetalae; rosids; fabids; Fabales; Fabaceae; Papilionoideae;
+            ADA clade; Dipterygeae; Dipteryx.
+REFERENCE   1  (bases 1 to 692)
+  AUTHORS   Torke,B.M. and Schaal,B.A.
+  TITLE     Molecular phylogenetics of the species-rich neotropical genus
+            Swartzia (Leguminosae, Papilionoideae) and related genera of the
+            swartzioid clade
+  JOURNAL   Am. J. Bot. 95 (2), 215-228 (2008)
+   PUBMED   21632346
+REFERENCE   2  (bases 1 to 692)
+  AUTHORS   Torke,B.M. and Schaal,B.A.
+  TITLE     Direct Submission
+  JOURNAL   Submitted (28-FEB-2007) Laboratory for Molecular Systematics and
+            Ecology, Academy of Natural Sciences, 1900 Benjamin Franklin
+            Parkway, Philadelphia, PA 19103-1195, USA
+FEATURES             Location/Qualifiers
+     source          1..692
+                     /organism="Dipteryx odorata"
+                     /organelle="plastid:chloroplast"
+                     /mol_type="genomic DNA"
+                     /isolate="S70DipO224"
+                     /specimen_voucher="Diaz 6429 (MO)"
+                     /db_xref="taxon:53873"
+                     /note="authority: Dipteryx odorata Willd."
+     misc_feature    <1..667
+                     /note="atpB-rbcL intergenic spacer"
+     gene            668..>692
+                     /gene="rbcL"
+     CDS             668..>692
+                     /gene="rbcL"
+                     /codon_start=1
+                     /transl_table=11
+                     /product="ribulose-1,5-bisphosphate carboxylase/oxygenase
+                     large subunit"
+                     /protein_id="ABS72227.1"
+                     /translation="MSPQTETK"
+ORIGIN      
+        1 tactccattt tcttggtccc atctaagcaa tccaattcta ttttttactt attcaatttc
+       61 aatgattaaa ttttcaagtt caaccaagtt attttgaaaa tatcaattga atgaaatctt
+      121 tcgaaagtct ttcatttgtt tatcattata gacaatatca tctgtattat ctatggaatt
+      181 tgaacctgaa ttttatttac gattccgttt ttctatctca ttggccctta tttcatattt
+      241 catcagcata cgatttatac ctagcatatt ttttttttat ctatttcttt ttgtgtgcga
+      301 attctgccta ttttcacatc tagcatttac atatacaaca tatatcactg tcaaggtcaa
+      361 gagtgaattt cttattattt agattagata tttcgattca aaaaaaaagt tgtaagagat
+      421 tcgaaatttg aaaaaaaaaa acaaggatgg ggttgcgcca tacatatgaa agagtataca
+      481 ataatgatgt atttggcaaa tcaaatacca tggtttaaga atgaaccatt cggattaatt
+      541 gatactatta gttgatcatt ttgtgaaaga ttcctgtaaa gtgaaaggtt tcattaactc
+      601 ctaagtcatg tcgagtagac cttgttgttg ctagaattct taattcatga gttgtagggg
+      661 gggatttatg tcaccacaaa cagagactaa ac
+//
+
+LOCUS       EF527489                 344 bp    DNA     linear   PLN 06-JUN-2008
+DEFINITION  Dipteryx odorata voucher Diaz 6429 (MO) authority Dipteryx odorata
+            Willd. trnL-trnF intergenic spacer, partial sequence; chloroplast.
+ACCESSION   EF527489
+VERSION     EF527489.1
+KEYWORDS    .
+SOURCE      chloroplast Dipteryx odorata
+  ORGANISM  Dipteryx odorata
+            Eukaryota; Viridiplantae; Streptophyta; Embryophyta; Tracheophyta;
+            Spermatophyta; Magnoliopsida; eudicotyledons; Gunneridae;
+            Pentapetalae; rosids; fabids; Fabales; Fabaceae; Papilionoideae;
+            ADA clade; Dipterygeae; Dipteryx.
+REFERENCE   1  (bases 1 to 344)
+  AUTHORS   Torke,B.M. and Schaal,B.A.
+  TITLE     Molecular phylogenetics of the species-rich neotropical genus
+            Swartzia (Leguminosae, Papilionoideae) and related genera of the
+            swartzioid clade
+  JOURNAL   Am. J. Bot. 95 (2), 215-228 (2008)
+   PUBMED   21632346
+REFERENCE   2  (bases 1 to 344)
+  AUTHORS   Torke,B.M. and Schaal,B.A.
+  TITLE     Direct Submission
+  JOURNAL   Submitted (28-MAR-2007) Laboratory for Molecular Systematics and
+            Ecology, Academy of Natural Sciences, 1900 Benjamin Franklin
+            Parkway, Philadelphia, PA 19103-1195, USA
+FEATURES             Location/Qualifiers
+     source          1..344
+                     /organism="Dipteryx odorata"
+                     /organelle="plastid:chloroplast"
+                     /mol_type="genomic DNA"
+                     /specimen_voucher="Diaz 6429 (MO)"
+                     /db_xref="taxon:53873"
+                     /note="authority: Dipteryx odorata Willd."
+     misc_feature    <1..>344
+                     /note="trnL-trnF intergenic spacer"
+ORIGIN      
+        1 aaggtccatt taactcttta attatttatc ctatatccat cctctttttt aaatttgtta
+       61 tgtgtcttat tcagtctatt ctttcacaaa tggatctgag cggaattttt cttatcacaa
+      121 tcacaaatct tggaatatgt ttggaatatg taattgaata tatatgagac acgtacaaat
+      181 gaacatctta tctttgagca agaaatcttc atatgaatga ttaacaatac atatcattat
+      241 tactactgaa acttacaaag tcttattttt ttttttagtt gacatagact cattgatata
+      301 tattcaagta atctcttaaa atgaagatga tggagcaaga atgg
+//
+
+LOCUS       EF466268                 556 bp    DNA     linear   PLN 06-JUN-2008
+DEFINITION  Dipteryx odorata isolate S70DipO224 voucher Diaz 6429 (MO)
+            authority Dipteryx odorata Willd. tRNA-Leu (trnL) gene, intron;
+            chloroplast.
+ACCESSION   EF466268
+VERSION     EF466268.1
+KEYWORDS    .
+SOURCE      chloroplast Dipteryx odorata
+  ORGANISM  Dipteryx odorata
+            Eukaryota; Viridiplantae; Streptophyta; Embryophyta; Tracheophyta;
+            Spermatophyta; Magnoliopsida; eudicotyledons; Gunneridae;
+            Pentapetalae; rosids; fabids; Fabales; Fabaceae; Papilionoideae;
+            ADA clade; Dipterygeae; Dipteryx.
+REFERENCE   1  (bases 1 to 556)
+  AUTHORS   Torke,B.M. and Schaal,B.A.
+  TITLE     Molecular phylogenetics of the species-rich neotropical genus
+            Swartzia (Leguminosae, Papilionoideae) and related genera of the
+            swartzioid clade
+  JOURNAL   Am. J. Bot. 95 (2), 215-228 (2008)
+   PUBMED   21632346
+REFERENCE   2  (bases 1 to 556)
+  AUTHORS   Torke,B.M. and Schaal,B.A.
+  TITLE     Direct Submission
+  JOURNAL   Submitted (01-MAR-2007) Laboratory for Molecular Systematics and
+            Ecology, Academy of Natural Sciences, 1900 Benjamin Franklin
+            Parkway, Philadelphia, PA 19103-1195, USA
+FEATURES             Location/Qualifiers
+     source          1..556
+                     /organism="Dipteryx odorata"
+                     /organelle="plastid:chloroplast"
+                     /mol_type="genomic DNA"
+                     /isolate="S70DipO224"
+                     /specimen_voucher="Diaz 6429 (MO)"
+                     /db_xref="taxon:53873"
+                     /note="authority: Dipteryx odorata Willd."
+     gene            <1..>556
+                     /gene="trnL"
+                     /note="tRNA-Leu"
+     intron          <1..>556
+                     /gene="trnL"
+ORIGIN      
+        1 ccttggtatg gaacctacca agtgagaact ttcaaattca gagaaaccct ggaattaaca
+       61 atgggaaatc ctgagccaaa tcctgttttc cgaaaacaaa gaagagttca taaagcgaga
+      121 gtaaagtaaa aaaggatagg tgcagagact caatggaagt tgttcgaaca aatggagttg
+      181 acaacatttc ttttcgcgtt aggaaaggaa tccttccatc gaaattccag aaaggaaagg
+      241 atcaatgata aatatatata tatatatacg tatatgtact gaaatactat ttcaattgat
+      301 taatgaagac tccaaaaatc tatatttttg aattgaatat ttatatcaca aatgaaagat
+      361 gtgaatcaat tccaagttga agaaagaatc gaatattcat tgatcaaatc attcactcca
+      421 tcatagcctg atagatcttt tgaagaactg attaatcaga tgagaataaa gatagagtcc
+      481 cattctacat gttaataccg acaacaatga aatttatagt aaaaggaaaa tccgtcgact
+      541 ttagaaatcg tgaggg
+//
+
+LOCUS       GQ982209                 489 bp    DNA     linear   PLN 10-NOV-2009
+DEFINITION  Dipteryx oleifera voucher STRI:BCI 236893 photosystem II protein D1
+            (psbA) gene, partial sequence; psbA-trnH intergenic spacer,
+            complete sequence; and tRNA-His gene, partial sequence;
+            chloroplast.
+ACCESSION   GQ982209
+VERSION     GQ982209.1
+KEYWORDS    .
+SOURCE      chloroplast Dipteryx oleifera
+  ORGANISM  Dipteryx oleifera
+            Eukaryota; Viridiplantae; Streptophyta; Embryophyta; Tracheophyta;
+            Spermatophyta; Magnoliopsida; eudicotyledons; Gunneridae;
+            Pentapetalae; rosids; fabids; Fabales; Fabaceae; Papilionoideae;
+            ADA clade; Dipterygeae; Dipteryx.
+REFERENCE   1  (bases 1 to 489)
+  AUTHORS   Kress,W.J., Erickson,D.L., Jones,F.A., Swenson,N.G., Perez,R.,
+            Sanjur,O. and Bermingham,E.
+  TITLE     Plant DNA barcodes and a community phylogeny of a tropical forest
+            dynamics plot in Panama
+  JOURNAL   Proc. Natl. Acad. Sci. U.S.A. 106 (44), 18621-18626 (2009)
+   PUBMED   19841276
+REFERENCE   2  (bases 1 to 489)
+  AUTHORS   Erickson,D.L.
+  TITLE     Direct Submission
+  JOURNAL   Submitted (22-SEP-2009) Department of Botany, Smithsonian
+            Institution, Washington, DC 20013, USA
+FEATURES             Location/Qualifiers
+     source          1..489
+                     /organism="Dipteryx oleifera"
+                     /organelle="plastid:chloroplast"
+                     /mol_type="genomic DNA"
+                     /specimen_voucher="STRI:BCI 236893"
+                     /db_xref="taxon:681432"
+                     /geo_loc_name="Panama"
+                     /collection_date="2007"
+                     /collected_by="R. Perez"
+                     /PCR_primers="fwd_name: psbA3'F, fwd_seq:
+                     gttatgcatgaacgtaatgctc, rev_name: trnH, rev_seq:
+                     cgcgcatggtggattcacaatcc"
+     gene            <1..4
+                     /gene="psbA"
+                     /note="photosystem II protein D1; contains stop codon"
+     misc_feature    5..478
+                     /note="psbA-trnH intergenic spacer"
+     tRNA            479..>489
+                     /product="tRNA-His"
+ORIGIN      
+        1 ataagatttt ggccttaaag tatacaagtt tttgaaagta aaggagcaat attaaactct
+       61 atattgctcc tttacttttt tagtagtctc gtgatttata ttttatatat tttatatata
+      121 taatttatat aattataata attatataaa tataaaatat aatttttttt tatttcaata
+      181 ttcttattct tttctttagc attttttata gcattcttta tttcaatttc agcataagaa
+      241 atagaaaatt tgtgagtttc ctattattat ttgttattta gtgatttcaa atttcttatt
+      301 gttttttttt ttcatcaatc tttaaaagag aaaaaataat atttgtaatg aatgtttcct
+      361 ttccattttt ttcttttcta taattaaaaa ttaaaagacg aataaaaact tagaagaaaa
+      421 aagaatgata gcgaaagagt agaaattcca gtatagttca tttttacata gtatacgggc
+      481 ggagagcca
+//
+
+LOCUS       GQ981983                 783 bp    DNA     linear   PLN 24-JUL-2016
+DEFINITION  Dipteryx oleifera maturase K (matK) gene, partial cds; chloroplast.
+ACCESSION   GQ981983
+VERSION     GQ981983.1
+KEYWORDS    .
+SOURCE      chloroplast Dipteryx oleifera
+  ORGANISM  Dipteryx oleifera
+            Eukaryota; Viridiplantae; Streptophyta; Embryophyta; Tracheophyta;
+            Spermatophyta; Magnoliopsida; eudicotyledons; Gunneridae;
+            Pentapetalae; rosids; fabids; Fabales; Fabaceae; Papilionoideae;
+            ADA clade; Dipterygeae; Dipteryx.
+REFERENCE   1  (bases 1 to 783)
+  AUTHORS   Kress,W.J., Erickson,D.L., Jones,F.A., Swenson,N.G., Perez,R.,
+            Sanjur,O. and Bermingham,E.
+  TITLE     Plant DNA barcodes and a community phylogeny of a tropical forest
+            dynamics plot in Panama
+  JOURNAL   Proc. Natl. Acad. Sci. U.S.A. 106 (44), 18621-18626 (2009)
+   PUBMED   19841276
+REFERENCE   2  (bases 1 to 783)
+  AUTHORS   Erickson,D.L.
+  TITLE     Direct Submission
+  JOURNAL   Submitted (22-SEP-2009) Department of Botany, Smithsonian
+            Institution, Washington, DC 20013, USA
+FEATURES             Location/Qualifiers
+     source          1..783
+                     /organism="Dipteryx oleifera"
+                     /organelle="plastid:chloroplast"
+                     /mol_type="genomic DNA"
+                     /specimen_voucher="STRI:BCI 236893"
+                     /db_xref="taxon:681432"
+                     /geo_loc_name="Panama"
+                     /collection_date="2007"
+     gene            <1..>783
+                     /gene="matK"
+     CDS             <1..>783
+                     /gene="matK"
+                     /codon_start=1
+                     /transl_table=11
+                     /product="maturase K"
+                     /protein_id="ACX70253.1"
+                     /translation="KDAPFFYLLRLFLYEYYNWNSLITPKNLIATFSKSNPRFFLFLY
+                     NFYVCEYESIFLFLRNKSSYLRLTSFSVFFERIYFYAKIEHLVEVFAKDFSSILSFFK
+                     DPFIHYVRYQGKSILASKNTPLLMNKWKXYLILLWQCHFYVWSQPGTIHINQLSEHSF
+                     DFLGYFSNVQLNPSVVRSQMLENSFIIEIVIKKLDTRIPIILLIRSLAKAKFCNVLGH
+                     PISKPVWADSSDFDIIDRFLQICRNLFHYYNGSSKKREFVSNK"
+ORIGIN      
+        1 aaagatgccc ctttctttta tttattaagg ttgtttcttt atgaatatta taattggaat
+       61 agtcttatta ctccaaaaaa cttgattgct actttttcaa aaagtaatcc aagattcttc
+      121 ttgtttctat ataattttta tgtatgtgaa tacgaatcta tcttcctttt tctccgtaac
+      181 aaatcctctt atttacgatt aacatctttt agcgtttttt ttgagcgaat ctatttctat
+      241 gcaaaaatag aacatcttgt agaagtcttt gctaaggatt tttcgtctat cttgtcattc
+      301 ttcaaggatc ctttcattca ttatgttaga tatcaaggaa aatccattct ggcttcaaag
+      361 aatacgcctc ttttaatgaa taaatggaaa wamtatctta tccttttatg gcaatgtcat
+      421 ttttatgttt ggtctcaacc aggaacgatc catataaacc aattatccga gcattcattt
+      481 gactttttag gctatttttc aaatgtgcag ctaaatcctt cagtggtacg aagtcaaatg
+      541 ctggaaaatt catttataat cgaaattgtt ataaaaaagc ttgatacaag aattccaatt
+      601 attcttctaa ttagatcatt agctaaagcg aaattttgta atgttttagg gcatcccatt
+      661 agtaagccgg tctgggccga ttcatccgat tttgatatta ttgaccggtt tttgcagata
+      721 tgcagaaatc tttttcatta ttacaatgga tcctcaaaaa aaagagagtt tgtatcgaat
+      781 aaa
+//
+
+LOCUS       AY553717                1521 bp    DNA     linear   PLN 26-JUL-2016
+DEFINITION  Dipteryx alata maturase K (matK) gene, complete cds; chloroplast.
+ACCESSION   AY553717
+VERSION     AY553717.1
+KEYWORDS    .
+SOURCE      chloroplast Dipteryx alata
+  ORGANISM  Dipteryx alata
+            Eukaryota; Viridiplantae; Streptophyta; Embryophyta; Tracheophyta;
+            Spermatophyta; Magnoliopsida; eudicotyledons; Gunneridae;
+            Pentapetalae; rosids; fabids; Fabales; Fabaceae; Papilionoideae;
+            ADA clade; Dipterygeae; Dipteryx.
+REFERENCE   1  (bases 1 to 1521)
+  AUTHORS   Wojciechowski,M.F. and Pennington,R.T.
+  TITLE     Phylogenetic analyses of Papilionoideae (family Fabaceae) using
+            sequences of the plastid matK gene
+  JOURNAL   Unpublished
+REFERENCE   2  (bases 1 to 1521)
+  AUTHORS   Wojciechowski,M.F. and Pennington,R.T.
+  TITLE     Direct Submission
+  JOURNAL   Submitted (20-FEB-2004) School of Life Sciences, Arizona State
+            University, PO Box 874501, Tempe, AZ 85287, USA
+FEATURES             Location/Qualifiers
+     source          1..1521
+                     /organism="Dipteryx alata"
+                     /organelle="plastid:chloroplast"
+                     /mol_type="genomic DNA"
+                     /specimen_voucher="R. T. Pennington 494 (E)"
+                     /db_xref="taxon:54988"
+     gene            1..1521
+                     /gene="matK"
+     CDS             1..1521
+                     /gene="matK"
+                     /codon_start=1
+                     /transl_table=11
+                     /product="maturase K"
+                     /protein_id="AAS64357.1"
+                     /translation="MEEYQFYLELDRSLQQDFLYPLIFQEYIYALAYGHDLNSSILVE
+                     NKGYDNKSSLLIIKRLITRMYQQNHLIISANDSNKNPFWGYNKNLYSQIISEGFAVVM
+                     EIPFSLQLRSFLEEEEIVKSYNNLRSIHSIFPFLEDQFTYFNFVSDVRIPYPIHLEIL
+                     VQIXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXKSNPRFFLFLYNFYVCE
+                     YESIFLFLRNKSSYLRLTSFSVFFERIYFYAKIEHLVEVFAKDFSSILSFFKDPFIHY
+                     VRYQGKSILASKNTPLLMNKWKYYLILLWQCHFYVWSQPGTIHINQLSEHSFDFLGYF
+                     SNVQLNPSVVRSQMLENSFIIEIVIKKLDTRIPIILLIRSLAKAKFCNVLGHPISKPV
+                     WADSSDFDIIDRFLQICRNLFHYYNGSSKKKSLYRIKYIVRLSCIKTLARKHKSTVRA
+                     FLKRLGSEDLFEEFFTEEEEILSLIFPRVSSTLQRLYRGRIWYLDIIFINDLVNHS"
+ORIGIN      
+        1 atggaggaat atcaattcta tttagaactg gatagatctc tccaacagga cttcctatac
+       61 ccacttattt ttcaggagta tatttatgca cttgcttatg gtcatgattt aaatagctcc
+      121 attttggtgg aaaataaggg ttatgacaat aaatctagtt tactaattat aaaacgttta
+      181 attactcgaa tgtatcaaca gaatcattta attatttctg ctaatgattc taacaaaaat
+      241 ccattttggg ggtataacaa gaatttgtat tctcaaataa tatcagaggg ttttgccgtc
+      301 gtcatggaaa ttccattttc cctacaatta agatcttttt tagaggagga agaaatcgta
+      361 aaatcttaca ataatttgcg atcaattcat tctatttttc cttttttgga ggatcaattt
+      421 acatatttca attttgtgtc agatgtacga ataccctatc ctatccatct ggaaatcttg
+      481 gttcaaatcn nnnnnnnnnn nnnnnnnnnn nnnnnnnnnn nnnnnnnnnn nnnnnnnnnn
+      541 nnnnnnnnnn nnnnnnnnnn nnnnnnnnnn nnnnnnnnnn nnnnnnnnnn nnnnnnnnnn
+      601 nnaaaaagta atccaagatt cttcttgttt ctatataatt tttatgtatg tgaatacgaa
+      661 tctatcttcc tttttctccg taacaaatcc tcttatttac gattaacatc ttttagcgtt
+      721 ttttttgagc gaatctattt ctatgcaaaa atagaacatc ttgtagaagt ctttgctaag
+      781 gatttttcgt ctatcttgtc attcttcaag gatcctttca ttcattatgt tagatatcaa
+      841 ggaaaatcca ttctggcttc aaagaatacg cctcttttaa tgaataaatg gaaatactat
+      901 cttatccttt tatggcaatg tcatttttat gtttggtctc aaccaggaac gatccatata
+      961 aaccaattat ccgagcattc atttgacttt ttaggctatt tttcaaatgt gcagctaaat
+     1021 ccttcagtgg tacgaagtca aatgctggaa aattcattta taatcgaaat tgttataaaa
+     1081 aagcttgata caagaattcc aattattctt ctaattagat cattagctaa agcgaaattt
+     1141 tgtaatgttt tagggcatcc cattagtaag ccggtctggg ccgattcatc cgattttgat
+     1201 attattgacc ggtttttgca gatatgcaga aatctttttc attattacaa tggatcctca
+     1261 aaaaaaaaga gtttgtatcg aataaaatat atagttcggc tttcttgtat taaaactttg
+     1321 gctcgtaaac acaaaagtac tgtacgcgct tttttgaaaa gactaggttc agaagactta
+     1381 tttgaagaat tctttacaga ggaagaagag attctttctt taatctttcc aagagtttct
+     1441 tctactttgc agaggttata tagaggtcgg atttggtatt tggatattat tttcatcaac
+     1501 gatctagtca atcattcatg a
+//
+
+LOCUS       GQ981725                 553 bp    DNA     linear   PLN 24-JUL-2016
+DEFINITION  Dipteryx oleifera ribulose-1,5-bisphosphate carboxylase/oxygenase
+            large subunit (rbcL) gene, partial cds; chloroplast.
+ACCESSION   GQ981725
+VERSION     GQ981725.1
+KEYWORDS    .
+SOURCE      chloroplast Dipteryx oleifera
+  ORGANISM  Dipteryx oleifera
+            Eukaryota; Viridiplantae; Streptophyta; Embryophyta; Tracheophyta;
+            Spermatophyta; Magnoliopsida; eudicotyledons; Gunneridae;
+            Pentapetalae; rosids; fabids; Fabales; Fabaceae; Papilionoideae;
+            ADA clade; Dipterygeae; Dipteryx.
+REFERENCE   1  (bases 1 to 553)
+  AUTHORS   Kress,W.J., Erickson,D.L., Jones,F.A., Swenson,N.G., Perez,R.,
+            Sanjur,O. and Bermingham,E.
+  TITLE     Plant DNA barcodes and a community phylogeny of a tropical forest
+            dynamics plot in Panama
+  JOURNAL   Proc. Natl. Acad. Sci. U.S.A. 106 (44), 18621-18626 (2009)
+   PUBMED   19841276
+REFERENCE   2  (bases 1 to 553)
+  AUTHORS   Erickson,D.L.
+  TITLE     Direct Submission
+  JOURNAL   Submitted (22-SEP-2009) Department of Botany, Smithsonian
+            Institution, Washington, DC 20013, USA
+FEATURES             Location/Qualifiers
+     source          1..553
+                     /organism="Dipteryx oleifera"
+                     /organelle="plastid:chloroplast"
+                     /mol_type="genomic DNA"
+                     /specimen_voucher="STRI:BCI 236893"
+                     /db_xref="taxon:681432"
+                     /geo_loc_name="Panama"
+                     /collection_date="2007"
+                     /collected_by="R. Perez"
+                     /PCR_primers="fwd_seq: atgtcaccacaaacagagact, rev_seq:
+                     gtaaaatcaagtccaccrcg"
+     gene            <1..>553
+                     /gene="rbcL"
+     CDS             <1..>553
+                     /gene="rbcL"
+                     /codon_start=1
+                     /transl_table=11
+                     /product="ribulose-1,5-bisphosphate carboxylase/oxygenase
+                     large subunit"
+                     /protein_id="ACX61798.1"
+                     /translation="SVGFKAGVKDYKLTYYTPQYQTKDTDILAAFRVTPQPGVPPEEA
+                     GAAVAAESSTGTWTTVWTDGLTSLDRYKGRCYHIEPVAGEENQYIAYVAYPLDLFEEG
+                     SVTNMFTSIVGNVFGFKALRALRLEDLRVPTSYIKTFQGPPHGIQVERDKLNKYGRPL
+                     LGCTIKPKLGLSAKNYGRAVYECL"
+ORIGIN      
+        1 agtgttgggt ttaaagctgg tgttaaagat tataaattga cttattatac tcctcagtat
+       61 caaaccaaag atactgatat cttggcagca ttccgagtaa ctcctcagcc tggagttcca
+      121 cctgaagaag caggtgccgc ggtagctgct gaatcttcta ctggtacatg gacaactgtg
+      181 tggaccgatg ggcttaccag tcttgatcgt tacaaaggac gatgctacca catcgagccc
+      241 gttgctggag aagaaaatca atatattgct tatgtagctt atcccttaga cctttttgaa
+      301 gaaggttctg ttactaacat gtttacttcc attgtgggta atgtatttgg gttcaaggcc
+      361 ttacgcgctc tacgtctgga ggatttgcga gtccctactt cttatattaa aactttccaa
+      421 ggtccgcctc acggcatcca agttgagaga gataaattga acaagtatgg ccgtccctta
+      481 ttgggatgta ctattaaacc aaaattgggg ttatccgcta agaattacgg tagagcagtt
+      541 tatgaatgtc tcc
+//
+
+LOCUS       AH009911                2400 bp    DNA     linear   PLN 10-JUN-2016
+DEFINITION  Dipteryx alata voucher R.T. Pennington 494 (E) trnK gene, partial
+            sequence; and maturase (matK) gene, partial cds; chloroplast.
+ACCESSION   AH009911 AF272092 AF272093
+VERSION     AH009911.2
+KEYWORDS    .
+SOURCE      chloroplast Dipteryx alata
+  ORGANISM  Dipteryx alata
+            Eukaryota; Viridiplantae; Streptophyta; Embryophyta; Tracheophyta;
+            Spermatophyta; Magnoliopsida; eudicotyledons; Gunneridae;
+            Pentapetalae; rosids; fabids; Fabales; Fabaceae; Papilionoideae;
+            ADA clade; Dipterygeae; Dipteryx.
+REFERENCE   1  (bases 1 to 2400)
+  AUTHORS   Lavin,M., Pennington,R.T., Klitgaard,B.B., Sprent,J.I., de
+            Lima,H.C. and Gasson,P.E.
+  TITLE     The dalbergioid legumes (Fabaceae): delimitation of a pantropical
+            monophyletic clade
+  JOURNAL   Am. J. Bot. 88 (3), 503-533 (2001)
+   PUBMED   11250829
+REFERENCE   2  (bases 1 to 2400)
+  AUTHORS   Lavin,M., Pennington,R.T., Klitgaard,B. and Sprent,J.
+  TITLE     Direct Submission
+  JOURNAL   Submitted (25-MAY-2000) Plant Sciences, Montana State University,
+            Ag Bioscience Bldg., Bozeman, MT 59717, USA
+COMMENT     On or before Jun 10, 2016 this sequence version replaced
+            AF272092.1, AF272093.1, AH009911.1.
+FEATURES             Location/Qualifiers
+     source          1..2400
+                     /organism="Dipteryx alata"
+                     /organelle="plastid:chloroplast"
+                     /mol_type="genomic DNA"
+                     /specimen_voucher="R.T. Pennington 494 (E)"
+                     /db_xref="taxon:54988"
+                     /geo_loc_name="Brazil: Goias"
+     gene            <1..>2400
+                     /gene="trnK"
+     intron          <1..>1179
+                     /gene="trnK"
+     gene            691..2198
+                     /gene="matK"
+     CDS             691..>1179
+                     /gene="matK"
+                     /codon_start=1
+                     /transl_table=11
+                     /product="maturase"
+                     /protein_id="AAG25072.1"
+                     /translation="MEEYQFYLELDRSLQQDFLYPLIFQEYIYALAYGHDLNSSILVE
+                     NKGYDNKSSLLIIKRLITRMYQQNHLIISANDSNKNPFWGYNKNLYSQIISEGFAVVM
+                     EIPFSLQLRSFLEEEEIVKSYNNLRSIHSIFPFLEDQFTYFNFVSDVRIPYPIHLEIL
+                     VQI"
+     gap             1180..1279
+                     /estimated_length=unknown
+     intron          <1280..>2400
+                     /gene="trnK"
+     CDS             <1280..2198
+                     /gene="matK"
+                     /codon_start=2
+                     /transl_table=11
+                     /product="maturase"
+                     /protein_id="AAG25073.1"
+                     /translation="KSNPRFFLFLYNFYVCEYESIFLFLRNKSSYLRLTSFSVFFERI
+                     YFYAKIEHLVEVFAKDFSSILSFFKDPFIHYVRYQGKSILASKNTPLLMNKWKYYLIL
+                     LWQCHFYVWSQPGTIHINQLSEHSFDFLGYFSNVQLNPSVVRSQMLENSFIIEIVIKK
+                     LDTRIPIILLIRSLAKAKFCNVLGHPISKPVWADSSDFDIIDRFLQICRNLFHYYNGS
+                     SKKKSLYRIKYIVRLSCIKTLARKHKSTVRAFLKRLGSEDLFEEFFTEEEEILSLIFP
+                     RVSSTLQRLYRGRIWYLDIIFINDLVNHS"
+ORIGIN      
+        1 gcttttaagt gcgactccat tttttacaca tttctatgaa ccaattgatt cgtccatact
+       61 attggtagag tttgtaagac cacgactgat ccagaaagga atgaatggaa aaagcagcat
+      121 gtcgtatcaa tggcgaattc gaaaaatatt tcattctttt ggatccggcc ccaattgaac
+      181 aaaaaaattc agttgggttg aattaataaa gggatagagc ttggcggctc caattatagg
+      241 gaaacaaaaa gcaacgagct ttcattttta atttgaatga ttaccccatc taattgtacg
+      301 ttaaaaatag attagtgctt gatgtgggaa aaacttttcc cgcgaatgga ttattgattt
+      361 ttgttatgag tcctaactat tattatctcc attatggggt gatgataaat gtgtagaaga
+      421 aagagtatat tgataaagat ctttttttcc aaaatcaaaa gagcgattgg gttgagaaaa
+      481 taaaagattt ctaactagct tgttatccta gaacaattag atggaaaaag cgaagagaga
+      541 gagtctgttg atgagtttta cttgtttttt aggtatctat tcatttttga ttctaattat
+      601 aatagaatac cctgttttga ctgtatcgca ctatgtatca tttaagaacc caataaatcc
+      661 ttgattcttt gatcaaatcg aatttcaaaa atggaggaat atcaattcta tttagaactg
+      721 gatagatctc tccaacagga cttcctatac ccacttattt ttcaggagta tatttatgca
+      781 cttgcttatg gtcatgattt aaatagctcc attttggtgg aaaataaggg ttatgacaat
+      841 aaatctagtt tactaattat aaaacgttta attactcgaa tgtatcaaca gaatcattta
+      901 attatttctg ctaatgattc taacaaaaat ccattttggg ggtataacaa gaatttgtat
+      961 tctcaaataa tatcagaggg ttttgccgtc gtcatggaaa ttccattttc cctacaatta
+     1021 agatcttttt tagaggagga agaaatcgta aaatcttaca ataatttgcg atcaattcat
+     1081 tctatttttc cttttttgga ggatcaattt acatatttca attttgtgtc agatgtacga
+     1141 ataccctatc ctatccatct ggaaatcttg gttcaaatcn nnnnnnnnnn nnnnnnnnnn
+     1201 nnnnnnnnnn nnnnnnnnnn nnnnnnnnnn nnnnnnnnnn nnnnnnnnnn nnnnnnnnnn
+     1261 nnnnnnnnnn nnnnnnnnna aaaagtaatc caagattctt cttgtttcta tataattttt
+     1321 atgtatgtga atacgaatct atcttccttt ttctccgtaa caaatcctct tatttacgat
+     1381 taacatcttt tagcgttttt tttgagcgaa tctatttcta tgcaaaaata gaacatcttg
+     1441 tagaagtctt tgctaaggat ttttcgtcta tcttgtcatt cttcaaggat cctttcattc
+     1501 attatgttag atatcaagga aaatccattc tggcttcaaa gaatacgcct cttttaatga
+     1561 ataaatggaa atactatctt atccttttat ggcaatgtca tttttatgtt tggtctcaac
+     1621 caggaacgat ccatataaac caattatccg agcattcatt tgacttttta ggctattttt
+     1681 caaatgtgca gctaaatcct tcagtggtac gaagtcaaat gctggaaaat tcatttataa
+     1741 tcgaaattgt tataaaaaag cttgatacaa gaattccaat tattcttcta attagatcat
+     1801 tagctaaagc gaaattttgt aatgttttag ggcatcccat tagtaagccg gtctgggccg
+     1861 attcatccga ttttgatatt attgaccggt ttttgcagat atgcagaaat ctttttcatt
+     1921 attacaatgg atcctcaaaa aaaaagagtt tgtatcgaat aaaatatata gttcggcttt
+     1981 cttgtattaa aactttggct cgtaaacaca aaagtactgt acgcgctttt ttgaaaagac
+     2041 taggttcaga agacttattt gaagaattct ttacagagga agaagagatt ctttctttaa
+     2101 tctttccaag agtttcttct actttgcaga ggttatatag aggtcggatt tggtatttgg
+     2161 atattatttt catcaacgat ctagtcaatc attcatgatt ggttatgata ctttgtaaat
+     2221 ggaaattatc cttaaatgaa gataaaaaaa ttcattcatt tctattagta ttctatagga
+     2281 ttatgaaatg ttcatgttgt aagagtcggg attgatcaac tgagtattta actttcttag
+     2341 agtcttgttc tggggaagta actaaggttt agatgtatac agaggaaaag ccgtgtgcaa
+//
+
+LOCUS       U74245                  1407 bp    DNA     linear   PLN 29-AUG-1997
+DEFINITION  Dipteryx odorata ribulose 1,5-bisphosphate carboxylase-oxygenase
+            large subunit (rbcL) gene, choloroplast gene encoding chloroplast
+            protein, partial cds.
+ACCESSION   U74245
+VERSION     U74245.1
+KEYWORDS    .
+SOURCE      chloroplast Dipteryx odorata
+  ORGANISM  Dipteryx odorata
+            Eukaryota; Viridiplantae; Streptophyta; Embryophyta; Tracheophyta;
+            Spermatophyta; Magnoliopsida; eudicotyledons; Gunneridae;
+            Pentapetalae; rosids; fabids; Fabales; Fabaceae; Papilionoideae;
+            ADA clade; Dipterygeae; Dipteryx.
+REFERENCE   1  (bases 1 to 1407)
+  AUTHORS   Doyle,J., Doyle,J., Ballenger,J., Dickson,E., Kajita,T. and
+            Ohashi,H.
+  TITLE     A phylogeny of the chloroplast gene rbcL in the Leguminosae:
+            taxonomic correlations and insights into the evolution of
+            nodulation
+  JOURNAL   Am. J. Bot. 84 (4), 541 (1997)
+   PUBMED   21708606
+REFERENCE   2  (bases 1 to 1407)
+  AUTHORS   Doyle,J.J., Doyle,J.L., Ballenger,J.A., Dickson,E.E., Kajita,T. and
+            Ohashi,H.
+  TITLE     Direct Submission
+  JOURNAL   Submitted (14-OCT-1996) Cornell University, L.H. Bailey Hortorium,
+            462 Mann Library Building, Ithaca, NY 14853-4301, USA
+FEATURES             Location/Qualifiers
+     source          1..1407
+                     /organism="Dipteryx odorata"
+                     /organelle="plastid:chloroplast"
+                     /mol_type="genomic DNA"
+                     /db_xref="taxon:53873"
+     gene            1..1398
+                     /gene="rbcL"
+     CDS             <1..1398
+                     /gene="rbcL"
+                     /codon_start=1
+                     /product="ribulose-1,5-bisphosphate carboxylase/oxygenase
+                     large subunit"
+                     /protein_id="AAB67924.1"
+                     /translation="VGFKAGVKDYKLTYYTPQYQTKDTDILAAFRVTPQPGVPPEEAG
+                     AAVAAESSTGTWTTVWTDGLTSLDRYKGRCYHIEPVAGEENQYIAYVAYPLDLFEEGS
+                     VTNMFTSIVGNVFGFKALRALRLEDLRVPTSYIKTFQGPPHGIQVERDKLNKYGRPLL
+                     GCTIKPKLGLSAKNYGRAVYECLRGGLDFTKDDENVNSQPFMRWRDRFLFCAEAIYKA
+                     QAETGEIKGHYLNATAGTCEEMLKRAVFARELGVPIVMHDYLTGGFTANTSLAHYCRD
+                     NGLLLHIHRAMHAVIDRQKNHGMHFRVLAKALRLSGGDHIHAGTVVGKLEGEREITLG
+                     FVDLLRDDFIEKDRSRGIYFTQDWVSLPGVIPVASGGIHVWHMPALTEIFGDDSVLQF
+                     GGGTLGHPWGNAPGAVANRVALEACVQARNEGRDLAREGNEIIREASKWSPELAAACE
+                     VWKEIKFEFPAMDTL"
+ORIGIN      
+        1 gttgggttta aagctggtgt taaagattat aaattgactt attatactcc tcagtatcaa
+       61 accaaagata ctgatatctt ggcagcattc cgagtaactc ctcagcctgg agttccacct
+      121 gaagaagcag gtgccgcggt agctgctgaa tcttctactg gtacatggac aactgtgtgg
+      181 accgatgggc ttaccagtct tgatcgttac aaaggacgat gctaccacat cgagcccgtt
+      241 gctggagaag aaaatcaata tattgcttat gtagcttatc ccttagacct ttttgaagaa
+      301 ggttctgtta ctaacatgtt tacttccatt gtgggtaatg tatttgggtt caaggcctta
+      361 cgcgctctac gtctggagga tttgcgagtc cctacttctt atattaaaac tttccaaggt
+      421 ccgcctcacg gcatccaagt tgagagagat aaattgaaca agtatggccg tcccttattg
+      481 ggatgtacta ttaaaccaaa attggggtta tccgctaaga attacggtag agcagtttat
+      541 gaatgtctcc gcggtggact tgattttacc aaagatgatg aaaatgtgaa ttctcaacca
+      601 tttatgcgtt ggagagatcg tttcttattt tgtgctgaag caatttataa agcacaggcc
+      661 gaaacaggtg aaatcaaagg gcattacttg aatgctactg caggtacatg cgaagaaatg
+      721 ctaaaaagag ctgtatttgc cagagaattg ggcgttccta tcgtaatgca tgattactta
+      781 acagggggat tcactgcaaa tactagcttg gctcattatt gccgagataa tggtctactt
+      841 cttcatatcc atcgtgcaat gcatgcagtt atcgatagac agaagaatca tggtatgcac
+      901 tttcgtgtac tagctaaggc gttacgtttg tctggtggag atcatattca cgctggtacc
+      961 gtagtaggta aacttgaagg ggaaagagag atcactttag gttttgttga tttactacgt
+     1021 gatgatttta ttgaaaaaga tcgaagccgc ggtatttatt tcactcagga ttgggtttct
+     1081 ctaccaggtg ttatacccgt tgcttcaggg ggtattcacg tctggcatat gcctgctttg
+     1141 accgagatct ttggagatga ttccgtactc caattcggtg gaggaacttt gggacaccct
+     1201 tggggaaatg caccaggtgc cgtagctaat cgagtagctc tcgaagcatg tgtacaagct
+     1261 cggaatgagg gacgtgatct tgctcgtgag ggtaatgaaa ttatccgtga ggctagcaaa
+     1321 tggagtcctg aattagctgc tgcttgtgaa gtatggaagg agattaagtt tgaattccca
+     1381 gcaatggata ctttgtaatc ccgtaat
+//
+
+LOCUS       AF309856                 468 bp    DNA     linear   PLN 30-SEP-2008
+DEFINITION  Dipteryx panamensis tRNA-Leu (trnL) gene, partial intron sequence;
+            chloroplast gene for chloroplast product.
+ACCESSION   AF309856
+VERSION     AF309856.1
+KEYWORDS    .
+SOURCE      chloroplast Dipteryx panamensis
+  ORGANISM  Dipteryx panamensis
+            Eukaryota; Viridiplantae; Streptophyta; Embryophyta; Tracheophyta;
+            Spermatophyta; Magnoliopsida; eudicotyledons; Gunneridae;
+            Pentapetalae; rosids; fabids; Fabales; Fabaceae; Papilionoideae;
+            ADA clade; Dipterygeae; Dipteryx.
+REFERENCE   1  (bases 1 to 468)
+  AUTHORS   Pennington,R.T., Lavin,M., Ireland,H., Klitgaard,B., Preston,J. and
+            Hu,J.-M.
+  TITLE     Phylogenetic relationships of basal papilionoid legumes based upon
+            sequences of the chloroplast trnL intron
+  JOURNAL   Syst. Bot. 26 (3), 537-556 (2001)
+REFERENCE   2  (bases 1 to 468)
+  AUTHORS   Pennington,T., Lavin,M., Ireland,H., Klitgaard,B., Preston,J. and
+            Hu,J.-M.
+  TITLE     Direct Submission
+  JOURNAL   Submitted (02-OCT-2000) Tropical Biology, Royal Botanic Garden
+            Edinburgh, 20a Inverleith Row, Edinburgh, Scotland EH3 5LR, UK
+FEATURES             Location/Qualifiers
+     source          1..468
+                     /organism="Dipteryx panamensis"
+                     /organelle="plastid:chloroplast"
+                     /mol_type="genomic DNA"
+                     /specimen_voucher="Costa Rica-R.T. Pennington 613 (E)"
+                     /db_xref="taxon:105942"
+     gene            <1..>468
+                     /gene="trnL"
+                     /note="tRNA-Leu"
+     intron          <1..>468
+                     /gene="trnL"
+ORIGIN      
+        1 aacaatggga aatcctgagc caaatcctgt tttccgaaaa caaagaagag ttcataaagc
+       61 gagagtaaag taaaaaagga taggtgcaga gactcaatgg aagttgttcg aacaaatgga
+      121 gttgacaaca tttcttttcg cgttaggaaa ggaatccttc catcgaaatt ccagaaagga
+      181 aaggatcaat gataaatata tatatatata cgtatatgta ctgaaatact atttcaattg
+      241 attaatgaag actccaaaaa tctatatttt tgaattgaat atttatatca caaatgaaag
+      301 atgtgaatca attccaagtt gaagaaagaa tcgaatattc attgatcaaa tcattcactc
+      361 catcatagcc tgatagatct tttgaagaac tgattaatca gatgagaata aagatagagt
+      421 cccattctac atgttaatac cgacaacaat gaaatttata gtaaaagg
+//
+
+LOCUS       AF208896                 573 bp    DNA     linear   PLN 13-JUL-2001
+DEFINITION  Dipteryx alata tRNA-Leu (trnL) gene, partial intron sequence;
+            chloroplast gene for chloroplast product.
+ACCESSION   AF208896
+VERSION     AF208896.1
+KEYWORDS    .
+SOURCE      chloroplast Dipteryx alata
+  ORGANISM  Dipteryx alata
+            Eukaryota; Viridiplantae; Streptophyta; Embryophyta; Tracheophyta;
+            Spermatophyta; Magnoliopsida; eudicotyledons; Gunneridae;
+            Pentapetalae; rosids; fabids; Fabales; Fabaceae; Papilionoideae;
+            ADA clade; Dipterygeae; Dipteryx.
+REFERENCE   1  (bases 1 to 573)
+  AUTHORS   Lavin,M., Pennington,R.T., Klitgaard,B.B., Sprent,J.I., de
+            Lima,H.C. and Gasson,P.E.
+  TITLE     The dalbergioid legumes (Fabaceae): delimitation of a pantropical
+            monophyletic clade
+  JOURNAL   Am. J. Bot. 88 (3), 503-533 (2001)
+   PUBMED   11250829
+REFERENCE   2  (bases 1 to 573)
+  AUTHORS   Lavin,M., Pennington,R.T., Klitgaard,B. and Sprent,J.
+  TITLE     The dalbergioid legumes
+  JOURNAL   Unpublished
+REFERENCE   3  (bases 1 to 573)
+  AUTHORS   Lavin,M., Pennington,R.T., Klitgaard,B. and Sprent,J.
+  TITLE     Direct Submission
+  JOURNAL   Submitted (29-NOV-1999) Plant Sciences, Montana State University,
+            Ag Bioscience Bldg, Bozeman, MT 59717, USA
+FEATURES             Location/Qualifiers
+     source          1..573
+                     /organism="Dipteryx alata"
+                     /organelle="plastid:chloroplast"
+                     /mol_type="genomic DNA"
+                     /db_xref="taxon:54988"
+                     /note="Brazil. Goi#s. Pennington 494 (E)"
+     gene            <1..>573
+                     /gene="trnL"
+                     /note="tRNA-Leu"
+     intron          <1..>573
+                     /gene="trnL"
+ORIGIN      
+        1 cgctacggac ttaattagat tgagccttgg tatggaaacc taccaagtga gaactttcaa
+       61 attcagagaa accctggaat taacaatggg aaatcctgag ccaaatcctg ttttccgaaa
+      121 acaaagaaga gttcataaag cgagagtaaa gtaaaaaagg ataggtgcag agactcaatg
+      181 gaagttgttc gaacaaatgg agttgacaac atttcttttc gcgttaggaa aggaatcctt
+      241 ccatcgaaat tccagaaagg aaaggatcaa tgataaatat atatatatat acgtatatgt
+      301 actgaaatac tatttcaatt gattaatgaa gactccaaaa atctatattt ttgaattgaa
+      361 tatttatatc acaaatgaaa gatgtgaatc aattccaagt tgaagaaaga atcgaatatt
+      421 cattgatcaa atcattcact ccatcatagc ctgatagatc ttttgaagaa ctgattaatc
+      481 agataagaat aaagatagag tcccattcta catgttaata ccgacaacaa tgaaatttat
+      541 agtaaaagga aaatccgtcg actttagaaa tcg
+//
+

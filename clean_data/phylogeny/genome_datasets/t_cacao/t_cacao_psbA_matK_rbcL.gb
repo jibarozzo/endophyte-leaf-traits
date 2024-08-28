@@ -1,0 +1,180 @@
+LOCUS       GQ982386                 485 bp    DNA     linear   PLN 10-NOV-2009
+DEFINITION  Theobroma cacao voucher STRI:BCI 023588 photosystem II protein D1
+            (psbA) gene, partial sequence; psbA-trnH intergenic spacer,
+            complete sequence; and tRNA-His gene, partial sequence;
+            chloroplast.
+ACCESSION   GQ982386
+VERSION     GQ982386.1
+KEYWORDS    .
+SOURCE      chloroplast Theobroma cacao (cacao)
+  ORGANISM  Theobroma cacao
+            Eukaryota; Viridiplantae; Streptophyta; Embryophyta; Tracheophyta;
+            Spermatophyta; Magnoliopsida; eudicotyledons; Gunneridae;
+            Pentapetalae; rosids; malvids; Malvales; Malvaceae; Byttnerioideae;
+            Theobroma.
+REFERENCE   1  (bases 1 to 485)
+  AUTHORS   Kress,W.J., Erickson,D.L., Jones,F.A., Swenson,N.G., Perez,R.,
+            Sanjur,O. and Bermingham,E.
+  TITLE     Plant DNA barcodes and a community phylogeny of a tropical forest
+            dynamics plot in Panama
+  JOURNAL   Proc. Natl. Acad. Sci. U.S.A. 106 (44), 18621-18626 (2009)
+   PUBMED   19841276
+REFERENCE   2  (bases 1 to 485)
+  AUTHORS   Erickson,D.L.
+  TITLE     Direct Submission
+  JOURNAL   Submitted (22-SEP-2009) Department of Botany, Smithsonian
+            Institution, Washington, DC 20013, USA
+FEATURES             Location/Qualifiers
+     source          1..485
+                     /organism="Theobroma cacao"
+                     /organelle="plastid:chloroplast"
+                     /mol_type="genomic DNA"
+                     /specimen_voucher="STRI:BCI 023588"
+                     /db_xref="taxon:3641"
+                     /geo_loc_name="Panama"
+                     /collection_date="2007"
+                     /collected_by="R. Perez"
+                     /PCR_primers="fwd_name: psbA3'F, fwd_seq:
+                     gttatgcatgaacgtaatgctc, rev_name: trnH, rev_seq:
+                     cgcgcatggtggattcacaatcc"
+     gene            <1..4
+                     /gene="psbA"
+                     /note="photosystem II protein D1; contains stop codon"
+     misc_feature    5..479
+                     /note="psbA-trnH intergenic spacer"
+     tRNA            480..>485
+                     /product="tRNA-His"
+ORIGIN      
+        1 ataagacttt ggttttagtg tatacgagtt tttgaaaata aaggagcaat aaccaatttc
+       61 ttgttctatc aagagtgttg gtattgctcc tttatttagt agtctttctt ttctttacat
+      121 aagtttgctt tttctttact ttaactttat ttactatttt attttaccat aagaaaaaaa
+      181 aaaggatttt taatgagttt gatttcgttt tattggattt tatttagtat tatacgtccg
+      241 ttatggacta atatataatt tctataaaat gaaaataaaa aaaaaaagta aaaaagttct
+      301 taccaatctt ttgtgaagtt tttattttag cgttaaaata aaagataaag attggaattt
+      361 tctatatatc gtatctcaga aataagataa aaaataatga tgaatcgtag aaatggaaat
+      421 ctttgaactt aaaatttgaa atatttaaag aaataaaaaa aaaatagtat agtagagggg
+      481 cggat
+//
+
+LOCUS       GQ982111                 768 bp    DNA     linear   PLN 24-JUL-2016
+DEFINITION  Theobroma cacao maturase K (matK) gene, partial cds; chloroplast.
+ACCESSION   GQ982111
+VERSION     GQ982111.1
+KEYWORDS    .
+SOURCE      chloroplast Theobroma cacao (cacao)
+  ORGANISM  Theobroma cacao
+            Eukaryota; Viridiplantae; Streptophyta; Embryophyta; Tracheophyta;
+            Spermatophyta; Magnoliopsida; eudicotyledons; Gunneridae;
+            Pentapetalae; rosids; malvids; Malvales; Malvaceae; Byttnerioideae;
+            Theobroma.
+REFERENCE   1  (bases 1 to 768)
+  AUTHORS   Kress,W.J., Erickson,D.L., Jones,F.A., Swenson,N.G., Perez,R.,
+            Sanjur,O. and Bermingham,E.
+  TITLE     Plant DNA barcodes and a community phylogeny of a tropical forest
+            dynamics plot in Panama
+  JOURNAL   Proc. Natl. Acad. Sci. U.S.A. 106 (44), 18621-18626 (2009)
+   PUBMED   19841276
+REFERENCE   2  (bases 1 to 768)
+  AUTHORS   Erickson,D.L.
+  TITLE     Direct Submission
+  JOURNAL   Submitted (22-SEP-2009) Department of Botany, Smithsonian
+            Institution, Washington, DC 20013, USA
+FEATURES             Location/Qualifiers
+     source          1..768
+                     /organism="Theobroma cacao"
+                     /organelle="plastid:chloroplast"
+                     /mol_type="genomic DNA"
+                     /specimen_voucher="STRI:BCI 023588"
+                     /db_xref="taxon:3641"
+                     /geo_loc_name="Panama"
+                     /collection_date="2007"
+     gene            <1..>768
+                     /gene="matK"
+     CDS             <1..>768
+                     /gene="matK"
+                     /codon_start=3
+                     /transl_table=11
+                     /product="maturase K"
+                     /protein_id="ACX70378.1"
+                     /translation="SSLHLLRFSLYEYCNLKSFFTPKKYISIFNPRLFLFLYNSHVCE
+                     YESIFLFLRNQSSHLRSTSSGVFLERIYFYGKIEHLVEVFSNDFQNNLWVFKDPFIHF
+                     IRYQGKAILASKDTSLLMNRWKYYFVDLWQYYFYVWSQSGRVRINQLSKYSLDFLGYL
+                     SSVRLNPSVVRSQMLENSFIIDNAIKKLDTRIPIISLIGSLSKAKFCNTLGHPISKPT
+                     WSDSSDSDIIDRFVRICRNLSHYHSGSSKKKSLYRIK"
+ORIGIN      
+        1 cttcttcttt gcatttatta cggttctctc tctacgagta ttgtaatttg aagagttttt
+       61 ttactccaaa gaaatatatt tctattttta atccaagatt attcttgttc ctatataatt
+      121 ctcatgtatg tgaatacgaa tccattttcc tttttctccg taaccaatct tctcatttac
+      181 gatcaacatc ttctggagtc tttcttgaac gaatttattt ctatggaaaa atagagcatc
+      241 ttgtagaagt cttttctaat gattttcaga acaacctctg ggtgttcaaa gatcctttca
+      301 tacattttat tagatatcaa ggaaaagcaa ttctagcctc aaaagatacg tctcttctga
+      361 tgaataggtg gaaatattac tttgtcgatt tatggcaata ttatttttac gtgtggtctc
+      421 aatcaggaag agtccgtata aatcaattat ctaaatattc tctcgacttt ctgggctatc
+      481 tttcaagtgt gcgattaaat ccttcagtgg tacggagtca aatgctagaa aattcattta
+      541 taatagataa tgctataaag aagctggata caagaattcc aattatttct ctgattggat
+      601 cattgtctaa agcgaaattt tgtaacacat tggggcatcc cattagtaag ccgacgtggt
+      661 ccgattcctc agattctgat attattgacc gatttgtgcg tatatgcaga aatctttctc
+      721 attatcacag tggatcttca aaaaaaaaga gtttgtatcg aataaaat
+//
+
+LOCUS       GQ981898                 519 bp    DNA     linear   PLN 24-JUL-2016
+DEFINITION  Theobroma cacao ribulose-1,5-bisphosphate carboxylase/oxygenase
+            large subunit (rbcL) gene, partial cds; chloroplast.
+ACCESSION   GQ981898
+VERSION     GQ981898.1
+KEYWORDS    .
+SOURCE      chloroplast Theobroma cacao (cacao)
+  ORGANISM  Theobroma cacao
+            Eukaryota; Viridiplantae; Streptophyta; Embryophyta; Tracheophyta;
+            Spermatophyta; Magnoliopsida; eudicotyledons; Gunneridae;
+            Pentapetalae; rosids; malvids; Malvales; Malvaceae; Byttnerioideae;
+            Theobroma.
+REFERENCE   1  (bases 1 to 519)
+  AUTHORS   Kress,W.J., Erickson,D.L., Jones,F.A., Swenson,N.G., Perez,R.,
+            Sanjur,O. and Bermingham,E.
+  TITLE     Plant DNA barcodes and a community phylogeny of a tropical forest
+            dynamics plot in Panama
+  JOURNAL   Proc. Natl. Acad. Sci. U.S.A. 106 (44), 18621-18626 (2009)
+   PUBMED   19841276
+REFERENCE   2  (bases 1 to 519)
+  AUTHORS   Erickson,D.L.
+  TITLE     Direct Submission
+  JOURNAL   Submitted (22-SEP-2009) Department of Botany, Smithsonian
+            Institution, Washington, DC 20013, USA
+FEATURES             Location/Qualifiers
+     source          1..519
+                     /organism="Theobroma cacao"
+                     /organelle="plastid:chloroplast"
+                     /mol_type="genomic DNA"
+                     /specimen_voucher="STRI:BCI 023588"
+                     /db_xref="taxon:3641"
+                     /geo_loc_name="Panama"
+                     /collection_date="2007"
+                     /collected_by="R. Perez"
+                     /PCR_primers="fwd_seq: atgtcaccacaaacagagact, rev_seq:
+                     gtaaaatcaagtccaccrcg"
+     gene            <1..>519
+                     /gene="rbcL"
+     CDS             <1..>519
+                     /gene="rbcL"
+                     /codon_start=3
+                     /transl_table=11
+                     /product="ribulose-1,5-bisphosphate carboxylase/oxygenase
+                     large subunit"
+                     /protein_id="ACX61971.1"
+                     /translation="LTYYTPDYETKDTDILAAFRVTPQPGVPPEEAGAAVAAESSTGT
+                     WTTVWTDGLTSLDRYKGRCYDIEPVAGEENQYIAYVAYPLDLFEEGSVTNMFTSIVGN
+                     VFGFKALRALRLEDLRIPPAYSKTFQGPPHGIQVERDKLNKYGRPLLGCTIKPKLGLS
+                     AKNYGRAVYECL"
+ORIGIN      
+        1 aattgactta ttatactcct gactatgaaa ccaaagatac tgatatcttg gcagcattcc
+       61 gagtaactcc tcaacctgga gttccgcctg aggaagcagg agccgcggta gctgctgaat
+      121 cttctactgg tacatggaca actgtgtgga ccgatgggct taccagtctt gatcgttata
+      181 aaggacgatg ctacgacatc gagcccgttg ctggagaaga aaatcaatat attgcttatg
+      241 tagcttaccc cttagacctt tttgaagaag gttctgttac taacatgttt acttccattg
+      301 tgggtaatgt atttggcttc aaagccctac gcgctctacg tctggaggat ttgcgaatcc
+      361 ctcctgctta ttctaaaact ttccaaggcc cccctcatgg catccaagtt gagagagata
+      421 aattgaacaa gtatggtcgc cccctattgg gctgtactat taaacctaaa ttggggttat
+      481 ccgctaagaa ttacggtaga gcagtttatg aatgtctac
+//
+

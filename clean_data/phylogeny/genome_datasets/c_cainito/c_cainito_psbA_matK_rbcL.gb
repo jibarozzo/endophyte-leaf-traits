@@ -1,0 +1,182 @@
+LOCUS       GQ982186                 522 bp    DNA     linear   PLN 10-NOV-2009
+DEFINITION  Chrysophyllum cainito voucher STRI:BCI 192453 photosystem II
+            protein D1 (psbA) gene, partial sequence; psbA-trnH intergenic
+            spacer, complete sequence; and tRNA-His gene, partial sequence;
+            chloroplast.
+ACCESSION   GQ982186
+VERSION     GQ982186.1
+KEYWORDS    .
+SOURCE      chloroplast Chrysophyllum cainito
+  ORGANISM  Chrysophyllum cainito
+            Eukaryota; Viridiplantae; Streptophyta; Embryophyta; Tracheophyta;
+            Spermatophyta; Magnoliopsida; eudicotyledons; Gunneridae;
+            Pentapetalae; asterids; Ericales; Sapotaceae; Chrysophylloideae;
+            Chrysophyllum.
+REFERENCE   1  (bases 1 to 522)
+  AUTHORS   Kress,W.J., Erickson,D.L., Jones,F.A., Swenson,N.G., Perez,R.,
+            Sanjur,O. and Bermingham,E.
+  TITLE     Plant DNA barcodes and a community phylogeny of a tropical forest
+            dynamics plot in Panama
+  JOURNAL   Proc. Natl. Acad. Sci. U.S.A. 106 (44), 18621-18626 (2009)
+   PUBMED   19841276
+REFERENCE   2  (bases 1 to 522)
+  AUTHORS   Erickson,D.L.
+  TITLE     Direct Submission
+  JOURNAL   Submitted (22-SEP-2009) Department of Botany, Smithsonian
+            Institution, Washington, DC 20013, USA
+FEATURES             Location/Qualifiers
+     source          1..522
+                     /organism="Chrysophyllum cainito"
+                     /organelle="plastid:chloroplast"
+                     /mol_type="genomic DNA"
+                     /specimen_voucher="STRI:BCI 192453"
+                     /db_xref="taxon:221251"
+                     /geo_loc_name="Panama"
+                     /collection_date="2007"
+                     /collected_by="R. Perez"
+                     /PCR_primers="fwd_name: psbA3'F, fwd_seq:
+                     gttatgcatgaacgtaatgctc, rev_name: trnH, rev_seq:
+                     cgcgcatggtggattcacaatcc"
+     gene            <1..4
+                     /gene="psbA"
+                     /note="photosystem II protein D1; contains stop codon"
+     misc_feature    5..516
+                     /note="psbA-trnH intergenic spacer"
+     tRNA            517..>522
+                     /product="tRNA-His"
+ORIGIN      
+        1 ataagacttt tgtcttagtg tatacgagtt tttgaaagta agggagcaat aaccaatttc
+       61 ttgttctatc aagagggcgt tattgctcct ttattacttt ttattttttt ttttattatt
+      121 attaatatat taatattaat attttattat attattctta ttattattaa attattttta
+      181 ttagtaatat tttatttaca tatactttat actttttttc gtcacaaaaa acaaaatctt
+      241 atggataaaa aaaaaaggat ttttatggtt gtgggttatt tcatgattga ttatcgtctt
+      301 ttctttctct attaatataa aatttatata cctatacctt ttcaaattta tatacctttg
+      361 tgaaattttt gtgaattttt tattttccat taaaaaaaaa attggaattt tttcttaatc
+      421 ttaatatttt tatcttagaa aaaaaaaaaa aagaaaaaat gagaaattgt taaaattgaa
+      481 tcctttataa tgaaatagtg gagtaaaggg aaaggggcgg ag
+//
+
+LOCUS       GQ981966                 776 bp    DNA     linear   PLN 24-JUL-2016
+DEFINITION  Chrysophyllum cainito maturase K (matK) gene, partial cds;
+            chloroplast.
+ACCESSION   GQ981966
+VERSION     GQ981966.1
+KEYWORDS    .
+SOURCE      chloroplast Chrysophyllum cainito
+  ORGANISM  Chrysophyllum cainito
+            Eukaryota; Viridiplantae; Streptophyta; Embryophyta; Tracheophyta;
+            Spermatophyta; Magnoliopsida; eudicotyledons; Gunneridae;
+            Pentapetalae; asterids; Ericales; Sapotaceae; Chrysophylloideae;
+            Chrysophyllum.
+REFERENCE   1  (bases 1 to 776)
+  AUTHORS   Kress,W.J., Erickson,D.L., Jones,F.A., Swenson,N.G., Perez,R.,
+            Sanjur,O. and Bermingham,E.
+  TITLE     Plant DNA barcodes and a community phylogeny of a tropical forest
+            dynamics plot in Panama
+  JOURNAL   Proc. Natl. Acad. Sci. U.S.A. 106 (44), 18621-18626 (2009)
+   PUBMED   19841276
+REFERENCE   2  (bases 1 to 776)
+  AUTHORS   Erickson,D.L.
+  TITLE     Direct Submission
+  JOURNAL   Submitted (22-SEP-2009) Department of Botany, Smithsonian
+            Institution, Washington, DC 20013, USA
+FEATURES             Location/Qualifiers
+     source          1..776
+                     /organism="Chrysophyllum cainito"
+                     /organelle="plastid:chloroplast"
+                     /mol_type="genomic DNA"
+                     /specimen_voucher="STRI:BCI 192453"
+                     /db_xref="taxon:221251"
+                     /geo_loc_name="Panama"
+                     /collection_date="2007"
+     gene            <1..>776
+                     /gene="matK"
+     CDS             <1..>776
+                     /gene="matK"
+                     /codon_start=2
+                     /transl_table=11
+                     /product="maturase K"
+                     /protein_id="ACX70237.1"
+                     /translation="SSLHLLRFFLYEYRNWNSLITPKKSSFSFSKRNQRLFLFLYNYH
+                     VCEYESIFIFLRNQSSHLRSISSGTFFERIDFYEKIEHFVEVFTKDFQAILWLCKDPF
+                     MHYVRYQGKSLLASKGKSLLMNKWKYYFVNFWQCYFYMWSQPGRIHINQLSNHSFDFL
+                     GYLSSVRLNPSMVRSQMLENSFLIGNAIKKFDTLVPIIPLIGSLSKAKFCNVLGHPIS
+                     KPVWADLSDSDIIDRFGRIYRNLSHYYSGSSKKMSLYRIK"
+ORIGIN      
+        1 ctcttctttg catttattac gattctttct gtacgagtat cgtaattgga atagtcttat
+       61 tactccaaag aaatctagtt tttctttctc aaaaagaaat caaagattat tcttgttctt
+      121 atataattat catgtatgtg aatacgaatc tatcttcatt tttcttcgaa accaatcttc
+      181 tcatttacga tcaatatctt ctggaacctt ttttgaacga atagatttct atgaaaaaat
+      241 agaacatttt gtagaagtct ttactaagga ttttcaggcc attctatggt tgtgcaagga
+      301 tcctttcatg cattatgtta ggtatcaagg aaaatccctt ttggcttcaa aagggaagtc
+      361 ccttttgatg aataaatgga aatattactt tgtcaatttc tggcaatgtt atttttacat
+      421 gtggtctcaa ccaggaagaa tccatataaa ccaattatcc aatcattcct tcgactttct
+      481 gggctatctt tcaagcgtgc gactaaaccc ttcaatggta cggagtcaaa tgctagaaaa
+      541 ttcatttcta ataggtaatg ctattaagaa gttcgatacc ctagttccaa ttattcctct
+      601 gattggatca ttgtctaaag cgaaattttg taacgtatta gggcatccca ttagtaagcc
+      661 agtctgggct gatttatcag attctgatat tattgaccga ttcgggcgta tatatagaaa
+      721 tctttctcat tattatagcg ggtcctcaaa aaaaatgagt ttgtaccgaa taaagt
+//
+
+LOCUS       GQ981702                 519 bp    DNA     linear   PLN 24-JUL-2016
+DEFINITION  Chrysophyllum cainito ribulose-1,5-bisphosphate
+            carboxylase/oxygenase large subunit (rbcL) gene, partial cds;
+            chloroplast.
+ACCESSION   GQ981702
+VERSION     GQ981702.1
+KEYWORDS    .
+SOURCE      chloroplast Chrysophyllum cainito
+  ORGANISM  Chrysophyllum cainito
+            Eukaryota; Viridiplantae; Streptophyta; Embryophyta; Tracheophyta;
+            Spermatophyta; Magnoliopsida; eudicotyledons; Gunneridae;
+            Pentapetalae; asterids; Ericales; Sapotaceae; Chrysophylloideae;
+            Chrysophyllum.
+REFERENCE   1  (bases 1 to 519)
+  AUTHORS   Kress,W.J., Erickson,D.L., Jones,F.A., Swenson,N.G., Perez,R.,
+            Sanjur,O. and Bermingham,E.
+  TITLE     Plant DNA barcodes and a community phylogeny of a tropical forest
+            dynamics plot in Panama
+  JOURNAL   Proc. Natl. Acad. Sci. U.S.A. 106 (44), 18621-18626 (2009)
+   PUBMED   19841276
+REFERENCE   2  (bases 1 to 519)
+  AUTHORS   Erickson,D.L.
+  TITLE     Direct Submission
+  JOURNAL   Submitted (22-SEP-2009) Department of Botany, Smithsonian
+            Institution, Washington, DC 20013, USA
+FEATURES             Location/Qualifiers
+     source          1..519
+                     /organism="Chrysophyllum cainito"
+                     /organelle="plastid:chloroplast"
+                     /mol_type="genomic DNA"
+                     /specimen_voucher="STRI:BCI 192453"
+                     /db_xref="taxon:221251"
+                     /geo_loc_name="Panama"
+                     /collection_date="2007"
+                     /collected_by="R. Perez"
+                     /PCR_primers="fwd_seq: atgtcaccacaaacagagact, rev_seq:
+                     gtaaaatcaagtccaccrcg"
+     gene            <1..>519
+                     /gene="rbcL"
+     CDS             <1..>519
+                     /gene="rbcL"
+                     /codon_start=3
+                     /transl_table=11
+                     /product="ribulose-1,5-bisphosphate carboxylase/oxygenase
+                     large subunit"
+                     /protein_id="ACX61775.1"
+                     /translation="LTYYTPEYETKDTDILAAFRVTPQPGVPPEEAGAAVAAESSTGT
+                     WTTVWTDGLTSLDRYKGRCYDIEPVAGEENQYICYVAYPLDLFEEGSVTNMFTSIVGN
+                     VFGFKALRALRLEDLRIPPAYTKTFQGPPHGIQVERDKLNKYGRPLLGCTIKPKLGLS
+                     AKNYGRAVYECL"
+ORIGIN      
+        1 aattgactta ttatactcca gagtatgaaa ccaaagatac tgatatcttg gcagcattcc
+       61 gagtaactcc tcaacctgga gttccacctg aggaagcagg agctgcagta gctgcggaat
+      121 cttctacagg tacatggaca actgtgtgga ccgatgggct taccagtctt gatcgttata
+      181 aaggacgatg ctacgacatc gagcccgttg ctggagaaga aaatcaatat atttgttatg
+      241 tagcttaccc cttagacctt tttgaagaag gttctgttac taatatgttt acttccattg
+      301 tcggtaatgt atttggattc aaagccctac gcgctctacg gctggaagat ttgcgaatcc
+      361 ctcctgctta tactaaaact ttccaaggcc cgcctcatgg catccaagtt gaaagagata
+      421 aattgaacaa gtatggccgc cccttattgg gctgtactat taaacctaaa ttggggctat
+      481 ccgctaagaa ttacggtaga gcagtttatg aatgtctcc
+//
+

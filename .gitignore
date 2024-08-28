@@ -4,3 +4,6 @@
 .Ruserdata
 
 /.quarto/
+
+/clean_data/phylogeny/genome_datasets/t_cacao/NC_030850.1.gb
+/clean_data/phylogeny/genome_datasets/t_cacao/GCF_000208745.1/*
