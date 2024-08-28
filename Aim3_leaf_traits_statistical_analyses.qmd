@@ -4436,9 +4436,9 @@ ctrl <- lmeControl(opt='optim')
 
 # Hebivory models
 ## Fit the model
-PHY_HREM <- lme(
+phylo_herbivory_REML <- lme(
   logit_herbivory ~ Thickness + LMA + E_load,
-  weights = varIdent(form = ~ 1|Species),
+  #weights = varIdent(form = ~ 1| Species),
   random = ~ 1 | Species,
   correlation = phylo_cor,
   method = "REML",
@@ -4448,17 +4448,17 @@ PHY_HREM <- lme(
 )
 
 ## Evaluating models
-AIC(PHY_HREM)
+AIC(phylo_herbivory_REML)
 AIC(M3REM)
 
-plot_model(PHY_REM, type = "diag")
+plot_model(phylo_herbivory_REML, type = "diag")
 plot_model(M3REM, type = "diag")
-plot_models(PHY_REM, M3REM)
+plot_models(phylo_herbivory_REML, M3REM)
 
 
 # Pathogen models
 ## Fit the model
-PHY_PREM <- lme(
+phylo_pathogen_REML <- lme(
   logit_pathogenicity ~  LMA + Thickness,
   #weights = varIdent(form = ~ 1 | Species),
   random = ~ 1 | Species / E_load / Treatment,
@@ -4468,15 +4468,68 @@ PHY_PREM <- lme(
   data = masterpat2,
   na.action = na.exclude
 )
-
 ## Evaluating models
-AIC(PHY_PREM)
-AIC(P3REM)
+AIC(PHY_HREM)
+AIC(M3REM)
 
-plot_model(PHY_PREM, type = "diag")
+plot_model(phylo_pathogen_REML, type = "diag")
 plot_model(P3REM, type = "diag")
-plot_models(PHY_PREM, P3REM)
+plot_models(phylo_pathogen_REML, P3REM)
+```
 
+This looks good, but when I went to make a table with `huxtable::huxreg` I received the error: *Error in intervals.lme(PHY_HREM) : cannot get confidence intervals on var-cov components: Non-positive definite approximate variance-covariance. Consider 'which = "fixed"'*. Both models return this erros. Searching on the web revealed that this is probably due to an overfitted model or that there is not enough data for the model structure. According to ChatGPT: *This error usually indicates that the model is having difficulty estimating the variance-covariance components for the random effects, which could be due to several reasons, such as model misspecification, insufficient data, or issues with the random effects structure.*. There are also various Stack Overflow threads discussing the matter, see [here](https://stats.stackexchange.com/questions/444995/scale-of-time-covariate-in-corcar1-matters) and [here](https://stackoverflow.com/questions/53409315/extracting-confidence-intervals-from-lme-model). 
+
+Basically adding the phylogenetic covariance structure over complicated things because I am also modelling variance structure by host species. Both ar ways for accounting for variance in the model.
+
+
+```{r, Phylogenetic GLMM}
+# Models are to complex for the data...
+
+# Controls with 1000 iterations
+iteration_ctrl <- lmeControl(opt = "optim", msMaxIter = 1000)
+
+# Herbivory model
+# Simpler models 
+phylo_herbivory_REML<- lme(
+  logit_herbivory ~ Thickness + LMA + E_load,
+  weights = varIdent(form = ~ 1| Species),
+  random = ~ 1 | Species,
+  correlation = phylo_cor,
+  method = "REML",
+  control = iteration_ctrl,
+  data = masterant2,
+  na.action = na.exclude
+)
+
+# Model summary
+summary(phylo_herbivory_REML)
+
+# Extracting fixed term Confidence Intervals
+phylo_herb_fixed_termsCI <- intervals(phylo_herbivory_REML, which = "fixed")
+
+
+# Pathogen models
+phylo_pathogen_REML <- lme(
+  logit_pathogenicity ~  LMA + Thickness,
+  #weights = varIdent(form = ~ 1 | Species),
+  random = ~ 1 | Species / E_load / Treatment,
+  correlation = phylo_cor,
+  method = "REML",
+  control = iteration_ctrl,
+  data = masterpat2,
+  na.action = na.exclude
+)
+
+summary(phylo_pathogen_REML)
+aov(M3REM)
+phylo_patho_fixed_termCIs <- intervals(phylo_pathogen_REML, which = "fixed")
+broom::tidy
+# Tidying model confidence intervals
+tidy(phylo_pathogen_REML, effects = "fixed", conf.level = 0.95, conf.int = TRUE)
+# tidy() from the broom/generics package helps tidy model coefficients and CIs. This function is used by huxtable::huxreg. Good to know for making the table for models.
+
+# Saving models
+save(phylo_herbivory_REML, phylo_pathogen_REML, file = "./clean_data/glmm_phylo_correct_models.rda")
 ```
 
 

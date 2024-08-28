@@ -2004,6 +2004,38 @@ P3REM <- lme(
 #AIC(P3REM) #1011.239 as of 30/OCT/2023
 
 save(M3REM, P3REM, file = "./clean_data/glmm_models.rda")
+
+# Models with phylogenetic correction based on Rviewer 1 from Functional Ecology
+# Hebivory models
+## Fit the model
+PHY_HREM <- lme(
+  logit_herbivory ~ Thickness + LMA + E_load,
+  weights = varIdent(form = ~ 1|Species),
+  random = ~ 1 | Species,
+  correlation = phylo_cor,
+  method = "REML",
+  control = ctrl,
+  data = masterant2,
+  na.action = na.exclude
+)
+
+# Pathogen models
+## Fit the model
+PHY_PREM <- lme(
+  logit_pathogenicity ~  LMA + Thickness,
+  #weights = varIdent(form = ~ 1 | Species),
+  random = ~ 1 | Species / E_load / Treatment,
+  correlation = phylo_cor,
+  method = "REML",
+  control = ctrl,
+  data = masterpat2,
+  na.action = na.exclude
+)
+
+## Evaluating model
+# AIC(PHY_HREM) # 623.1469
+# AIC(PHY_PREM) # 903.0283
+
 ```
 
 ```{r, Table2, tidy = TRUE}
@@ -2048,153 +2080,35 @@ save(M3REM, P3REM, file = "./clean_data/glmm_models.rda")
 #   relocate(conf.low.y, conf.high.y, .after = estimate.y) |>
 #   relocate(stars.x, .after = p.value.x) |>
 #   relocate(stars.y, .after = p.value.y)
-# 
-# # Table with `gt` package
-# table3 <- gt(models, 
-#              rowname_col = "term") |>
-#   cols_width(everything() ~ px(70),
-#              starts_with("term") ~ px(200)
-#   ) |>
-#   tab_options(row_group.as_column = TRUE) |>
-#   tab_stubhead(label = "Fixed effects") |>
-#   cols_merge(
-#     columns = c(conf.low.x, conf.high.x),
-#     pattern = "{1} - {2}"
-#   ) |>
-#   cols_merge(
-#     columns = c(conf.low.y, conf.high.y),
-#     pattern = "{1} - {2}"
-#   ) |>
-#   cols_label(
-#     estimate.x = "Estimate",
-#     estimate.y = "Estimate",
-#     std.error.x = "Standard error",
-#     std.error.y = "Standard error",
-#     df.x = "df",
-#     df.y = "df",
-#     statistic.x = "t-value",
-#     statistic.y = "t-value",
-#     p.value.x = "p-value",
-#     p.value.y = "p-value",
-#     stars.x = "",
-#     stars.y = "",
-#     conf.low.x = "CI",
-#     conf.low.y = "CI",
-#   ) |>
-#   fmt_number(columns = everything(),
-#              rows = everything(),
-#              decimals = 3,
-#              n_sigfig = NULL
-#    ) |>
-#   tab_spanner(
-#     label = md("Herbivory model"),
-#     columns = ends_with(".x")
-#     ) |>
-#   tab_spanner(
-#     label = md("Pathogen damage model"),
-#     columns = ends_with(".y")
-#     ) |>
-#   tab_style(
-#     style = list(
-#       cell_text(weight = "bold"),
-#       cell_text(style = "italic")),
-#     locations = cells_column_labels()
-#     ) |>
-#   tab_style(
-#     style = list(
-#       cell_text(style = "italic")),
-#     locations = cells_stubhead()
-#     ) |>
-#   tab_style(
-#     style = list(
-#       cell_text(weight = "bold")),
-#     locations = cells_column_spanners()
-#     ) |>
-#    tab_style(
-#     style = cell_text(size = pct(90)),
-#     locations = list(cells_body(),
-#                      cells_stub(),
-#                      cells_column_labels())  
-#     ) |>
-#   tab_style(
-#     style = cell_borders(
-#       sides = "all",
-#       color = NULL
-#     ),
-#     locations = list(cells_body(),
-#                      cells_stub())
-#    ) |>
-#   tab_style(
-#     style = cell_text(weight = "bold"),
-#     locations = cells_body(
-#       columns = c(p.value.x, p.value.y),
-#       rows = p.value.x < 0.05 | p.value.y < 0.05)
-#   ) |>
-# 
-#   tab_header(
-#     title = md("Generalized linear mixed models (GLMMs) for predicting leaf herbivory and pathogen damage")
-#    ) |>
-#   tab_footnote(
-#     footnote = md("Akaike Information Criterion (AIC) = 741.8"),
-#     locations = cells_column_spanners(spanner = "Herbivory model")
-#   ) |>
-#   tab_footnote(
-#     footnote = md("Akaike Information Criterion (AIC) = 1011.2"),
-#     locations = cells_column_spanners(spanner = "Pathogen damage model")
-#   ) |>
-#   tab_footnote(
-#     footnote = md("Significance levels are represented by *ns* (not significant) and asterisks [*p* < .05 (\\*), *p* < .01 (\\**), *p* < .001 (\\***), and *p* < .0001 (\\****)]."),
-#     locations = cells_column_labels(columns = starts_with("p"))
-#   ) |>
-#   opt_align_table_header(align = "left") |>
-#   opt_table_font(
-#     font = list(
-#       google_font(name = "Tex Gyre Termes"),
-#        "serif"
-#     )
-#   ) |>
-#   opt_footnote_marks(marks = "letters")
+#
 
-#Final editing of the table will be completed in text editor. 
+#Using `huxtable` package to create the same table
 
-#gtsave(table3, file = "Aim3_table3_30JAN2024.docx", path = "./tables")
-# I didn't like the way the table looked in the end. This format would look better as HTML
+#Thick borders for table
+thick <- fp_border(color = "black", style = "solid", width = 2)
 
-#Using `hugetable` package to create the same table
 # Table with `huxtable` package
-table3 <- huxreg(
-  "Herbivory model" = M3REM,
-  "Pathogen damage model" = P3REM,
+table2 <- huxreg(
+  "Herbivory model" = phylo_herbivory_REML,
+  "Pathogen damage model" = phylo_pathogen_REML,
   coefs = c(
     "Intercept" = "(Intercept)",
     "Thickness" = "Thickness",
     "LMA" = "LMA",
-    "Endophyte load (E+)" = "E_loadE+",
-    "sd_Intercept" = "sd_(Intercept)",
-    "Observations" = "sd_Observation",
-    "A. membranacea" = "APEIME",
-    "C. cainito" = "CHRYCA",
-    "C. alliodora" = "CORDAL",
-    "Dipteryx sp." = "DYPTE",
-    "H. concinna"  = "HEISCO",
-    "L. panamensis" = "LACPA",
-    "T. cacao" = "THEOCA"
+    "Endophyte load (E+)" = "E_loadE+"
   ),
   error_pos = "right",
   error_format = "({conf.low} - {conf.high} ) [{statistic}]",
   number_format = "%.3f",
   align = ".",
   ci_level = 0.95,
-  stars = c(`***` = 0.001,
-            `**` = 0.01,
-            `*` = 0.05),
+  tidy_args = list(conf.int = TRUE, effects = "fixed"),
+  stars = c(`***` = 0.001, `**` = 0.01, `*` = 0.05),
   bold_signif = 0.05,
   borders = 0.4,
   outer_borders = 0.8,
   note = "Significance levels are represented by asterisks [p < 0.05 (*), p < 0.01 (**), p < 0.001 (***), and p < 0.0001 (****)]. T statistics in brackets.",
-  statistics = c("N" = "nobs",
-                 "logLik",
-                 "AIC")
+  statistics = c("N" = "nobs", "logLik", "AIC")
 ) |>
   insert_row("Predictors",
              "Estimate",
@@ -2202,7 +2116,8 @@ table3 <- huxreg(
              "Estimate",
              "CI [t-statistic]",
              after = 1) |>
-  insert_row("Random effects", "", "", "", "", after = 6) |>
+  insert_row("Fixed effects", "", "", "", "", after = 2, copy_cell_props = FALSE) |>
+  insert_row("Random effects", "", "", "", "", after = 7) |>
   set_all_padding(4) |>
   set_outer_padding(0) |>
   set_bold(row = 1, col = everywhere) |>
@@ -2211,14 +2126,28 @@ table3 <- huxreg(
   theme_article() |> #flextable::theme_apa() is good too.
   huxtable::as_flextable(column_to_header = TRUE) |>
   hline_top(part = "body", border = thick) |>
-  hline(19,
+  hline(2,
         part = "body",
         border = fp_border(
           color = "black",
           style = "solid",
           width = 1
         )) |>
-  hline(16, part = "all", border = thick) |>
+  hline(3,
+        part = "body",
+        border = fp_border(
+          color = "black",
+          style = "solid",
+          width = 0
+        )) |> 
+  hline(11,
+        part = "body",
+        border = fp_border(
+          color = "black",
+          style = "solid",
+          width = 1
+        )) |>
+  hline(8, part = "all", border = thick) |>
   hline(
     i = 1,
     j = c(2:3, 4:5),
@@ -2230,17 +2159,17 @@ table3 <- huxreg(
     )
   ) |>
   flextable::align(j = 2:5, align = "center", part = "body") |>
-  flextable::style(i = c(1:20),
+  flextable::style(i = c(1:12),
                    j = 1,
                    pr_t = fp_text(bold = FALSE)) |>
   flextable::italic(
-    i = c(7, 10:16),
+    i = c(3, 8),
     j = 1,
     italic = TRUE,
     part = "body"
   ) |>
   flextable::bold(
-    i = c(2, 7),
+    i = c(3, 8),
     j = 1,
     bold = TRUE,
     part = "body"
@@ -2259,8 +2188,16 @@ table3 <- huxreg(
   )
 
 table2
+
 #Final editing of the table will be completed in text editor.
-#save_as_docx(table3, path = "./tables/Aim3_table2_30JAN2024.docx", section_properties = sect_properties)
+# In text editor Random effects coefficients will be added for both models using 
+summary(phylo_herbivory_REML)
+phylo_herbivory_REML[["coefficients"]][["random"]][["Species"]]
+
+summary(phylo_pathogen_REML)
+phylo_pathogen_REML[["coefficients"]][["random"]][["Species"]]
+
+#save_as_docx(table2, path = "./tables/Aim3_table2_phylogenetic_review.docx")
 ```
 
 # Supplementary Materials
