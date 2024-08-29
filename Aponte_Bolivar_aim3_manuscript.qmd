@@ -846,7 +846,7 @@ fig1
 
 
 # Saving
-ggsave(filename = "./figures/figure1.png", plot = fig1, dpi = 300, units = c("mm"), width = 210, height = 180, bg = "white")
+ggsave(filename = "./figures/Aponte_Bolivar_figure1.png", plot = fig1, dpi = 300, units = c("mm"), width = 210, height = 180, bg = "white")
 #
 ```
 
@@ -859,7 +859,7 @@ ggsave(filename = "./figures/figure1.png", plot = fig1, dpi = 300, units = c("mm
 #| warning: false
 #| fig.height: 6
 #| fig.width: 6
-#| fig.cap: "Distributions of values and means of herbivory (%) damage caused by *Atta colombica* in treatment groups (*E-low* and *E-high*) and tree species. a) Comparison of herbivory (%) means between treatment groups across individuals of all species. Pink represents low FEF group (*E-low*) and yellow outlined box plots represent high FEF group (*E-high*). b) Comparison of pathogen (%) means between treatment groups across individuals of all species. Maroon box plots represent control leaves and blue box plots represent pathogen treated leaves. Statistical significance was calculated using a two-sided Student's t-Test. Significance levels are represented by *ns* (not significant) and asterisks [*p* < .05 (\\*), *p* < .01 (\\*\\*), *p* < .001 (\\*\\*\\*), and *p* < .0001 (\\*\\*\\*\\*)].."
+#| fig.cap: "Distribution of values of herbivory (%) damage caused by *Atta colombica* in treatment groups (*E-low* and *E-high*) and pathogen damage cause by *Calonectria* sp. to tree species. a) Comparison of herbivory (%) means between treatment groups across individuals of all species. b) Comparison of the absolute pathogen damage (%) means between treatment groups across individuals of all species (values from 'control' treated leaves were substracted from pathogen treated leaves). Pink represents low FEF group (*E-low*) and yellow outlined box plots represent high FEF group (*E-high*). Statistical significance was calculated using a two-sided Student's t-Test. Significance levels are represented by *ns* (not significant) and asterisks [*p* < .05 (\\*), *p* < .01 (\\*\\*), *p* < .001 (\\*\\*\\*), and *p* < .0001 (\\*\\*\\*\\*)].."
 
 
 # Fig. 2a
@@ -927,7 +927,7 @@ fig2a_t_test <- t.test(
 )
 
 # Plot
-herb_violin <-
+herb_boxplot <-
   ggplot(data = master, aes(x = E_load, y = Ant_percent_leafloss)) +
   # geom_violin() +
   geom_point(
@@ -964,7 +964,7 @@ herb_violin <-
     bracket.size = 0.8
   )
 
-# herb_violin
+# herb_boxplot
 
 # Fig. 2b
 
@@ -1017,42 +1017,59 @@ fig2b_compare_means <-
   )
 
 # Plot
-patho_violin <-
+patho_boxplot <-
   ggplot(
-    data = master |>
-      filter(!is.na(Treatment)),
-    aes(x = E_load, y = Pathogen_percent_damage, fill = Treatment)
+    master |>
+      filter(!is.na(Treatment)) |>
+      select(
+        Species,
+        Sample_name,
+        E_load,
+        Treatment,
+        Pathogen_percent_damage
+      ) |>
+      pivot_longer(
+        !c(Species, Sample_name, E_load, Pathogen_percent_damage),
+        names_to = c("Vars"),
+        #names_sep = "_",
+        values_to = "Values"
+      ) |>
+      pivot_wider(names_from = Values, values_from = Pathogen_percent_damage) |>
+      mutate(denoise = abs(pathogen - control)), # Absolute difference in pathogen damage between control and pathogen treated leaves
+    aes(x = E_load, y = denoise, fill = E_load)
   ) +
-  # geom_violin() +
-  # geom_point(aes(color = E_load),position = position_jitterdodge(dodge.width = 0, jitter.width = 0.2),
-  #            alpha = 0.5, size = 2) +
   geom_point(
     aes(color = E_load),
     alpha = 0.7,
     size = 1.7,
     position = position_jitter(w = 0.2)
   ) +
-  geom_boxplot(alpha = 0.5, outlier.alpha = 0.0) +
-  scale_fill_manual(
-    name = "Pathogen treatment  ",
-    labels = c("Control", "Pathogen"),
-    values = met.brewer("Egypt", n = 2, type = "discrete")
+    geom_boxplot(
+    aes(color = E_load),
+    alpha = 0.0,
+    outlier.alpha = 0.0,
+    linewidth = 1.2
   ) +
-  scale_color_manual(values = met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_fill_manual(values = met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_color_manual(
+    name = "Inoculation treatment  ",
+    labels = c("E-low", "E-high"),
+    values = met.brewer("Cross", n = 2, type = "discrete")
+  ) +
   theme(
     legend.title = element_text(face = "bold"),
     panel.border = element_rect(linetype = "blank", fill = NA),
-    # axis.text.x=element_blank(),
+    axis.text.x=element_blank(),
     legend.position = "right",
     legend.text = element_text(size = 12)
   ) +
   labs(x = "", y = expression(paste("Pathogen damage (%)"))) +
-  stat_compare_means(
-    label = "p.signif",
-    method = "t.test",
-    paired = T,
-    label.y = 80
-  ) +
+  # stat_compare_means(
+  #   label = "p.signif",
+  #   method = "t.test",
+  #   paired = T,
+  #   label.y = 80
+  # ) +
   stat_compare_means(
     label = "p.signif",
     method = "t.test",
@@ -1061,22 +1078,23 @@ patho_violin <-
     bracket.size = 0.8
   ) +
   guides(color = "none")
-# patho_violin
+# patho_boxplot
 
 
 # Figure 2a-2b
-figure2 <- ggarrange(herb_violin, patho_violin,
+figure2 <- ggarrange(herb_boxplot, patho_boxplot,
   nrow = 1,
   ncol = 2,
   label.x = -0.015, vjust = 1,
   widths = c(1.2, 1),
-  common.legend = FALSE,
+  common.legend = TRUE,
   legend = "bottom",
   labels = c("(a)", "(b)")
 )
 
 figure2
-ggsave(filename = "./figures/figure2.png", plot = figure2, dpi = 300, units = c("mm"), width = 250, height = 200, bg = "white")
+ggsave(filename = "./figures/Aponte_Bolivar_figure2.png", plot = figure2, dpi = 300, units = c("mm"), width = 250, height = 200, bg = "white")
+
 ```
 
 ## Figure 3
@@ -1297,7 +1315,7 @@ p_m3dbrda$layers <- c(
 figure3 <- p_m3dbrda
 figure3
 ggsave(
-  filename = "./figures/figure3.png",
+  filename = "./figures/Aponte_Bolivar_figure3.png",
   plot = figure3,
   dpi = 300,
   units = c("mm"),
@@ -1305,14 +1323,14 @@ ggsave(
   height = 200
 )
 
-# ggsave(
-#   filename = "./figures/figure3_points.png",
-#   plot = p_m3dbrda,
-#   dpi = 300,
-#   units = c("mm"),
-#   width = 250,
-#   height = 200
-# )
+ggsave(
+  filename = "./figures/Aponte_Bolivar_figure3_points.png",
+  plot = p_m3dbrda,
+  dpi = 300,
+  units = c("mm"),
+  width = 250,
+  height = 200
+)
 ```
 
 ## Figure 4
@@ -1520,7 +1538,7 @@ figure4
 #
 # ant_pca_with_caption
 
-ggsave(filename = "./figures/figure4.png", plot = figure4, dpi = 300, units = c("mm"), width = 275, height = 300, bg = "white")
+ggsave(filename = "./figures/Aponte_Bolivar_figure4.png", plot = figure4, dpi = 300, units = c("mm"), width = 275, height = 300, bg = "white")
 # Previously called Aim3_GridPCA_SEPT182023.png
 ```
 
@@ -1879,7 +1897,7 @@ figure5 <- ggarrange(ant_pc1, ant_pc2, pat_pc1, pat_pc2,
 
 figure5
 
-ggsave(filename = "./figures/figure5.png", plot = figure5, dpi = 300, units = c("mm"), width = 300, height = 225, bg = "white")
+ggsave(filename = "./figures/Aponte_Bolivar_figure5.png", plot = figure5, dpi = 300, units = c("mm"), width = 300, height = 225, bg = "white")
 # Previously named Aim3_AntPCS_SEPT252023.png
 ```
 
@@ -3665,7 +3683,7 @@ suppfig_1 <- ggarrange(Abun7a, Abun7b, nrow = 1, ncol = 2, common.legend = TRUE,
 suppfig_1
 
 
-ggsave(filename = "./figures/suppfig1.png", plot = suppfig_1, dpi = 300, units = c("mm"), width = 250, height = 200, bg = "white")
+ggsave(filename = "./figures/Aponte_Bolivar_suppfig1.png", plot = suppfig_1, dpi = 300, units = c("mm"), width = 250, height = 200, bg = "white")
 ```
 
 ## Figure S2
@@ -3825,7 +3843,7 @@ suppfig_2 <- ggarrange(ACIa, ACIb,
   labels = c("(a)", "(b)")
 )
 suppfig_2
-ggsave(filename = "./figures/suppfig2.png", plot = suppfig_2, dpi = 300, units = c("mm"), width = 250, height = 200, bg = "white")
+ggsave(filename = "./figures/Aponte_Bolivar_suppfig2.png", plot = suppfig_2, dpi = 300, units = c("mm"), width = 250, height = 200, bg = "white")
 ```
 
 ## Figure S3
@@ -3969,7 +3987,7 @@ suppfig_3 <- ggarrange(LTa, LTb,
 )
 suppfig_3
 
-ggsave(filename = "./figures/suppfig3.png", plot = suppfig_3, dpi = 300, units = c("mm"), width = 250, height = 200, bg = "white")
+ggsave(filename = "./figures/Aponte_Bolivar_suppfig3.png", plot = suppfig_3, dpi = 300, units = c("mm"), width = 250, height = 200, bg = "white")
 # Previously saved under name: Aim3_LT_Species_07062022.png
 ```
 
@@ -4110,7 +4128,7 @@ suppfig_4 <- ggarrange(LPSa, LPSb,
   labels = c("(a)", "(b)")
 )
 suppfig_4
-ggsave(filename = "./figures/suppfig4.png", plot = suppfig_4, dpi = 300, units = c("mm"), width = 250, height = 200, bg = "white")
+ggsave(filename = "./figures/Aponte_Bolivar_suppfig4.png", plot = suppfig_4, dpi = 300, units = c("mm"), width = 250, height = 200, bg = "white")
 # Previously named Aim3_LPS_Species_07062022.png
 ```
 
@@ -4255,7 +4273,7 @@ suppfig_5 <- ggarrange(
   labels = c("(a)", "(b)")
 )
 suppfig_5
-ggsave(filename = "./figures/suppfig5.png", plot = suppfig_5, dpi = 300, units = c("mm"), width = 250, height = 200, bg = "white")
+ggsave(filename = "./figures/Aponte_Bolivar_suppfig5.png", plot = suppfig_5, dpi = 300, units = c("mm"), width = 250, height = 200, bg = "white")
 ```
 
 ## Figure S6
@@ -4362,7 +4380,7 @@ suppfig_6 <- ggarrange(herb_violin_a, patho_violin_b,
 )
 
 suppfig_6
-ggsave(filename = "./figures/suppfig6.png", plot = suppfig_6, dpi = 300, units = c("mm"), width = 250, height = 200, bg = "white")
+ggsave(filename = "./figures/Aponte_Bolivar_suppfig6.png", plot = suppfig_6, dpi = 300, units = c("mm"), width = 250, height = 200, bg = "white")
 ```
 
 ## Figure S7
@@ -4809,7 +4827,7 @@ suppfig_S7 <-
 
 suppfig_S7
 
-ggsave(filename = "./figures/suppfig7.png", plot = suppfig_S7, dpi = 300, units = c("mm"), width = 250, height = 200, bg = "white")
+ggsave(filename = "./figures/Aponte_Bolivar_suppfig7.png", plot = suppfig_S7, dpi = 300, units = c("mm"), width = 250, height = 200, bg = "white")
 ```
 
 ## Figure S8
@@ -5265,7 +5283,7 @@ suppfig_S8 <-
 
 suppfig_S8
 # Saving
-ggsave(filename = "./figures/suppfig8.png", plot = suppfig_S8, dpi = 300, units = c("mm"), width = 250, height = 200, bg = "white")
+ggsave(filename = "./figures/Aponte_Bolivar_suppfig8.png", plot = suppfig_S8, dpi = 300, units = c("mm"), width = 250, height = 200, bg = "white")
 
 # showtext_auto(FALSE)
 ```
