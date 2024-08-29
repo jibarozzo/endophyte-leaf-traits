@@ -28,7 +28,7 @@ pcrdata <- read.csv("clean_data/post_biopipeline/All_PCR_R1_otuFINAL_95.csv") #P
 #The issue stated in the above line has been resolved as of March 10, 2022. -BAR
 
 pcrdata <- pcrdata %>%
-  rename(OTU_ID = X.OTU.ID)
+  rename(OTU_ID = X.OTU.ID) 
 
 ###Cleaning and reshaping Samples###
 ####################################
