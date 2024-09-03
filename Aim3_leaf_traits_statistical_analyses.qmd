@@ -2801,7 +2801,7 @@ summary(m3_dbrda_selection)
 
 #Assessing marginal significance of constraining variables 
 anova(m3_dbrda_selection, by = "margin")
-anova(m3_dbrda_selection, by = "term")
+anova(m3_dbrda, by = "term")
 anova(m3_dbrda_selection, by="axis", perm.max=500) 
 
 ## Model 3 and 5 keep species and trial type as the most significant explanatory variables. Yes, the community composition will be different across species due to the combinantion of species traits and leaf functional trait values. 
@@ -2812,10 +2812,13 @@ anova(m3_dbrda_selection, by="axis", perm.max=500)
 ```{r, m3 dbRDA}
  
 #dbRDa with `dbrda` function. it can be calculated with `capscale` function too. VERY similar.
-#Best model selected with `ordistep` function 
+#Best model selected with `ordistep` function
+# Brough E_load back into the fold given Functional Ecology's reviewer comments
 #Terms: otu_e.dist ~ Thickness + Toughness + Anthocyanins + LMA
-m3dbRDA <- dbrda(otu_e.dist ~ Anthocyanins + Toughness + Thickness + LMA, data= ndata2, dist="bray", na.action = na.omit)
-anova.cca(m3dbRDA, by="margin")
+m3dbRDA <- dbrda(otu_e.dist ~ Anthocyanins + Toughness + Thickness + LMA + E_load, data= ndata2, dist="bray", na.action = na.omit)
+anova_m3dbRDA <- anova.cca(m3dbRDA, by="margin")
+saveRDS(anova_m3dbRDA, file = "./clean_data/anova_m3dbRDA.rds")
+
 m3dbrda_summary <- summary(m3dbRDA)
 plot(m3dbRDA)
 #Correlation of constrained and unconstrained axes
@@ -4400,7 +4403,8 @@ I have aligned my sequences so it is probably not the best application. I  think
 
 ```{r, Phylogenetic correlation}
 
-phylo_tree <- ape::read.tree("clean_data/phylogeny/iqtree_results/all_species_rbcL_aligned.fasta.treefile")  # Load your phylogenetic tree
+# Load phylogenetic tree
+phylo_tree <- ape::read.tree("clean_data/phylogeny/iqtree_results/all_species_rbcL_aligned.fasta.treefile")  
 
 # Change tip labels to species acronyms
 phylo_tree[["tip.label"]] <- species_list
@@ -4524,6 +4528,7 @@ summary(phylo_pathogen_REML)
 aov(M3REM)
 phylo_patho_fixed_termCIs <- intervals(phylo_pathogen_REML, which = "fixed")
 broom::tidy
+
 # Tidying model confidence intervals
 tidy(phylo_pathogen_REML, effects = "fixed", conf.level = 0.95, conf.int = TRUE)
 # tidy() from the broom/generics package helps tidy model coefficients and CIs. This function is used by huxtable::huxreg. Good to know for making the table for models.

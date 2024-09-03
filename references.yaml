@@ -1,110 +1,667 @@
 ---
 references:
-- id: kitajima2013
+- id: anderson2017
   abstract: >-
-    Background and AimsLeaf life span is widely recognized as a key life history
-    trait associated with herbivory resistance, but rigorous comparative data
-    are rare for seedlings. The goal of this study was to examine how light
-    environment affects leaf life span, and how ontogenetic development during
-    the first year may influence leaf fracture toughness, lamina density and
-    stem density that are relevant for herbivory resistance, leaf life span and
-    seedling survival.MethodsData from three experiments encompassing 104
-    neotropical woody species were combined. Leaf life span, lamina and vein
-    fracture toughness, leaf and stem tissue density and seedling survival were
-    quantified for the first-year seedlings at standardized ontogenetic stages
-    in shade houses and common gardens established in gaps and shaded
-    understorey in a moist tropical forest in Panama. Mortality of naturally
-    recruited seedlings till 1 year later was quantified in 800 1-m2 plots from
-    1994 to 2011.Key ResultsMedian leaf life span ranged widely among species,
-    always greater in shade (ranging from 151 to >1790 d in the understorey and
-    shade houses) than in gaps (115-867 d), but with strong correlation between
-    gaps and shade. Leaf and stem tissue density increased with seedling age,
-    whereas leaf fracture toughness showed only a weak increase. All these
-    traits were positively correlated with leaf life span. Leaf life span and
-    stem density were negatively correlated with seedling mortality in shade,
-    while gap mortality showed no correlation with these traits.ConclusionsThe
-    wide spectrum of leaf life span and associated functional traits reflects
-    variation in shade tolerance of first-year seedlings among coexisting trees,
-    shrubs and lianas in this neotropical forest. High leaf tissue density is
-    important in enhancing leaf toughness, a known physical defence, and leaf
-    life span. Both seedling leaf life span and stem density should be
-    considered as key functional traits that contribute to seedling survival in
-    tropical forest understoreys. © The Author 2013.
+    PERMANOVA is a computer program for testing the simultaneous response of one
+    or more variables to one or more factors in an ANOVA experimental design on
+    the basis of any distance measure, using permutation methods. These notes
+    for users assume knowledge of multi-factorial ANOVA, which has the same
+    basic logic in multivariate as in univariate analysis, and an understanding
+    of what it means to test a multivariate hypothesis. A more complete
+    description of the method is given in Anderson (2001a) and McArdle &
+    Anderson (2001). The program includes: choice of appropriate transformation
+    and/or standardization of the data; choice of 19 distance (or dissimilarity)
+    measures to use as the basis of the analysis; option to rank the distances
+    in the distance matrix before the analysis; analysis and partitioning of the
+    total sum of squares according to the full model, including appropriate
+    treatment of factors that are fixed or random, crossed (orthogonal) or
+    nested (hierarchical), and all interaction terms; correct calculation of an
+    appropriate distance-based pseudo F-statistic for each term in the model,
+    based on expected mean squares as in univariate ANOVA (Winer et al. 1991,
+    Searle et al.1992); correct permutation procedures to obtain P-values for
+    each term in the model, using the correct permutable units (Anderson & ter
+    Braak 2003); choice of permutation method: raw data units or residuals under
+    either a reduced or a full model (Anderson 2001b, Anderson & Legendre 1999,
+    Anderson & Robinson 2001); correct P-values also obtained through Monte
+    Carlo random draws from the asymptotic permutation distribution (Anderson &
+    Robinson 2003); option to include one or more covariables (i.e., to perform
+    ANCOVA or MANCOVA); pair-wise a posteriori comparisons of levels for single
+    factors, including within individual levels of other factors in the case of
+    significant interactions and the use of correct permutable units in each
+    case.
   author:
-    - family: Kitajima
-      given: Kaoru
-    - family: Cordero
-      given: Roberto A.
-    - family: Wright
-      given: S. Joseph
-  citation-key: kitajima2013
-  container-title: Annals of Botany
-  DOI: 10.1093/aob/mct036
-  issue: '4'
-  issued:
-    - year: 2013
-  page: 685-699
-  title: >-
-    Leaf life span spectrum of tropical woody seedlings: Effects of light and
-    ontogeny and consequences for survival
-  type: article-journal
-  volume: '112'
-
-- id: carbone2017
-  abstract: >-
-    Motivation: High-quality phylogenetic placement of sequence data has the
-    potential to greatly accelerate studies of the diversity, systematics,
-    ecology and functional biology of diverse groups. We developed the
-    Tree-Based Alignment Selector (T-BAS) toolkit to allow evolutionary
-    placement and visualization of diverse DNA sequences representing unknown
-    taxa within a robust phylogenetic context, and to permit the downloading of
-    highly curated, single- and multi-locus alignments for specific clades.
-    Results: In its initial form, T-BAS v1.0 uses a core phylogeny of 979 taxa
-    (including 23 outgroup taxa, as well as 61 orders, 175 families and 496
-    genera) representing all 13 classes of largest subphylum of Fungi -
-    Pezizomycotina (Ascomycota) - based on sequence alignments for six loci
-    (nr5.8S, nrLSU, nrSSU, mtSSU, RPB1, RPB2). T-BAS v1.0 has three main uses:
-    (i) Users may download alignments and voucher tables for members of the
-    Pezizomycotina directly from the reference tree, facilitating systematics
-    studies of focal clades. (ii) Users may upload sequence files with reads
-    representing unknown taxa and place these on the phylogeny using either
-    BLAST or phylogeny-based approaches, and then use the displayed tree to
-    select reference taxa to include when downloading alignments. The placement
-    of unknowns can be performed for large numbers of Sanger sequences obtained
-    from fungal cultures and for alignable, short reads of environmental
-    amplicons. (iii) User-customizable metadata can be visualized on the tree.
-  author:
-    - family: Carbone
-      given: Ignazio
-    - family: White
-      given: James B.
-    - family: Miadlikowska
-      given: Jolanta
-    - family: Arnold
-      given: A. Elizabeth
-    - family: Miller
-      given: Mark A.
-    - family: Kauff
-      given: Frank
-    - family: U'Ren
-      given: Jana M.
-    - family: May
-      given: Georgiana
-    - family: Lutzoni
-      given: François
-  citation-key: carbone2017
-  container-title: Bioinformatics
-  DOI: 10.1093/bioinformatics/btw808
-  issue: '8'
+    - family: Anderson
+      given: Marti J.
+  citation-key: anderson2017
+  container-title: 'Wiley StatsRef: Statistics Reference Online'
+  DOI: 10.1002/9781118445112.stat07841
   issued:
     - year: 2017
-  page: 1160-1168
+      month: 11
+      day: 15
+  page: 1-15
+  publisher: Wiley
+  title: Permutational Multivariate Analysis of Variance ( PERMANOVA )
+  type: chapter
+
+- id: pinheiro2000
+  author:
+    - family: Pinheiro
+      given: José C
+    - family: Bates
+      given: Douglas M
+  citation-key: pinheiro2000
+  DOI: 10.1007/b98882
+  event-place: New York
+  issued:
+    - year: 2000
+  publisher: Springer
+  publisher-place: New York
+  title: Mixed-Effects Models in S and S-PLUS
+  type: book
+
+- id: coblentz2013
+  abstract: >-
+    Endophytic fungi live symbiotically in the tissues of plants. Although a
+    large amount of evidence suggests a mutualistic role for vertically
+    transmitted endophytic fungi in agronomic grasses, the role of horizontally
+    transmitted endophytic fungi as mutualists has been challenged. Recent
+    studies, however, have shown that horizontally transmitted endophytic fungi
+    can act as mutualists to their plant hosts by providing defense against
+    pathogens and defoliators. In particular, several experimental studies have
+    shown that endophytic fungi interact negatively with leaf-cutting ants and
+    their fungal cultivar, but these studies were performed under laboratory
+    conditions. Using field colonies of Atta colombica in Central Panama, we
+    measured the fungal endophyte content in the forage material of leaf-cutting
+    ants and compared it to ambient endophyte levels. We then used the collected
+    data to model the area of plant material containing endophytes that enters a
+    mature colony daily. We found that mature colonies collect leaf material
+    that is 20% lower in endophyte abundance than surrounding leaves. A similar
+    pattern was observed for newly emerged colonies. Our model suggests that via
+    ant foraging preferences, leaf-cutting ants reduce the possible area of
+    material containing endophytes entering the colony by 33%. Our results
+    provide further evidence for a negative interaction between leaf-cutting
+    ants and horizontally transmitted endophytes, suggesting that fungal
+    endophytes have a defensive role in tropical plants by influencing
+    leafcutting ant foraging preferences. Copyright: ? 2013 Coblentz and Van
+    Bael.
+  author:
+    - family: Coblentz
+      given: K.E.
+    - family: Van Bael
+      given: S.A.
+  citation-key: coblentz2013
+  container-title: Ecosphere
+  DOI: 10.1890/ES13-00012.1
+  issue: '5'
+  issued:
+    - year: 2013
   title: >-
-    T-BAS: Tree-Based Alignment Selector toolkit for phylogenetic-based
-    placement, alignment downloads and metadata visualization: An example with
-    the Pezizomycotina tree of life
+    Field colonies of leaf-cutting ants select plant materials containing low
+    abundances of endophytic fungi
   type: article-journal
-  volume: '33'
+  volume: '4'
+
+- id: bittleston2011
+  abstract: >-
+    Our study examines how the mutualism between Atta colombica leaf-cutting
+    ants and their cultivated fungus is influenced by the presence of diverse
+    foliar endophytic fungi (endophytes) at high densities in tropical leaf
+    tissues. We conducted laboratory choice trials in which ant colonies chose
+    between Cordia alliodora seedlings with high (E high) or low (E low)
+    densities of endophytes. The E high seedlings contained 5.5 times higher
+    endophyte content and a greater diversity of fungal morphospecies than the E
+    low treatment, and endophyte content was not correlated with leaf toughness
+    or thickness. Leafcutting ants cut over 2.5 times the leaf area from E low
+    relative to E high seedlings and had a tendency to recruit more ants to E
+    low plants. Our findings suggest that leaf-cutting ants may incur costs from
+    cutting and processing leaves with high endophyte loads, which could impact
+    Neotropical forests by causing variable damage rates within plant
+    communities. This journal is ? 2010 The Royal Society.
+  author:
+    - family: Bittleston
+      given: L.S.
+    - family: Brockmann
+      given: F.
+    - family: Wcislo
+      given: W.
+    - family: Van Bael
+      given: S.A.
+  citation-key: bittleston2011
+  container-title: Biology Letters
+  DOI: 10.1098/rsbl.2010.0456
+  issue: '1'
+  issued:
+    - year: 2011
+  page: 30-32
+  title: Endophytic fungi reduce leaf-cutting ant damage to seedlings
+  type: article-journal
+  volume: '7'
+
+- id: estrada2013
+  abstract: >-
+    Fungal symbionts that live asymptomatically inside plant tissues
+    (endophytes) can influence plant-insect interactions. Recent work has shown
+    that damage by leaf-cutting ants, a major Neotropical defoliator, is reduced
+    to almost half in plants with high densities of endophytes. We investigated
+    changes in the phenotype of leaves that could influence ants' behavior to
+    result in the reduction of foliar damage. We produced cucumber seedlings
+    with high and low densities of one common endophyte species, Colletotrichum
+    tropicale. We used the leaves in bioassays and to compare chemical and
+    physical leaf characteristics important for ants' food selection. Ants cut
+    about one-third more area of cucumber leaves with lower densities of
+    endophytes and removed c. 20% more paper disks impregnated with the extracts
+    of those leaves compared with leaves and disks from plants hosting the
+    fungus. Colletotrichum tropicale colonization did not cause detectable
+    changes in the composition of volatile compounds, cuticular waxes, nutrients
+    or leaf toughness. Our study shows that endophytes changed leaf chemistry
+    and suggests that compounds with relative low volatility released after leaf
+    wounding are a major factor influencing foraging decisions by ants when
+    choosing between plants with low or high endophyte loads. © 2013 New
+    Phytologist Trust.
+  author:
+    - family: Estrada
+      given: C.
+    - family: Wcislo
+      given: William T.
+    - family: Van Bael
+      given: Sunshine A.
+  citation-key: estrada2013
+  container-title: New Phytologist
+  DOI: 10.1111/nph.12140
+  issue: '1'
+  issued:
+    - year: 2013
+  page: 241-251
+  title: Symbiotic fungi alter plant chemistry that discourages leaf-cutting ants
+  type: article-journal
+  volume: '198'
+
+- id: tellezRedCol2016
+  abstract: >-
+    ? 2016 The Association for Tropical Biology and Conservation.The adaptive
+    significance of red coloration in tropical forest leaves remains unclear. In
+    vivo assays show that there is a significant negative correlation between
+    anthocyanin pigments in young leaves and fungal pathogen damage. This
+    supports a previous hypothesis that anthocyanins may protect young leaves
+    from fungal damage during the vulnerable period of leaf expansion.
+  author:
+    - family: Tellez
+      given: P.H.
+    - family: Rojas
+      given: Enith
+    - family: Van Bael
+      given: Sunshine
+  citation-key: tellezRedCol2016
+  container-title: Biotropica
+  DOI: 10.1111/btp.12303
+  issue: '2'
+  issued:
+    - year: 2016
+      month: 3
+  page: 150-153
+  title: >-
+    Red coloration in young tropical leaves associated with reduced fungal
+    pathogen damage
+  type: article-journal
+  URL: http://doi.wiley.com/10.1111/btp.12303
+  volume: '48'
+
+- id: mcgill2006
+  abstract: >-
+    There is considerable debate about whether community ecology will ever
+    produce general principles. We suggest here that this can be achieved but
+    that community ecology has lost its way by focusing on pairwise species
+    interactions independent of the environment. We assert that community
+    ecology should return to an emphasis on four themes that are tied together
+    by a two-step process: how the fundamental niche is governed by functional
+    traits within the context of abiotic environmental gradients; and how the
+    interaction between traits and fundamental niches maps onto the realized
+    niche in the context of a biotic interaction milieu. We suggest this
+    approach can create a more quantitative and predictive science that can more
+    readily address issues of global change. ?? 2006 Elsevier Ltd. All rights
+    reserved.
+  author:
+    - family: McGill
+      given: Brian J.
+    - family: Enquist
+      given: Brian J.
+    - family: Weiher
+      given: Evan
+    - family: Westoby
+      given: Mark
+  citation-key: mcgill2006
+  container-title: Trends in Ecology and Evolution
+  DOI: 10.1016/j.tree.2006.02.002
+  ISSN: 0169-5347
+  issue: '4'
+  issued:
+    - year: 2006
+  page: 178-185
+  title: Rebuilding community ecology from functional traits
+  type: article-journal
+  volume: '21'
+
+- id: arnold2003
+  abstract: >-
+    Every plant species examined to date harbors endophytic fungi within its
+    asymptomatic aerial tissues, such that endophytes rep-resent a ubiquitous,
+    yet cryptic, component of terrestrial plant communities. Fungal endophytes
+    associated with leaves of woody angiosperms are especially diverse; yet,
+    fundamental aspects of their interactions with hosts are unknown. In
+    contrast to the relatively species-poor endophytes that are vertically
+    transmitted and act as defensive mutualists of some temperate grasses, the
+    diverse, horizontally transmitted endophytes of woody angio-sperms are
+    thought to contribute little to host defense. Here, we document high
+    diversity, spatial structure, and host affinity among foliar endophytes
+    associated with a tropical tree (Theobroma cacao, Malvaceae) across lowland
+    Panama. We then show that inoculation of endophyte-free leaves with
+    endophytes isolated frequently from naturally infected, asymptomatic hosts
+    signifi-cantly decreases both leaf necrosis and leaf mortality when T. cacao
+    seedlings are challenged with a major pathogen (Phytophthora sp.). In
+    contrast to reports of fungal inoculation inducing systemic defense, we
+    found that protection was primarily localized to endophyte-infected tissues.
+    Further, endophyte-mediated protec-tion was greater in mature leaves, which
+    bear less intrinsic defense against fungal pathogens than do young leaves.
+    In vitro studies suggest that host affinity is mediated by leaf chemistry,
+    and that protection may be mediated by direct interactions of endophytes
+    with foliar pathogens. Together, these data demonstrate the capacity of
+    diverse, horizontally transmitted endophytes of woody angiosperms to play an
+    important but previously unappreciated role in host defense.
+  author:
+    - family: Arnold
+      given: A Elizabeth
+    - family: Mejía
+      given: Luis Carlos
+    - family: Kyllo
+      given: Damond
+    - family: Rojas
+      given: Enith I
+    - family: Maynard
+      given: Zuleyka
+    - family: Robbins
+      given: Nancy
+    - family: Herre
+      given: Edward Allen
+  citation-key: arnold2003
+  container-title: Proceedings of the National Academy of Sciences
+  DOI: 10.1073/pnas.2533483100
+  issue: '26'
+  issued:
+    - year: 2003
+  page: 15649-15654
+  title: Fungal endophytes limit pathogen damage in a tropical tree
+  type: article-journal
+  volume: '100'
+
+- id: mejia2014
+  abstract: >-
+    It is increasingly recognized that macro-organisms (corals, insects, plants,
+    vertebrates) consist of both host tissues and multiple microbial symbionts
+    that play essential roles in their host's ecological and evolutionary
+    success. Consequently, identifying benefits and costs of symbioses, as well
+    as mechanisms underlying them are research priorities. All plants surveyed
+    under natural conditions harbor foliar endophytic fungi (FEF) in their leaf
+    tissues, often at high densities. Despite producing no visible effects on
+    their hosts, experiments have nonetheless shown that FEF reduce pathogen and
+    herbivore damage. Here, combining results from three genomic, and two
+    physiological experiments, we demonstrate pervasive genetic and phenotypic
+    effects of the apparently asymptomatic endophytes on their hosts.
+    Specifically, inoculation of endophyte-free (E-) Theobroma cacao leaves with
+    Colletotrichum tropicale (E+), the dominant FEF species in healthy T. cacao,
+    induces consistent changes in the expression of hundreds of host genes,
+    including many with known defensive functions. Further, E+ plants exhibited
+    increased lignin and cellulose content, reduced maximum rates of
+    photosynthesis (Amax), and enrichment of nitrogen-15 and carbon-13 isotopes.
+    These phenotypic changes observed in E+ plants correspond to changes in
+    expression of specific functional genes in related pathways. Moreover, a
+    cacao gene (Tc00g04254) highly up-regulated by C. tropicale also confers
+    resistance to pathogen damage in the absence of endophytes or their products
+    in host tissues. Thus, the benefits of increased pathogen resistance in E+
+    plants are derived in part from up-regulation of intrinsic host defense
+    responses, and appear to be offset by potential costs including reduced
+    photosynthesis, altered host nitrogen metabolism, and endophyte heterotrophy
+    of host tissues. Similar effects are likely in most plant-endophyte
+    interactions, and should be recognized in the design and interpretation of
+    genetic and phenotypic studies of plants.
+  author:
+    - family: Mejía
+      given: Luis C.
+    - family: Herre
+      given: Edward A.
+    - family: Sparks
+      given: Jed P.
+    - family: Winter
+      given: Klaus
+    - family: García
+      given: Milton N.
+    - family: Van Bael
+      given: Sunshine A.
+    - family: Stitt
+      given: Joseph
+    - family: Shi
+      given: Zi
+    - family: Zhang
+      given: Yufan
+    - family: Guiltinan
+      given: Mark J.
+    - family: Maximova
+      given: Siela N.
+  citation-key: mejia2014
+  container-title: Frontiers in Microbiology
+  DOI: 10.3389/fmicb.2014.00479
+  issue: SEP
+  issued:
+    - year: 2014
+  page: 1-16
+  title: >-
+    Pervasive effects of a dominant foliar endophytic fungus on host genetic and
+    phenotypic expression in a tropical tree
+  type: article-journal
+  volume: '5'
+
+- id: rocha2017
+  abstract: |-
+    Interactions between leaf-cutting ants, their fungal symbiont (
+                  Leucoagaricus
+                  ) and the endophytic fungi within the vegetation they carry into their colonies are still poorly understood. If endophytes antagonistic to
+                  Leucoagaricus
+                  were found in plant material being carried by these ants, then this might indicate a potential mechanism for plants to defend themselves from leaf-cutter attack. In addition, it could offer possibilities for the management of these important Neotropical pests. Here, we show that, for
+                  Atta sexdens rubropilosa
+                  , there was a significantly greater incidence of
+                  Trichoderma
+                  species in the vegetation removed from the nests—and deposited around the entrances—than in that being transported into the nests. In a no-choice test,
+                  Trichoderma-
+                  infested rice was taken into the nest, with deleterious effects on both the fungal gardens and ant survival. The endophytic ability of selected strains of
+                  Trichoderma
+                  was also confirmed, following their inoculation and subsequent reisolation from seedlings of eucalyptus. These results indicate that endophytic fungi which pose a threat to ant fungal gardens through their antagonistic traits, such as
+                  Trichoderma
+                  , have the potential to act as bodyguards of their plant hosts and thus might be employed in a Trojan-horse strategy to mitigate the negative impact of leaf-cutting ants in both agriculture and silviculture in the Neotropics. We posit that the ants would detect and evict such ‘malign’ endophytes—artificially inoculated into vulnerable crops—during the quality-control process within the nest, and, moreover, that the foraging ants may then be deterred from further harvesting of ‘
+                  Trichoderma
+                  -enriched’ plants.
+  accessed:
+    - year: 2024
+      month: 1
+      day: 30
+  author:
+    - family: Rocha
+      given: Silma L.
+    - family: Evans
+      given: Harry C.
+    - family: Jorge
+      given: Vanessa L.
+    - family: Cardoso
+      given: Lucimar A. O.
+    - family: Pereira
+      given: Fernanda S. T.
+    - family: Rocha
+      given: Fabiano B.
+    - family: Barreto
+      given: Robert W.
+    - family: Hart
+      given: Adam G.
+    - family: Elliot
+      given: Simon L.
+  citation-key: rocha2017
+  container-title: Royal Society Open Science
+  container-title-short: R. Soc. open sci.
+  DOI: 10.1098/rsos.160628
+  ISSN: 2054-5703
+  issue: '4'
+  issued:
+    - year: 2017
+      month: 4
+  language: en
+  page: '160628'
+  source: DOI.org (Crossref)
+  title: >-
+    Recognition of endophytic *Trichoderma* species by leaf-cutting ants and
+    their potential in a Trojan-horse management strategy
+  type: article-journal
+  URL: https://royalsocietypublishing.org/doi/10.1098/rsos.160628
+  volume: '4'
+
+- id: wright2004
+  abstract: >-
+    Bringing together leaf trait data spanning 2,548 species and 175 sites we
+    describe, for the first time at global scale, a universal spectrum of leaf
+    economics consisting of key chemical, structural and physiological
+    properties. The spectrum runs from quick to slow return on investments of
+    nutrients and dry mass in leaves, and operates largely independently of
+    growth form, plant functional type or biome. Categories along the spectrum
+    would, in general, describe leaf economic variation at the global scale
+    better than plant functional types, because functional types overlap
+    substantially in their leaf traits. Overall, modulation of leaf traits and
+    trait relationships by climate is surprisingly modest, although some
+    striking and significant patterns can be seen. Reliable quantification of
+    the leaf economics spectrum and its interaction with climate will prove
+    valuable for modelling nutrient fluxes and vegetation boundaries under
+    changing land-use and climate.
+  author:
+    - family: Wright
+      given: Ian J
+    - family: Reich
+      given: Peter B
+    - family: Westoby
+      given: Mark
+    - family: Ackerly
+      given: David D
+    - family: Baruch
+      given: Zdravko
+    - family: Bongers
+      given: Frans
+    - family: Cavender-Bares
+      given: Jeannine
+    - family: Chapin
+      given: Terry
+    - family: Cornelissen
+      given: Johannes H C
+    - family: Diemer
+      given: Matthias
+    - family: Flexas
+      given: Jaume
+    - family: Garnier
+      given: Eric
+    - family: Groom
+      given: Philip K
+    - family: Gulias
+      given: Javier
+    - family: Hikosaka
+      given: Kouki
+    - family: Lamont
+      given: Byron B
+    - family: Lee
+      given: Tali
+    - family: Lee
+      given: William
+    - family: Lusk
+      given: Christopher
+    - family: Midgley
+      given: Jeremy J
+    - family: Navas
+      given: Marie-Laure
+    - family: Niinemets
+      given: Ülo
+    - family: Oleksyn
+      given: Jacek
+    - family: Osada
+      given: Noriyuki
+    - family: Poorter
+      given: Hendrik
+    - family: Poot
+      given: Pieter
+    - family: Prior
+      given: Lynda
+    - family: Pyankov
+      given: Vladimir I
+    - family: Roumet
+      given: Catherine
+    - family: Thomas
+      given: Sean C
+    - family: Tjoelker
+      given: Mark G
+    - family: Veneklaas
+      given: Erik J
+    - family: Villar
+      given: Rafael
+  citation-key: wright2004
+  container-title: Nature
+  DOI: 10.1038/nature02403
+  issue: '6985'
+  issued:
+    - year: 2004
+  page: 821-827
+  title: The worldwide leaf economics spectrum
+  type: article-journal
+  URL: https://doi.org/10.1038/nature02403
+  volume: '428'
+
+- id: mejia2008
+  abstract: >-
+    Fungal endophytes isolated from healthy Theobroma cacao tissues were
+    screened in vitro for antagonism against major pathogens of cacao. Of tested
+    endophytic morphospecies, 40% (21/52), 65% (28/43) and 27% percent (4/15)
+    showed in vitro antagonism against Moniliophthora roreri (frosty pod rot),
+    Phytophthora palmivora (black pod rot) and Moniliophthora perniciosa
+    (witches broom), respectively. The most common antagonistic mechanism was
+    simple competition for substrate. Nonetheless, 13%, 21%, and 0% of tested
+    morphospecies showed clear antibiosis against M. roreri, P. palmivora, and
+    M. perniciosa, respectively. One isolate of Trichoderma was observed to be
+    parasitic on M. roreri. Endophyte species that were common in the host
+    plants under natural conditions often are good colonizers and grow fast in
+    vitro whereas antibiosis producers usually appear to be relatively rare in
+    nature, tend to grow slowly in vitro, and often are not good colonizers. We
+    suggest that there is an inherent general trade-off between fast growth
+    (high colonization) and production of chemicals that produce antibiosis
+    reactions. Finally, field trials assessing the effects of three endophytic
+    fungi (Colletotrichum gloeosporioides, Clonostachys rosea and Botryosphaeria
+    ribis) on pod loss due to M. roreri and Phytophthora spp. were conducted at
+    four farms in Panama. Although the overall incidence of black pod rot was
+    very low during the tests, treatment with C. gloeosporioides significantly
+    decreased pod loss due to that disease. We observed no decrease in pod loss
+    due to frosty pod rot, but treatment with C. rosea reduced the incidence of
+    cacao pods with sporulating lesions of M. roreri by 10%. The observed
+    reduction in pod loss due to Phytophthora spp., and sporulation by M.
+    roreri, supports the potential of fungal endophytes as biological control
+    agents. Further, these studies suggest that combined information from field
+    censuses of endophytic fungi, in vitro studies, and greenhouse experiments
+    can provide useful a priori criteria for identifying desirable attributes
+    for potential biocontrol agents. © 2008 Elsevier Inc. All rights reserved.
+  author:
+    - family: Mejía
+      given: Luis C.
+    - family: Rojas
+      given: Enith I.
+    - family: Maynard
+      given: Zuleyka
+    - family: Bael
+      given: Sunshine Van
+    - family: Arnold
+      given: A. Elizabeth
+    - family: Hebbar
+      given: Prakash
+    - family: Samuels
+      given: Gary J.
+    - family: Robbins
+      given: Nancy
+    - family: Herre
+      given: Edward Allen
+  citation-key: mejia2008
+  container-title: Biological Control
+  DOI: 10.1016/j.biocontrol.2008.01.012
+  issue: '1'
+  issued:
+    - year: 2008
+  page: 4-14
+  title: Endophytic fungi as biocontrol agents of *Theobroma cacao* pathogens
+  type: article-journal
+  volume: '46'
+
+- id: stamp2003
+  abstract: >-
+    Several hypotheses, mainly Optimal Defense (OD), Carbon:Nutrient Balance
+    (CNB), Growth Rate (GR), and Growth-Differentiation Balance (GDB), have
+    individually served as frameworks for investigating the patterns of plant
+    defense against herbivores, in particular the pattern of constitutive
+    defense. The predictions and tests of these hypotheses have been problematic
+    for a variety of reasons and have led to considerable confusion about the
+    state of the "theory of plant defense." The primary contribution of the OD
+    hypothesis is that it has served as the main framework for investigation of
+    genotypic expression of plant defense, with the emphasis on allocation cost
+    of defense. The primary contribution of the CNB hypothesis is that it has
+    served as the main framework for investigation of how resources affect
+    phenotypic expression of plant defense, often with studies concerned about
+    allocation cost of defense. The primary contribution of the GR hypothesis is
+    that it explains how intrinsic growth rate of plants shaped evolutionarily
+    by resource availability affects defensive patterns. The primary
+    contribution of the expanded GDB hypothesis is that it recognizes the
+    constant physiological tradeoff between growth and differentiation at the
+    cellular and tissue levels relative to the selective pressures of resource
+    availability, including explicitly taking into account plant tolerance of
+    damage by enemies. A clearer understanding of these hypotheses and what we
+    have learned from investigations that use them can facilitate development of
+    well-designed experiments that address the gaps in our knowledge of plant
+    defense.
+  author:
+    - family: Stamp
+      given: Nancy
+  citation-key: stamp2003
+  container-title: Quarterly Review of Biology
+  DOI: 10.1086/367580
+  issue: '1'
+  issued:
+    - year: 2003
+  page: 23-55
+  title: Out of the quagmire of plant defense hypotheses
+  type: article-journal
+  volume: '78'
+
+- id: tellezFoliarl2020
+  abstract: >-
+    Vascular epiphytes contribute up to 35% of the plant diversity and foliar
+    biomass of flowering plants. The family Bromeliaceae is a monophyletic group
+    of plants native to the Neotropics. Epiphytic bromeliads form associations
+    with distinct groups of organisms but their relationship with foliar fungal
+    endophytes remain underexplored. In this study we examined the relationship
+    of foliar fungal endophytes to host photosynthetic pathways and associated
+    ecophysiological traits. We sampled the fungal endophyte communities of 67
+    host individuals in six epiphytic bromeliad species differing in C3 and
+    crassulacean acid metabolism (CAM) photosynthetic pathways. We tested
+    whether endophyte assemblages were associated with ecophysiological leaf
+    traits related to host photosynthetic pathways. Our results indicate that
+    (1) C3 and CAM bromeliads host dissimilar endophyte assemblages, (2)
+    endophyte communities in C3 bromeliads are characterized by variable
+    relative abundances of fungal orders; conversely, CAM associated endophyte
+    communities were characterized by consistent relative abundances of fungal
+    orders, and (3) endophyte communities in bromeliads are distributed along a
+    continuum of leaf toughness and leaf water content. Taken together, our
+    study suggests that host physiology and associated ecophysiological traits
+    of epiphytic bromeliads may represent biotic filters for communities of
+    fungal endophytes in the tropics.
+  author:
+    - family: Tellez
+      given: Peter H.
+    - family: Woods
+      given: Carrie L.
+    - family: Formel
+      given: Stephen
+    - family: Bael
+      given: Sunshine A. Van
+  citation-key: tellezFoliarl2020
+  container-title: Diversity
+  DOI: 10.3390/d12100378
+  issue: '10'
+  issued:
+    - year: 2020
+      month: 9
+  page: 378-378
+  title: >-
+    Relationships between Foliar Fungal Endophyte Communities and
+    Ecophysiological Traits of CAM and C3 Epiphytic Bromeliads in a Neotropical
+    Rainforest
+  type: article-journal
+  URL: https://www.mdpi.com/1424-2818/12/10/378
+  volume: '12'
 
 - id: currie2014
   abstract: >-
@@ -285,620 +842,265 @@ references:
   type: article-journal
   volume: '177'
 
-- id: stamp2003
+- id: carbone2017
   abstract: >-
-    Several hypotheses, mainly Optimal Defense (OD), Carbon:Nutrient Balance
-    (CNB), Growth Rate (GR), and Growth-Differentiation Balance (GDB), have
-    individually served as frameworks for investigating the patterns of plant
-    defense against herbivores, in particular the pattern of constitutive
-    defense. The predictions and tests of these hypotheses have been problematic
-    for a variety of reasons and have led to considerable confusion about the
-    state of the "theory of plant defense." The primary contribution of the OD
-    hypothesis is that it has served as the main framework for investigation of
-    genotypic expression of plant defense, with the emphasis on allocation cost
-    of defense. The primary contribution of the CNB hypothesis is that it has
-    served as the main framework for investigation of how resources affect
-    phenotypic expression of plant defense, often with studies concerned about
-    allocation cost of defense. The primary contribution of the GR hypothesis is
-    that it explains how intrinsic growth rate of plants shaped evolutionarily
-    by resource availability affects defensive patterns. The primary
-    contribution of the expanded GDB hypothesis is that it recognizes the
-    constant physiological tradeoff between growth and differentiation at the
-    cellular and tissue levels relative to the selective pressures of resource
-    availability, including explicitly taking into account plant tolerance of
-    damage by enemies. A clearer understanding of these hypotheses and what we
-    have learned from investigations that use them can facilitate development of
-    well-designed experiments that address the gaps in our knowledge of plant
-    defense.
+    Motivation: High-quality phylogenetic placement of sequence data has the
+    potential to greatly accelerate studies of the diversity, systematics,
+    ecology and functional biology of diverse groups. We developed the
+    Tree-Based Alignment Selector (T-BAS) toolkit to allow evolutionary
+    placement and visualization of diverse DNA sequences representing unknown
+    taxa within a robust phylogenetic context, and to permit the downloading of
+    highly curated, single- and multi-locus alignments for specific clades.
+    Results: In its initial form, T-BAS v1.0 uses a core phylogeny of 979 taxa
+    (including 23 outgroup taxa, as well as 61 orders, 175 families and 496
+    genera) representing all 13 classes of largest subphylum of Fungi -
+    Pezizomycotina (Ascomycota) - based on sequence alignments for six loci
+    (nr5.8S, nrLSU, nrSSU, mtSSU, RPB1, RPB2). T-BAS v1.0 has three main uses:
+    (i) Users may download alignments and voucher tables for members of the
+    Pezizomycotina directly from the reference tree, facilitating systematics
+    studies of focal clades. (ii) Users may upload sequence files with reads
+    representing unknown taxa and place these on the phylogeny using either
+    BLAST or phylogeny-based approaches, and then use the displayed tree to
+    select reference taxa to include when downloading alignments. The placement
+    of unknowns can be performed for large numbers of Sanger sequences obtained
+    from fungal cultures and for alignable, short reads of environmental
+    amplicons. (iii) User-customizable metadata can be visualized on the tree.
   author:
-    - family: Stamp
-      given: Nancy
-  citation-key: stamp2003
-  container-title: Quarterly Review of Biology
-  DOI: 10.1086/367580
-  issue: '1'
-  issued:
-    - year: 2003
-  page: 23-55
-  title: Out of the quagmire of plant defense hypotheses
-  type: article-journal
-  volume: '78'
-
-- id: mejia2008
-  abstract: >-
-    Fungal endophytes isolated from healthy Theobroma cacao tissues were
-    screened in vitro for antagonism against major pathogens of cacao. Of tested
-    endophytic morphospecies, 40% (21/52), 65% (28/43) and 27% percent (4/15)
-    showed in vitro antagonism against Moniliophthora roreri (frosty pod rot),
-    Phytophthora palmivora (black pod rot) and Moniliophthora perniciosa
-    (witches broom), respectively. The most common antagonistic mechanism was
-    simple competition for substrate. Nonetheless, 13%, 21%, and 0% of tested
-    morphospecies showed clear antibiosis against M. roreri, P. palmivora, and
-    M. perniciosa, respectively. One isolate of Trichoderma was observed to be
-    parasitic on M. roreri. Endophyte species that were common in the host
-    plants under natural conditions often are good colonizers and grow fast in
-    vitro whereas antibiosis producers usually appear to be relatively rare in
-    nature, tend to grow slowly in vitro, and often are not good colonizers. We
-    suggest that there is an inherent general trade-off between fast growth
-    (high colonization) and production of chemicals that produce antibiosis
-    reactions. Finally, field trials assessing the effects of three endophytic
-    fungi (Colletotrichum gloeosporioides, Clonostachys rosea and Botryosphaeria
-    ribis) on pod loss due to M. roreri and Phytophthora spp. were conducted at
-    four farms in Panama. Although the overall incidence of black pod rot was
-    very low during the tests, treatment with C. gloeosporioides significantly
-    decreased pod loss due to that disease. We observed no decrease in pod loss
-    due to frosty pod rot, but treatment with C. rosea reduced the incidence of
-    cacao pods with sporulating lesions of M. roreri by 10%. The observed
-    reduction in pod loss due to Phytophthora spp., and sporulation by M.
-    roreri, supports the potential of fungal endophytes as biological control
-    agents. Further, these studies suggest that combined information from field
-    censuses of endophytic fungi, in vitro studies, and greenhouse experiments
-    can provide useful a priori criteria for identifying desirable attributes
-    for potential biocontrol agents. © 2008 Elsevier Inc. All rights reserved.
-  author:
-    - family: Mejía
-      given: Luis C.
-    - family: Rojas
-      given: Enith I.
-    - family: Maynard
-      given: Zuleyka
-    - family: Bael
-      given: Sunshine Van
-    - family: Arnold
-      given: A. Elizabeth
-    - family: Hebbar
-      given: Prakash
-    - family: Samuels
-      given: Gary J.
-    - family: Robbins
-      given: Nancy
-    - family: Herre
-      given: Edward Allen
-  citation-key: mejia2008
-  container-title: Biological Control
-  DOI: 10.1016/j.biocontrol.2008.01.012
-  issue: '1'
-  issued:
-    - year: 2008
-  page: 4-14
-  title: Endophytic fungi as biocontrol agents of *Theobroma cacao* pathogens
-  type: article-journal
-  volume: '46'
-
-- id: anderson2017
-  abstract: >-
-    PERMANOVA is a computer program for testing the simultaneous response of one
-    or more variables to one or more factors in an ANOVA experimental design on
-    the basis of any distance measure, using permutation methods. These notes
-    for users assume knowledge of multi-factorial ANOVA, which has the same
-    basic logic in multivariate as in univariate analysis, and an understanding
-    of what it means to test a multivariate hypothesis. A more complete
-    description of the method is given in Anderson (2001a) and McArdle &
-    Anderson (2001). The program includes: choice of appropriate transformation
-    and/or standardization of the data; choice of 19 distance (or dissimilarity)
-    measures to use as the basis of the analysis; option to rank the distances
-    in the distance matrix before the analysis; analysis and partitioning of the
-    total sum of squares according to the full model, including appropriate
-    treatment of factors that are fixed or random, crossed (orthogonal) or
-    nested (hierarchical), and all interaction terms; correct calculation of an
-    appropriate distance-based pseudo F-statistic for each term in the model,
-    based on expected mean squares as in univariate ANOVA (Winer et al. 1991,
-    Searle et al.1992); correct permutation procedures to obtain P-values for
-    each term in the model, using the correct permutable units (Anderson & ter
-    Braak 2003); choice of permutation method: raw data units or residuals under
-    either a reduced or a full model (Anderson 2001b, Anderson & Legendre 1999,
-    Anderson & Robinson 2001); correct P-values also obtained through Monte
-    Carlo random draws from the asymptotic permutation distribution (Anderson &
-    Robinson 2003); option to include one or more covariables (i.e., to perform
-    ANCOVA or MANCOVA); pair-wise a posteriori comparisons of levels for single
-    factors, including within individual levels of other factors in the case of
-    significant interactions and the use of correct permutable units in each
-    case.
-  author:
-    - family: Anderson
-      given: Marti J.
-  citation-key: anderson2017
-  container-title: 'Wiley StatsRef: Statistics Reference Online'
-  DOI: 10.1002/9781118445112.stat07841
-  issued:
-    - year: 2017
-      month: 11
-      day: 15
-  page: 1-15
-  publisher: Wiley
-  title: Permutational Multivariate Analysis of Variance ( PERMANOVA )
-  type: chapter
-
-- id: bittleston2011
-  abstract: >-
-    Our study examines how the mutualism between Atta colombica leaf-cutting
-    ants and their cultivated fungus is influenced by the presence of diverse
-    foliar endophytic fungi (endophytes) at high densities in tropical leaf
-    tissues. We conducted laboratory choice trials in which ant colonies chose
-    between Cordia alliodora seedlings with high (E high) or low (E low)
-    densities of endophytes. The E high seedlings contained 5.5 times higher
-    endophyte content and a greater diversity of fungal morphospecies than the E
-    low treatment, and endophyte content was not correlated with leaf toughness
-    or thickness. Leafcutting ants cut over 2.5 times the leaf area from E low
-    relative to E high seedlings and had a tendency to recruit more ants to E
-    low plants. Our findings suggest that leaf-cutting ants may incur costs from
-    cutting and processing leaves with high endophyte loads, which could impact
-    Neotropical forests by causing variable damage rates within plant
-    communities. This journal is ? 2010 The Royal Society.
-  author:
-    - family: Bittleston
-      given: L.S.
-    - family: Brockmann
-      given: F.
-    - family: Wcislo
-      given: W.
-    - family: Van Bael
-      given: S.A.
-  citation-key: bittleston2011
-  container-title: Biology Letters
-  DOI: 10.1098/rsbl.2010.0456
-  issue: '1'
-  issued:
-    - year: 2011
-  page: 30-32
-  title: Endophytic fungi reduce leaf-cutting ant damage to seedlings
-  type: article-journal
-  volume: '7'
-
-- id: estrada2013
-  abstract: >-
-    Fungal symbionts that live asymptomatically inside plant tissues
-    (endophytes) can influence plant-insect interactions. Recent work has shown
-    that damage by leaf-cutting ants, a major Neotropical defoliator, is reduced
-    to almost half in plants with high densities of endophytes. We investigated
-    changes in the phenotype of leaves that could influence ants' behavior to
-    result in the reduction of foliar damage. We produced cucumber seedlings
-    with high and low densities of one common endophyte species, Colletotrichum
-    tropicale. We used the leaves in bioassays and to compare chemical and
-    physical leaf characteristics important for ants' food selection. Ants cut
-    about one-third more area of cucumber leaves with lower densities of
-    endophytes and removed c. 20% more paper disks impregnated with the extracts
-    of those leaves compared with leaves and disks from plants hosting the
-    fungus. Colletotrichum tropicale colonization did not cause detectable
-    changes in the composition of volatile compounds, cuticular waxes, nutrients
-    or leaf toughness. Our study shows that endophytes changed leaf chemistry
-    and suggests that compounds with relative low volatility released after leaf
-    wounding are a major factor influencing foraging decisions by ants when
-    choosing between plants with low or high endophyte loads. © 2013 New
-    Phytologist Trust.
-  author:
-    - family: Estrada
-      given: C.
-    - family: Wcislo
-      given: William T.
-    - family: Van Bael
-      given: Sunshine A.
-  citation-key: estrada2013
-  container-title: New Phytologist
-  DOI: 10.1111/nph.12140
-  issue: '1'
-  issued:
-    - year: 2013
-  page: 241-251
-  title: Symbiotic fungi alter plant chemistry that discourages leaf-cutting ants
-  type: article-journal
-  volume: '198'
-
-- id: coblentz2013
-  abstract: >-
-    Endophytic fungi live symbiotically in the tissues of plants. Although a
-    large amount of evidence suggests a mutualistic role for vertically
-    transmitted endophytic fungi in agronomic grasses, the role of horizontally
-    transmitted endophytic fungi as mutualists has been challenged. Recent
-    studies, however, have shown that horizontally transmitted endophytic fungi
-    can act as mutualists to their plant hosts by providing defense against
-    pathogens and defoliators. In particular, several experimental studies have
-    shown that endophytic fungi interact negatively with leaf-cutting ants and
-    their fungal cultivar, but these studies were performed under laboratory
-    conditions. Using field colonies of Atta colombica in Central Panama, we
-    measured the fungal endophyte content in the forage material of leaf-cutting
-    ants and compared it to ambient endophyte levels. We then used the collected
-    data to model the area of plant material containing endophytes that enters a
-    mature colony daily. We found that mature colonies collect leaf material
-    that is 20% lower in endophyte abundance than surrounding leaves. A similar
-    pattern was observed for newly emerged colonies. Our model suggests that via
-    ant foraging preferences, leaf-cutting ants reduce the possible area of
-    material containing endophytes entering the colony by 33%. Our results
-    provide further evidence for a negative interaction between leaf-cutting
-    ants and horizontally transmitted endophytes, suggesting that fungal
-    endophytes have a defensive role in tropical plants by influencing
-    leafcutting ant foraging preferences. Copyright: ? 2013 Coblentz and Van
-    Bael.
-  author:
-    - family: Coblentz
-      given: K.E.
-    - family: Van Bael
-      given: S.A.
-  citation-key: coblentz2013
-  container-title: Ecosphere
-  DOI: 10.1890/ES13-00012.1
-  issue: '5'
-  issued:
-    - year: 2013
-  title: >-
-    Field colonies of leaf-cutting ants select plant materials containing low
-    abundances of endophytic fungi
-  type: article-journal
-  volume: '4'
-
-- id: pinheiro2000
-  author:
-    - family: Pinheiro
-      given: José C
-    - family: Bates
-      given: Douglas M
-  citation-key: pinheiro2000
-  DOI: 10.1007/b98882
-  event-place: New York
-  issued:
-    - year: 2000
-  publisher: Springer
-  publisher-place: New York
-  title: Mixed-Effects Models in S and S-PLUS
-  type: book
-
-- id: arnold2003
-  abstract: >-
-    Every plant species examined to date harbors endophytic fungi within its
-    asymptomatic aerial tissues, such that endophytes rep-resent a ubiquitous,
-    yet cryptic, component of terrestrial plant communities. Fungal endophytes
-    associated with leaves of woody angiosperms are especially diverse; yet,
-    fundamental aspects of their interactions with hosts are unknown. In
-    contrast to the relatively species-poor endophytes that are vertically
-    transmitted and act as defensive mutualists of some temperate grasses, the
-    diverse, horizontally transmitted endophytes of woody angio-sperms are
-    thought to contribute little to host defense. Here, we document high
-    diversity, spatial structure, and host affinity among foliar endophytes
-    associated with a tropical tree (Theobroma cacao, Malvaceae) across lowland
-    Panama. We then show that inoculation of endophyte-free leaves with
-    endophytes isolated frequently from naturally infected, asymptomatic hosts
-    signifi-cantly decreases both leaf necrosis and leaf mortality when T. cacao
-    seedlings are challenged with a major pathogen (Phytophthora sp.). In
-    contrast to reports of fungal inoculation inducing systemic defense, we
-    found that protection was primarily localized to endophyte-infected tissues.
-    Further, endophyte-mediated protec-tion was greater in mature leaves, which
-    bear less intrinsic defense against fungal pathogens than do young leaves.
-    In vitro studies suggest that host affinity is mediated by leaf chemistry,
-    and that protection may be mediated by direct interactions of endophytes
-    with foliar pathogens. Together, these data demonstrate the capacity of
-    diverse, horizontally transmitted endophytes of woody angiosperms to play an
-    important but previously unappreciated role in host defense.
-  author:
-    - family: Arnold
-      given: A Elizabeth
-    - family: Mejía
-      given: Luis Carlos
-    - family: Kyllo
-      given: Damond
-    - family: Rojas
-      given: Enith I
-    - family: Maynard
-      given: Zuleyka
-    - family: Robbins
-      given: Nancy
-    - family: Herre
-      given: Edward Allen
-  citation-key: arnold2003
-  container-title: Proceedings of the National Academy of Sciences
-  issue: '26'
-  issued:
-    - year: 2003
-  page: 15649-15654
-  title: Fungal endophytes limit pathogen damage in a tropical tree
-  type: article-journal
-  volume: '100'
-
-- id: mcgill2006
-  abstract: >-
-    There is considerable debate about whether community ecology will ever
-    produce general principles. We suggest here that this can be achieved but
-    that community ecology has lost its way by focusing on pairwise species
-    interactions independent of the environment. We assert that community
-    ecology should return to an emphasis on four themes that are tied together
-    by a two-step process: how the fundamental niche is governed by functional
-    traits within the context of abiotic environmental gradients; and how the
-    interaction between traits and fundamental niches maps onto the realized
-    niche in the context of a biotic interaction milieu. We suggest this
-    approach can create a more quantitative and predictive science that can more
-    readily address issues of global change. ?? 2006 Elsevier Ltd. All rights
-    reserved.
-  author:
-    - family: McGill
-      given: Brian J.
-    - family: Enquist
-      given: Brian J.
-    - family: Weiher
-      given: Evan
-    - family: Westoby
-      given: Mark
-  citation-key: mcgill2006
-  container-title: Trends in Ecology and Evolution
-  DOI: 10.1016/j.tree.2006.02.002
-  ISSN: 0169-5347
-  issue: '4'
-  issued:
-    - year: 2006
-  page: 178-185
-  title: Rebuilding community ecology from functional traits
-  type: article-journal
-  volume: '21'
-
-- id: opti-sciencesinc
-  accessed:
-    - year: 2023
-      month: 11
-      day: 29
-  author:
-    - family: ''
-      given: Opti-Sciences Inc.
-  citation-key: opti-sciencesinc
-  container-title: ACM-200plus
-  note: Opti-Sciences Inc., Hudson, New Hampshire, U.S.A.
-  title: ACM-200plus
-  title-short: Anthocyanin Content Meter
-  type: webpage
-  URL: https://www.optisci.com/acm-200.html
-
-- id: weiss2017
-  accessed:
-    - year: 2023
-      month: 11
-      day: 26
-  author:
-    - family: Weiss
-      given: Sophie
-    - family: Xu
-      given: Zhenjiang Zech
-    - family: Peddada
-      given: Shyamal
-    - family: Amir
-      given: Amnon
-    - family: Bittinger
-      given: Kyle
-    - family: Gonzalez
-      given: Antonio
-    - family: Lozupone
-      given: Catherine
-    - family: Zaneveld
-      given: Jesse R.
-    - family: Vázquez-Baeza
-      given: Yoshiki
-    - family: Birmingham
-      given: Amanda
-    - family: Hyde
-      given: Embriette R.
-    - family: Knight
-      given: Rob
-  citation-key: weiss2017
-  container-title: Microbiome
-  container-title-short: Microbiome
-  DOI: 10.1186/s40168-017-0237-y
-  ISSN: 2049-2618
-  issue: '1'
-  issued:
-    - year: 2017
-      month: 12
-  language: en
-  page: '27'
-  source: DOI.org (Crossref)
-  title: >-
-    Normalization and microbial differential abundance strategies depend upon
-    data characteristics
-  type: article-journal
-  URL: >-
-    https://microbiomejournal.biomedcentral.com/articles/10.1186/s40168-017-0237-y
-  volume: '5'
-
-- id: bowman2021
-  abstract: >-
-    Fungal communities associated with plants often decrease in similarity as
-    the distance between sampling sites increases (i.e., they demonstrate
-    distance decay). In the southwestern USA, forests occur in highlands
-    separated from one another by warmer, drier biomes with plant and fungal
-    communities that differ from those at higher elevations. These disjunct
-    forests are broadly similar in climate to one another, offering an
-    opportunity to examine drivers of distance decay in plant-associated fungi
-    across multiple ecologically similar yet geographically disparate
-    landscapes. We examined ectomycorrhizal and foliar endophytic fungi
-    associated with a dominant forest tree (Pinus ponderosa) in forests across
-    ca. 550 km of geographic distance from northwestern to southeastern Arizona
-    (USA). Both guilds of fungi showed distance decay, but drivers differed for
-    each: ectomycorrhizal fungi are constrained primarily by dispersal
-    limitation, whereas foliar endophytes are constrained by specific
-    environmental conditions. Most ectomycorrhizal fungi were found in only a
-    single forested area, as were many endophytic fungi. Such regional-scale
-    perspectives are needed for baseline estimates of fungal diversity
-    associated with forest trees at a landscape scale, with attention to the
-    sensitivity of different guilds of fungal symbionts to decreasing areas of
-    suitable habitat, increasing disturbance, and related impacts of climate
-    change.
-  accessed:
-    - year: 2023
-      month: 11
-      day: 16
-  author:
-    - family: Bowman
-      given: Elizabeth A.
-    - family: Arnold
-      given: A. Elizabeth
-  citation-key: bowman2021
-  container-title: The ISME Journal
-  container-title-short: ISME J
-  DOI: 10.1038/s41396-021-01006-9
-  ISSN: 1751-7362, 1751-7370
-  issue: '12'
-  issued:
-    - year: 2021
-      month: 12
-  language: en
-  page: 3437-3454
-  source: DOI.org (Crossref)
-  title: >-
-    Drivers and implications of distance decay differ for ectomycorrhizal and
-    foliar endophytic fungi across an anciently fragmented landscape
-  type: article-journal
-  URL: https://www.nature.com/articles/s41396-021-01006-9
-  volume: '15'
-
-- id: wright2004
-  abstract: >-
-    Bringing together leaf trait data spanning 2,548 species and 175 sites we
-    describe, for the first time at global scale, a universal spectrum of leaf
-    economics consisting of key chemical, structural and physiological
-    properties. The spectrum runs from quick to slow return on investments of
-    nutrients and dry mass in leaves, and operates largely independently of
-    growth form, plant functional type or biome. Categories along the spectrum
-    would, in general, describe leaf economic variation at the global scale
-    better than plant functional types, because functional types overlap
-    substantially in their leaf traits. Overall, modulation of leaf traits and
-    trait relationships by climate is surprisingly modest, although some
-    striking and significant patterns can be seen. Reliable quantification of
-    the leaf economics spectrum and its interaction with climate will prove
-    valuable for modelling nutrient fluxes and vegetation boundaries under
-    changing land-use and climate.
-  author:
-    - family: Wright
-      given: Ian J
-    - family: Reich
-      given: Peter B
-    - family: Westoby
-      given: Mark
-    - family: Ackerly
-      given: David D
-    - family: Baruch
-      given: Zdravko
-    - family: Bongers
-      given: Frans
-    - family: Cavender-Bares
-      given: Jeannine
-    - family: Chapin
-      given: Terry
-    - family: Cornelissen
-      given: Johannes H C
-    - family: Diemer
-      given: Matthias
-    - family: Flexas
-      given: Jaume
-    - family: Garnier
-      given: Eric
-    - family: Groom
-      given: Philip K
-    - family: Gulias
-      given: Javier
-    - family: Hikosaka
-      given: Kouki
-    - family: Lamont
-      given: Byron B
-    - family: Lee
-      given: Tali
-    - family: Lee
-      given: William
-    - family: Lusk
-      given: Christopher
-    - family: Midgley
-      given: Jeremy J
-    - family: Navas
-      given: Marie-Laure
-    - family: Niinemets
-      given: Ülo
-    - family: Oleksyn
-      given: Jacek
-    - family: Osada
-      given: Noriyuki
-    - family: Poorter
-      given: Hendrik
-    - family: Poot
-      given: Pieter
-    - family: Prior
-      given: Lynda
-    - family: Pyankov
-      given: Vladimir I
-    - family: Roumet
-      given: Catherine
-    - family: Thomas
-      given: Sean C
-    - family: Tjoelker
-      given: Mark G
-    - family: Veneklaas
-      given: Erik J
-    - family: Villar
-      given: Rafael
-  citation-key: wright2004
-  container-title: Nature
-  DOI: 10.1038/nature02403
-  issue: '6985'
-  issued:
-    - year: 2004
-  page: 821-827
-  title: The worldwide leaf economics spectrum
-  type: article-journal
-  URL: https://doi.org/10.1038/nature02403
-  volume: '428'
-
-- id: uren2019
-  accessed:
-    - year: 2023
-      month: 11
-      day: 16
-  author:
-    - family: U’Ren
-      given: Jana M.
-    - family: Lutzoni
-      given: François
-    - family: Miadlikowska
-      given: Jolanta
-    - family: Zimmerman
-      given: Naupaka B.
     - family: Carbone
       given: Ignazio
-    - family: May
-      given: Georgiana
+    - family: White
+      given: James B.
+    - family: Miadlikowska
+      given: Jolanta
     - family: Arnold
       given: A. Elizabeth
-  citation-key: uren2019
-  container-title: Nature Ecology & Evolution
-  container-title-short: Nat Ecol Evol
-  DOI: 10.1038/s41559-019-0975-2
-  ISSN: 2397-334X
-  issue: '10'
+    - family: Miller
+      given: Mark A.
+    - family: Kauff
+      given: Frank
+    - family: U'Ren
+      given: Jana M.
+    - family: May
+      given: Georgiana
+    - family: Lutzoni
+      given: François
+  citation-key: carbone2017
+  container-title: Bioinformatics
+  DOI: 10.1093/bioinformatics/btw808
+  issue: '8'
+  issued:
+    - year: 2017
+  page: 1160-1168
+  title: >-
+    T-BAS: Tree-Based Alignment Selector toolkit for phylogenetic-based
+    placement, alignment downloads and metadata visualization: An example with
+    the Pezizomycotina tree of life
+  type: article-journal
+  volume: '33'
+
+- id: kitajima2013
+  abstract: >-
+    Background and AimsLeaf life span is widely recognized as a key life history
+    trait associated with herbivory resistance, but rigorous comparative data
+    are rare for seedlings. The goal of this study was to examine how light
+    environment affects leaf life span, and how ontogenetic development during
+    the first year may influence leaf fracture toughness, lamina density and
+    stem density that are relevant for herbivory resistance, leaf life span and
+    seedling survival.MethodsData from three experiments encompassing 104
+    neotropical woody species were combined. Leaf life span, lamina and vein
+    fracture toughness, leaf and stem tissue density and seedling survival were
+    quantified for the first-year seedlings at standardized ontogenetic stages
+    in shade houses and common gardens established in gaps and shaded
+    understorey in a moist tropical forest in Panama. Mortality of naturally
+    recruited seedlings till 1 year later was quantified in 800 1-m2 plots from
+    1994 to 2011.Key ResultsMedian leaf life span ranged widely among species,
+    always greater in shade (ranging from 151 to >1790 d in the understorey and
+    shade houses) than in gaps (115-867 d), but with strong correlation between
+    gaps and shade. Leaf and stem tissue density increased with seedling age,
+    whereas leaf fracture toughness showed only a weak increase. All these
+    traits were positively correlated with leaf life span. Leaf life span and
+    stem density were negatively correlated with seedling mortality in shade,
+    while gap mortality showed no correlation with these traits.ConclusionsThe
+    wide spectrum of leaf life span and associated functional traits reflects
+    variation in shade tolerance of first-year seedlings among coexisting trees,
+    shrubs and lianas in this neotropical forest. High leaf tissue density is
+    important in enhancing leaf toughness, a known physical defence, and leaf
+    life span. Both seedling leaf life span and stem density should be
+    considered as key functional traits that contribute to seedling survival in
+    tropical forest understoreys. © The Author 2013.
+  author:
+    - family: Kitajima
+      given: Kaoru
+    - family: Cordero
+      given: Roberto A.
+    - family: Wright
+      given: S. Joseph
+  citation-key: kitajima2013
+  container-title: Annals of Botany
+  DOI: 10.1093/aob/mct036
+  issue: '4'
+  issued:
+    - year: 2013
+  page: 685-699
+  title: >-
+    Leaf life span spectrum of tropical woody seedlings: Effects of light and
+    ontogeny and consequences for survival
+  type: article-journal
+  volume: '112'
+
+- id: poorter2006
+  abstract: >-
+    We compared the leaf traits and plant performance of 53 co-occurring tree
+    species in a semi-evergreen tropical moist forest community. The species
+    differed in all leaf traits analyzed: leaf life span varied 11-fold among
+    species, specific leaf area 5-fold, mass-based nitrogen 3-fold, mass-based
+    assimilation rate 13-fold, mass-based respiration rate 15-fold, stomatal
+    conductance 8-fold, and photosynthetic water use efficiency 4-fold.
+    Photosynthetic traits were strongly coordinated, and specific leaf area
+    predicted mass-based rates of assimilation and respiration; leaf life span
+    predicted many other leaf characteristics. Leaf traits were closely
+    associated with growth, survival, and light requirement of the species. Leaf
+    investment strategies varied on a continuum trading off short-term carbon
+    gain against long-term leaf persistence that, in turn, is linked to
+    variation in whole-plant growth and survival. Leaf traits were good
+    predictors of plant performance, both in gaps and in the forest understory.
+    High growth in gaps is promoted by cheap, short-lived, and physiologically
+    active leaves. High survival in the forest understory is enhanced by the
+    formation of long-lived well protected leaves that reduce biomass loss by
+    herbivory, mechanical disturbance, or leaf turnover. Leaf traits underlay
+    this growth–survival trade-off; species with short-lived, physiologically
+    active leaves have high growth but low survival. This continuum in leaf
+    traits, through its effect on plant performance, in turn gives rise to a
+    continuum in species' light requirements.
+  author:
+    - family: Poorter
+      given: Lourens
+    - family: Bongers
+      given: Frans
+  citation-key: poorter2006
+  container-title: Ecology
+  DOI: 10.1890/0012-9658(2006)87[1733:LTAGPO]2.0.CO;2
+  issue: '7'
+  issued:
+    - year: 2006
+  page: 1733-1743
+  title: >-
+    Leaf Traits Are Good Predictors of Plant Performance Across 53 Rain Forest
+    Species
+  type: article-journal
+  URL: >-
+    https://esajournals.onlinelibrary.wiley.com/doi/abs/10.1890/0012-9658%282006%2987%5B1733%3ALTAGPO%5D2.0.CO%3B2
+  volume: '87'
+
+- id: daru2019
+  abstract: >-
+    Herbarium specimens represent important records of morphological and genetic
+    diversity of plants that inform questions relevant to global change,
+    including species distributions, phenology and functional traits. It is
+    increasingly appreciated that plant microbiomes can influence these aspects
+    of plant biology, but little is known regarding the historic distribution of
+    microbes associated with plants collected in the pre-molecular age. If
+    microbiomes can be observed reliably in herbarium specimens, researchers
+    will gain a new lens with which to examine microbial ecology, evolution,
+    species interactions. Here, we describe a method for accessing historical
+    plant microbiomes from preserved herbarium specimens, providing a proof of
+    concept using two plant taxa from the imperiled boreal biome (
+                  Andromeda polifolia
+                  and
+                  Ledum palustre
+                  subsp
+                  . groenlandicum,
+                  Ericaceae). We focus on fungal endophytes, which occur within symptomless plant tissues such as leaves. Through a three-part approach (i.e. culturing, cloning and next-generation amplicon sequencing via the Illumina MiSeq platform, with extensive controls), we examined endophyte communities in dried, pressed leaves that had been processed as regular herbarium specimens and stored at room temperature in a herbarium for four years
+                  .
+                  We retrieved only one endophyte in culture, but cloning and especially the MiSeq analysis revealed a rich community of foliar endophytes. The phylogenetic distribution and diversity of endophyte assemblages, especially among the Ascomycota, resemble endophyte communities from fresh plants collected in the boreal biome. We could distinguish communities of endophytes in each plant species and differentiate likely endophytes from fungi that could be surface contaminants. Taxa found by cloning were observed in the larger MiSeq dataset, but species richness was greater when subsets of the same tissues were evaluated with the MiSeq approach. Our findings provide a proof of concept for capturing endophyte DNA from herbarium specimens, supporting the importance of herbarium records as roadmaps for understanding the dynamics of plant-associated microbial biodiversity in the Anthropocene.
+                
+                This article is part of the theme issue ‘Biological collections for understanding biodiversity in the Anthropocene’.
+  accessed:
+    - year: 2023
+      month: 11
+      day: 6
+  author:
+    - family: Daru
+      given: Barnabas H.
+    - family: Bowman
+      given: Elizabeth A.
+    - family: Pfister
+      given: Donald H.
+    - family: Arnold
+      given: A. Elizabeth
+  citation-key: daru2019
+  container-title: 'Philosophical Transactions of the Royal Society B: Biological Sciences'
+  container-title-short: Phil. Trans. R. Soc. B
+  DOI: 10.1098/rstb.2017.0395
+  ISSN: 0962-8436, 1471-2970
+  issue: '1763'
   issued:
     - year: 2019
-      month: 9
-      day: 23
+      month: 1
+      day: 7
   language: en
-  page: 1430-1437
+  page: '20170395'
   source: DOI.org (Crossref)
   title: >-
-    Host availability drives distributions of fungal endophytes in the
-    imperilled boreal realm
+    A novel proof of concept for capturing the diversity of endophytic fungi
+    preserved in herbarium specimens
   type: article-journal
-  URL: https://www.nature.com/articles/s41559-019-0975-2
-  volume: '3'
+  URL: https://royalsocietypublishing.org/doi/10.1098/rstb.2017.0395
+  volume: '374'
+
+- id: rognes2016
+  abstract: |-
+    Background
+                  VSEARCH is an open source and free of charge multithreaded 64-bit tool for processing and preparing metagenomics, genomics and population genomics nucleotide sequence data. It is designed as an alternative to the widely used USEARCH tool (Edgar, 2010) for which the source code is not publicly available, algorithm details are only rudimentarily described, and only a memory-confined 32-bit version is freely available for academic use.
+                
+                
+                  Methods
+                  When searching nucleotide sequences, VSEARCH uses a fast heuristic based on words shared by the query and target sequences in order to quickly identify similar sequences, a similar strategy is probably used in USEARCH. VSEARCH then performs optimal global sequence alignment of the query against potential target sequences, using full dynamic programming instead of the seed-and-extend heuristic used by USEARCH. Pairwise alignments are computed in parallel using vectorisation and multiple threads.
+                
+                
+                  Results
+                  
+                    VSEARCH includes most commands for analysing nucleotide sequences available in USEARCH version 7 and several of those available in USEARCH version 8, including searching (exact or based on global alignment), clustering by similarity (using length pre-sorting, abundance pre-sorting or a user-defined order), chimera detection (reference-based or
+                    de novo
+                    ), dereplication (full length or prefix), pairwise alignment, reverse complementation, sorting, and subsampling. VSEARCH also includes commands for FASTQ file processing, i.e., format detection, filtering, read quality statistics, and merging of paired reads. Furthermore, VSEARCH extends functionality with several new commands and improvements, including shuffling, rereplication, masking of low-complexity sequences with the well-known DUST algorithm, a choice among different similarity definitions, and FASTQ file format conversion. VSEARCH is here shown to be more accurate than USEARCH when performing searching, clustering, chimera detection and subsampling, while on a par with USEARCH for paired-ends read merging. VSEARCH is slower than USEARCH when performing clustering and chimera detection, but significantly faster when performing paired-end reads merging and dereplication. VSEARCH is available at
+                    https://github.com/torognes/vsearch
+                    under either the BSD 2-clause license or the GNU General Public License version 3.0.
+                  
+                
+                
+                  Discussion
+                  VSEARCH has been shown to be a fast, accurate and full-fledged alternative to USEARCH. A free and open-source versatile tool for sequence analysis is now available to the metagenomics community.
+  accessed:
+    - year: 2023
+      month: 11
+      day: 14
+  author:
+    - family: Rognes
+      given: Torbjørn
+    - family: Flouri
+      given: Tomáš
+    - family: Nichols
+      given: Ben
+    - family: Quince
+      given: Christopher
+    - family: Mahé
+      given: Frédéric
+  citation-key: rognes2016
+  container-title: PeerJ
+  DOI: 10.7717/peerj.2584
+  ISSN: 2167-8359
+  issued:
+    - year: 2016
+      month: 10
+      day: 18
+  language: en
+  page: e2584
+  source: DOI.org (Crossref)
+  title: 'VSEARCH: a versatile open source tool for metagenomics'
+  title-short: VSEARCH
+  type: article-journal
+  URL: https://peerj.com/articles/2584
+  volume: '4'
 
 - id: carbone2019
   abstract: >-
@@ -957,236 +1159,225 @@ references:
   URL: https://journals.asm.org/doi/10.1128/MRA.00328-19
   volume: '8'
 
-- id: rognes2016
-  abstract: |-
-    Background
-                  VSEARCH is an open source and free of charge multithreaded 64-bit tool for processing and preparing metagenomics, genomics and population genomics nucleotide sequence data. It is designed as an alternative to the widely used USEARCH tool (Edgar, 2010) for which the source code is not publicly available, algorithm details are only rudimentarily described, and only a memory-confined 32-bit version is freely available for academic use.
-                
-                
-                  Methods
-                  When searching nucleotide sequences, VSEARCH uses a fast heuristic based on words shared by the query and target sequences in order to quickly identify similar sequences, a similar strategy is probably used in USEARCH. VSEARCH then performs optimal global sequence alignment of the query against potential target sequences, using full dynamic programming instead of the seed-and-extend heuristic used by USEARCH. Pairwise alignments are computed in parallel using vectorisation and multiple threads.
-                
-                
-                  Results
-                  
-                    VSEARCH includes most commands for analysing nucleotide sequences available in USEARCH version 7 and several of those available in USEARCH version 8, including searching (exact or based on global alignment), clustering by similarity (using length pre-sorting, abundance pre-sorting or a user-defined order), chimera detection (reference-based or
-                    de novo
-                    ), dereplication (full length or prefix), pairwise alignment, reverse complementation, sorting, and subsampling. VSEARCH also includes commands for FASTQ file processing, i.e., format detection, filtering, read quality statistics, and merging of paired reads. Furthermore, VSEARCH extends functionality with several new commands and improvements, including shuffling, rereplication, masking of low-complexity sequences with the well-known DUST algorithm, a choice among different similarity definitions, and FASTQ file format conversion. VSEARCH is here shown to be more accurate than USEARCH when performing searching, clustering, chimera detection and subsampling, while on a par with USEARCH for paired-ends read merging. VSEARCH is slower than USEARCH when performing clustering and chimera detection, but significantly faster when performing paired-end reads merging and dereplication. VSEARCH is available at
-                    https://github.com/torognes/vsearch
-                    under either the BSD 2-clause license or the GNU General Public License version 3.0.
-                  
-                
-                
-                  Discussion
-                  VSEARCH has been shown to be a fast, accurate and full-fledged alternative to USEARCH. A free and open-source versatile tool for sequence analysis is now available to the metagenomics community.
+- id: uren2019
   accessed:
     - year: 2023
       month: 11
-      day: 14
+      day: 16
   author:
-    - family: Rognes
-      given: Torbjørn
-    - family: Flouri
-      given: Tomáš
-    - family: Nichols
-      given: Ben
-    - family: Quince
-      given: Christopher
-    - family: Mahé
-      given: Frédéric
-  citation-key: rognes2016
-  container-title: PeerJ
-  DOI: 10.7717/peerj.2584
-  ISSN: 2167-8359
-  issued:
-    - year: 2016
-      month: 10
-      day: 18
-  language: en
-  page: e2584
-  source: DOI.org (Crossref)
-  title: 'VSEARCH: a versatile open source tool for metagenomics'
-  title-short: VSEARCH
-  type: article-journal
-  URL: https://peerj.com/articles/2584
-  volume: '4'
-
-- id: daru2019
-  abstract: >-
-    Herbarium specimens represent important records of morphological and genetic
-    diversity of plants that inform questions relevant to global change,
-    including species distributions, phenology and functional traits. It is
-    increasingly appreciated that plant microbiomes can influence these aspects
-    of plant biology, but little is known regarding the historic distribution of
-    microbes associated with plants collected in the pre-molecular age. If
-    microbiomes can be observed reliably in herbarium specimens, researchers
-    will gain a new lens with which to examine microbial ecology, evolution,
-    species interactions. Here, we describe a method for accessing historical
-    plant microbiomes from preserved herbarium specimens, providing a proof of
-    concept using two plant taxa from the imperiled boreal biome (
-                  Andromeda polifolia
-                  and
-                  Ledum palustre
-                  subsp
-                  . groenlandicum,
-                  Ericaceae). We focus on fungal endophytes, which occur within symptomless plant tissues such as leaves. Through a three-part approach (i.e. culturing, cloning and next-generation amplicon sequencing via the Illumina MiSeq platform, with extensive controls), we examined endophyte communities in dried, pressed leaves that had been processed as regular herbarium specimens and stored at room temperature in a herbarium for four years
-                  .
-                  We retrieved only one endophyte in culture, but cloning and especially the MiSeq analysis revealed a rich community of foliar endophytes. The phylogenetic distribution and diversity of endophyte assemblages, especially among the Ascomycota, resemble endophyte communities from fresh plants collected in the boreal biome. We could distinguish communities of endophytes in each plant species and differentiate likely endophytes from fungi that could be surface contaminants. Taxa found by cloning were observed in the larger MiSeq dataset, but species richness was greater when subsets of the same tissues were evaluated with the MiSeq approach. Our findings provide a proof of concept for capturing endophyte DNA from herbarium specimens, supporting the importance of herbarium records as roadmaps for understanding the dynamics of plant-associated microbial biodiversity in the Anthropocene.
-                
-                This article is part of the theme issue ‘Biological collections for understanding biodiversity in the Anthropocene’.
-  accessed:
-    - year: 2023
-      month: 11
-      day: 6
-  author:
-    - family: Daru
-      given: Barnabas H.
-    - family: Bowman
-      given: Elizabeth A.
-    - family: Pfister
-      given: Donald H.
+    - family: U’Ren
+      given: Jana M.
+    - family: Lutzoni
+      given: François
+    - family: Miadlikowska
+      given: Jolanta
+    - family: Zimmerman
+      given: Naupaka B.
+    - family: Carbone
+      given: Ignazio
+    - family: May
+      given: Georgiana
     - family: Arnold
       given: A. Elizabeth
-  citation-key: daru2019
-  container-title: 'Philosophical Transactions of the Royal Society B: Biological Sciences'
-  container-title-short: Phil. Trans. R. Soc. B
-  DOI: 10.1098/rstb.2017.0395
-  ISSN: 0962-8436, 1471-2970
-  issue: '1763'
-  issued:
-    - year: 2019
-      month: 1
-      day: 7
-  language: en
-  page: '20170395'
-  source: DOI.org (Crossref)
-  title: >-
-    A novel proof of concept for capturing the diversity of endophytic fungi
-    preserved in herbarium specimens
-  type: article-journal
-  URL: https://royalsocietypublishing.org/doi/10.1098/rstb.2017.0395
-  volume: '374'
-
-- id: tellezRedCol2016
-  abstract: >-
-    ? 2016 The Association for Tropical Biology and Conservation.The adaptive
-    significance of red coloration in tropical forest leaves remains unclear. In
-    vivo assays show that there is a significant negative correlation between
-    anthocyanin pigments in young leaves and fungal pathogen damage. This
-    supports a previous hypothesis that anthocyanins may protect young leaves
-    from fungal damage during the vulnerable period of leaf expansion.
-  author:
-    - family: Tellez
-      given: P.H.
-    - family: Rojas
-      given: Enith
-    - family: Van Bael
-      given: Sunshine
-  citation-key: tellezRedCol2016
-  container-title: Biotropica
-  DOI: 10.1111/btp.12303
-  issue: '2'
-  issued:
-    - year: 2016
-      month: 3
-  page: 150-153
-  title: >-
-    Red coloration in young tropical leaves associated with reduced fungal
-    pathogen damage
-  type: article-journal
-  URL: http://doi.wiley.com/10.1111/btp.12303
-  volume: '48'
-
-- id: tellezFoliarl2020
-  abstract: >-
-    Vascular epiphytes contribute up to 35% of the plant diversity and foliar
-    biomass of flowering plants. The family Bromeliaceae is a monophyletic group
-    of plants native to the Neotropics. Epiphytic bromeliads form associations
-    with distinct groups of organisms but their relationship with foliar fungal
-    endophytes remain underexplored. In this study we examined the relationship
-    of foliar fungal endophytes to host photosynthetic pathways and associated
-    ecophysiological traits. We sampled the fungal endophyte communities of 67
-    host individuals in six epiphytic bromeliad species differing in C3 and
-    crassulacean acid metabolism (CAM) photosynthetic pathways. We tested
-    whether endophyte assemblages were associated with ecophysiological leaf
-    traits related to host photosynthetic pathways. Our results indicate that
-    (1) C3 and CAM bromeliads host dissimilar endophyte assemblages, (2)
-    endophyte communities in C3 bromeliads are characterized by variable
-    relative abundances of fungal orders; conversely, CAM associated endophyte
-    communities were characterized by consistent relative abundances of fungal
-    orders, and (3) endophyte communities in bromeliads are distributed along a
-    continuum of leaf toughness and leaf water content. Taken together, our
-    study suggests that host physiology and associated ecophysiological traits
-    of epiphytic bromeliads may represent biotic filters for communities of
-    fungal endophytes in the tropics.
-  author:
-    - family: Tellez
-      given: Peter H.
-    - family: Woods
-      given: Carrie L.
-    - family: Formel
-      given: Stephen
-    - family: Bael
-      given: Sunshine A. Van
-  citation-key: tellezFoliarl2020
-  container-title: Diversity
-  DOI: 10.3390/d12100378
+  citation-key: uren2019
+  container-title: Nature Ecology & Evolution
+  container-title-short: Nat Ecol Evol
+  DOI: 10.1038/s41559-019-0975-2
+  ISSN: 2397-334X
   issue: '10'
   issued:
-    - year: 2020
+    - year: 2019
       month: 9
-  page: 378-378
+      day: 23
+  language: en
+  page: 1430-1437
+  source: DOI.org (Crossref)
   title: >-
-    Relationships between Foliar Fungal Endophyte Communities and
-    Ecophysiological Traits of CAM and C3 Epiphytic Bromeliads in a Neotropical
-    Rainforest
+    Host availability drives distributions of fungal endophytes in the
+    imperilled boreal realm
   type: article-journal
-  URL: https://www.mdpi.com/1424-2818/12/10/378
-  volume: '12'
+  URL: https://www.nature.com/articles/s41559-019-0975-2
+  volume: '3'
 
-- id: poorter2006
+- id: bowman2021
   abstract: >-
-    We compared the leaf traits and plant performance of 53 co-occurring tree
-    species in a semi-evergreen tropical moist forest community. The species
-    differed in all leaf traits analyzed: leaf life span varied 11-fold among
-    species, specific leaf area 5-fold, mass-based nitrogen 3-fold, mass-based
-    assimilation rate 13-fold, mass-based respiration rate 15-fold, stomatal
-    conductance 8-fold, and photosynthetic water use efficiency 4-fold.
-    Photosynthetic traits were strongly coordinated, and specific leaf area
-    predicted mass-based rates of assimilation and respiration; leaf life span
-    predicted many other leaf characteristics. Leaf traits were closely
-    associated with growth, survival, and light requirement of the species. Leaf
-    investment strategies varied on a continuum trading off short-term carbon
-    gain against long-term leaf persistence that, in turn, is linked to
-    variation in whole-plant growth and survival. Leaf traits were good
-    predictors of plant performance, both in gaps and in the forest understory.
-    High growth in gaps is promoted by cheap, short-lived, and physiologically
-    active leaves. High survival in the forest understory is enhanced by the
-    formation of long-lived well protected leaves that reduce biomass loss by
-    herbivory, mechanical disturbance, or leaf turnover. Leaf traits underlay
-    this growth–survival trade-off; species with short-lived, physiologically
-    active leaves have high growth but low survival. This continuum in leaf
-    traits, through its effect on plant performance, in turn gives rise to a
-    continuum in species' light requirements.
+    Fungal communities associated with plants often decrease in similarity as
+    the distance between sampling sites increases (i.e., they demonstrate
+    distance decay). In the southwestern USA, forests occur in highlands
+    separated from one another by warmer, drier biomes with plant and fungal
+    communities that differ from those at higher elevations. These disjunct
+    forests are broadly similar in climate to one another, offering an
+    opportunity to examine drivers of distance decay in plant-associated fungi
+    across multiple ecologically similar yet geographically disparate
+    landscapes. We examined ectomycorrhizal and foliar endophytic fungi
+    associated with a dominant forest tree (Pinus ponderosa) in forests across
+    ca. 550 km of geographic distance from northwestern to southeastern Arizona
+    (USA). Both guilds of fungi showed distance decay, but drivers differed for
+    each: ectomycorrhizal fungi are constrained primarily by dispersal
+    limitation, whereas foliar endophytes are constrained by specific
+    environmental conditions. Most ectomycorrhizal fungi were found in only a
+    single forested area, as were many endophytic fungi. Such regional-scale
+    perspectives are needed for baseline estimates of fungal diversity
+    associated with forest trees at a landscape scale, with attention to the
+    sensitivity of different guilds of fungal symbionts to decreasing areas of
+    suitable habitat, increasing disturbance, and related impacts of climate
+    change.
+  accessed:
+    - year: 2023
+      month: 11
+      day: 16
   author:
-    - family: Poorter
-      given: Lourens
-    - family: Bongers
-      given: Frans
-  citation-key: poorter2006
-  container-title: Ecology
-  DOI: 10.1890/0012-9658(2006)87[1733:LTAGPO]2.0.CO;2
-  issue: '7'
+    - family: Bowman
+      given: Elizabeth A.
+    - family: Arnold
+      given: A. Elizabeth
+  citation-key: bowman2021
+  container-title: The ISME Journal
+  container-title-short: ISME J
+  DOI: 10.1038/s41396-021-01006-9
+  ISSN: 1751-7362, 1751-7370
+  issue: '12'
   issued:
-    - year: 2006
-  page: 1733-1743
+    - year: 2021
+      month: 12
+  language: en
+  page: 3437-3454
+  source: DOI.org (Crossref)
   title: >-
-    Leaf Traits Are Good Predictors of Plant Performance Across 53 Rain Forest
-    Species
+    Drivers and implications of distance decay differ for ectomycorrhizal and
+    foliar endophytic fungi across an anciently fragmented landscape
+  type: article-journal
+  URL: https://www.nature.com/articles/s41396-021-01006-9
+  volume: '15'
+
+- id: weiss2017
+  accessed:
+    - year: 2023
+      month: 11
+      day: 26
+  author:
+    - family: Weiss
+      given: Sophie
+    - family: Xu
+      given: Zhenjiang Zech
+    - family: Peddada
+      given: Shyamal
+    - family: Amir
+      given: Amnon
+    - family: Bittinger
+      given: Kyle
+    - family: Gonzalez
+      given: Antonio
+    - family: Lozupone
+      given: Catherine
+    - family: Zaneveld
+      given: Jesse R.
+    - family: Vázquez-Baeza
+      given: Yoshiki
+    - family: Birmingham
+      given: Amanda
+    - family: Hyde
+      given: Embriette R.
+    - family: Knight
+      given: Rob
+  citation-key: weiss2017
+  container-title: Microbiome
+  container-title-short: Microbiome
+  DOI: 10.1186/s40168-017-0237-y
+  ISSN: 2049-2618
+  issue: '1'
+  issued:
+    - year: 2017
+      month: 12
+  language: en
+  page: '27'
+  source: DOI.org (Crossref)
+  title: >-
+    Normalization and microbial differential abundance strategies depend upon
+    data characteristics
   type: article-journal
   URL: >-
-    https://esajournals.onlinelibrary.wiley.com/doi/abs/10.1890/0012-9658%282006%2987%5B1733%3ALTAGPO%5D2.0.CO%3B2
-  volume: '87'
+    https://microbiomejournal.biomedcentral.com/articles/10.1186/s40168-017-0237-y
+  volume: '5'
+
+- id: opti-sciencesinc
+  accessed:
+    - year: 2023
+      month: 11
+      day: 29
+  author:
+    - family: ''
+      given: Opti-Sciences Inc.
+  citation-key: opti-sciencesinc
+  container-title: ACM-200plus
+  note: Opti-Sciences Inc., Hudson, New Hampshire, U.S.A.
+  title: ACM-200plus
+  title-short: Anthocyanin Content Meter
+  type: webpage
+  URL: https://www.optisci.com/acm-200.html
+
+- id: decaceres2009
+  author:
+    - family: De Cáceres
+      given: Miquel
+    - family: Legendre
+      given: Pierre
+  citation-key: decaceres2009
+  container-title: Ecology
+  DOI: 10.1890/08-1823.1
+  issued:
+    - year: 2009
+  page: 3566-3574
+  title: >-
+    Associations between species and groups of sites: indices and statistical
+    inference
+  type: article-journal
+  volume: '90'
+
+- id: gilbert2007
+  abstract: >-
+    What determines which plant species are susceptible to a given plant
+    pathogen is poorly understood. Experimental inoculations with fungal
+    pathogens of plant leaves in a tropical rain forest show that most fungal
+    pathogens are polyphagous but that most plant species in a local community
+    are resistant to any given pathogen. The likelihood that a pathogen can
+    infect two plant species decreases continuously with phylogenetic distance
+    between the plants, even to ancient evolutionary distances. This
+    phylogenetic signal in host range allows us to predict the likely host range
+    of plant pathogens in a local community, providing an important tool for
+    plant ecology, design of agronomic systems, quarantine regulations in
+    international trade, and risk analysis of biological control agents. In
+    particular, the results suggest that the rate of spread and ecological
+    impacts of a disease through a natural plant community will depend strongly
+    on the phylogenetic structure of the community itself and that current
+    regulatory approaches strongly underestimate the local risks of global
+    movement of plant pathogens or their hosts.
+  accessed:
+    - year: 2024
+      month: 1
+      day: 12
+  author:
+    - family: Gilbert
+      given: Gregory S.
+    - family: Webb
+      given: Campbell O.
+  citation-key: gilbert2007
+  container-title: Proceedings of the National Academy of Sciences
+  container-title-short: Proc. Natl. Acad. Sci. U.S.A.
+  DOI: 10.1073/pnas.0607968104
+  ISSN: 0027-8424, 1091-6490
+  issue: '12'
+  issued:
+    - year: 2007
+      month: 3
+      day: 20
+  language: en
+  page: 4979-4983
+  source: DOI.org (Crossref)
+  title: Phylogenetic signal in plant pathogen–host range
+  type: article-journal
+  URL: https://pnas.org/doi/full/10.1073/pnas.0607968104
+  volume: '104'
 
 - id: blanchet2008
   abstract: >-
@@ -1234,135 +1425,6 @@ references:
   URL: https://esajournals.onlinelibrary.wiley.com/doi/10.1890/07-0986.1
   volume: '89'
 
-- id: gilbert2007
-  abstract: >-
-    What determines which plant species are susceptible to a given plant
-    pathogen is poorly understood. Experimental inoculations with fungal
-    pathogens of plant leaves in a tropical rain forest show that most fungal
-    pathogens are polyphagous but that most plant species in a local community
-    are resistant to any given pathogen. The likelihood that a pathogen can
-    infect two plant species decreases continuously with phylogenetic distance
-    between the plants, even to ancient evolutionary distances. This
-    phylogenetic signal in host range allows us to predict the likely host range
-    of plant pathogens in a local community, providing an important tool for
-    plant ecology, design of agronomic systems, quarantine regulations in
-    international trade, and risk analysis of biological control agents. In
-    particular, the results suggest that the rate of spread and ecological
-    impacts of a disease through a natural plant community will depend strongly
-    on the phylogenetic structure of the community itself and that current
-    regulatory approaches strongly underestimate the local risks of global
-    movement of plant pathogens or their hosts.
-  accessed:
-    - year: 2024
-      month: 1
-      day: 12
-  author:
-    - family: Gilbert
-      given: Gregory S.
-    - family: Webb
-      given: Campbell O.
-  citation-key: gilbert2007
-  container-title: Proceedings of the National Academy of Sciences
-  container-title-short: Proc. Natl. Acad. Sci. U.S.A.
-  DOI: 10.1073/pnas.0607968104
-  ISSN: 0027-8424, 1091-6490
-  issue: '12'
-  issued:
-    - year: 2007
-      month: 3
-      day: 20
-  language: en
-  page: 4979-4983
-  source: DOI.org (Crossref)
-  title: Phylogenetic signal in plant pathogen–host range
-  type: article-journal
-  URL: https://pnas.org/doi/full/10.1073/pnas.0607968104
-  volume: '104'
-
-- id: decaceres2009
-  author:
-    - family: De Cáceres
-      given: Miquel
-    - family: Legendre
-      given: Pierre
-  citation-key: decaceres2009
-  container-title: Ecology
-  DOI: 10.1890/08-1823.1
-  issued:
-    - year: 2009
-  page: 3566-3574
-  title: >-
-    Associations between species and groups of sites: indices and statistical
-    inference
-  type: article-journal
-  volume: '90'
-
-- id: mejia2014
-  abstract: >-
-    It is increasingly recognized that macro-organisms (corals, insects, plants,
-    vertebrates) consist of both host tissues and multiple microbial symbionts
-    that play essential roles in their host's ecological and evolutionary
-    success. Consequently, identifying benefits and costs of symbioses, as well
-    as mechanisms underlying them are research priorities. All plants surveyed
-    under natural conditions harbor foliar endophytic fungi (FEF) in their leaf
-    tissues, often at high densities. Despite producing no visible effects on
-    their hosts, experiments have nonetheless shown that FEF reduce pathogen and
-    herbivore damage. Here, combining results from three genomic, and two
-    physiological experiments, we demonstrate pervasive genetic and phenotypic
-    effects of the apparently asymptomatic endophytes on their hosts.
-    Specifically, inoculation of endophyte-free (E-) Theobroma cacao leaves with
-    Colletotrichum tropicale (E+), the dominant FEF species in healthy T. cacao,
-    induces consistent changes in the expression of hundreds of host genes,
-    including many with known defensive functions. Further, E+ plants exhibited
-    increased lignin and cellulose content, reduced maximum rates of
-    photosynthesis (Amax), and enrichment of nitrogen-15 and carbon-13 isotopes.
-    These phenotypic changes observed in E+ plants correspond to changes in
-    expression of specific functional genes in related pathways. Moreover, a
-    cacao gene (Tc00g04254) highly up-regulated by C. tropicale also confers
-    resistance to pathogen damage in the absence of endophytes or their products
-    in host tissues. Thus, the benefits of increased pathogen resistance in E+
-    plants are derived in part from up-regulation of intrinsic host defense
-    responses, and appear to be offset by potential costs including reduced
-    photosynthesis, altered host nitrogen metabolism, and endophyte heterotrophy
-    of host tissues. Similar effects are likely in most plant-endophyte
-    interactions, and should be recognized in the design and interpretation of
-    genetic and phenotypic studies of plants.
-  author:
-    - family: Mejía
-      given: Luis C.
-    - family: Herre
-      given: Edward A.
-    - family: Sparks
-      given: Jed P.
-    - family: Winter
-      given: Klaus
-    - family: García
-      given: Milton N.
-    - family: Van Bael
-      given: Sunshine A.
-    - family: Stitt
-      given: Joseph
-    - family: Shi
-      given: Zi
-    - family: Zhang
-      given: Yufan
-    - family: Guiltinan
-      given: Mark J.
-    - family: Maximova
-      given: Siela N.
-  citation-key: mejia2014
-  container-title: Frontiers in Microbiology
-  DOI: 10.3389/fmicb.2014.00479
-  issue: SEP
-  issued:
-    - year: 2014
-  page: 1-16
-  title: >-
-    Pervasive effects of a dominant foliar endophytic fungus on host genetic and
-    phenotypic expression in a tropical tree
-  type: article-journal
-  volume: '5'
-
 - id: kitajima2012
   abstract: See also the Commentary by Onoda and Lusk
   accessed:
@@ -1401,30 +1463,195 @@ references:
   URL: https://nph.onlinelibrary.wiley.com/doi/10.1111/j.1469-8137.2012.04203.x
   volume: '195'
 
-- id: leigh1996
-  citation-key: leigh1996
-  edition: 2nd ed
-  editor:
-    - family: Leigh
-      given: Egbert Giles
-    - family: Rand
-      given: Austin Stanley
-    - family: Windsor
-      given: Donald M.
-    - family: Smithsonian Tropical Research Institute
-      given: ''
-  event-place: Washington, D.C
-  ISBN: 978-1-56098-642-3
+- id: porras-alfaro2011
+  abstract: >-
+    Endophytes are microorganisms that live within plant tissues without causing
+    symptoms of disease. They are important components of plant microbiomes.
+    Endophytes interact with, and overlap in function with, other core microbial
+    groups that colonize plant tissues, e.g., mycorrhizal fungi, pathogens,
+    epiphytes, and saprotrophs. Some fungal endophytes affect plant growth and
+    plant responses to pathogens, herbivores, and environmental change; others
+    produce useful or interesting secondary metabolites. Here, we focus on new
+    techniques and approaches that can provide an integrative understanding of
+    the role of fungal endophytes in the plant microbiome. Clavicipitaceous
+    endophytes of grasses are not considered because they have unique properties
+    distinct from other endophytes. Hidden from view and often overlooked,
+    endophytes are emerging as their diversity, importance for plant growth and
+    survival, and interactions with other organisms are revealed.
+  accessed:
+    - year: 2024
+      month: 1
+      day: 20
+  author:
+    - family: Porras-Alfaro
+      given: Andrea
+    - family: Bayman
+      given: Paul
+  citation-key: porras-alfaro2011
+  container-title: Annual Review of Phytopathology
+  container-title-short: Annu. Rev. Phytopathol.
+  DOI: 10.1146/annurev-phyto-080508-081831
+  ISSN: 0066-4286, 1545-2107
+  issue: '1'
   issued:
-    - year: 1996
-  language: eng
-  number-of-pages: '503'
-  publisher: Smithsonian Institution Press
-  publisher-place: Washington, D.C
-  source: K10plus ISBN
-  title: 'The ecology of a tropical forest: seasonal rhythms and long-term changes'
-  title-short: The ecology of a tropical forest
-  type: book
+    - year: 2011
+      month: 9
+      day: 8
+  language: en
+  page: 291-315
+  source: DOI.org (Crossref)
+  title: 'Hidden Fungi, Emergent Properties: Endophytes and Microbiomes'
+  title-short: Hidden Fungi, Emergent Properties
+  type: article-journal
+  URL: https://www.annualreviews.org/doi/10.1146/annurev-phyto-080508-081831
+  volume: '49'
+
+- id: arnold2007
+  abstract: >-
+    Drought strongly influences plant phenology, growth and mortality in
+    tropical forests, thereby shaping plant performance, population dynamics and
+    community structure (Bunker & Carson 2005, Condit
+                  et al.
+                  1995). Microbial symbionts of plants profoundly influence host water relations (Lösch & Gansert 2002), but are rarely considered in studies of tropical plant physiology. In particular, plant–fungus associations, which are ubiquitous in plant communities and especially common in tropical forests, play important and varied roles in plant water status. Fungal pathogens associated with roots, vascular tissue and foliage may interfere with water uptake and transport, increase rates of foliar transpiration, and induce xylem embolism and tissue death (Agrios 1997). In contrast, rhizosphere mutualists such as ecto- and arbuscular mycorrhizal fungi may benefit hosts by increasing surface area for water uptake, enhancing stomatal regulation of water loss, and increasing root hydraulic conductivity (Auge 2001, Lösch & Gansert 2002).
+  accessed:
+    - year: 2024
+      month: 1
+      day: 20
+  author:
+    - family: Arnold
+      given: A. Elizabeth
+    - family: Engelbrecht
+      given: Bettina M. J.
+  citation-key: arnold2007
+  container-title: Journal of Tropical Ecology
+  container-title-short: J. Trop. Ecol.
+  DOI: 10.1017/S0266467407004038
+  ISSN: 0266-4674, 1469-7831
+  issue: '3'
+  issued:
+    - year: 2007
+      month: 5
+  language: en
+  page: 369-372
+  source: DOI.org (Crossref)
+  title: >-
+    Fungal endophytes nearly double minimum leaf conductance in seedlings of a
+    neotropical tree species
+  type: article-journal
+  URL: >-
+    https://www.cambridge.org/core/product/identifier/S0266467407004038/type/journal_article
+  volume: '23'
+
+- id: friesen2011
+  abstract: >-
+    Plants are rife with bacteria and fungi that colonize roots and shoots both
+    externally and internally. By providing novel nutritional and defense
+    pathways and influencing plant biochemical pathways, microbes can
+    fundamentally alter plant phenotypes. Here we review the widespread nature
+    of microbially mediated plant functional traits. We highlight that there is
+    likely fitness conflict between hosts and symbionts and that fitness
+    outcomes can depend on partner genotypes and ecological factors. Microbes
+    may influence ecosystems through their effects on the functional trait
+    values and population dynamics of their plant hosts. These effects may feed
+    back on symbiont evolution by altering transmission rates of symbionts and
+    scale up to ecosystem processes and services. We end by proposing new
+    avenues of research in this emerging field.
+  accessed:
+    - year: 2024
+      month: 1
+      day: 20
+  author:
+    - family: Friesen
+      given: Maren L.
+    - family: Porter
+      given: Stephanie S.
+    - family: Stark
+      given: Scott C.
+    - family: Von Wettberg
+      given: Eric J.
+    - family: Sachs
+      given: Joel L.
+    - family: Martinez-Romero
+      given: Esperanza
+  citation-key: friesen2011
+  container-title: Annual Review of Ecology, Evolution, and Systematics
+  container-title-short: Annu. Rev. Ecol. Evol. Syst.
+  DOI: 10.1146/annurev-ecolsys-102710-145039
+  ISSN: 1543-592X, 1545-2069
+  issue: '1'
+  issued:
+    - year: 2011
+      month: 12
+      day: 1
+  language: en
+  page: 23-46
+  source: DOI.org (Crossref)
+  title: Microbially Mediated Plant Functional Traits
+  type: article-journal
+  URL: https://www.annualreviews.org/doi/10.1146/annurev-ecolsys-102710-145039
+  volume: '42'
+
+- id: leakey2012
+  abstract: |-
+    Variation in atmospheric [CO
+                  2
+                  ] is a prominent feature of the environmental history over which vascular plants have evolved. Periods of falling and low [CO
+                  2
+                  ] in the palaeo-record appear to have created selective pressure for important adaptations in modern plants. Today, rising [CO
+                  2
+                  ] is a key component of anthropogenic global environmental change that will impact plants and the ecosystem goods and services they deliver. Currently, there is limited evidence that natural plant populations have evolved in response to contemporary increases in [CO
+                  2
+                  ] in ways that increase plant productivity or fitness, and no evidence for incidental breeding of crop varieties to achieve greater yield enhancement from rising [CO
+                  2
+                  ]. Evolutionary responses to elevated [CO
+                  2
+                  ] have been studied by applying selection in controlled environments, quantitative genetics and trait-based approaches. Findings to date suggest that adaptive changes in plant traits in response to future [CO
+                  2
+                  ] will not be consistently observed across species or environments and will not be large in magnitude compared with physiological and ecological responses to future [CO
+                  2
+                  ]. This lack of evidence for strong evolutionary effects of elevated [CO
+                  2
+                  ] is surprising, given the large effects of elevated [CO
+                  2
+                  ] on plant phenotypes. New studies under more stressful, complex environmental conditions associated with climate change may revise this view. Efforts are underway to engineer plants to: (i) overcome the limitations to photosynthesis from today's [CO
+                  2
+                  ] and (ii) benefit maximally from future, greater [CO
+                  2
+                  ]. Targets range in scale from manipulating the function of a single enzyme (e.g. Rubisco) to adding metabolic pathways from bacteria as well as engineering the structural and functional components necessary for C
+                  4
+                  photosynthesis into C
+                  3
+                  leaves. Successfully improving plant performance will depend on combining the knowledge of the evolutionary context, cellular basis and physiological integration of plant responses to varying [CO
+                  2
+                  ].
+  accessed:
+    - year: 2024
+      month: 1
+      day: 20
+  author:
+    - family: Leakey
+      given: Andrew D. B.
+    - family: Lau
+      given: Jennifer A.
+  citation-key: leakey2012
+  container-title: 'Philosophical Transactions of the Royal Society B: Biological Sciences'
+  container-title-short: Phil. Trans. R. Soc. B
+  DOI: 10.1098/rstb.2011.0248
+  ISSN: 0962-8436, 1471-2970
+  issue: '1588'
+  issued:
+    - year: 2012
+      month: 2
+      day: 19
+  language: en
+  page: 613-629
+  source: DOI.org (Crossref)
+  title: >-
+    Evolutionary context for understanding and manipulating plant responses to
+    past, present and future atmospheric \[CO ~2~ ]
+  type: article-journal
+  URL: https://royalsocietypublishing.org/doi/10.1098/rstb.2011.0248
+  volume: '367'
 
 - id: feild2005
   abstract: |-
@@ -1540,195 +1767,88 @@ references:
   URL: https://nph.onlinelibrary.wiley.com/doi/10.1111/j.1469-8137.2005.01333.x
   volume: '166'
 
-- id: leakey2012
-  abstract: |-
-    Variation in atmospheric [CO
-                  2
-                  ] is a prominent feature of the environmental history over which vascular plants have evolved. Periods of falling and low [CO
-                  2
-                  ] in the palaeo-record appear to have created selective pressure for important adaptations in modern plants. Today, rising [CO
-                  2
-                  ] is a key component of anthropogenic global environmental change that will impact plants and the ecosystem goods and services they deliver. Currently, there is limited evidence that natural plant populations have evolved in response to contemporary increases in [CO
-                  2
-                  ] in ways that increase plant productivity or fitness, and no evidence for incidental breeding of crop varieties to achieve greater yield enhancement from rising [CO
-                  2
-                  ]. Evolutionary responses to elevated [CO
-                  2
-                  ] have been studied by applying selection in controlled environments, quantitative genetics and trait-based approaches. Findings to date suggest that adaptive changes in plant traits in response to future [CO
-                  2
-                  ] will not be consistently observed across species or environments and will not be large in magnitude compared with physiological and ecological responses to future [CO
-                  2
-                  ]. This lack of evidence for strong evolutionary effects of elevated [CO
-                  2
-                  ] is surprising, given the large effects of elevated [CO
-                  2
-                  ] on plant phenotypes. New studies under more stressful, complex environmental conditions associated with climate change may revise this view. Efforts are underway to engineer plants to: (i) overcome the limitations to photosynthesis from today's [CO
-                  2
-                  ] and (ii) benefit maximally from future, greater [CO
-                  2
-                  ]. Targets range in scale from manipulating the function of a single enzyme (e.g. Rubisco) to adding metabolic pathways from bacteria as well as engineering the structural and functional components necessary for C
-                  4
-                  photosynthesis into C
-                  3
-                  leaves. Successfully improving plant performance will depend on combining the knowledge of the evolutionary context, cellular basis and physiological integration of plant responses to varying [CO
-                  2
-                  ].
-  accessed:
-    - year: 2024
-      month: 1
-      day: 20
-  author:
-    - family: Leakey
-      given: Andrew D. B.
-    - family: Lau
-      given: Jennifer A.
-  citation-key: leakey2012
-  container-title: 'Philosophical Transactions of the Royal Society B: Biological Sciences'
-  container-title-short: Phil. Trans. R. Soc. B
-  DOI: 10.1098/rstb.2011.0248
-  ISSN: 0962-8436, 1471-2970
-  issue: '1588'
+- id: leigh1996
+  citation-key: leigh1996
+  edition: 2nd ed
+  editor:
+    - family: Leigh
+      given: Egbert Giles
+    - family: Rand
+      given: Austin Stanley
+    - family: Windsor
+      given: Donald M.
+    - family: Smithsonian Tropical Research Institute
+      given: ''
+  event-place: Washington, D.C
+  ISBN: 978-1-56098-642-3
   issued:
-    - year: 2012
-      month: 2
-      day: 19
-  language: en
-  page: 613-629
-  source: DOI.org (Crossref)
-  title: >-
-    Evolutionary context for understanding and manipulating plant responses to
-    past, present and future atmospheric \[CO ~2~ ]
-  type: article-journal
-  URL: https://royalsocietypublishing.org/doi/10.1098/rstb.2011.0248
-  volume: '367'
+    - year: 1996
+  language: eng
+  number-of-pages: '503'
+  publisher: Smithsonian Institution Press
+  publisher-place: Washington, D.C
+  source: K10plus ISBN
+  title: 'The ecology of a tropical forest: seasonal rhythms and long-term changes'
+  title-short: The ecology of a tropical forest
+  type: book
 
-- id: friesen2011
-  abstract: >-
-    Plants are rife with bacteria and fungi that colonize roots and shoots both
-    externally and internally. By providing novel nutritional and defense
-    pathways and influencing plant biochemical pathways, microbes can
-    fundamentally alter plant phenotypes. Here we review the widespread nature
-    of microbially mediated plant functional traits. We highlight that there is
-    likely fitness conflict between hosts and symbionts and that fitness
-    outcomes can depend on partner genotypes and ecological factors. Microbes
-    may influence ecosystems through their effects on the functional trait
-    values and population dynamics of their plant hosts. These effects may feed
-    back on symbiont evolution by altering transmission rates of symbionts and
-    scale up to ecosystem processes and services. We end by proposing new
-    avenues of research in this emerging field.
+- id: bittleston2016
   accessed:
     - year: 2024
       month: 1
-      day: 20
+      day: 27
   author:
-    - family: Friesen
-      given: Maren L.
-    - family: Porter
-      given: Stephanie S.
-    - family: Stark
-      given: Scott C.
-    - family: Von Wettberg
-      given: Eric J.
-    - family: Sachs
-      given: Joel L.
-    - family: Martinez-Romero
-      given: Esperanza
-  citation-key: friesen2011
-  container-title: Annual Review of Ecology, Evolution, and Systematics
-  container-title-short: Annu. Rev. Ecol. Evol. Syst.
-  DOI: 10.1146/annurev-ecolsys-102710-145039
-  ISSN: 1543-592X, 1545-2069
-  issue: '1'
+    - family: Bittleston
+      given: Leonora S.
+    - family: Pierce
+      given: Naomi E.
+    - family: Ellison
+      given: Aaron M.
+    - family: Pringle
+      given: Anne
+  citation-key: bittleston2016
+  container-title: Trends in Ecology & Evolution
+  container-title-short: Trends in Ecology & Evolution
+  DOI: 10.1016/j.tree.2016.01.006
+  ISSN: '01695347'
+  issue: '4'
   issued:
-    - year: 2011
-      month: 12
+    - year: 2016
+      month: 4
+  language: en
+  page: 269-280
+  source: DOI.org (Crossref)
+  title: Convergence in Multispecies Interactions
+  type: article-journal
+  URL: https://linkinghub.elsevier.com/retrieve/pii/S0169534716000203
+  volume: '31'
+
+- id: gonzalez-teuber2016
+  abstract: |-
+    Abstract
+                Fungal endophytes colonize living internal plant tissues without causing any visible symptoms of disease. Endophytic fungi associated with healthy leaves may play an important role in the protection of hosts against herbivores and pathogens. In this study, the diversity of foliar endophytic fungi (FEF) of the southern temperate tree Embothrium coccineum (Proteaceae), as well as their role in plant protection in nature was determined. Fungal endophytes were isolated from 40 asymptomatic leaves by the culture method for molecular identification of the 18S rRNA gene. A relationship between FEF frequency and plant protection was evaluated in juveniles of E. coccineum . Fungal endophyte frequency was estimated using real-time PCR analyses to determine endophyte DNA content per plant. A total of 178 fungal isolates were identified, with sequence data revealing 34 different operational taxonomic units (OTUs). A few common taxa dominated the fungal endophyte community, whereas most taxa qualified as rare. A significant positive correlation between plant protection (evaluated in terms of percentage of leaf damage) and FEF frequency was found. Furthermore, in vitro confrontation assays indicated that FEF were able to inhibit the growth of fungal pathogens. The data showed a relatively high diversity of fungal endophytes associated with leaves of E. coccineum , and suggest a positive relationship between fungal endophyte frequencies in leaves and host protection in nature.
+  accessed:
+    - year: 2024
+      month: 1
+      day: 27
+  author:
+    - family: González-Teuber
+      given: Marcia
+  citation-key: gonzalez-teuber2016
+  container-title: AoB PLANTS
+  DOI: 10.1093/aobpla/plw050
+  ISSN: 2041-2851
+  issued:
+    - year: 2016
+      month: 1
       day: 1
   language: en
-  page: 23-46
+  page: plw050
   source: DOI.org (Crossref)
-  title: Microbially Mediated Plant Functional Traits
+  title: The defensive role of foliar endophytic fungi for a South American tree
   type: article-journal
-  URL: https://www.annualreviews.org/doi/10.1146/annurev-ecolsys-102710-145039
-  volume: '42'
-
-- id: arnold2007
-  abstract: >-
-    Drought strongly influences plant phenology, growth and mortality in
-    tropical forests, thereby shaping plant performance, population dynamics and
-    community structure (Bunker & Carson 2005, Condit
-                  et al.
-                  1995). Microbial symbionts of plants profoundly influence host water relations (Lösch & Gansert 2002), but are rarely considered in studies of tropical plant physiology. In particular, plant–fungus associations, which are ubiquitous in plant communities and especially common in tropical forests, play important and varied roles in plant water status. Fungal pathogens associated with roots, vascular tissue and foliage may interfere with water uptake and transport, increase rates of foliar transpiration, and induce xylem embolism and tissue death (Agrios 1997). In contrast, rhizosphere mutualists such as ecto- and arbuscular mycorrhizal fungi may benefit hosts by increasing surface area for water uptake, enhancing stomatal regulation of water loss, and increasing root hydraulic conductivity (Auge 2001, Lösch & Gansert 2002).
-  accessed:
-    - year: 2024
-      month: 1
-      day: 20
-  author:
-    - family: Arnold
-      given: A. Elizabeth
-    - family: Engelbrecht
-      given: Bettina M. J.
-  citation-key: arnold2007
-  container-title: Journal of Tropical Ecology
-  container-title-short: J. Trop. Ecol.
-  DOI: 10.1017/S0266467407004038
-  ISSN: 0266-4674, 1469-7831
-  issue: '3'
-  issued:
-    - year: 2007
-      month: 5
-  language: en
-  page: 369-372
-  source: DOI.org (Crossref)
-  title: >-
-    Fungal endophytes nearly double minimum leaf conductance in seedlings of a
-    neotropical tree species
-  type: article-journal
-  URL: >-
-    https://www.cambridge.org/core/product/identifier/S0266467407004038/type/journal_article
-  volume: '23'
-
-- id: porras-alfaro2011
-  abstract: >-
-    Endophytes are microorganisms that live within plant tissues without causing
-    symptoms of disease. They are important components of plant microbiomes.
-    Endophytes interact with, and overlap in function with, other core microbial
-    groups that colonize plant tissues, e.g., mycorrhizal fungi, pathogens,
-    epiphytes, and saprotrophs. Some fungal endophytes affect plant growth and
-    plant responses to pathogens, herbivores, and environmental change; others
-    produce useful or interesting secondary metabolites. Here, we focus on new
-    techniques and approaches that can provide an integrative understanding of
-    the role of fungal endophytes in the plant microbiome. Clavicipitaceous
-    endophytes of grasses are not considered because they have unique properties
-    distinct from other endophytes. Hidden from view and often overlooked,
-    endophytes are emerging as their diversity, importance for plant growth and
-    survival, and interactions with other organisms are revealed.
-  accessed:
-    - year: 2024
-      month: 1
-      day: 20
-  author:
-    - family: Porras-Alfaro
-      given: Andrea
-    - family: Bayman
-      given: Paul
-  citation-key: porras-alfaro2011
-  container-title: Annual Review of Phytopathology
-  container-title-short: Annu. Rev. Phytopathol.
-  DOI: 10.1146/annurev-phyto-080508-081831
-  ISSN: 0066-4286, 1545-2107
-  issue: '1'
-  issued:
-    - year: 2011
-      month: 9
-      day: 8
-  language: en
-  page: 291-315
-  source: DOI.org (Crossref)
-  title: 'Hidden Fungi, Emergent Properties: Endophytes and Microbiomes'
-  title-short: Hidden Fungi, Emergent Properties
-  type: article-journal
-  URL: https://www.annualreviews.org/doi/10.1146/annurev-phyto-080508-081831
-  volume: '49'
+  URL: https://academic.oup.com/aobpla/article/doi/10.1093/aobpla/plw050/2609609
+  volume: '8'
 
 - id: dalling2020
   abstract: >-
@@ -1779,211 +1899,38 @@ references:
   URL: https://www.annualreviews.org/doi/10.1146/annurev-ecolsys-012120-115156
   volume: '51'
 
-- id: gonzalez-teuber2016
-  abstract: |-
-    Abstract
-                Fungal endophytes colonize living internal plant tissues without causing any visible symptoms of disease. Endophytic fungi associated with healthy leaves may play an important role in the protection of hosts against herbivores and pathogens. In this study, the diversity of foliar endophytic fungi (FEF) of the southern temperate tree Embothrium coccineum (Proteaceae), as well as their role in plant protection in nature was determined. Fungal endophytes were isolated from 40 asymptomatic leaves by the culture method for molecular identification of the 18S rRNA gene. A relationship between FEF frequency and plant protection was evaluated in juveniles of E. coccineum . Fungal endophyte frequency was estimated using real-time PCR analyses to determine endophyte DNA content per plant. A total of 178 fungal isolates were identified, with sequence data revealing 34 different operational taxonomic units (OTUs). A few common taxa dominated the fungal endophyte community, whereas most taxa qualified as rare. A significant positive correlation between plant protection (evaluated in terms of percentage of leaf damage) and FEF frequency was found. Furthermore, in vitro confrontation assays indicated that FEF were able to inhibit the growth of fungal pathogens. The data showed a relatively high diversity of fungal endophytes associated with leaves of E. coccineum , and suggest a positive relationship between fungal endophyte frequencies in leaves and host protection in nature.
-  accessed:
-    - year: 2024
-      month: 1
-      day: 27
-  author:
-    - family: González-Teuber
-      given: Marcia
-  citation-key: gonzalez-teuber2016
-  container-title: AoB PLANTS
-  DOI: 10.1093/aobpla/plw050
-  ISSN: 2041-2851
-  issued:
-    - year: 2016
-      month: 1
-      day: 1
-  language: en
-  page: plw050
-  source: DOI.org (Crossref)
-  title: The defensive role of foliar endophytic fungi for a South American tree
-  type: article-journal
-  URL: https://academic.oup.com/aobpla/article/doi/10.1093/aobpla/plw050/2609609
-  volume: '8'
-
-- id: bittleston2016
-  accessed:
-    - year: 2024
-      month: 1
-      day: 27
-  author:
-    - family: Bittleston
-      given: Leonora S.
-    - family: Pierce
-      given: Naomi E.
-    - family: Ellison
-      given: Aaron M.
-    - family: Pringle
-      given: Anne
-  citation-key: bittleston2016
-  container-title: Trends in Ecology & Evolution
-  container-title-short: Trends in Ecology & Evolution
-  DOI: 10.1016/j.tree.2016.01.006
-  ISSN: '01695347'
-  issue: '4'
-  issued:
-    - year: 2016
-      month: 4
-  language: en
-  page: 269-280
-  source: DOI.org (Crossref)
-  title: Convergence in Multispecies Interactions
-  type: article-journal
-  URL: https://linkinghub.elsevier.com/retrieve/pii/S0169534716000203
-  volume: '31'
-
-- id: rocha2017
-  abstract: |-
-    Interactions between leaf-cutting ants, their fungal symbiont (
-                  Leucoagaricus
-                  ) and the endophytic fungi within the vegetation they carry into their colonies are still poorly understood. If endophytes antagonistic to
-                  Leucoagaricus
-                  were found in plant material being carried by these ants, then this might indicate a potential mechanism for plants to defend themselves from leaf-cutter attack. In addition, it could offer possibilities for the management of these important Neotropical pests. Here, we show that, for
-                  Atta sexdens rubropilosa
-                  , there was a significantly greater incidence of
-                  Trichoderma
-                  species in the vegetation removed from the nests—and deposited around the entrances—than in that being transported into the nests. In a no-choice test,
-                  Trichoderma-
-                  infested rice was taken into the nest, with deleterious effects on both the fungal gardens and ant survival. The endophytic ability of selected strains of
-                  Trichoderma
-                  was also confirmed, following their inoculation and subsequent reisolation from seedlings of eucalyptus. These results indicate that endophytic fungi which pose a threat to ant fungal gardens through their antagonistic traits, such as
-                  Trichoderma
-                  , have the potential to act as bodyguards of their plant hosts and thus might be employed in a Trojan-horse strategy to mitigate the negative impact of leaf-cutting ants in both agriculture and silviculture in the Neotropics. We posit that the ants would detect and evict such ‘malign’ endophytes—artificially inoculated into vulnerable crops—during the quality-control process within the nest, and, moreover, that the foraging ants may then be deterred from further harvesting of ‘
-                  Trichoderma
-                  -enriched’ plants.
-  accessed:
-    - year: 2024
-      month: 1
-      day: 30
-  author:
-    - family: Rocha
-      given: Silma L.
-    - family: Evans
-      given: Harry C.
-    - family: Jorge
-      given: Vanessa L.
-    - family: Cardoso
-      given: Lucimar A. O.
-    - family: Pereira
-      given: Fernanda S. T.
-    - family: Rocha
-      given: Fabiano B.
-    - family: Barreto
-      given: Robert W.
-    - family: Hart
-      given: Adam G.
-    - family: Elliot
-      given: Simon L.
-  citation-key: rocha2017
-  container-title: Royal Society Open Science
-  container-title-short: R. Soc. open sci.
-  DOI: 10.1098/rsos.160628
-  ISSN: 2054-5703
-  issue: '4'
-  issued:
-    - year: 2017
-      month: 4
-  language: en
-  page: '160628'
-  source: DOI.org (Crossref)
-  title: >-
-    Recognition of endophytic *Trichoderma* species by leaf-cutting ants and
-    their potential in a Trojan-horse management strategy
-  type: article-journal
-  URL: https://royalsocietypublishing.org/doi/10.1098/rsos.160628
-  volume: '4'
-
-- id: saunders2010
-  abstract: |-
-    Abstract
-                All plants, including crop species, harbor a community of fungal endophyte species, yet we know little about the biotic factors that are important in endophyte community assembly. We suggest that the most direct route to understanding the mechanisms underlying community assembly is through the study of functional trait variation in the host and its fungal consortium. We review studies on crop endophytes that investigate plant and fungal traits likely to be important in endophyte community processes. We focus on approaches that could speed detection of general trends in endophyte community assembly: (i) use of the ‘assembly rules’ concept to identify specific mechanisms that influence endophyte community dynamics, (ii) measurement of functional trait variation in plants and fungi to better understand endophyte community processes and plant–fungal interactions, and (iii) investigation of microbe–microbe interactions, and fungal traits that mediate them. This approach is well suited for research in agricultural systems, where pair‐wise host–fungus interactions and mechanisms of fungal–fungal competition have frequently been described. Areas for consideration include the possibility that human manipulation of crop phenotype and deployment of fungal biocontrol species can significantly influence endophyte community assembly. Evaluation of endophyte assembly rules may help to fine‐tune crop management strategies.
+- id: niklas2023
   accessed:
     - year: 2024
       month: 1
       day: 31
   author:
-    - family: Saunders
-      given: Megan
-    - family: Glenn
-      given: Anthony E.
-    - family: Kohn
-      given: Linda M.
-  citation-key: saunders2010
-  container-title: Evolutionary Applications
-  container-title-short: Evolutionary Applications
-  DOI: 10.1111/j.1752-4571.2010.00141.x
-  ISSN: 1752-4571, 1752-4571
-  issue: 5-6
+    - family: Niklas
+      given: Karl J.
+    - family: Shi
+      given: Peijian
+    - family: Gielis
+      given: Johan
+    - family: Schrader
+      given: Julian
+    - family: Niinemets
+      given: Ülo
+  citation-key: niklas2023
+  container-title: Frontiers in Plant Science
+  container-title-short: Front. Plant Sci.
+  DOI: 10.3389/fpls.2023.1169558
+  ISSN: 1664-462X
   issued:
-    - year: 2010
-      month: 9
-  language: en
-  page: 525-537
+    - year: 2023
+      month: 3
+      day: 21
+  page: '1169558'
   source: DOI.org (Crossref)
-  title: >-
-    Exploring the evolutionary ecology of fungal endophytes in agricultural
-    systems: using functional traits to reveal mechanisms in community processes
-  title-short: >-
-    Exploring the evolutionary ecology of fungal endophytes in agricultural
-    systems
+  title: 'Editorial: Leaf functional traits: Ecological and evolutionary implications'
+  title-short: Editorial
   type: article-journal
-  URL: https://onlinelibrary.wiley.com/doi/10.1111/j.1752-4571.2010.00141.x
-  volume: '3'
-
-- id: anderson2010
-  abstract: >-
-    The analysis of plant–pathogen interactions is a rapidly moving research
-    field and one that is very important for productive agricultural systems.
-    The focus of this review is on the evolution of plant defence responses and
-    the coevolution of their pathogens, primarily from a molecular-genetic
-    perspective. It explores the evolution of the major types of plant defence
-    responses including pathogen associated molecular patterns and effector
-    triggered immunity as well as the forces driving pathogen evolution, such as
-    the mechanisms by which pathogen lineages and species evolve. Advances in
-    our understanding of plant defence signalling, stomatal regulation, R
-    gene–effector interactions and host specific toxins are used to highlight
-    recent insights into the coevolutionary arms race between pathogens and
-    plants. Finally, the review considers the intriguing question of how plants
-    have evolved the ability to distinguish friends such as rhizobia and
-    mycorrhiza from their many foes.
-  accessed:
-    - year: 2024
-      month: 1
-      day: 31
-  author:
-    - family: Anderson
-      given: Jonathan P.
-    - family: Gleason
-      given: Cynthia A.
-    - family: Foley
-      given: Rhonda C.
-    - family: Thrall
-      given: Peter H.
-    - family: Burdon
-      given: Jeremy B.
-    - family: Singh
-      given: Karam B.
-  citation-key: anderson2010
-  container-title: Functional Plant Biology
-  container-title-short: Functional Plant Biol.
-  DOI: 10.1071/FP09304
-  ISSN: 1445-4408
-  issue: '6'
-  issued:
-    - year: 2010
-  language: en
-  page: '499'
-  source: DOI.org (Crossref)
-  title: 'Plants versus pathogens: an evolutionary arms race'
-  title-short: Plants versus pathogens
-  type: article-journal
-  URL: http://www.publish.csiro.au/?paper=FP09304
-  volume: '37'
+  URL: https://www.frontiersin.org/articles/10.3389/fpls.2023.1169558/full
+  volume: '14'
 
 - id: gagliardi2023
   abstract: >-
@@ -2039,38 +1986,92 @@ references:
   URL: https://dx.plos.org/10.1371/journal.pone.0284203
   volume: '18'
 
-- id: niklas2023
+- id: anderson2010
+  abstract: >-
+    The analysis of plant–pathogen interactions is a rapidly moving research
+    field and one that is very important for productive agricultural systems.
+    The focus of this review is on the evolution of plant defence responses and
+    the coevolution of their pathogens, primarily from a molecular-genetic
+    perspective. It explores the evolution of the major types of plant defence
+    responses including pathogen associated molecular patterns and effector
+    triggered immunity as well as the forces driving pathogen evolution, such as
+    the mechanisms by which pathogen lineages and species evolve. Advances in
+    our understanding of plant defence signalling, stomatal regulation, R
+    gene–effector interactions and host specific toxins are used to highlight
+    recent insights into the coevolutionary arms race between pathogens and
+    plants. Finally, the review considers the intriguing question of how plants
+    have evolved the ability to distinguish friends such as rhizobia and
+    mycorrhiza from their many foes.
   accessed:
     - year: 2024
       month: 1
       day: 31
   author:
-    - family: Niklas
-      given: Karl J.
-    - family: Shi
-      given: Peijian
-    - family: Gielis
-      given: Johan
-    - family: Schrader
-      given: Julian
-    - family: Niinemets
-      given: Ülo
-  citation-key: niklas2023
-  container-title: Frontiers in Plant Science
-  container-title-short: Front. Plant Sci.
-  DOI: 10.3389/fpls.2023.1169558
-  ISSN: 1664-462X
+    - family: Anderson
+      given: Jonathan P.
+    - family: Gleason
+      given: Cynthia A.
+    - family: Foley
+      given: Rhonda C.
+    - family: Thrall
+      given: Peter H.
+    - family: Burdon
+      given: Jeremy B.
+    - family: Singh
+      given: Karam B.
+  citation-key: anderson2010
+  container-title: Functional Plant Biology
+  container-title-short: Functional Plant Biol.
+  DOI: 10.1071/FP09304
+  ISSN: 1445-4408
+  issue: '6'
   issued:
-    - year: 2023
-      month: 3
-      day: 21
-  page: '1169558'
+    - year: 2010
+  language: en
+  page: '499'
   source: DOI.org (Crossref)
-  title: 'Editorial: Leaf functional traits: Ecological and evolutionary implications'
-  title-short: Editorial
+  title: 'Plants versus pathogens: an evolutionary arms race'
+  title-short: Plants versus pathogens
   type: article-journal
-  URL: https://www.frontiersin.org/articles/10.3389/fpls.2023.1169558/full
-  volume: '14'
+  URL: http://www.publish.csiro.au/?paper=FP09304
+  volume: '37'
+
+- id: saunders2010
+  abstract: |-
+    Abstract
+                All plants, including crop species, harbor a community of fungal endophyte species, yet we know little about the biotic factors that are important in endophyte community assembly. We suggest that the most direct route to understanding the mechanisms underlying community assembly is through the study of functional trait variation in the host and its fungal consortium. We review studies on crop endophytes that investigate plant and fungal traits likely to be important in endophyte community processes. We focus on approaches that could speed detection of general trends in endophyte community assembly: (i) use of the ‘assembly rules’ concept to identify specific mechanisms that influence endophyte community dynamics, (ii) measurement of functional trait variation in plants and fungi to better understand endophyte community processes and plant–fungal interactions, and (iii) investigation of microbe–microbe interactions, and fungal traits that mediate them. This approach is well suited for research in agricultural systems, where pair‐wise host–fungus interactions and mechanisms of fungal–fungal competition have frequently been described. Areas for consideration include the possibility that human manipulation of crop phenotype and deployment of fungal biocontrol species can significantly influence endophyte community assembly. Evaluation of endophyte assembly rules may help to fine‐tune crop management strategies.
+  accessed:
+    - year: 2024
+      month: 1
+      day: 31
+  author:
+    - family: Saunders
+      given: Megan
+    - family: Glenn
+      given: Anthony E.
+    - family: Kohn
+      given: Linda M.
+  citation-key: saunders2010
+  container-title: Evolutionary Applications
+  container-title-short: Evolutionary Applications
+  DOI: 10.1111/j.1752-4571.2010.00141.x
+  ISSN: 1752-4571, 1752-4571
+  issue: 5-6
+  issued:
+    - year: 2010
+      month: 9
+  language: en
+  page: 525-537
+  source: DOI.org (Crossref)
+  title: >-
+    Exploring the evolutionary ecology of fungal endophytes in agricultural
+    systems: using functional traits to reveal mechanisms in community processes
+  title-short: >-
+    Exploring the evolutionary ecology of fungal endophytes in agricultural
+    systems
+  type: article-journal
+  URL: https://onlinelibrary.wiley.com/doi/10.1111/j.1752-4571.2010.00141.x
+  volume: '3'
 
 - id: gange2012
   accessed:
@@ -2788,35 +2789,6 @@ references:
   title: 96 well DNA Extraction Protocol for Plant and Lichen Tissue Stored in CTAB
   type: article-journal
 
-- id: stevene.lindow2003
-  abstract: >-
-    The above-ground parts of plants are normally colonized by a variety of
-    bacteria, yeasts, and fungi. While a few microbial species can be isolated
-    from within plant tissues, many more are recovered from the surfaces of
-    healthy plants. The aerial habitat colonized by these microbes is termed the
-  author:
-    - literal: Steven E. Lindow
-    - family: Lindow
-      given: Steven E.
-    - literal: Maria T. Brandl
-    - family: Brandl
-      given: Maria T.
-  citation-key: stevene.lindow2003
-  container-title: Applied and Environmental Microbiology
-  DOI: 10.1128/aem.69.4.1875-1883.2003
-  issue: '4'
-  issued:
-    - year: 2003
-      month: 4
-      day: 1
-  note: 'MAG ID: 2147739650'
-  page: 1875-1883
-  PMCID: '154815'
-  PMID: '12676659'
-  title: Microbiology of the Phyllosphere
-  type: article-journal
-  volume: '69'
-
 - id: stevenw.kembel2014
   abstract: >-
     The aerial surface of plants, known as the phyllosphere, represents a
@@ -2856,6 +2828,35 @@ references:
     fungal communities1
   type: article-journal
   volume: '92'
+
+- id: stevene.lindow2003
+  abstract: >-
+    The above-ground parts of plants are normally colonized by a variety of
+    bacteria, yeasts, and fungi. While a few microbial species can be isolated
+    from within plant tissues, many more are recovered from the surfaces of
+    healthy plants. The aerial habitat colonized by these microbes is termed the
+  author:
+    - literal: Steven E. Lindow
+    - family: Lindow
+      given: Steven E.
+    - literal: Maria T. Brandl
+    - family: Brandl
+      given: Maria T.
+  citation-key: stevene.lindow2003
+  container-title: Applied and Environmental Microbiology
+  DOI: 10.1128/aem.69.4.1875-1883.2003
+  issue: '4'
+  issued:
+    - year: 2003
+      month: 4
+      day: 1
+  note: 'MAG ID: 2147739650'
+  page: 1875-1883
+  PMCID: '154815'
+  PMID: '12676659'
+  title: Microbiology of the Phyllosphere
+  type: article-journal
+  volume: '69'
 
 - id: gonzalez-teuber2021
   abstract: |-
@@ -4101,4 +4102,1038 @@ references:
   type: article-journal
   URL: https://mycokeys.pensoft.net/article/84896/
   volume: '91'
+
+- id: revell2010
+  accessed:
+    - year: 2024
+      month: 8
+      day: 19
+  author:
+    - family: Revell
+      given: Liam J.
+  citation-key: revell2010
+  container-title: Methods in Ecology and Evolution
+  DOI: 10.1111/j.2041-210X.2010.00044.x
+  ISSN: 2041210X
+  issue: '4'
+  issued:
+    - year: 2010
+      month: 12
+  language: en
+  license: http://doi.wiley.com/10.1002/tdm_license_1.1
+  page: 319-329
+  source: DOI.org (Crossref)
+  title: >-
+    Phylogenetic signal and linear regression on species data: *Phylogenetic
+    regression*
+  title-short: Phylogenetic signal and linear regression on species data
+  type: article-journal
+  URL: https://onlinelibrary.wiley.com/doi/10.1111/j.2041-210X.2010.00044.x
+  volume: '1'
+
+- id: xiao2018
+  accessed:
+    - year: 2024
+      month: 8
+      day: 20
+  author:
+    - family: Xiao
+      given: Jian
+    - family: Chen
+      given: Li
+    - family: Johnson
+      given: Stephen
+    - family: Yu
+      given: Yue
+    - family: Zhang
+      given: Xianyang
+    - family: Chen
+      given: Jun
+  citation-key: xiao2018
+  container-title: Frontiers in Microbiology
+  container-title-short: Front. Microbiol.
+  DOI: 10.3389/fmicb.2018.01391
+  ISSN: 1664-302X
+  issued:
+    - year: 2018
+      month: 6
+      day: 27
+  page: '1391'
+  source: DOI.org (Crossref)
+  title: >-
+    Predictive Modeling of Microbiome Data Using a Phylogeny-Regularized
+    Generalized Linear Mixed Model
+  type: article-journal
+  URL: https://www.frontiersin.org/article/10.3389/fmicb.2018.01391/full
+  volume: '9'
+
+- id: ives2018
+  author:
+    - family: Ives
+      given: Anthony R
+  citation-key: ives2018
+  issued:
+    - year: 2018
+  language: en
+  source: Zotero
+  title: 'Mixed and Phylogenetic Models: A Conceptual Introduction to Correlated Data'
+  type: article-journal
+  URL: https://leanpub. com/correlateddata
+
+- id: hadfield2010
+  accessed:
+    - year: 2024
+      month: 8
+      day: 20
+  author:
+    - family: Hadfield
+      given: Jarrod D.
+  citation-key: hadfield2010
+  container-title: Journal of Statistical Software
+  container-title-short: J. Stat. Soft.
+  DOI: 10.18637/jss.v033.i02
+  ISSN: 1548-7660
+  issue: '2'
+  issued:
+    - year: 2010
+  language: en
+  source: DOI.org (Crossref)
+  title: >-
+    MCMC Methods for Multi-Response Generalized Linear Mixed Models: The
+    **MCMCglmm** *R* Package
+  title-short: MCMC Methods for Multi-Response Generalized Linear Mixed Models
+  type: article-journal
+  URL: http://www.jstatsoft.org/v33/i02/
+  volume: '33'
+
+- id: zuntini2024
+  abstract: "Abstract\n            \n              Angiosperms are the cornerstone of most terrestrial ecosystems and human livelihoods\n              1,2\n              . A robust understanding of angiosperm evolution is required to explain their rise to ecological dominance. So far, the angiosperm tree of life has been determined primarily by means of analyses of the plastid genome\n              3,4\n              . Many studies have drawn on this foundational work, such as classification and first insights into angiosperm diversification since their Mesozoic origins\n              5–7\n              . However, the limited and biased sampling of both taxa and genomes undermines confidence in the tree and its implications. Here, we build the tree of life for almost 8,000 (about 60%) angiosperm genera using a standardized set of 353 nuclear genes\n              8\n              . This 15-fold increase in genus-level sampling relative to comparable nuclear studies\n              9\n              provides a critical test of earlier results and brings notable\_change to key groups, especially in rosids, while substantiating many previously predicted relationships. Scaling this tree to time using 200 fossils, we discovered that early angiosperm evolution was characterized by high gene tree conflict and explosive diversification, giving rise to more than 80% of extant angiosperm orders. Steady diversification ensued through the remaining Mesozoic Era until rates resurged in the Cenozoic Era, concurrent with decreasing global temperatures and tightly linked with gene tree conflict. Taken together, our extensive sampling combined with advanced phylogenomic methods shows the deep history and full complexity in the evolution of a megadiverse clade."
+  accessed:
+    - year: 2024
+      month: 8
+      day: 20
+  author:
+    - family: Zuntini
+      given: Alexandre R.
+    - family: Carruthers
+      given: Tom
+    - family: Maurin
+      given: Olivier
+    - family: Bailey
+      given: Paul C.
+    - family: Leempoel
+      given: Kevin
+    - family: Brewer
+      given: Grace E.
+    - family: Epitawalage
+      given: Niroshini
+    - family: Françoso
+      given: Elaine
+    - family: Gallego-Paramo
+      given: Berta
+    - family: McGinnie
+      given: Catherine
+    - family: Negrão
+      given: Raquel
+    - family: Roy
+      given: Shyamali R.
+    - family: Simpson
+      given: Lalita
+    - family: Toledo Romero
+      given: Eduardo
+    - family: Barber
+      given: Vanessa M. A.
+    - family: Botigué
+      given: Laura
+    - family: Clarkson
+      given: James J.
+    - family: Cowan
+      given: Robyn S.
+    - family: Dodsworth
+      given: Steven
+    - family: Johnson
+      given: Matthew G.
+    - family: Kim
+      given: Jan T.
+    - family: Pokorny
+      given: Lisa
+    - family: Wickett
+      given: Norman J.
+    - family: Antar
+      given: Guilherme M.
+    - family: DeBolt
+      given: Lucinda
+    - family: Gutierrez
+      given: Karime
+    - family: Hendriks
+      given: Kasper P.
+    - family: Hoewener
+      given: Alina
+    - family: Hu
+      given: Ai-Qun
+    - family: Joyce
+      given: Elizabeth M.
+    - family: Kikuchi
+      given: Izai A. B. S.
+    - family: Larridon
+      given: Isabel
+    - family: Larson
+      given: Drew A.
+    - family: De Lírio
+      given: Elton John
+    - family: Liu
+      given: Jing-Xia
+    - family: Malakasi
+      given: Panagiota
+    - family: Przelomska
+      given: Natalia A. S.
+    - family: Shah
+      given: Toral
+    - family: Viruel
+      given: Juan
+    - family: Allnutt
+      given: Theodore R.
+    - family: Ameka
+      given: Gabriel K.
+    - family: Andrew
+      given: Rose L.
+    - family: Appelhans
+      given: Marc S.
+    - family: Arista
+      given: Montserrat
+    - family: Ariza
+      given: María Jesús
+    - family: Arroyo
+      given: Juan
+    - family: Arthan
+      given: Watchara
+    - family: Bachelier
+      given: Julien B.
+    - family: Bailey
+      given: C. Donovan
+    - family: Barnes
+      given: Helen F.
+    - family: Barrett
+      given: Matthew D.
+    - family: Barrett
+      given: Russell L.
+    - family: Bayer
+      given: Randall J.
+    - family: Bayly
+      given: Michael J.
+    - family: Biffin
+      given: Ed
+    - family: Biggs
+      given: Nicky
+    - family: Birch
+      given: Joanne L.
+    - family: Bogarín
+      given: Diego
+    - family: Borosova
+      given: Renata
+    - family: Bowles
+      given: Alexander M. C.
+    - family: Boyce
+      given: Peter C.
+    - family: Bramley
+      given: Gemma L. C.
+    - family: Briggs
+      given: Marie
+    - family: Broadhurst
+      given: Linda
+    - family: Brown
+      given: Gillian K.
+    - family: Bruhl
+      given: Jeremy J.
+    - family: Bruneau
+      given: Anne
+    - family: Buerki
+      given: Sven
+    - family: Burns
+      given: Edie
+    - family: Byrne
+      given: Margaret
+    - family: Cable
+      given: Stuart
+    - family: Calladine
+      given: Ainsley
+    - family: Callmander
+      given: Martin W.
+    - family: Cano
+      given: Ángela
+    - family: Cantrill
+      given: David J.
+    - family: Cardinal-McTeague
+      given: Warren M.
+    - family: Carlsen
+      given: Mónica M.
+    - family: Carruthers
+      given: Abigail J. A.
+    - family: De Castro Mateo
+      given: Alejandra
+    - family: Chase
+      given: Mark W.
+    - family: Chatrou
+      given: Lars W.
+    - family: Cheek
+      given: Martin
+    - family: Chen
+      given: Shilin
+    - family: Christenhusz
+      given: Maarten J. M.
+    - family: Christin
+      given: Pascal-Antoine
+    - family: Clements
+      given: Mark A.
+    - family: Coffey
+      given: Skye C.
+    - family: Conran
+      given: John G.
+    - family: Cornejo
+      given: Xavier
+    - family: Couvreur
+      given: Thomas L. P.
+    - family: Cowie
+      given: Ian D.
+    - family: Csiba
+      given: Laszlo
+    - family: Darbyshire
+      given: Iain
+    - family: Davidse
+      given: Gerrit
+    - family: Davies
+      given: Nina M. J.
+    - family: Davis
+      given: Aaron P.
+    - family: Van Dijk
+      given: Kor-jent
+    - family: Downie
+      given: Stephen R.
+    - family: Duretto
+      given: Marco F.
+    - family: Duvall
+      given: Melvin R.
+    - family: Edwards
+      given: Sara L.
+    - family: Eggli
+      given: Urs
+    - family: Erkens
+      given: Roy H. J.
+    - family: Escudero
+      given: Marcial
+    - family: De La Estrella
+      given: Manuel
+    - family: Fabriani
+      given: Federico
+    - family: Fay
+      given: Michael F.
+    - family: Ferreira
+      given: Paola De L.
+    - family: Ficinski
+      given: Sarah Z.
+    - family: Fowler
+      given: Rachael M.
+    - family: Frisby
+      given: Sue
+    - family: Fu
+      given: Lin
+    - family: Fulcher
+      given: Tim
+    - family: Galbany-Casals
+      given: Mercè
+    - family: Gardner
+      given: Elliot M.
+    - family: German
+      given: Dmitry A.
+    - family: Giaretta
+      given: Augusto
+    - family: Gibernau
+      given: Marc
+    - family: Gillespie
+      given: Lynn J.
+    - family: González
+      given: Cynthia C.
+    - family: Goyder
+      given: David J.
+    - family: Graham
+      given: Sean W.
+    - family: Grall
+      given: Aurélie
+    - family: Green
+      given: Laura
+    - family: Gunn
+      given: Bee F.
+    - family: Gutiérrez
+      given: Diego G.
+    - family: Hackel
+      given: Jan
+    - family: Haevermans
+      given: Thomas
+    - family: Haigh
+      given: Anna
+    - family: Hall
+      given: Jocelyn C.
+    - family: Hall
+      given: Tony
+    - family: Harrison
+      given: Melissa J.
+    - family: Hatt
+      given: Sebastian A.
+    - family: Hidalgo
+      given: Oriane
+    - family: Hodkinson
+      given: Trevor R.
+    - family: Holmes
+      given: Gareth D.
+    - family: Hopkins
+      given: Helen C. F.
+    - family: Jackson
+      given: Christopher J.
+    - family: James
+      given: Shelley A.
+    - family: Jobson
+      given: Richard W.
+    - family: Kadereit
+      given: Gudrun
+    - family: Kahandawala
+      given: Imalka M.
+    - family: Kainulainen
+      given: Kent
+    - family: Kato
+      given: Masahiro
+    - family: Kellogg
+      given: Elizabeth A.
+    - family: King
+      given: Graham J.
+    - family: Klejevskaja
+      given: Beata
+    - family: Klitgaard
+      given: Bente B.
+    - family: Klopper
+      given: Ronell R.
+    - family: Knapp
+      given: Sandra
+    - family: Koch
+      given: Marcus A.
+    - family: Leebens-Mack
+      given: James H.
+    - family: Lens
+      given: Frederic
+    - family: Leon
+      given: Christine J.
+    - family: Léveillé-Bourret
+      given: Étienne
+    - family: Lewis
+      given: Gwilym P.
+    - family: Li
+      given: De-Zhu
+    - family: Li
+      given: Lan
+    - family: Liede-Schumann
+      given: Sigrid
+    - family: Livshultz
+      given: Tatyana
+    - family: Lorence
+      given: David
+    - family: Lu
+      given: Meng
+    - family: Lu-Irving
+      given: Patricia
+    - family: Luber
+      given: Jaquelini
+    - family: Lucas
+      given: Eve J.
+    - family: Luján
+      given: Manuel
+    - family: Lum
+      given: Mabel
+    - family: Macfarlane
+      given: Terry D.
+    - family: Magdalena
+      given: Carlos
+    - family: Mansano
+      given: Vidal F.
+    - family: Masters
+      given: Lizo E.
+    - family: Mayo
+      given: Simon J.
+    - family: McColl
+      given: Kristina
+    - family: McDonnell
+      given: Angela J.
+    - family: McDougall
+      given: Andrew E.
+    - family: McLay
+      given: Todd G. B.
+    - family: McPherson
+      given: Hannah
+    - family: Meneses
+      given: Rosa I.
+    - family: Merckx
+      given: Vincent S. F. T.
+    - family: Michelangeli
+      given: Fabián A.
+    - family: Mitchell
+      given: John D.
+    - family: Monro
+      given: Alexandre K.
+    - family: Moore
+      given: Michael J.
+    - family: Mueller
+      given: Taryn L.
+    - family: Mummenhoff
+      given: Klaus
+    - family: Munzinger
+      given: Jérôme
+    - family: Muriel
+      given: Priscilla
+    - family: Murphy
+      given: Daniel J.
+    - family: Nargar
+      given: Katharina
+    - family: Nauheimer
+      given: Lars
+    - family: Nge
+      given: Francis J.
+    - family: Nyffeler
+      given: Reto
+    - family: Orejuela
+      given: Andrés
+    - family: Ortiz
+      given: Edgardo M.
+    - family: Palazzesi
+      given: Luis
+    - family: Peixoto
+      given: Ariane Luna
+    - family: Pell
+      given: Susan K.
+    - family: Pellicer
+      given: Jaume
+    - family: Penneys
+      given: Darin S.
+    - family: Perez-Escobar
+      given: Oscar A.
+    - family: Persson
+      given: Claes
+    - family: Pignal
+      given: Marc
+    - family: Pillon
+      given: Yohan
+    - family: Pirani
+      given: José R.
+    - family: Plunkett
+      given: Gregory M.
+    - family: Powell
+      given: Robyn F.
+    - family: Prance
+      given: Ghillean T.
+    - family: Puglisi
+      given: Carmen
+    - family: Qin
+      given: Ming
+    - family: Rabeler
+      given: Richard K.
+    - family: Rees
+      given: Paul E. J.
+    - family: Renner
+      given: Matthew
+    - family: Roalson
+      given: Eric H.
+    - family: Rodda
+      given: Michele
+    - family: Rogers
+      given: Zachary S.
+    - family: Rokni
+      given: Saba
+    - family: Rutishauser
+      given: Rolf
+    - family: De Salas
+      given: Miguel F.
+    - family: Schaefer
+      given: Hanno
+    - family: Schley
+      given: Rowan J.
+    - family: Schmidt-Lebuhn
+      given: Alexander
+    - family: Shapcott
+      given: Alison
+    - family: Al-Shehbaz
+      given: Ihsan
+    - family: Shepherd
+      given: Kelly A.
+    - family: Simmons
+      given: Mark P.
+    - family: Simões
+      given: André O.
+    - family: Simões
+      given: Ana Rita G.
+    - family: Siros
+      given: Michelle
+    - family: Smidt
+      given: Eric C.
+    - family: Smith
+      given: James F.
+    - family: Snow
+      given: Neil
+    - family: Soltis
+      given: Douglas E.
+    - family: Soltis
+      given: Pamela S.
+    - family: Soreng
+      given: Robert J.
+    - family: Sothers
+      given: Cynthia A.
+    - family: Starr
+      given: Julian R.
+    - family: Stevens
+      given: Peter F.
+    - family: Straub
+      given: Shannon C. K.
+    - family: Struwe
+      given: Lena
+    - family: Taylor
+      given: Jennifer M.
+    - family: Telford
+      given: Ian R. H.
+    - family: Thornhill
+      given: Andrew H.
+    - family: Tooth
+      given: Ifeanna
+    - family: Trias-Blasi
+      given: Anna
+    - family: Udovicic
+      given: Frank
+    - family: Utteridge
+      given: Timothy M. A.
+    - family: Del Valle
+      given: Jose C.
+    - family: Verboom
+      given: G. Anthony
+    - family: Vonow
+      given: Helen P.
+    - family: Vorontsova
+      given: Maria S.
+    - family: De Vos
+      given: Jurriaan M.
+    - family: Al-Wattar
+      given: Noor
+    - family: Waycott
+      given: Michelle
+    - family: Welker
+      given: Cassiano A. D.
+    - family: White
+      given: Adam J.
+    - family: Wieringa
+      given: Jan J.
+    - family: Williamson
+      given: Luis T.
+    - family: Wilson
+      given: Trevor C.
+    - family: Wong
+      given: Sin Yeng
+    - family: Woods
+      given: Lisa A.
+    - family: Woods
+      given: Roseina
+    - family: Worboys
+      given: Stuart
+    - family: Xanthos
+      given: Martin
+    - family: Yang
+      given: Ya
+    - family: Zhang
+      given: Yu-Xiao
+    - family: Zhou
+      given: Meng-Yuan
+    - family: Zmarzty
+      given: Sue
+    - family: Zuloaga
+      given: Fernando O.
+    - family: Antonelli
+      given: Alexandre
+    - family: Bellot
+      given: Sidonie
+    - family: Crayn
+      given: Darren M.
+    - family: Grace
+      given: Olwen M.
+    - family: Kersey
+      given: Paul J.
+    - family: Leitch
+      given: Ilia J.
+    - family: Sauquet
+      given: Hervé
+    - family: Smith
+      given: Stephen A.
+    - family: Eiserhardt
+      given: Wolf L.
+    - family: Forest
+      given: Félix
+    - family: Baker
+      given: William J.
+  citation-key: zuntini2024
+  container-title: Nature
+  container-title-short: Nature
+  DOI: 10.1038/s41586-024-07324-0
+  ISSN: 0028-0836, 1476-4687
+  issue: '8013'
+  issued:
+    - year: 2024
+      month: 5
+      day: 23
+  language: en
+  page: 843-850
+  source: DOI.org (Crossref)
+  title: Phylogenomics and the rise of the angiosperms
+  type: article-journal
+  URL: https://www.nature.com/articles/s41586-024-07324-0
+  volume: '629'
+
+- id: jin2023
+  accessed:
+    - year: 2024
+      month: 8
+      day: 20
+  author:
+    - family: Jin
+      given: Yi
+    - family: Qian
+      given: Hong
+  citation-key: jin2023
+  container-title: Plant Diversity
+  container-title-short: Plant Diversity
+  DOI: 10.1016/j.pld.2022.12.007
+  ISSN: '24682659'
+  issue: '3'
+  issued:
+    - year: 2023
+      month: 5
+  language: en
+  page: 347-352
+  source: DOI.org (Crossref)
+  title: >-
+    U.PhyloMaker: An R package that can generate large phylogenetic trees for
+    plants and animals
+  title-short: U.PhyloMaker
+  type: article-journal
+  URL: https://linkinghub.elsevier.com/retrieve/pii/S2468265922001329
+  volume: '45'
+
+- id: miller2023
+  abstract: >-
+    A taxonomic revision is provided for Cordiaceae (Boraginales) in Mexico and
+    Central America and the adjacent portions of the United States, including 44
+    species of Cordia and 17 species of Varronia. Eight of the 44 species of
+    Cordia were described as new to science elsewhere in earlier parts of this
+    study. Cordiaceae are distinguished from other families of Boraginales in
+    being erect woody plants with a style that is twice-divided with four
+    stigmas. Taxonomic history of generic delimitation in the Cordiaceae is
+    presented, along with discussions of morphology of Cordia and Varronia, an
+    overview of breeding systems in the family, provisional conservation
+    assessments, infrageneric classification, keys to species, and descriptions,
+    with complete nomenclature and notes on geographic distribution and how to
+    recognize individual species.
+  accessed:
+    - year: 2024
+      month: 8
+      day: 20
+  author:
+    - family: Miller
+      given: James S.
+  citation-key: miller2023
+  container-title: Journal of the Botanical Research Institute of Texas
+  container-title-short: J. Bot. Res. Inst. Texas
+  DOI: 10.17348/jbrit.v17.i1.1290
+  ISSN: 2644-1608, 1934-5259
+  issue: '1'
+  issued:
+    - year: 2023
+      month: 7
+      day: 21
+  license: https://creativecommons.org/licenses/by-nc-nd/4.0/
+  page: 39-137
+  source: DOI.org (Crossref)
+  title: >-
+    A revision of Cordiaceae (Boraginales) in Central America, Mexico, and the
+    United States
+  type: article-journal
+  URL: https://journals.brit.org/jbrit/article/view/1290
+  volume: '17'
+
+- id: kress2009
+  abstract: >-
+    The assembly of DNA barcode libraries is particularly relevant within
+    species-rich natural communities for which accurate species identifications
+    will enable detailed ecological forensic studies. In addition, well-resolved
+    molecular phylogenies derived from these DNA barcode sequences have the
+    potential to improve investigations of the mechanisms underlying community
+    assembly and functional trait evolution. To date, no studies have
+    effectively applied DNA barcodes
+                  sensu strictu
+                  in this manner. In this report, we demonstrate that a three-locus DNA barcode when applied to 296 species of woody trees, shrubs, and palms found within the 50-ha Forest Dynamics Plot on Barro Colorado Island (BCI), Panama, resulted in >98% correct identifications. These DNA barcode sequences are also used to reconstruct a robust community phylogeny employing a supermatrix method for 281 of the 296 plant species in the plot. The three-locus barcode data were sufficient to reliably reconstruct evolutionary relationships among the plant taxa in the plot that are congruent with the broadly accepted phylogeny of flowering plants (APG II). Earlier work on the phylogenetic structure of the BCI forest dynamics plot employing less resolved phylogenies reveals significant differences in evolutionary and ecological inferences compared with our data and suggests that unresolved community phylogenies may have increased type I and type II errors. These results illustrate how highly resolved phylogenies based on DNA barcode sequence data will enhance research focused on the interface between community ecology and evolution.
+  accessed:
+    - year: 2024
+      month: 8
+      day: 20
+  author:
+    - family: Kress
+      given: W. John
+    - family: Erickson
+      given: David L.
+    - family: Jones
+      given: F. Andrew
+    - family: Swenson
+      given: Nathan G.
+    - family: Perez
+      given: Rolando
+    - family: Sanjur
+      given: Oris
+    - family: Bermingham
+      given: Eldredge
+  citation-key: kress2009
+  container-title: Proceedings of the National Academy of Sciences
+  container-title-short: Proc. Natl. Acad. Sci. U.S.A.
+  DOI: 10.1073/pnas.0909820106
+  ISSN: 0027-8424, 1091-6490
+  issue: '44'
+  issued:
+    - year: 2009
+      month: 11
+      day: 3
+  language: en
+  page: 18621-18626
+  source: DOI.org (Crossref)
+  title: >-
+    Plant DNA barcodes and a community phylogeny of a tropical forest dynamics
+    plot in Panama
+  type: article-journal
+  URL: https://pnas.org/doi/full/10.1073/pnas.0909820106
+  volume: '106'
+
+- id: janssens2020
+  abstract: >-
+    Phylogenies are a central and indispensable tool for evolutionary and
+    ecological research. Even though most angiosperm families are well
+    investigated from a phylogenetic point of view, there are far less
+    possibilities to carry out large-scale meta-analyses at order level or
+    higher. Here, we reconstructed a large-scale dated phylogeny including
+    nearly 1/8th of all angiosperm species, based on two plastid barcoding
+    genes,
+                  matK
+                  (incl.
+                  trnK
+                  ) and
+                  rbcL.
+                  Novel sequences were generated for several species, while the rest of the data were mined from GenBank. The resulting tree was dated using 56 angiosperm fossils as calibration points. The resulting megaphylogeny is one of the largest dated phylogenetic tree of angiosperms yet, consisting of 36,101 sampled species, representing 8,399 genera, 426 families and all orders. This novel framework will be useful for investigating different broad scale research questions in ecological and evolutionary biology.
+  accessed:
+    - year: 2024
+      month: 8
+      day: 20
+  author:
+    - family: Janssens
+      given: Steven
+    - family: Couvreur
+      given: Thomas L.P.
+    - family: Mertens
+      given: Arne
+    - family: Dauby
+      given: Gilles
+    - family: Dagallier
+      given: Leo-Paul
+    - family: Vanden Abeele
+      given: Samuel
+    - family: Vandelook
+      given: Filip
+    - family: Mascarello
+      given: Maurizio
+    - family: Beeckman
+      given: Hans
+    - family: Sosef
+      given: Marc
+    - family: Droissart
+      given: Vincent
+    - family: Van Der Bank
+      given: Michelle
+    - family: Maurin
+      given: Olivier
+    - family: Hawthorne
+      given: William
+    - family: Marshall
+      given: Cicely
+    - family: Réjou-Méchain
+      given: Maxime
+    - family: Beina
+      given: Denis
+    - family: Baya
+      given: Fidele
+    - family: Merckx
+      given: Vincent
+    - family: Verstraete
+      given: Brecht
+    - family: Hardy
+      given: Olivier
+  citation-key: janssens2020
+  container-title: Biodiversity Data Journal
+  container-title-short: BDJ
+  DOI: 10.3897/BDJ.8.e39677
+  ISSN: 1314-2828, 1314-2836
+  issued:
+    - year: 2020
+      month: 1
+      day: 21
+  license: http://creativecommons.org/licenses/by/4.0/
+  page: e39677
+  source: DOI.org (Crossref)
+  title: >-
+    A large-scale species level dated angiosperm phylogeny for evolutionary and
+    ecological analyses
+  type: article-journal
+  URL: https://bdj.pensoft.net/article/39677/
+  volume: '8'
+
+- id: toparslan2020
+  abstract: >-
+    Phylogenetic analyses can provide a wealth of information about the past
+    demography of a population and the level of genetic diversity within and
+    between species. By using special computer programs developed in recent
+    years, large amounts of data have been produced in the molecular genetics
+    area. To analyze these data, powerful new methods based on large
+    computations have been applied in various software packages and programs.
+    But these programs have their own specific input and output formats, and
+    users need to create different input formats for almost every program. R is
+    an open source software environment, and it supports open contribution and
+    modification to its libraries. Furthermore, it is also possible to perform
+    several analyses using a single input file format. In this article, by using
+    the multiple sequences FASTA format file (.fas extension) we demonstrate and
+    share a workflow of how to extract haplotypes and perform phylogenetic
+    analyses and visualizations in R. As an example dataset, we used 120
+                  Bombus terrestris dalmatinus
+                  mitochondrial cytochrome
+                  b
+                  gene (cyt
+                  b
+                  ) sequences (373 bp) collected from eight different beehives in Antalya. This article presents a short guide on how to perform phylogenetic analyses using R and RStudio.
+  accessed:
+    - year: 2024
+      month: 8
+      day: 23
+  author:
+    - family: Toparslan
+      given: Emine
+    - family: Karabag
+      given: Kemal
+    - family: Bilge
+      given: Ugur
+  citation-key: toparslan2020
+  container-title: PLOS ONE
+  container-title-short: PLoS ONE
+  DOI: 10.1371/journal.pone.0243927
+  editor:
+    - family: Brewer
+      given: Michael Scott
+  ISSN: 1932-6203
+  issue: '12'
+  issued:
+    - year: 2020
+      month: 12
+      day: 15
+  language: en
+  page: e0243927
+  source: DOI.org (Crossref)
+  title: >-
+    A workflow with R: Phylogenetic analyses and visualizations using
+    mitochondrial cytochrome b gene sequences
+  title-short: A workflow with R
+  type: article-journal
+  URL: https://dx.plos.org/10.1371/journal.pone.0243927
+  volume: '15'
+
+- id: gkanogiannis2016
+  abstract: |-
+    Abstract
+                
+                  Background
+                  Metagenomics holds great promises for deepening our knowledge of key bacterial driven processes, but metagenome assembly remains problematic, typically resulting in representation biases and discarding significant amounts of non-redundant sequence information. In order to alleviate constraints assembly can impose on downstream analyses, and/or to increase the fraction of raw reads assembled via targeted assemblies relying on pre-assembly binning steps, we developed a set of binning modules and evaluated their combination in a new “assembly-free” binning protocol.
+                
+                
+                  Results
+                  
+                    We describe a scalable multi-tiered binning algorithm that combines frequency and compositional features to cluster unassembled reads, and demonstrate i) significant runtime performance gains of the developed modules against state of the art software, obtained through parallelization and the efficient use of large lock-free concurrent hash maps, ii) its relevance for clustering unassembled reads from high complexity (e.g., harboring 700 distinct genomes) samples, iii) its relevance to experimental setups involving multiple samples, through a use case consisting in the “de novo” identification of sequences from a target genome (e.g., a pathogenic strain) segregating at low levels in a cohort of 50 complex microbiomes (harboring 100 distinct genomes each), in the background of closely related strains and the absence of reference genomes, iv) its ability to correctly identify clusters of sequences from the
+                    E. coli O104:H4
+                    genome as the most strongly correlated to the infection status in 53 microbiomes sampled from the 2011 STEC outbreak in Germany, and to accurately cluster contigs of this pathogenic strain from a cross-assembly of these 53 microbiomes.
+                  
+                
+                
+                  Conclusions
+                  
+                    We present a set of sequence clustering (“binning”) modules and their application to biomarker (e.g., genomes of pathogenic organisms) discovery from large synthetic and real metagenomics datasets. Initially designed for the “assembly-free” analysis of individual metagenomic samples, we demonstrate their extension to setups involving multiple samples via the usage of the “alignment-free” d
+                    2
+                    S statistic to relate clusters across samples, and illustrate how the clustering modules can otherwise be leveraged for
+                    de novo
+                    “pre-assembly” tasks by segregating sequences into biologically meaningful partitions.
+  accessed:
+    - year: 2024
+      month: 8
+      day: 29
+  author:
+    - family: Gkanogiannis
+      given: Anestis
+    - family: Gazut
+      given: Stéphane
+    - family: Salanoubat
+      given: Marcel
+    - family: Kanj
+      given: Sawsan
+    - family: Brüls
+      given: Thomas
+  citation-key: gkanogiannis2016
+  container-title: BMC Bioinformatics
+  container-title-short: BMC Bioinformatics
+  DOI: 10.1186/s12859-016-1186-3
+  ISSN: 1471-2105
+  issue: '1'
+  issued:
+    - year: 2016
+      month: 8
+      day: 19
+  language: en
+  page: '311'
+  source: DOI.org (Crossref)
+  title: >-
+    A scalable assembly-free variable selection algorithm for biomarker
+    discovery from metagenomes
+  type: article-journal
+  URL: >-
+    https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-016-1186-3
+  volume: '17'
+
+- id: lombard2010
+  accessed:
+    - year: 2024
+      month: 9
+      day: 3
+  author:
+    - family: Lombard
+      given: L.
+    - family: Crous
+      given: P.W.
+    - family: Wingfield
+      given: B.D.
+    - family: Wingfield
+      given: M.J.
+  citation-key: lombard2010
+  container-title: Studies in Mycology
+  container-title-short: Studies in Mycology
+  DOI: 10.3114/sim.2010.66.01
+  ISSN: '01660616'
+  issued:
+    - year: 2010
+  language: en
+  license: https://www.elsevier.com/tdm/userlicense/1.0/
+  page: 1-13
+  source: DOI.org (Crossref)
+  title: Species concepts in Calonectria (Cylindrocladium)
+  type: article-journal
+  URL: https://www.ingentaconnect.com/content/10.3114/sim.2010.66.01
+  volume: '66'
 ...

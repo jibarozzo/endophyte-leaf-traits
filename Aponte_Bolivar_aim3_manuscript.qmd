@@ -289,7 +289,7 @@ To assess leaf-cutter ant damage, we collected one extra leaf per plant per trea
 
 #### Pathogen assays
 
-For the pathogen assays, we inoculated seedlings with *Calonectria* sp. pathogen. *Calonectria* is a widespread pathogen in tropical and temperate ecosystems [@crous2006; @li2022]. Its distribution reflects trends in agriculture, forestry, and the ornamental plant trade [@li2022]. In the tropics its effects are known as *Calonectria* leaf blight (CLB) which has become a primary fungal disease in commercial tree plantations [@sanchez-gonzalez2022]. In our assays, we introduced an agar plug inoculated with hyphae of *Calonectria* sp. (*P+* treatment), and an agar plug without the pathogen (*P-* control) to similarly aged/sized leaves that were still on plants (i.e., were not harvested) within 10-14 days after endophyte inoculations [@gilbert2007]. Leaves with the *P+* or *P-* treatment were misted with sterile water two times a day (morning and afternoon) to maintain moisture. After four days, we removed the plugs and took digital photos to analyze leaf area damage using ImageJ [v1.52r; @schneider2012].
+For the pathogen assays, we inoculated seedlings with *Calonectria* sp. pathogen. *Calonectria* is a widespread pathogen in tropical and temperate ecosystems [@crous2006; @li2022]. Its distribution reflects trends in agriculture, forestry, and the ornamental plant trade [@li2022]. In the tropics its effects are known as *Calonectria* leaf blight (CLB) which has become a primary fungal disease in commercial tree plantations [@sanchez-gonzalez2022; @lombard2010]. We prepared the pathogen inoculum following Gilbert & Webb [-@gilbert2007] and Tellez et al. [-@tellezRedCol2016]. Briefly, this required growing inoculum in 2% MEA in caps (agar plug) from 1.8 mL cryovials, then grown for 5 days before applying to seedlings. In our assays, haphazardly selected 2 similarly aged/sized leaves from seedlings not used in herbivore assays within 10-14 days after ambient spore-fall inoculations (see Fungal endophyte inoculation section above) [@gilbert2007]. Then we lightly punctured the leaf lamina with a sterile needle (95% EtOH and heat treated) and applied an agar plug inoculated with hyphae of *Calonectria* sp. (*P+* treatment), and in a separate leaf, an agar plug without the pathogen (*P-* control). Agar plugs were held in place with sterile metal double prong curl clips (Sally Beauty LLC., Denton, Texas, USA. Item number: SBS-292507). Leaves with the *P+* or *P-* treatments were misted with sterile water two times a day (morning and afternoon) to maintain moisture. After four days, we removed the plugs and took digital photos to analyze leaf area damage using ImageJ [v1.52r; @schneider2012].
 
 ### Replication Statement
 
@@ -378,7 +378,7 @@ Inoculation of seedlings was successful. Seedlings exposed to forest spore fall 
 
 We observed general differences in LFTs among species (@tbl-table1). Anthocyanins (ACI) and leaf punch strength (LPS) did not differ between treatments (*E-low* and *E-high*) when we combined all host species (Fig. S2a and Fig. S4a respectively). For LT and LMA we saw significant differences between *E-low* and *E-high* treatment groups when we combined all host species (Fig S3a and Fig. S5a, respectively). As predicted, we did observe lower herbivory in the *E-high* treatment compared to the *E-low* treatment when we combined all host species, *t*(31) = 2.23, *p* = .033 (Fig. 2a). We did not observe differences in pathogen damage between *E-low* and *E-high* treatments when we combined all host species (Fig. 2b). However, within the *E-low* treatment group, leaves exposed to *Calonectria* sp. suffered greater damage (*M* = 17.37, *SD* = 12.57) compared to non-exposed leaves (*M* = 3.49, *SD* = 5.42), *t*(31) = -7.19, *p* \< .0001 (Fig. 2b). The same pattern arose for the *E-high* treatment group: exposed leaves (*M* = 20.04, *SD* = 15.72), non-exposed leaves (*M* = 7.17, *SD* = 17.48), *t*(31) = -3.26, *p* \< .01 (Fig. 2b). At the species level, herbivory and pathogen damage did not differ between treatment groups (Fig. S6a-S6b).
 
-All LFTs are significantly correlated with FEF community composition (Fig.3). We used dbRDA to understand FEF community composition across host species and treatment groups. The analyses revealed that 6.34% of the overall variance in FEF communities was constrained by the LFTs. The first axis (dbRDA1) explained 49% and the second axis (dbRDA2) explained 21.3% of the constrained variance (Fig. 3). We observed a high degree of overlap between FEF communities (Fig. 3), indicating that the communities are similar in composition across host species and treatment groups, at least at the degree of resolution provided by ITS data (Fig. 3). Nonetheless, we also observed tight clustering of FEF communities in *C. cainito* and *L. panamensis*, emphasizing a distinct composition of FEF OTUs within the FEF identified. Other host species showed greater variation in FEF composition. Our PERMDISP analyses showed no significant differences in host species group dispersion (*F*~6,~ ~149~ = 0.717, *p* \< .63), observed differences were due to location. Unsurprisingly, the dispersion for *E-low* and *E-high* treatment groups was significantly different (*F*~1,~ ~154~ = 5.09, *p* \= .03). The Tukey tests revealed dispersion of host species were not significantly different at the α \< .05 level, while treatment group dispersions were.
+All LFTs are significantly correlated with FEF community composition (Fig. 3 and @tble-dbRDA). We used dbRDA to understand FEF community composition across host species and treatment groups. The analyses revealed that 6.9% of the overall model variance in FEF communities was constrained by the LFTs. The first axis (dbRDA1) explained 45.2% and the second axis (dbRDA2) explained 19.6% of the constrained variance (Fig. 3). We observed a high degree of overlap between FEF communities (Fig. 3), indicating that the communities are similar in composition across host species and treatment groups, at least at the degree of resolution provided by ITS data (Fig. 3). Nonetheless, we also observed tight clustering of FEF communities in *C. cainito* and *L. panamensis*, emphasizing a distinct composition of FEF OTUs within the FEF identified. Other host species showed greater variation in FEF composition. Our PERMDISP analyses showed no significant differences in host species group dispersion (*F*~6,~ ~149~ = 0.717, *p* \< .63), observed differences were due to location. Unsurprisingly, the dispersion for *E-low* and *E-high* treatment groups was significantly different (*F*~1,~ ~154~ = 5.09, *p* \= .03). The Tukey tests revealed dispersion of host species were not significantly different at the α \< .05 level, while treatment group dispersions were.
 
 We determined there was a core set of OTUs that significantly associated with host tree species or particular treatments by calculating the point biserial correlation coefficient. In summary, 72 out of 569 Ascomycota OTUs were significantly associated with all host tree species (Table S5). Seedlings used in herbivory assays had 13 OTUs significantly associated with high herbivory damage (\>70%) and 3 and 1 OTUs significantly associated with medium (31-69%) and low (\<30%) herbivory damage, respectively, in *E-low* and *E-high* treatment groups (Table S6). We detected 11 OTUs significantly associated with seedlings that experienced high (\>30%) pathogen damage in *E-low* and *E-high* treatment groups (Table S7). We could not tease apart which OTUs were associated with leaves exposed to *Calonectria* sp. agar plugs and non-exposed leaves because the genomic data scale for these trials was at the individual plant level, not leaf level. We found 30 OTUs significantly associated with *E-high* treated (inoculated with forest spore fall) individuals used in our pathogen assays (Table S8).
 
@@ -1116,13 +1116,13 @@ otu_e.dist <- vegdist(t(rabun), method = "bray", binary = FALSE)
 #| warning: false
 #| fig.width: 6.5
 #| fig.height: 6
-#| fig.cap: "FEF community composition was associated with leaf functional traits (LFTs) from the leaf economic spectrum (LES) (genomic data set). Variation in FEF community composition within and between host species (*n* = 7) and treatment groups (*E*-, *E*+) from distance-based redundancy analyses (dbRDA). Solid arrows represent statistically significant associations (*p* <.01). Each point represents a FEF community sample from one host tree species per treatment group; colors represent host tree species. Circles and filled triangles represent low (*E*-) and high (*E*+) FEF treatment groups, respectively."
+#| fig.cap: "FEF community composition was associated with leaf functional traits (LFTs) from the leaf economic spectrum (LES) (genomic data set). Variation in FEF community composition within and between host species (*n* = 7) and treatment groups (*E*-, *E*+) from distance-based redundancy analyses (dbRDA). Solid black arrows represent statistically significant associations (*p* <.01). Each point represents a FEF community sample from one host tree species per treatment group; colors represent host tree species. Circles and filled triangles represent low (*E*-) and high (*E*+) FEF treatment groups, respectively."
 
 # dbRDa with `dbrda` function. it can be calculated with `capscale` function too. VERY similar.
 # Best model selected with `ordistep` function
 # Terms: otu_e.dist ~ Thickness + Toughness + Anthocyanins + LMA
 m3dbRDA <- dbrda(
-  otu_e.dist ~ Anthocyanins + Toughness + Thickness + LMA,
+  otu_e.dist ~ Anthocyanins + Toughness + Thickness + LMA + E_load,
   data = ndata2,
   dist = "bray",
   na.action = na.omit
@@ -1174,10 +1174,10 @@ arrowhead <- arrow(length = unit(0.02, "npc"))
 # subset A4 for labeling
 A.4 <- A.4[sort(rownames(A.4)), ]
 
-A4.sub1 <- A.4[3, ] # Thickness
+A4.sub1 <- A.4[4, ] # Thickness
 A4.sub2 <- A.4[1, ] # Anthocyanins
-A4.sub3 <- A.4[2, ] # LMA
-A4.sub4 <- A.4[4, ] # Toughness
+A4.sub3 <- A.4[3, ] # LMA
+A4.sub4 <- A.4[5, ] # Toughness
 
 # A4.sub4
 
@@ -1291,7 +1291,7 @@ p_m3dbrda <- p_m3 +
     inherit.aes = TRUE
   ) +
 
-  labs(caption = "PERMDISP: *F*<sub>4,151</sub> = 2.56, *p* = .001") + # From simple ANOVA
+  #labs(caption = "PERMDISP: *F*<sub>4,151</sub> = 2.56, *p* = .001") + # From simple ANOVA
   theme(
     plot.title = element_text(
       color = "black",
@@ -1320,17 +1320,17 @@ ggsave(
   dpi = 300,
   units = c("mm"),
   width = 275,
-  height = 200
+  height = 250
 )
 
-ggsave(
-  filename = "./figures/Aponte_Bolivar_figure3_points.png",
-  plot = p_m3dbrda,
-  dpi = 300,
-  units = c("mm"),
-  width = 250,
-  height = 200
-)
+# ggsave(
+#   filename = "./figures/Aponte_Bolivar_figure3_points.png",
+#   plot = p_m3dbrda,
+#   dpi = 300,
+#   units = c("mm"),
+#   width = 250,
+#   height = 200
+# )
 ```
 
 ## Figure 4
@@ -1538,7 +1538,7 @@ figure4
 #
 # ant_pca_with_caption
 
-ggsave(filename = "./figures/Aponte_Bolivar_figure4.png", plot = figure4, dpi = 300, units = c("mm"), width = 275, height = 300, bg = "white")
+# ggsave(filename = "./figures/Aponte_Bolivar_figure4.png", plot = figure4, dpi = 300, units = c("mm"), width = 275, height = 300, bg = "white")
 # Previously called Aim3_GridPCA_SEPT182023.png
 ```
 
@@ -2106,54 +2106,52 @@ table1_ggplot <- data %>%
 
 table1_ggplot
 
-gtsave(table1_ggplot, "tables/table1_ggplot.html")
+# gtsave(table1_ggplot, "tables/table1_ggplot.html")
 
 ```
 
-<!-- ## Test -->
-<!-- ```{r} -->
-<!-- #| echo: false -->
-<!-- #| eval: true -->
-<!-- #| tidy: true -->
-<!-- #| warning: false -->
-<!-- #| label: tbl-tableMIM31 -->
-<!-- #| tbl-cap: "Permutational ANOVA for the best-fit dbRDA model with all genetic cross-types." -->
-<!-- #dbRDA table  (results from terms are the same as adonis2 but without R2) -->
-<!-- #anova_m3_hell_margin <- readRDS("clean_data/statistics/anova_m3_hell_margin.rds") -->
-<!-- anova_m3_hell_term <- readRDS(file.path(path, "clean_data/statistics/anova_m3_hell_term.rds")) -->
-
-<!-- anova_table1 <- tidy(anova_m3_hell_term) %>% -->
-<!--   as.data.frame() %>% -->
-<!--   mutate("p-value" = str_replace_all(p.value, "0.001", "***"), -->
-<!--          across(term, ~ gsub("_m", " (m)", .))) %>% -->
-<!--   rename( -->
-<!--     Term = term, -->
-<!--     "Sum. of Sqs." = SumOfSqs, -->
-<!--     "F-value" = statistic, -->
-<!--     "Df" = df -->
-<!--   ) %>% -->
-<!--   select(Term, Df, "Sum. of Sqs.", "F-value", "p-value") -->
-
-<!-- supptab_S1 <- gt(anova_table1) %>% -->
-<!--   fmt_number(columns = vars("Sum. of Sqs.", "F-value"), -->
-<!--              decimals = 2) %>% -->
-<!--   fmt_number(columns = vars("Df"), decimals = 0) %>% -->
-<!--   tab_footnote( -->
-<!--     footnote = md( -->
-<!--       "Significance levels are represented by *ns* (not significant) and asterisks [*p* < .05 (\\*), *p* < .01 (\\*\\*), *p* < .001 (\\*\\*\\*), and *p* < .0001 (\\*\\*\\*\\*)]." -->
-<!--     ), -->
-<!--     locations = cells_column_labels(columns = "p-value") -->
-<!--   ) %>% -->
-<!--   tab_style(style = cell_text(weight = "bold"), -->
-<!--             locations = cells_column_labels(columns = everything())) %>% -->
-<!--   as_latex() -->
-
-<!-- supptab_S1 -->
-<!-- ``` -->
-
-
-
 ## Table 2
+```{r}
+#| echo: false
+#| eval: true
+#| tidy: true
+#| warning: false
+#| label: tbl-dbRDA
+#| tbl-cap: "Permutational ANOVA for the best-fit dbRDA model with all host species."
+#dbRDA table  (results from terms are the same as adonis2 but without R2)
+
+anova_m3dbRDA <- readRDS(file.path(save.path, "/clean_data/anova_m3dbRDA.rds"))
+
+anova_table1 <- tidy(anova_m3dbRDA) %>%
+  as.data.frame() %>%
+  mutate("p-value" = str_replace_all(p.value, "0.0001", "****"), across(term, ~ gsub("_m", " (m)", .))) %>%
+  rename(
+    Term = term,
+    "Sum. of Sqs." = SumOfSqs,
+    "F-value" = statistic,
+    "Df" = df
+  ) %>%
+  select(Term, Df, "Sum. of Sqs.", "F-value", "p-value")
+
+supptab_S1 <- gt(anova_table1) %>%
+  fmt_number(columns = vars("Sum. of Sqs.", "F-value"),
+             decimals = 2) %>%
+  fmt_number(columns = vars("Df"), decimals = 0) %>%
+  # tab_footnote(
+  #   footnote = md(
+  #     "Significance levels are represented by *ns* (not significant) and asterisks [*p* < .05 (\\*), *p* < .01 (\\*\\*), *p* < .001 (\\*\\*\\*), and *p* < .0001 (\\*\\*\\*\\*)]."
+  #   ),
+  #   locations = cells_column_labels(columns = "p-value")
+  # ) %>%
+  tab_style(style = cell_text(weight = "bold"),
+            locations = cells_column_labels(columns = everything()))
+
+supptab_S1
+```
+
+
+
+## Table 3
 
 ```{r}
 #| echo: false
@@ -2195,7 +2193,33 @@ P3REM <- lme(
 # summary(P3REM)
 # AIC(P3REM) #1011.239 as of 30/OCT/2023
 
-save(M3REM, P3REM, file = "./clean_data/glmm_models.rda")
+# save(M3REM, P3REM, file = "./clean_data/glmm_models.rda")
+
+### Phylogenetic correction ### See Aim3_leaf_traits_statistical_analyses.qmd for more info on model selection. 
+# Species list organized by matrix order
+species_list <- c("CORDAL",
+                  "HEISCO",
+                  "THEOCA",
+                  "CHRYCA",
+                  "DYPTE",
+                  "LACPA",
+                  "APEIME")
+
+# Load phylogenetic tree
+phylo_tree <- ape::read.tree("clean_data/phylogeny/iqtree_results/all_species_rbcL_aligned.fasta.treefile")  
+
+# Change tip labels to species acronyms
+phylo_tree[["tip.label"]] <- species_list
+
+# Compute the covariance matrix
+phylo_vcv <- vcv(phylo_tree, corr = TRUE)  # Compute the covariance matrix
+
+phylo_vcv_clean <- as.matrix(phylo_vcv) %>%
+  as.data.frame
+
+# Create a phylogenetic correlation structure (Pagel's “lambda” Correlation Structure)
+phylo_cor <- corPagel(1, phy = phylo_tree, form = ~ Species)
+# Assuming a λ  of 1 (full phylogenetic effect)
 
 # Models with phylogenetic correction based on Rviewer 1 from Functional Ecology
 # Hebivory models
