@@ -366,7 +366,7 @@ Secondly, we calculated the FEF richness and Shannon's diversity index with the 
 
 #### Correlations between FEF and herbivory and pathogen damage {#sec-correlations}
 
-Thirdly, we arbitrarily designated percent leaf damage in herbivore assays as high (\>70%), medium (31-69%) and low (\<30%) and in pathogen assays as high (\>30%) and low (\<30%). These categories allowed us to explore correlations between host tree species and specific FEF OTUs. To achieve this, we used the `multipatt` function from the `indicspecies` package in *R* [@decaceres2009]. We calculated the point biserial correlation coefficient for each OTU at all tree species and treatment group combinations by applying the `multipatt` function with arguments `func`= "r.g" and `control` = how(nperm=999) to our OTU abundance matrix [@decaceres2009]. Like with other statistical tests performed, we adjusted *p* values to account for false discovery rates in multiple comparisons by using "BH" method [@benjamini1995] in the `p.adjust` function from the `stats` package [@rcoreteam2024]. We then filtered the adjusted *p* value with a cutoff of \< .05.
+Thirdly, we arbitrarily designated percent leaf damage in herbivore assays as high (\>70%), medium (31-69%) and low (\<30%) and in pathogen assays as high (\>30%) and low (\<30%). These categories allowed us to explore correlations between host tree species and specific FEF OTUs. To achieve this, we used the `multipatt` function from the `indicspecies` package in *R* [v. 1.7.14; @decaceres2009], which allowed us to determine correlation indices for each site group combination (host tress species and OTUs). We applied the `multipatt` function with arguments `func`= "r.g" and `control` = how(nperm=999) to our OTU abundance matrix to calculate the point biserial correlation coefficient for each OTU at all tree species and treatment group combinations [@decaceres2009]. Like with other statistical tests performed, we adjusted *p* values to account for false discovery rates in multiple comparisons by using "BH" method [@benjamini1995] in the `p.adjust` function from the `stats` package [@rcoreteam2024]. We then filtered the adjusted *p* value with a cutoff of \< .05.
 
 We used Principal Component Analysis (PCA) to reduce dimensions among covariates and reveal underlying interactions between covariates that could influence herbivory and pathogen damage. The PCA was computed using the `prcomp` function in R statistical software [@rcoreteam2024]. A complete PCA was computed with variables ACI, LT, LPS, and LMA. We then proceeded to compute a PCA with the data from leaves of plants used in the herbivory (*n* = 210) and pathogen assays (*n* = 192). We then took from the herbivory and pathogen PCA the principal components that explained the most variance (PC1 and PC2) and regressed them to herbivory (%) and pathogen damage (%). We also regressed ACI, LT, LPS, LMA and Shannon diversity index to logit transformed herbivory (%) and pathogen damage (%). We used the `logit` function from the `car` package for logit transformation of variables and the `lm` function from the `stat` package for simple linear regressions [@fox2019; @rcoreteam2024].
 
@@ -1116,7 +1116,7 @@ otu_e.dist <- vegdist(t(rabun), method = "bray", binary = FALSE)
 #| warning: false
 #| fig.width: 6.5
 #| fig.height: 6
-#| fig.cap: "FEF community composition was associated with leaf functional traits (LFTs) from the leaf economic spectrum (LES) (genomic data set). Variation in FEF community composition within and between host species (*n* = 7) and treatment groups (*E*-, *E*+) from distance-based redundancy analyses (dbRDA). Solid black arrows represent statistically significant associations (*p* <.01). Each point represents a FEF community sample from one host tree species per treatment group; colors represent host tree species. Circles and filled triangles represent low (*E*-) and high (*E*+) FEF treatment groups, respectively."
+#| fig.cap: "FEF community composition was associated with leaf functional traits (LFTs) from the leaf economic spectrum (LES) (genomic data set). Variation in FEF community composition within and between host species (*n* = 7) and treatment groups (*E*-, *E*+) from distance-based redundancy analyses (dbRDA). Solid black arrows represent statistically significant associations (*p* <.01). The arrows are displayed at double their actual size to enhance visual clarity. Each point represents a FEF community sample from one host tree species per treatment group; colors represent host tree species. Circles and filled triangles represent low (*E*-) and high (*E*+) FEF treatment groups, respectively."
 
 # dbRDa with `dbrda` function. it can be calculated with `capscale` function too. VERY similar.
 # Best model selected with `ordistep` function
@@ -1314,6 +1314,7 @@ p_m3dbrda$layers <- c(
 
 figure3 <- p_m3dbrda
 figure3
+
 ggsave(
   filename = "./figures/Aponte_Bolivar_figure3.png",
   plot = figure3,
@@ -2098,7 +2099,7 @@ table1_ggplot <- data %>%
     fig_dim = c(5, 30),
     same_limit = FALSE,
     # ensures each histogram can have its own axis range
-    fill_color = "red",
+    fill_color = "coral",
     # changed color for a little more visibility of the bins
     line_color = "black"
   ) %>%
@@ -2109,6 +2110,8 @@ table1_ggplot
 # gtsave(table1_ggplot, "tables/table1_ggplot.html")
 
 ```
+
+## MAYBE ANOTHER TABLE
 
 ## Table 2
 ```{r}
@@ -2420,6 +2423,171 @@ phylo_pathogen_REML[["coefficients"]][["random"]][["Species"]]
 
 # save_as_docx(table2, path = "./tables/Aim3_table2_phylogenetic_review.docx")
 ```
+
+## Another table
+
+```{r}
+#| echo: false
+#| eval: true
+#| tidy: true
+#| warning: false
+#| label: tbl-linearreg
+#| tbl-cap: "Summary of simple linear regression models for predicting leaf herbivory and pathogen damage"
+
+# Linear regression models
+# Herbivory
+
+herb_lm_lt <- summary(lm(logit_herbivory ~ Thickness, data = masterant2))
+herb_lm_lps <- summary(lm(logit_herbivory ~ Toughness, data = masterant2))
+herb_lm_aci <- summary(lm(logit_herbivory ~ Anthocyanins, data = masterant2))
+herb_lm_lma <- summary(lm(logit_herbivory ~ LMA, data = masterant2))
+herb_lm_sdi <- summary(lm(logit_herbivory ~ Shannon, data = masterant2))
+
+# Pathogen damage
+patho_lm_lt <- summary(lm(logit_pathogenicity ~ Thickness, data = masterpat2))
+patho_lm_lps <- summary(lm(logit_pathogenicity ~ Toughness, data = masterpat2))
+patho_lm_aci <- summary(lm(logit_pathogenicity ~ Anthocyanins, data = masterpat2))
+patho_lm_lma <- summary(lm(logit_pathogenicity ~ LMA, data = masterpat2))
+patho_lm_sdi <- summary(lm(logit_pathogenicity ~ Shannon, data = masterpat2))
+
+
+# E-high treatment
+regrex_ehigh <- data.table(
+  LFTs = c(
+    "Anthocyanins (ACI)",
+    "Leaf Thickness (LT) (\U00B5m)",
+    "Leaf Punch Strength (LPS)(N mm^-1)",
+    "Leaf Mass per Area (LMA)(mg/mm)",
+    "Shannon Diversity Index"
+  ),
+  Treatment = "E-high",
+  Leaf_damage = c("Herbivory (%)", "Pathogen Damage (%)"),
+  "R^2^~adj~" = c(
+    herb_lm_aci$adj.r.squared,
+    herb_lm_lt$adj.r.squared,
+    herb_lm_lps$adj.r.squared,
+    herb_lm_lma$adj.r.squared,
+    herb_lm_sdi$adj.r.squared
+  ),
+  
+  "F-value" = c(
+    herb_lm_aci$fstatistic[1],
+    herb_lm_lt$fstatistic[1],
+    herb_lm_lps$fstatistic[1],
+    herb_lm_lma$fstatistic[1],
+    herb_lm_sdi$fstatistic[1]
+  ),
+  
+  "p-value" = c(
+    pf(
+      herb_lm_aci$fstatistic[1],
+      herb_lm_aci$fstatistic[2],
+      herb_lm_aci$fstatistic[3],
+      lower.tail = FALSE
+    ),
+    pf(
+      herb_lm_lt$fstatistic[1],
+      herb_lm_lt$fstatistic[2],
+      herb_lm_lt$fstatistic[3],
+      lower.tail = FALSE
+    ),
+    pf(
+      herb_lm_lps$fstatistic[1],
+      herb_lm_lps$fstatistic[2],
+      herb_lm_lps$fstatistic[3],
+      lower.tail = FALSE
+    ),
+    pf(
+      herb_lm_lma$fstatistic[1],
+      herb_lm_lma$fstatistic[2],
+      herb_lm_lma$fstatistic[3],
+      lower.tail = FALSE
+    ),
+    pf(
+      herb_lm_sdi$fstatistic[1],
+      herb_lm_sdi$fstatistic[2],
+      herb_lm_sdi$fstatistic[3],
+      lower.tail = FALSE
+    )
+  )
+) 
+
+# E-low treatment
+regrex_elow <- data.table(
+  LFTs = c(
+    "Anthocyanins (ACI)",
+    "Leaf Thickness (LT) (\U00B5m)",
+    "Leaf Punch Strength (LPS)(N mm^-1)",
+    "Leaf Mass per Area (LMA)(mg/mm)",
+    "Shannon Diversity Index"
+  ),
+  Treatment = "E-low",
+  Leaf_damage = c("Pathogen Damage (%)"),
+  "R^2^~adj~" = c(
+    patho_lm_aci$adj.r.squared,
+    patho_lm_lt$adj.r.squared,
+    patho_lm_lps$adj.r.squared,
+    patho_lm_lma$adj.r.squared,
+    patho_lm_sdi$adj.r.squared
+  ),
+  
+  "F-value" = c(
+    patho_lm_aci$fstatistic[1],
+    patho_lm_lt$fstatistic[1],
+    patho_lm_lps$fstatistic[1],
+    patho_lm_lma$fstatistic[1],
+    patho_lm_sdi$fstatistic[1]
+  ),
+  
+  "p-value" = c(
+    pf(
+      patho_lm_aci$fstatistic[1],
+      patho_lm_aci$fstatistic[2],
+      patho_lm_aci$fstatistic[3],
+      lower.tail = FALSE
+    ),
+    pf(
+      patho_lm_lt$fstatistic[1],
+      patho_lm_lt$fstatistic[2],
+      patho_lm_lt$fstatistic[3],
+      lower.tail = FALSE
+    ),
+    pf(
+      patho_lm_lps$fstatistic[1],
+      patho_lm_lps$fstatistic[2],
+      patho_lm_lps$fstatistic[3],
+      lower.tail = FALSE
+    ),
+    pf(
+      patho_lm_lma$fstatistic[1],
+      patho_lm_lma$fstatistic[2],
+      patho_lm_lma$fstatistic[3],
+      lower.tail = FALSE
+    ),
+    pf(
+      patho_lm_sdi$fstatistic[1],
+      patho_lm_sdi$fstatistic[2],
+      patho_lm_sdi$fstatistic[3],
+      lower.tail = FALSE
+    )
+  )
+)
+
+# All observations
+regrex_all <- rbind(regrex_ehigh, regrex_elow)
+
+regrex_all %>%
+  gt(groupname_col = "Treatment",
+    row_group_as_column = TRUE)
+
+  tab_row_group(
+    group = "Treatment",
+    rows = c(1, 6)
+  )
+
+
+```
+
 
 # Appendix S1
 
