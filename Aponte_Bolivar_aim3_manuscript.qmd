@@ -2071,30 +2071,27 @@ table1_ggplot <- data %>%
     "LFT distribution" = list(Values)
   ) %>%
   gt() %>%
-  tab_options(
-    table.align = "center"
-  ) %>%
-  tab_style(
-    style = cell_text(weight = "bold"),
-    locations = cells_column_labels(columns = everything())
-  ) %>%
-  tab_style(
-    style = cell_text(weight = "bold"),
-    locations = cells_row_groups(groups = everything())
-  ) %>%
-  tab_style(
-    style = cell_text(style = "italic"),
-    locations = cells_body(columns = "Species")
-  ) %>%
-  tab_style(
-    style = cell_text(align = "center"),
-    locations = cells_body(columns = c("Observations", "Number of seedlings", "E-high seedlings", "E-low seedlings"))
-  ) %>%
+  tab_options(table.align = "center") %>%
+  tab_style(style = cell_text(weight = "bold"),
+            locations = cells_column_labels(columns = everything())) %>%
+  tab_style(style = cell_text(weight = "bold"),
+            locations = cells_row_groups(groups = everything())) %>%
+  tab_style(style = cell_text(style = "italic"),
+            locations = cells_body(columns = "Species")) %>%
+  tab_style(style = cell_text(align = "center"),
+            locations = cells_body(
+              columns = c(
+                "Observations",
+                "Number of seedlings",
+                "E-high seedlings",
+                "E-low seedlings"
+              )
+            )) %>%
   tab_footnote(
     footnote = "LFT = leaf functional traits. Outliers have been removed to better visualize distribution of LFT values.",
-  locations = cells_column_labels(columns = "LFT distribution"),
-  placement = "auto"
-) %>%
+    locations = cells_column_labels(columns = "LFT distribution"),
+    placement = "auto"
+  ) %>%
   opt_footnote_marks(marks = "standard") %>%
   gt_plt_dist(
     "LFT distribution",
@@ -2106,7 +2103,11 @@ table1_ggplot <- data %>%
     # changed color for a little more visibility of the bins
     line_color = "black"
   ) %>%
-   tab_caption(caption = md("**Table 1: Summary statistics for leaf functional traits (LFTs) across host tree species**"))
+  tab_header(
+    title = md(
+      "**Table 1: Summary statistics for leaf functional traits (LFTs) across host tree species**"
+    )
+  )
 
 table1_ggplot
 
@@ -2176,8 +2177,8 @@ table2 <- gt(anova_table1) |>
     locations = cells_body(column = `Term`, rows = `Term` == "Residuals")
   ) |>
   sub_missing(columns = 4, missing_text = "-") |>
-  tab_caption(
-    caption = md(
+  tab_header(
+    title = md(
       "**Table 2: Permutational ANOVA for the best-fit dbRDA model with all host species**"
     )
   )
@@ -2187,246 +2188,7 @@ table2
 gtsave(table2, "tables/Aponte_Bolivar_table2.html")
 ```
 
-
-
 ## Table 3
-
-```{r}
-#| echo: false
-#| eval: true
-#| tidy: true
-#| warning: false
-#| label: tbl-tableGLMM
-#| tbl-cap:  "Generalized linear mixed models (GLMMs) for predicting leaf herbivory and pathogenicity"
-# Optimizers
-ctrl <- lmeControl(opt = "optim")
-ctrl2 <- lmeControl(opt = "nlminb")
-
-# M3REM
-# M3REM Best fit model after model selection. See Aim3_leaftraits_Statistical_Analyses.qmd for details.
-M3REM <- lme(
-  logit_herbivory ~ Thickness + LMA + E_load,
-  weights = varIdent(form = ~ 1 | Species),
-  random = ~ 1 | Species,
-  method = "REML",
-  control = ctrl,
-  data = masterant2,
-  na.action = na.exclude
-)
-
-# summary(M3REM)
-# AIC(M3REM) #741.7852 as of 30/OCT/2023
-
-# P3REM
-# Best fit model after model selection. See Aim3_leaftraits_Statistical_Analyses.qmd for details.
-P3REM <- lme(
-  logit_pathogenicity ~ LMA + Thickness,
-  weights = varIdent(form = ~ 1 | Species),
-  random = ~ 1 |
-    Species / E_load / Treatment,
-  method = "REML",
-  control = ctrl,
-  data = masterpat2,
-  na.action = na.exclude
-)
-# summary(P3REM)
-# AIC(P3REM) #1011.239 as of 30/OCT/2023
-
-# save(M3REM, P3REM, file = "./clean_data/glmm_models.rda")
-
-### Phylogenetic correction ### See Aim3_leaf_traits_statistical_analyses.qmd for more info on model selection. 
-# Species list organized by matrix order
-species_list <- c("CORDAL",
-                  "HEISCO",
-                  "THEOCA",
-                  "CHRYCA",
-                  "DYPTE",
-                  "LACPA",
-                  "APEIME")
-
-# Load phylogenetic tree
-phylo_tree <- ape::read.tree("clean_data/phylogeny/iqtree_results/all_species_rbcL_aligned.fasta.treefile")  
-
-# Change tip labels to species acronyms
-phylo_tree[["tip.label"]] <- species_list
-
-# Compute the covariance matrix
-phylo_vcv <- vcv(phylo_tree, corr = TRUE)  # Compute the covariance matrix
-
-phylo_vcv_clean <- as.matrix(phylo_vcv) %>%
-  as.data.frame
-
-# Create a phylogenetic correlation structure (Pagel's “lambda” Correlation Structure)
-phylo_cor <- corPagel(1, phy = phylo_tree, form = ~ Species)
-# Assuming a λ  of 1 (full phylogenetic effect)
-
-# Models with phylogenetic correction based on Rviewer 1 from Functional Ecology
-# Hebivory models
-## Fit the model
-phylo_herbivory_REML <- lme(
-  logit_herbivory ~ Thickness + LMA + E_load,
-  weights = varIdent(form = ~ 1 | Species),
-  random = ~ 1 | Species,
-  correlation = phylo_cor,
-  method = "REML",
-  control = ctrl,
-  data = masterant2,
-  na.action = na.exclude
-)
-
-# Pathogen models
-## Fit the model
-phylo_pathogen_REML <- lme(
-  logit_pathogenicity ~ LMA + Thickness,
-  # weights = varIdent(form = ~ 1 | Species),
-  random = ~ 1 | Species / E_load / Treatment,
-  correlation = phylo_cor,
-  method = "REML",
-  control = ctrl,
-  data = masterpat2,
-  na.action = na.exclude
-)
-
-## Evaluating model
-# AIC(PHY_HREM) # 623.1469
-# AIC(PHY_PREM) # 903.0283
-
-
-
-# # Significance stars
-# makeStars <- function(x){
-#   stars <- c("****", "***", "**", "*", "ns")
-#   vec <- c(0, 0.0001, 0.001, 0.01, 0.05, 1)
-#   i <- findInterval(x, vec)
-#   stars[i]
-# }
-
-# Using `huxtable` package to create the same table
-
-# Thick borders for table
-thick <- fp_border(color = "black", style = "solid", width = 2)
-
-# Table with `huxtable` package
-table3 <- huxreg(
-  "Herbivory model" = phylo_herbivory_REML,
-  "Pathogen damage model" = phylo_pathogen_REML,
-  coefs = c(
-    "Intercept" = "(Intercept)",
-    "Thickness" = "Thickness",
-    "LMA" = "LMA",
-    "Endophyte load (E+)" = "E_loadE+"
-  ),
-  error_pos = "right",
-  error_format = "({conf.low} - {conf.high} ) [{statistic}]",
-  number_format = "%.3f",
-  align = ".",
-  ci_level = 0.95,
-  tidy_args = list(conf.int = TRUE, effects = "fixed"),
-  stars = c(`***` = 0.001, `**` = 0.01, `*` = 0.05),
-  bold_signif = 0.05,
-  borders = 0.4,
-  outer_borders = 0.8,
-  note = "Significance levels are represented by asterisks [p < 0.05 (*), p < 0.01 (**), p < 0.001 (***), and p < 0.0001 (****)]. T-statistics in brackets.",
-  statistics = c("N" = "nobs", "logLik", "AIC")
-) |>
-  insert_row("Predictors",
-             "Estimate",
-             "CI [t-statistic]",
-             "Estimate",
-             "CI [t-statistic]",
-             after = 1) |>
-  insert_row("Fixed effects",
-             "",
-             "",
-             "",
-             "",
-             after = 2,
-             copy_cell_props = FALSE) |>
-  insert_row("Random effects", "", "", "", "", after = 7) |>
-  set_all_padding(4) |>
-  set_outer_padding(0) |>
-  set_bold(row = 1, col = everywhere) |>
-  # set_bottom_border(row = 1, col = everywhere) |>
-  set_width(1.1) |>
-  theme_article() |> # flextable::theme_apa() is good too.
-  huxtable::as_flextable(column_to_header = TRUE) |>
-  hline_top(part = "body", border = thick) |>
-  hline(2,
-        part = "body",
-        border = fp_border(
-          color = "black",
-          style = "solid",
-          width = 1
-        )) |>
-  hline(3,
-        part = "body",
-        border = fp_border(
-          color = "black",
-          style = "solid",
-          width = 0
-        )) |>
-  hline(11,
-        part = "body",
-        border = fp_border(
-          color = "black",
-          style = "solid",
-          width = 1
-        )) |>
-  hline(8, part = "all", border = thick) |>
-  hline(
-    i = 1,
-    j = c(2:3, 4:5),
-    part = "body",
-    border = fp_border(
-      color = "black",
-      style = "solid",
-      width = 1
-    )
-  ) |>
-  flextable::align(j = 2:5, align = "center", part = "body") |>
-  flextable::style(i = c(1:12),
-                   j = 1,
-                   pr_t = fp_text(bold = FALSE)) |>
-  flextable::italic(
-    i = c(3, 8),
-    j = 1,
-    italic = TRUE,
-    part = "body"
-  ) |>
-  flextable::bold(
-    i = c(3, 8),
-    j = 1,
-    bold = TRUE,
-    part = "body"
-  ) |>
-  flextable::set_caption(
-    "Generalized linear mixed models (GLMMs) for predicting leaf herbivory and pathogen damage"
-  ) |>
-  flextable::font(
-    i = NULL,
-    j = NULL,
-    fontname = "Tex Gyre Termes",
-    part = "all",
-    cs.family = fontname,
-    hansi.family = fontname,
-    eastasia.family = fontname
-  )
-
-table3
-
-# Final editing of the table will be completed in text editor.
-# In text editor Random effects coefficients will be added for both models using
-summary(phylo_herbivory_REML)
-phylo_herbivory_REML[["coefficients"]][["random"]][["Species"]]
-
-summary(phylo_pathogen_REML)
-phylo_pathogen_REML[["coefficients"]][["random"]][["Species"]]
-
-# save_as_html(table3, path = "tables/Aponte_Bolivar_table3.html")
-# save_as_docx(table2, path = "tables/Aponte_Bolivar_table3.docx")
-```
-
-## Table 4
 
 ```{r}
 #| echo: false
@@ -2906,7 +2668,7 @@ regrex_all <- rbind(
 
 
 # Table with all models
-table_4 <- regrex_all |>
+table3 <- regrex_all |>
   gt(
     groupname_col = c("type_damage", "data_set"),
     row_group_as_column = TRUE
@@ -2970,16 +2732,255 @@ table_4 <- regrex_all |>
     footnote = "Positive correlation denoted by upward light green arrow, negative correlation by downward light orange arrow.",
     placement = "auto"
   ) |>
-  tab_caption(
-    caption = md("**Table 4: Summary of simple linear regression models for predicting leaf herbivory and pathogen damage**")
+  tab_header(
+    title = md("**Table 3: Summary of simple linear regression models for predicting leaf herbivory and pathogen damage**")
   ) |>
   tab_footnote(
     footnote = "Models are separated by treatment and data set evaluated.",
     location = cells_title()
   )
 
-gtsave(table_4, "tables/Aponte_Bolivar_table4.html")
+gtsave(table3, "tables/Aponte_Bolivar_table3.html")
 ```
+
+
+## Table 4
+
+```{r}
+#| echo: false
+#| eval: true
+#| tidy: true
+#| warning: false
+#| label: tbl-tableGLMM
+#| tbl-cap:  "Generalized linear mixed models (GLMMs) for predicting leaf herbivory and pathogenicity"
+# Optimizers
+ctrl <- lmeControl(opt = "optim")
+ctrl2 <- lmeControl(opt = "nlminb")
+
+# M3REM
+# M3REM Best fit model after model selection. See Aim3_leaftraits_Statistical_Analyses.qmd for details.
+M3REM <- lme(
+  logit_herbivory ~ Thickness + LMA + E_load,
+  weights = varIdent(form = ~ 1 | Species),
+  random = ~ 1 | Species,
+  method = "REML",
+  control = ctrl,
+  data = masterant2,
+  na.action = na.exclude
+)
+
+# summary(M3REM)
+# AIC(M3REM) #741.7852 as of 30/OCT/2023
+
+# P3REM
+# Best fit model after model selection. See Aim3_leaftraits_Statistical_Analyses.qmd for details.
+P3REM <- lme(
+  logit_pathogenicity ~ LMA + Thickness,
+  weights = varIdent(form = ~ 1 | Species),
+  random = ~ 1 |
+    Species / E_load / Treatment,
+  method = "REML",
+  control = ctrl,
+  data = masterpat2,
+  na.action = na.exclude
+)
+# summary(P3REM)
+# AIC(P3REM) #1011.239 as of 30/OCT/2023
+
+# save(M3REM, P3REM, file = "./clean_data/glmm_models.rda")
+
+### Phylogenetic correction ### See Aim3_leaf_traits_statistical_analyses.qmd for more info on model selection. 
+# Species list organized by matrix order
+species_list <- c("CORDAL",
+                  "HEISCO",
+                  "THEOCA",
+                  "CHRYCA",
+                  "DYPTE",
+                  "LACPA",
+                  "APEIME")
+
+# Load phylogenetic tree
+phylo_tree <- ape::read.tree("clean_data/phylogeny/iqtree_results/all_species_rbcL_aligned.fasta.treefile")  
+
+# Change tip labels to species acronyms
+phylo_tree[["tip.label"]] <- species_list
+
+# Compute the covariance matrix
+phylo_vcv <- vcv(phylo_tree, corr = TRUE)  # Compute the covariance matrix
+
+phylo_vcv_clean <- as.matrix(phylo_vcv) %>%
+  as.data.frame
+
+# Create a phylogenetic correlation structure (Pagel's “lambda” Correlation Structure)
+phylo_cor <- corPagel(1, phy = phylo_tree, form = ~ Species)
+# Assuming a λ  of 1 (full phylogenetic effect)
+
+# Models with phylogenetic correction based on Rviewer 1 from Functional Ecology
+# Hebivory models
+## Fit the model
+phylo_herbivory_REML <- lme(
+  logit_herbivory ~ Thickness + LMA + E_load,
+  weights = varIdent(form = ~ 1 | Species),
+  random = ~ 1 | Species,
+  correlation = phylo_cor,
+  method = "REML",
+  control = ctrl,
+  data = masterant2,
+  na.action = na.exclude
+)
+
+# Pathogen models
+## Fit the model
+phylo_pathogen_REML <- lme(
+  logit_pathogenicity ~ LMA + Thickness,
+  # weights = varIdent(form = ~ 1 | Species),
+  random = ~ 1 | Species / E_load / Treatment,
+  correlation = phylo_cor,
+  method = "REML",
+  control = ctrl,
+  data = masterpat2,
+  na.action = na.exclude
+)
+
+## Evaluating model
+# AIC(PHY_HREM) # 623.1469
+# AIC(PHY_PREM) # 903.0283
+
+
+
+# # Significance stars
+# makeStars <- function(x){
+#   stars <- c("****", "***", "**", "*", "ns")
+#   vec <- c(0, 0.0001, 0.001, 0.01, 0.05, 1)
+#   i <- findInterval(x, vec)
+#   stars[i]
+# }
+
+# Using `huxtable` package to create the same table
+
+# Thick borders for table
+thick <- fp_border(color = "black", style = "solid", width = 2)
+
+# Table with `huxtable` package
+table4 <- huxreg(
+  "Herbivory model" = phylo_herbivory_REML,
+  "Pathogen damage model" = phylo_pathogen_REML,
+  coefs = c(
+    "Intercept" = "(Intercept)",
+    "Thickness" = "Thickness",
+    "LMA" = "LMA",
+    "Endophyte load (E+)" = "E_loadE+"
+  ),
+  error_pos = "right",
+  error_format = "({conf.low} - {conf.high} ) [{statistic}]",
+  number_format = "%.3f",
+  align = ".",
+  ci_level = 0.95,
+  tidy_args = list(conf.int = TRUE, effects = "fixed"),
+  stars = c(`***` = 0.001, `**` = 0.01, `*` = 0.05),
+  bold_signif = 0.05,
+  borders = 0.4,
+  outer_borders = 0.8,
+  note = "Significance levels are represented by asterisks [p < 0.05 (*), p < 0.01 (**), p < 0.001 (***), and p < 0.0001 (****)]. T-statistics in brackets.",
+  statistics = c("N" = "nobs", "logLik", "AIC")
+) |>
+  insert_row("Predictors",
+             "Estimate",
+             "CI [t-statistic]",
+             "Estimate",
+             "CI [t-statistic]",
+             after = 1) |>
+  insert_row("Fixed effects",
+             "",
+             "",
+             "",
+             "",
+             after = 2,
+             copy_cell_props = FALSE) |>
+  insert_row("Random effects", "", "", "", "", after = 7) |>
+  set_all_padding(4) |>
+  set_outer_padding(0) |>
+  set_bold(row = 1, col = everywhere) |>
+  # set_bottom_border(row = 1, col = everywhere) |>
+  set_width(1.1) |>
+  theme_article() |> # flextable::theme_apa() is good too.
+  huxtable::as_flextable(column_to_header = TRUE) |>
+  hline_top(part = "body", border = thick) |>
+  hline(2,
+        part = "body",
+        border = fp_border(
+          color = "black",
+          style = "solid",
+          width = 1
+        )) |>
+  hline(3,
+        part = "body",
+        border = fp_border(
+          color = "black",
+          style = "solid",
+          width = 0
+        )) |>
+  hline(11,
+        part = "body",
+        border = fp_border(
+          color = "black",
+          style = "solid",
+          width = 1
+        )) |>
+  hline(8, part = "all", border = thick) |>
+  hline(
+    i = 1,
+    j = c(2:3, 4:5),
+    part = "body",
+    border = fp_border(
+      color = "black",
+      style = "solid",
+      width = 1
+    )
+  ) |>
+  flextable::align(j = 2:5, align = "center", part = "body") |>
+  flextable::style(i = c(1:12),
+                   j = 1,
+                   pr_t = fp_text(bold = FALSE)) |>
+  flextable::italic(
+    i = c(3, 8),
+    j = 1,
+    italic = TRUE,
+    part = "body"
+  ) |>
+  flextable::bold(
+    i = c(3, 8),
+    j = 1,
+    bold = TRUE,
+    part = "body"
+  ) |>
+  flextable::set_caption(
+    "Generalized linear mixed models (GLMMs) for predicting leaf herbivory and pathogen damage"
+  ) |>
+  flextable::font(
+    i = NULL,
+    j = NULL,
+    fontname = "Tex Gyre Termes",
+    part = "all",
+    cs.family = fontname,
+    hansi.family = fontname,
+    eastasia.family = fontname
+  )
+
+table4
+
+# Final editing of the table will be completed in text editor.
+# In text editor Random effects coefficients will be added for both models using
+summary(phylo_herbivory_REML)
+phylo_herbivory_REML[["coefficients"]][["random"]][["Species"]]
+
+summary(phylo_pathogen_REML)
+phylo_pathogen_REML[["coefficients"]][["random"]][["Species"]]
+
+# save_as_html(table3, path = "tables/Aponte_Bolivar_table4.html")
+# save_as_docx(table2, path = "tables/Aponte_Bolivar_table4.docx")
+```
+
 
 
 # Appendix S1
