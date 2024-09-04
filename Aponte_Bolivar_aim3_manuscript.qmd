@@ -205,6 +205,9 @@ library(conflicted)
 conflict_prefer("select", "dplyr")
 conflict_prefer("filter", "dplyr")
 #conflict_prefer_all("phyloseq")
+
+# Format p-values
+source("functions/fmt_stars.R")
 ```
 
 
@@ -2124,31 +2127,64 @@ gtsave(table1_ggplot, "tables/Aponte_Bolivar_table1.html")
 
 anova_m3dbRDA <- readRDS(file.path(save.path, "/clean_data/anova_m3dbRDA.rds"))
 
-anova_table1 <- tidy(anova_m3dbRDA) %>%
-  as.data.frame() %>%
-  mutate("p-value" = str_replace_all(p.value, "0.0001", "****"), across(term, ~ gsub("_m", " (m)", .))) %>%
+anova_table1 <- tidy(anova_m3dbRDA) |>
+  as.data.frame() |>
+  # mutate("p-value" = str_replace_all(p.value, "0.0001", "****"), across(term, ~ gsub("_m", " (m)", .))) |>
   rename(
     Term = term,
     "Sum. of Sqs." = SumOfSqs,
     "F-statistic" = statistic,
-    "Df" = df
-  ) %>%
-  select(Term, Df, "Sum. of Sqs.", "F-statistic", "p-value")
-
-supptab_S1 <- gt(anova_table1) %>%
-  fmt_number(columns = vars("Sum. of Sqs.", "F-statistic"),
-             decimals = 2) %>%
-  fmt_number(columns = vars("Df"), decimals = 0) %>%
-  # tab_footnote(
-  #   footnote = md(
-  #     "Significance levels are represented by *ns* (not significant) and asterisks [*p* < .05 (\\*), *p* < .01 (\\*\\*), *p* < .001 (\\*\\*\\*), and *p* < .0001 (\\*\\*\\*\\*)]."
-  #   ),
-  #   locations = cells_column_labels(columns = "p-value")
-  # ) %>%
+    "Df" = df,
+    "p-value" = p.value
+  ) |>
+  select(Term, Df, "Sum. of Sqs.", "F-statistic", "p-value") |>
+  mutate(
+    Term = case_match(
+      Term,
+      "Anthocyanins" ~ "Anthocyanins (ACI)",
+      "Thickness" ~ "Leaf Thickness (LT) (\U00B5m)",
+      "Toughness" ~ "Leaf Punch Strength (LPS)(N mm^-1)",
+      "LMA" ~ "Leaf Mass per Area (LMA)(mg/mm)",
+      "E_load" ~ "Endophyte load (High/Low)",
+      "Residual" ~ "Residuals"
+    )
+  ) 
+table2 <- gt(anova_table1) |>
+  fmt_stars(columns = c("p-value")) |>
+  fmt_number(columns = c("Sum. of Sqs.", "F-statistic"),
+             decimals = 2) |>
+  fmt_number(columns = c("Df"), decimals = 0) |>
+  cols_label(`F-statistic` = md("*F*-statistic"),
+             `p-value` = md("*p*-value")) |>
+  tab_footnote(
+    footnote = md(
+      "Significance levels are represented by *ns* (not significant) and asterisks [*p* < .05 (\\*), *p* < .01 (\\*\\*), *p* < .001 (\\*\\*\\*), and *p* < .0001 (\\*\\*\\*\\*)]."
+    ),
+    locations = cells_column_labels(columns = "p-value")
+  ) |>
   tab_style(style = cell_text(weight = "bold"),
-            locations = cells_column_labels(columns = everything()))
+            locations = cells_column_labels(columns = everything())) |>
+  tab_style(
+    style = cell_text(weight = "bold"),
+    locations = cells_body(
+      columns = c(`Df`, `Sum. of Sqs.`, `F-statistic`, `p-value`),
+      rows = `p-value` < 0.05
+    )
+  ) |>
+  tab_style(
+    style = cell_text(style = "italic"),
+    locations = cells_body(column = `Term`, rows = `Term` == "Residuals")
+  ) |>
+  sub_missing(columns = 4, missing_text = "-") |>
+  tab_caption(
+    caption = md(
+      "**Table 2: Permutational ANOVA for the best-fit dbRDA model with all host species**"
+    )
+  )
 
-supptab_S1
+table2
+
+gtsave(table2, "tables/Aponte_Bolivar_table2.html")
 ```
 
 
@@ -2271,7 +2307,7 @@ phylo_pathogen_REML <- lme(
 thick <- fp_border(color = "black", style = "solid", width = 2)
 
 # Table with `huxtable` package
-table2 <- huxreg(
+table3 <- huxreg(
   "Herbivory model" = phylo_herbivory_REML,
   "Pathogen damage model" = phylo_pathogen_REML,
   coefs = c(
@@ -2376,7 +2412,7 @@ table2 <- huxreg(
     eastasia.family = fontname
   )
 
-table2
+table3
 
 # Final editing of the table will be completed in text editor.
 # In text editor Random effects coefficients will be added for both models using
@@ -2386,7 +2422,8 @@ phylo_herbivory_REML[["coefficients"]][["random"]][["Species"]]
 summary(phylo_pathogen_REML)
 phylo_pathogen_REML[["coefficients"]][["random"]][["Species"]]
 
-# save_as_docx(table2, path = "./tables/Aim3_table2_phylogenetic_review.docx")
+# save_as_html(table3, path = "tables/Aponte_Bolivar_table3.html")
+# save_as_docx(table2, path = "tables/Aponte_Bolivar_table3.docx")
 ```
 
 ## Table 4
@@ -2867,8 +2904,6 @@ regrex_all <- rbind(
   regrex_patho_elow
 )
 
-# Format p-values
-source("functions/fmt_stars.R")
 
 # Table with all models
 table_4 <- regrex_all |>
