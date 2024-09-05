@@ -1,5 +1,5 @@
 ---
-title: "Evaluating the Role of Endophyte-Rich Leaves in Protecting Tropical Trees Against a Generalist Herbivore and a Pathogen"
+title: "Evaluating Endophyte-Rich Leaves and Leaf Functional Traits’ Role in Protecting Tropical Trees Against a Generalist Herbivore and a Pathogen"
 date: today
 bibliography: references.yaml
 #csl: functional-ecology.csl
@@ -401,7 +401,7 @@ Leaf thickness and LMA have opposite outcomes in plants' response to herbivory. 
 <!-- 1) Leaf-cutter ants and *Calonectria* sp. would cause less leaf damage (herbivory through leaf tissue removal and leaf necrosis through pathogen infection, respectively) on leaves with higher FEF abundance, richness and diversity; -->
 
 <!-- 2.  How do leaf functional traits differ between FEF high and low treatments? -->
-<!-- 2) Tree species with leaf functional traits on the low end of the economic spectrum (e.g., lower leaf mass per area) would have less herbivory and pathogen damage when treated with high FEF loads (*E-high*) compared to their low FEF counterparts (*E-low*);  -->
+<!-- 2) ;  -->
 
 <!-- 3.  What is the relationship between FEF abundance, richness, diversity and species composition and herbivory and pathogen damage? -->
 <!-- 3) Conversely, tree species with leaf functional traits of the high side of the economic spectrum (e.g., greater leaf mass per area) treated with high FEF loads (*E-high*) would have no differences in herbivory and pathogen damage compared to their low FEF counterparts (*E-low*). -->
@@ -410,15 +410,15 @@ Leaf thickness and LMA have opposite outcomes in plants' response to herbivory. 
 <!-- 4) we anticipated that leaves with leaf functional traits on the high end of the economic spectrum would be experience less herbivory by leaf-cutter ants, but low FEF loads (*E-low*) in them could increase allurement. -->
 
 
-This is the first study to examine the interplay of FEF communities and LFTs in response to the effects of a generalist herbivore and a pathogen in tropical tree species. Integrating the role of FEF communities into a conceptual framework that includes trade-offs to plants' constitutive and induced defenses in response to natural enemies helps us understand the importance of FEF communities in the maintenance of plant diversity in tropical forests. Our findings suggest that foliar endophytic fungi (FEF) communities and leaf traits work to improve leaf defenses against generalist herbivores and pathogens in tropical trees. Across all host species, we saw that the *E-high* treatment group exhibited lower herbivory damage than the *E-low* treatment group. At the host species level, we saw that *E-high* had less herbivory damage, however these differences were not significant between treatment groups. This is probably due to a small replicate size in treated individuals per species used in herbivory assay trials. Our results align with Estrada et al., [-@estrada2013], where leaf-cutter ant effects were significantly reduced in paper disks and leaves treated with higher densities of a common endophyte. In a laboratory setting, Bittleston et al., [-@bittleston2011] found similar patterns in herbivory reduction using *C. alliodora* treated with high and low FEF loads and laboratory reared colonies of *Atta colombica*. In a field study, Coblentz and Van Bael [-@coblentz2013] found that leaf-cutter ants preferred leaves with a lower FEF abundance when compared to surrounding leaf material (material not selected by ants). Rocha et al. [-@rocha2017], found endophytic *Trichoderma* more frequently isolated from leaf cuttings rejected by queen-less leaf-cutter ant colonies of *A. sexdens rubropilosa* in southeast Brazil. Our results track findings from previous studies that focus on single host-endophyte interactions or haphazard field collection and build upon them by using multiple host tree species and field inoculated FEF communities. 
+This is the first study to examine the interplay of FEF communities and LFTs in response to the effects of a generalist herbivore and a pathogen in tropical tree species. Integrating the role of FEF communities into a conceptual framework that includes trade-offs to plants' constitutive and induced defenses in response to natural enemies helps us understand the importance of FEF communities in the maintenance of plant diversity in tropical forests. Our findings suggest that foliar endophytic fungi (FEF) communities and leaf traits work to improve leaf defenses against generalist herbivores and pathogens in tropical trees. Across all host species, we saw that the *E-high* treatment group exhibited lower herbivory damage than the *E-low* treatment group. This is in partial support to our prediction that leaf-cutter ants cause less leaf damage in plants with higher FEF abundance; it is less clear how higher level of FEF richness and diversity influence leaf herbivory. At the host species level, we saw that *E-high* had less herbivory damage, however these differences were not significant between treatment groups. This is probably due to a small replicate size in treated individuals per species used in herbivory assay trials. Our results align with Estrada et al., [-@estrada2013], where leaf-cutter ant effects were significantly reduced in paper disks and leaves treated with higher densities of a common endophyte. In a laboratory setting, Bittleston et al., [-@bittleston2011] found similar patterns in herbivory reduction using *C. alliodora* treated with high and low FEF loads and laboratory reared colonies of *Atta colombica*. In a field study, Coblentz and Van Bael [-@coblentz2013] found that leaf-cutter ants preferred leaves with a lower FEF abundance when compared to surrounding leaf material (material not selected by ants). Rocha et al. [-@rocha2017], found endophytic *Trichoderma* more frequently isolated from leaf cuttings rejected by queen-less leaf-cutter ant colonies of *A. sexdens rubropilosa* in southeast Brazil. Our results track findings from previous studies that focus on single host-endophyte interactions or haphazard field collection and build upon them by using multiple host tree species and field inoculated FEF communities. 
 
-Our GLMM analysis allowed us to look at FEF and leaf traits at the same time; for herbivory damage we observed only LMA, LT and *E-high* treatment group as strong predictors (@tbl-tableGLMM). Using data from all the assays in simple linear regressions, FEF diversity and community composition correlated negatively with herbivory damage, since we saw reduced herbivory as Shannon diversity index increased (black regression line in Figure S7e). As a caveat to these results, we saw an inverse relationship between the treatment groups with the *E-high* group positively correlating to herbivory and *E-low* group negatively correlating to herbivory (yellow and pink regression lines, respectively, in Figure S7e). The contrast between GLMM and simple linear regressions point to the nuanced role of FEF diversity in combating herbivory; LFTs, LMA and LT, overshadowed FEF diversity in our results. The FEF abundance, measured as *E-high* treatment group, also played a strong role in predicting herbivory, but less so diversity and community composition. <!-- Given consistent preference by leaf-cutter ants [@bittleston2011; @coblentz2013; @estrada2013], we interpret our results as evidence for a threshold of diminishing returns for the host plant, were the acquisition of more FEF increases the chances of hosting a community that does not deter leaf-cutter ants. From the perspective of the leaf-cutter ants, everything is equally infected and the cost of allocating new resources is taxing. It highlights a trade-off in the presumably asymptomatic symbiosis host species have with FEF communities. -->
+The leaf economic spectrum (LES) provides a framework for interpreting results based on the functional traits that can have an important role in understanding tripartite plant-insect-pathogen interaction. The LES describes how LFTs with high values are characteristic of long-lived versus short-lived leaves [@wright2004, @kitajima2013, @poorter2006]. The LES, thus acts as a host-imposed filter which FEF communities must overcome to colonize leaf tissue, assemble, and carry out their life cycle. Though this lens we found partial support for predictions: 2) *tree species with leaf functional traits on the low end of the LES would have less herbivory and pathogen damage when treated with high FEF loads (*E-high*) compared to their low FEF counterparts (*E-low*)*; and 3) *tree species with leaf functional traits of the high side of the LES treated with high FEF loads (*E-high*) would have no differences in herbivory and pathogen damage compared to their low FEF counterparts (*E-low*)*. While we did not measure leaf lifespan directly, we interpret the values obtained for the LFTs we measured as proxies for leaf lifespan, with the caveat that the traits were measured on seedlings and leaves were relatively young (\< 150 days). We saw that species with relatively low values of ACI, LMA, and LPS (Figures S2 - S5) constrained in the PC1 axis (Figure 4b) experienced very little herbivory damage (i.e., *Dypteryx* sp.) or had much variability (i.e., *C. alliodora*) (Figure 5a). Species with relatively high values of ACI, LMA, and LPS like *C. cainito* experienced low to moderate herbivory damage (Figure 5a). We view these findings and those presented in Figure S7 as support for prediction 4) *leaves on the high end of the LES, are less attractive to leaf cutter-ants but the effects of FEF communities outweigh this selection factor* after a certain threshold is reached, as mentioned above. A similar pattern was evident in the pathogen damage data set (Figure 5c). The contrast in the slopes of the regression lines in Figure 5a and 5c highlight the potential importance LES traits have to counter herbivory and pathogen damage. 
 
-We did not observe the same pattern for pathogen damage since there were no significant differences between treatment groups when considering all tree species combined (Figure 2b). Like herbivory damage, pathogen damage was not significantly different across treatment groups per species. Interestingly we saw that the *E-high* group had equal or slightly higher pathogen damage than the *E-low* group in all tree species (Figure S6b). The best-fit GLMM for pathogen damage showed LMA and LT as weak predictors (@tbl-tableGLMM). On the other hand, with simple linear regressions we saw a significant increase in pathogen damage as Shannon diversity index increased for the complete data set (Figure S8e). Like our herbivory damage models, the contrast between GLMM and simple linear regression point to a nuanced role of FEF abundance and diversity in combating a pathogen. Pathogen damage significantly increased in the *E-high* group as Shannon diversity increased, but the *E-low* group did not (Figure S8e). González-Tauber [-@gonzalez-teuber2016] found the opposite trend when examining *in vitro* the inhibitory effects of the most abundant genera (*Mycosphaerella* sp., *Xylaria* sp., *Diaporthe* sp., and *Penicillium* sp.) in FEF communities isolated from the southern temperate tree *Embothrium coccineum* against three common pathogens (*Botrytis cinerea*, *Fusarium oxysporum* and *Ceratocystis pilifera*). In our case, it is possible that the FEF abundance and diversity acquired from spore-fall have a synergistic interaction with *Calonectria* sp., thus outweighing any benefits provided by single-species interactions, ultimately increasing pathogen damage intensity.
+Our GLMM analysis allowed us to look at FEF and leaf traits at the same time; for herbivory damage we observed only LMA, LT and *E-high* treatment group as strong predictors (@tbl-tableGLMM). Using data from all the assays in simple linear regressions, FEF diversity and community composition correlated negatively with herbivory damage, since we saw reduced herbivory as Shannon diversity index increased (@tbl-linearreg; black regression line in Figure S7e). As a caveat to these results, we saw an inverse relationship between the treatment groups with the *E-high* group positively correlating to herbivory and *E-low* group negatively correlating to herbivory (@tbl-linearreg; yellow and pink regression lines, respectively, in Figure S7e). The contrast between GLMM and simple linear regressions point to the nuanced role of FEF diversity in combating herbivory; LFTs, LMA and LT, overshadowed FEF diversity in our results. The FEF abundance, measured as *E-high* treatment group, also played a strong role in predicting herbivory, but less so diversity and community composition. <!-- Given consistent preference by leaf-cutter ants [@bittleston2011; @coblentz2013; @estrada2013], we interpret our results as evidence for a threshold of diminishing returns for the host plant, were the acquisition of more FEF increases the chances of hosting a community that does not deter leaf-cutter ants. From the perspective of the leaf-cutter ants, everything is equally infected and the cost of allocating new resources is taxing. It highlights a trade-off in the presumably asymptomatic symbiosis host species have with FEF communities. -->
 
-The leaf economic spectrum (LES) allows us to interpret our results based on the functional traits that can have an important role in understanding tripartite plant-insect-pathogen interaction. The LES describes how LFTs with high values are characteristic of long-lived versus short-lived leaves [@wright2004, @kitajima2013, @poorter2006]. The LES, thus acts as a host-imposed filter which FEF communities must overcome to colonize leaf tissue, assemble, and carry out their life cycle. We did not measure leaf lifespan directly, but we interpret the values obtained for the LFTs we measured as proxies for leaf lifespan, with the caveat that the traits were measured on seedlings and leaves were relatively young (\< 150 days). We saw that species with relatively low values of ACI, LMA, and LPS (Figures S2 - S5) constrained in the PC1 axis (Figure 4b) experienced very little herbivory damage (i.e., *Dypteryx* sp.) or had much variability (i.e., *C. alliodora*) (Figure 5a). Species with relatively high values of ACI, LMA, and LPS like *C. cainito* experienced low to moderate herbivory damage (Figure 5a). A similar pattern was evident in the pathogen damage data set (Figure 5c). The contrast in the slopes of the regression lines in Figure 5a and 5c highlight the potential importance LES traits have to counter herbivory and pathogen damage. We view these findings and those presented in Figure S7 as support for our prediction, where leaves on the high end of the LES, are less attractive to leaf cutter-ants but the effects of FEF communities outweigh this selection factor after a certain threshold is reached, as mentioned above.
+We did not observe the same pattern for pathogen damage since there were no significant differences between treatment groups when considering all tree species combined (Figure 2b). Like herbivory damage, pathogen damage was not significantly different across treatment groups per species. Interestingly we saw that the *E-high* group had equal or slightly higher pathogen damage than the *E-low* group in all tree species (Figure S6b). The best-fit GLMM for pathogen damage showed LMA and LT as weak predictors (@tbl-tableGLMM). On the other hand, with simple linear regressions we saw a significant increase in pathogen damage as Shannon diversity index increased for the complete data set (@tbl-linearreg and Figure S8e). Like our herbivory damage models, the contrast between GLMM and simple linear regression point to a nuanced role of FEF abundance and diversity in combating a pathogen. Pathogen damage significantly increased in the *E-high* group as Shannon diversity increased, but the *E-low* group did not (@tbl-linearreg and Figure S8e). González-Tauber [-@gonzalez-teuber2016] found the opposite trend when examining *in vitro* the inhibitory effects of the most abundant genera (*Mycosphaerella* sp., *Xylaria* sp., *Diaporthe* sp., and *Penicillium* sp.) in FEF communities isolated from the southern temperate tree *Embothrium coccineum* against three common pathogens (*Botrytis cinerea*, *Fusarium oxysporum* and *Ceratocystis pilifera*). In our case, it is possible that the FEF abundance and diversity acquired from spore-fall have a synergistic interaction with *Calonectria* sp., thus outweighing any benefits provided by single-species interactions, ultimately increasing pathogen damage intensity. Arnold et al. [-@arnold2003] found significant differences in pathogen damage between *E-high* and *E-low* treatments groups of *T. cacao* when exposed to *Phytophthora* sp. Our study focused on the effect of a pathogen on relatively young leaves *versus* Arnold et al. [-@arnold2003] where they observed leaves from different life stages and the effects of the pathogen increased relative to leaf age. A lack of leaves at different life stages as well as a low sample size might explain the lack of differences in pathogen damage present in this study.  
 
-Comprehending the relationship between the Leaf Economic Spectrum (LES), plant defenses, and FEF communities is crucial for understanding the complex interactions among plants, insects, and pathogens. The Optimal Defense Theory (ODT), as outlined by Stamp [-@stamp2003], proposes three key predictions about plant defenses. First, a plant's defense investment is directly proportional to the frequency of attacks, such as herbivory or pathogen intensity, and inversely related to the cost of resources [@holeski2010]. Second, plants tend to allocate resources preferentially to parts with high reproductive value, especially when defense costs are minimal. Third, plants exhibit increased defensive responses after being attacked. This framework suggests that the likelihood of a plant to bolster its defenses following an attack is inversely related to its inherent defense traits [@holeski2010]. Our results point to a preemptive low-cost investment strategy against plant enemies, particularly at the seedling stage, that is leveraged by species specific inherent defense mechanisms. We did not track herbivory or pathogen damage past the seedling stage, so an avenue for inquiry is to investigate how FEF communities change after herbivore and pathogen attacks and to determine the key life stages. A combination of *in vitro* and *in vivo* assays could help elucidate the roles of specific FEF OTUs. The use of *in vitro* assays could help identify the potential anti-herbivore and anti-pathogen qualities of specific FEF OTUs. *In vivo* inoculation assays could help identify the importance that specific FEF OTUs have in different developmental stages, especially in older stages.
+Comprehending the relationship between the LES, plant defenses, and FEF communities is crucial for understanding the complex interactions among plants, insects, and pathogens. The Optimal Defense Theory (ODT), as outlined by Stamp [-@stamp2003], proposes three key predictions about plant defenses. First, a plant's defense investment is directly proportional to the frequency of attacks, such as herbivory or pathogen intensity, and inversely related to the cost of resources [@holeski2010]. Second, plants tend to allocate resources preferentially to parts with high reproductive value, especially when defense costs are minimal. Third, plants exhibit increased defensive responses after being attacked. This framework suggests that the likelihood of a plant to bolster its defenses following an attack is inversely related to its inherent defense traits [@holeski2010]. Our results point to a preemptive low-cost investment strategy against plant enemies, particularly at the seedling stage, that is leveraged by species specific inherent defense mechanisms. We did not track herbivory or pathogen damage past the seedling stage, so an avenue for inquiry is to investigate how FEF communities change after herbivore and pathogen attacks and to determine the key life stages. A combination of *in vitro* and *in vivo* assays could help elucidate the roles of specific FEF OTUs. The use of *in vitro* assays could help identify the potential anti-herbivore and anti-pathogen qualities of specific FEF OTUs. *In vivo* inoculation assays could help identify the importance that specific FEF OTUs have in different developmental stages, especially in older stages.
 
 # Conclusion
 
@@ -1122,7 +1122,7 @@ lfts <- ndata2 |>
 #| warning: false
 #| fig.width: 6.5
 #| fig.height: 6
-#| fig.cap: "FEF community composition was associated with leaf functional traits (LFTs) from the leaf economic spectrum (LES) (genomic data set). Variation in FEF community composition within and between host species (*n* = 7) and treatment groups (*E*-, *E*+) from distance-based redundancy analyses (dbRDA). Solid black arrows represent statistically significant associations (*p* <.01). The arrows are displayed at double their actual size to enhance visual clarity. Each point represents a FEF community sample from one host tree species per treatment group; colors represent host tree species. Circles and filled triangles represent low (*E*-) and high (*E*+) FEF treatment groups, respectively."
+#| fig.cap: "FEF community composition was associated with leaf functional traits (LFTs) from the leaf economic spectrum (LES) (genomic data set). Variation in FEF community composition within and between host species (*n* = 7) and treatment groups (*E-low*, *E-high*) from distance-based redundancy analyses (dbRDA). Solid black arrows represent statistically significant associations (*p* <.01). The arrows are displayed at double their actual size to enhance visual clarity. Each point represents a FEF community sample from one host tree species per treatment group; colors represent host tree species. Circles and filled triangles represent low (*E-low*) and high (*E-high*) FEF treatment groups, respectively."
 
 # dbRDa with `dbrda` function. it can be calculated with `capscale` function too. VERY similar.
 # Best model selected with `ordistep` function
@@ -1953,7 +1953,13 @@ summa_t <-   master %>%
       na.exclude(Relative_Abundance)
     ), 3), " (±", round(sd(
       na.exclude(Relative_Abundance)
-    ), 3), ")")
+    ), 3), ")"),
+        "Min." = paste0(round(min(
+      na.exclude(Relative_Abundance)
+    ), 3)),
+        "Max." = paste0(round(max(
+      na.exclude(Relative_Abundance)
+    ), 3))
   ) %>%
   gt(rowname_col = "Treatment") %>%
   tab_options(
@@ -1983,7 +1989,7 @@ summa_t <-   master %>%
             locations = cells_body(columns = "Species")) %>%
   tab_header(
     title = md(
-      "**Table 1: Summary statistics for the relative abundance of endophytes across host tree species**"
+      "**Summary statistics for the relative abundance of endophytes across host tree species**"
     )
   )
   
@@ -1991,7 +1997,7 @@ table1 <- summa_t
 table1
 
 
-# gtsave(table1, "tables/Aponte_Bolivar_table1.html")
+gtsave(table1, "tables/Aponte_Bolivar_table1.html")
 ```
 
 ## Table 2
@@ -2192,13 +2198,13 @@ table2_ggplot <- data %>%
   ) %>%
   tab_header(
     title = md(
-      "**Table 2: Summary statistics for leaf functional traits (LFTs) across host tree species**"
+      "**Summary statistics for leaf functional traits (LFTs) across host tree species**"
     )
   )
 
 table2_ggplot
 
-# gtsave(table2_ggplot, "tables/Aponte_Bolivar_table2.html")
+gtsave(table2_ggplot, "tables/Aponte_Bolivar_table2.html")
 
 ```
 
@@ -2268,13 +2274,13 @@ table3 <- gt(anova_table1) |>
   sub_missing(columns = 4, missing_text = "-") |>
   tab_header(
     title = md(
-      "**Table 3: Permutational ANOVA for the best-fit dbRDA model with all host species**"
+      "**Permutational ANOVA for the best-fit dbRDA model with all host species**"
     )
   )
 
 table3
 
-# gtsave(table3, "tables/Aponte_Bolivar_table3.html")
+gtsave(table3, "tables/Aponte_Bolivar_table3.html")
 ```
 
 ## Table 4
@@ -2822,14 +2828,14 @@ table4 <- regrex_all |>
     placement = "auto"
   ) |>
   tab_header(
-    title = md("**Table 3: Summary of simple linear regression models for predicting leaf herbivory and pathogen damage**")
+    title = md("**Summary of simple linear regression models for predicting leaf herbivory and pathogen damage**")
   ) |>
   tab_footnote(
     footnote = "Models are separated by treatment and data set evaluated.",
     location = cells_title()
   )
 
-# gtsave(table4, "tables/Aponte_Bolivar_table4.html")
+gtsave(table4, "tables/Aponte_Bolivar_table4.html")
 ```
 
 
@@ -2951,7 +2957,7 @@ phylo_pathogen_REML <- lme(
 thick <- fp_border(color = "black", style = "solid", width = 2)
 
 # Table with `huxtable` package
-table4 <- huxreg(
+table5 <- huxreg(
   "Herbivory model" = phylo_herbivory_REML,
   "Pathogen damage model" = phylo_pathogen_REML,
   coefs = c(
