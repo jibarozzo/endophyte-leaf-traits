@@ -106,7 +106,7 @@ crossref:
     - kind: float
       key: suppfig
       latex-env: suppfig
-      reference-prefix: Fig. S
+      reference-prefix: Figure S
       space-before-numbering: false
       latex-list-of-description: Supplementary Figure
     
@@ -205,9 +205,6 @@ library(conflicted)
 conflict_prefer("select", "dplyr")
 conflict_prefer("filter", "dplyr")
 #conflict_prefer_all("phyloseq")
-
-# Format p-values
-source("functions/fmt_stars.R")
 ```
 
 
@@ -278,7 +275,7 @@ In preparation for DNA extraction, we decontaminated all instruments, materials,
 
 #### Mock Communities
 
-We processed and sequenced a mock community following the methods described above. We had two aims: to understand the relationship between read abundance and biological abundance, and to determine whether primer bias might exclude fungal lineages of interest from our sequence data. We used two mock communities that consisted of PCR product from DNA extractions of 32 phylogenetically distinct fungi, representing lineages that are typically observed as endophytes: Ascomycota, Basidiomycota, fungi traditionally classified as Zygomycota, and Chytridiomycota [@oita2021; see @daru2019 for details]. In brief, we sequenced six replicates of the mock community with equimolar concentrations of DNA from all 32 fungal taxa, and another six replicates of the mock communities with tiered concentrations of DNA from the same fungal taxa [see @daru2019]. Read abundance from tiered communities was positively associated with the expected read number (*R^2^~adj~* = 0.87, *p* \< .0001, see Fig. S9), and all major fungal lineages present in the mock community were detected (data not shown).  Henceforth, we used read abundance as a relevant proxy for biological OTU abundance [@uren2019].
+We processed and sequenced a mock community following the methods described above. We had two aims: to understand the relationship between read abundance and biological abundance, and to determine whether primer bias might exclude fungal lineages of interest from our sequence data. We used two mock communities that consisted of PCR product from DNA extractions of 32 phylogenetically distinct fungi, representing lineages that are typically observed as endophytes: Ascomycota, Basidiomycota, fungi traditionally classified as Zygomycota, and Chytridiomycota [@oita2021; see @daru2019 for details]. In brief, we sequenced six replicates of the mock community with equimolar concentrations of DNA from all 32 fungal taxa, and another six replicates of the mock communities with tiered concentrations of DNA from the same fungal taxa [see @daru2019]. Read abundance from tiered communities was positively associated with the expected read number (*R^2^~adj~* = 0.87, *p* \< .0001, see Figure S9), and all major fungal lineages present in the mock community were detected (data not shown).  Henceforth, we used read abundance as a relevant proxy for biological OTU abundance [@uren2019].
 
 #### Bioinformatic analyses
 
@@ -377,24 +374,24 @@ Lastly, to test how LFTs and FEF communities interact to influence herbivory and
 
 # Results
 
-Inoculation of seedlings was successful. Seedlings exposed to forest spore fall (i.e., *E-high*) had a significantly higher proportion of leaf segments colonized by FEF across all species (data from cultures, Fig. S1). Similarly, the  molecular data set showed that seedlings with *E-high* treatment had a significantly higher FEF relative abundance (paired, two-sided *t*-tests, *p* \< .05) for all tree species when compared to the *E-low* treatment (Fig. 1a). Despite these significant differences, there was a high degree of variability in FEF relative abundance within each treatment type (Fig. 1).
+Inoculation of seedlings was successful. Seedlings exposed to forest spore fall (i.e., *E-high*) had a significantly higher proportion of leaf segments colonized by FEF across all species (data from cultures, Figure S1). Similarly, the  molecular data set showed that seedlings with *E-high* treatment had a significantly higher FEF relative abundance (paired, two-sided *t*-tests, *p* \< .05) for all tree species when compared to the *E-low* treatment (Figure 1a and @tbl-table1). Despite these significant differences, there was a high degree of variability in FEF relative abundance within each treatment type (Figure 1 and @tbl-table1).
 
-We observed general differences in LFTs among species (@tbl-table1). Anthocyanins (ACI) and leaf punch strength (LPS) did not differ between treatments (*E-low* and *E-high*) when we combined all host species (Fig. S2a and Fig. S4a respectively). For LT and LMA we saw significant differences between *E-low* and *E-high* treatment groups when we combined all host species (Fig S3a and Fig. S5a, respectively). As predicted, we did observe lower herbivory in the *E-high* treatment compared to the *E-low* treatment when we combined all host species, *t*(31) = 2.23, *p* = .033 (Fig. 2a). We did not observe differences in pathogen damage between *E-low* and *E-high* treatments when we combined all host species (Fig. 2b). However, within the *E-low* treatment group, leaves exposed to *Calonectria* sp. suffered greater damage (*M* = 17.37, *SD* = 12.57) compared to non-exposed leaves (*M* = 3.49, *SD* = 5.42), *t*(31) = -7.19, *p* \< .0001 (Fig. 2b). The same pattern arose for the *E-high* treatment group: exposed leaves (*M* = 20.04, *SD* = 15.72), non-exposed leaves (*M* = 7.17, *SD* = 17.48), *t*(31) = -3.26, *p* \< .01 (Fig. 2b). At the species level, herbivory and pathogen damage did not differ between treatment groups (Fig. S6a-S6b).
+We observed general differences in LFTs among species (@tbl-table2). Anthocyanins (ACI) and leaf punch strength (LPS) did not differ between treatments (*E-low* and *E-high*) when we combined all host species (Figure S2a and Figure S4a respectively). For LT and LMA we saw significant differences between *E-low* and *E-high* treatment groups when we combined all host species (Fig S3a and Figure S5a, respectively). As predicted, we did observe lower herbivory in the *E-high* treatment compared to the *E-low* treatment when we combined all host species, *t*(31) = 2.23, *p* = .033 (Figure 2a). We did not observe differences in pathogen damage between *E-low* and *E-high* treatments when we combined all host species (Figure 2b). However, within the *E-low* treatment group, leaves exposed to *Calonectria* sp. suffered greater damage (*M* = 17.37, *SD* = 12.57) compared to non-exposed leaves (*M* = 3.49, *SD* = 5.42), *t*(31) = -7.19, *p* \< .0001 (Figure 2b). The same pattern arose for the *E-high* treatment group: exposed leaves (*M* = 20.04, *SD* = 15.72), non-exposed leaves (*M* = 7.17, *SD* = 17.48), *t*(31) = -3.26, *p* \< .01 (Figure 2b). At the species level, herbivory and pathogen damage did not differ between treatment groups (Figure S6a-S6b).
 
-All LFTs are significantly correlated with FEF community composition (Fig. 3 and @tble-dbRDA). We used dbRDA to understand FEF community composition across host species and treatment groups. The analyses revealed that 6.9% of the overall model variance in FEF communities was constrained by the LFTs. The first axis (dbRDA1) explained 45.2% and the second axis (dbRDA2) explained 19.6% of the constrained variance (Fig. 3). We observed a high degree of overlap between FEF communities (Fig. 3), indicating that the communities are similar in composition across host species and treatment groups, at least at the degree of resolution provided by ITS data (Fig. 3). Nonetheless, we also observed tight clustering of FEF communities in *C. cainito* and *L. panamensis*, emphasizing a distinct composition of FEF OTUs within the FEF identified. Other host species showed greater variation in FEF composition. Our PERMDISP analyses showed no significant differences in host species group dispersion (*F*~6,~ ~149~ = 0.717, *p* \< .63), observed differences were due to location. Unsurprisingly, the dispersion for *E-low* and *E-high* treatment groups was significantly different (*F*~1,~ ~154~ = 5.09, *p* \= .03). The Tukey tests revealed dispersion of host species were not significantly different at the α \< .05 level, while treatment group dispersions were.
+All LFTs are significantly correlated with FEF community composition (Figure 3 and @tble-dbRDA). We used dbRDA to understand FEF community composition across host species and treatment groups. The analyses revealed that 6.9% of the overall model variance in FEF communities was constrained by the LFTs. The first axis (dbRDA1) explained 45.2% and the second axis (dbRDA2) explained 19.6% of the constrained variance (Figure 3). We observed a high degree of overlap between FEF communities (Figure 3), indicating that the communities are similar in composition across host species and treatment groups, at least at the degree of resolution provided by ITS data (Figure 3). Nonetheless, we also observed tight clustering of FEF communities in *C. cainito* and *L. panamensis*, emphasizing a distinct composition of FEF OTUs within the FEF identified. Other host species showed greater variation in FEF composition. Our PERMDISP analyses showed no significant differences in host species group dispersion (*F*~6,~ ~149~ = 0.717, *p* \< .63), observed differences were due to location. Unsurprisingly, the dispersion for *E-low* and *E-high* treatment groups was significantly different (*F*~1,~ ~154~ = 5.09, *p* \= .03). The Tukey tests revealed dispersion of host species were not significantly different at the α \< .05 level, while treatment group dispersions were.
 
 We determined there was a core set of OTUs that significantly associated with host tree species or particular treatments by calculating the point biserial correlation coefficient. In summary, 72 out of 569 Ascomycota OTUs were significantly associated with all host tree species (Table S5). Seedlings used in herbivory assays had 13 OTUs significantly associated with high herbivory damage (\>70%) and 3 and 1 OTUs significantly associated with medium (31-69%) and low (\<30%) herbivory damage, respectively, in *E-low* and *E-high* treatment groups (Table S6). We detected 11 OTUs significantly associated with seedlings that experienced high (\>30%) pathogen damage in *E-low* and *E-high* treatment groups (Table S7). We could not tease apart which OTUs were associated with leaves exposed to *Calonectria* sp. agar plugs and non-exposed leaves because the genomic data scale for these trials was at the individual plant level, not leaf level. We found 30 OTUs significantly associated with *E-high* treated (inoculated with forest spore fall) individuals used in our pathogen assays (Table S8).
 
-Host species leaf traits encompassed variation along the leaf economic spectrum (LES). The PCA revealed how ACI, LT, LPS and LMA were related. We plotted leaf trait data according to tree species groups on the PCA axes to show how the variance in the complete data set is explained by PC1 (60%) and PC2 (27%) (Fig. 4a). We observed that ACI, LPS and LMA loadings tracked along PC1 towards more negative values, showing correlation among these traits (Fig. 4a). Traits LT and LPS were orthogonal to each other (Fig. 4a), indicative of low correlation. We note distinct grouping of host species along PC1 towards negative values. We observed compact clustering of host species on opposite ends of PC2 (Fig. 4a). We note similar relationships between the leaf traits with respect to PC1 and PC2 in the subset of individual seedlings used for herbivory versus pathogen damage trials (Fig. 4b-c). The PCA of leaf traits from seedlings used in herbivory trials had a PC1 explaining 57.5% of the variance and a PC2 explaining 28% of the variance in the subset data (Fig. 4b). We saw an inversion of the LT loading in direction of positive values, as well as the same tree species clustered (i.e., *Dypteryx* sp. and *A. membranacea*) along PC2 (Fig. 4b) with respect to Fig. 4a. The PCA of leaf traits from seedling used in pathogen damage trials had a PC1 explaining 64% of the variance and a PC2 explaining 25% of the variance in the subset data (Fig. 4c). We detected similar relationships among leaf traits and PC axes in the pathogen damage subset data (Fig. 4c) when compared to the complete data set (Fig. 4a).
+Host species leaf traits encompassed variation along the leaf economic spectrum (LES). The PCA revealed how ACI, LT, LPS and LMA were related. We plotted leaf trait data according to tree species groups on the PCA axes to show how the variance in the complete data set is explained by PC1 (60%) and PC2 (27%) (Figure 4a). We observed that ACI, LPS and LMA loadings tracked along PC1 towards more negative values, showing correlation among these traits (Figure 4a). Traits LT and LPS were orthogonal to each other (Figure 4a), indicative of low correlation. We note distinct grouping of host species along PC1 towards negative values. We observed compact clustering of host species on opposite ends of PC2 (Figure 4a). We note similar relationships between the leaf traits with respect to PC1 and PC2 in the subset of individual seedlings used for herbivory versus pathogen damage trials (Figure 4b-c). The PCA of leaf traits from seedlings used in herbivory trials had a PC1 explaining 57.5% of the variance and a PC2 explaining 28% of the variance in the subset data (Figure 4b). We saw an inversion of the LT loading in direction of positive values, as well as the same tree species clustered (i.e., *Dypteryx* sp. and *A. membranacea*) along PC2 (Figure 4b) with respect to Figure 4a. The PCA of leaf traits from seedling used in pathogen damage trials had a PC1 explaining 64% of the variance and a PC2 explaining 25% of the variance in the subset data (Figure 4c). We detected similar relationships among leaf traits and PC axes in the pathogen damage subset data (Figure 4c) when compared to the complete data set (Figure 4a).
 
 
-Leaf functional traits influence plants' response to herbivory and pathogen damage differentially. We examined the relationship between LFTs, herbivory and pathogen damage to understand how host species on opposite ends of the LES modulate herbivory and pathogen damage. We used simple linear regressions plotting herbivory and pathogen damage with PC1 and PC2 from the PCA. Simple linear regressions of herbivory (%) against PC1 revealed no correlation (Fig. 5a; *R^2^~adj~* = -0.0024, *F*~1,~ ~208~ = 0.508, *df* = 208, *p* = .447), where positive values represent greater values of ACI, LPS and LMA. Even though we note large spread in the data (Fig. 5a and 5b), we saw that herbivory was strongly associated with PC2 (Fig. 5b; *R^2^~adj~* = 0.079, *F*~1, 208~ = 18.9, *p* \< .0001), where positive values represent greater LT. Regressions of pathogen damage (%) plotted against PC1 revealed a significant correlation (Fig. 5c; *R^2^~adj~* = 0.064, *F*~1,~ ~380~ = 26.93 *p* \< .0001), in which positive values represent greater values of ACI, LPS and LMA. We did not see a significant relationship between pathogen damage and PC2 (Fig. 5d; *R^2^~adj~* = 0.002, *F*~1,~ ~380~ = 1.60, *p* = .207). 
+Leaf functional traits influence plants' response to herbivory and pathogen damage differentially. We examined the relationship between LFTs, herbivory and pathogen damage to understand how host species on opposite ends of the LES modulate herbivory and pathogen damage. We used simple linear regressions plotting herbivory and pathogen damage with PC1 and PC2 from the PCA. Simple linear regressions of herbivory (%) against PC1 revealed no correlation (Figure 5a; *R^2^~adj~* = -0.0024, *F*~1,~ ~208~ = 0.508, *df* = 208, *p* = .447), where positive values represent greater values of ACI, LPS and LMA. Even though we note large spread in the data (Figure 5a and 5b), we saw that herbivory was strongly associated with PC2 (Figure 5b; *R^2^~adj~* = 0.079, *F*~1,~ ~208~ = 18.9, *p* \< .0001), where positive values represent greater LT. Regressions of pathogen damage (%) plotted against PC1 revealed a significant correlation (Figure 5c; *R^2^~adj~* = 0.064, *F*~1,~ ~380~ = 26.93 *p* \< .0001), in which positive values represent greater values of ACI, LPS and LMA. We did not see a significant relationship between pathogen damage and PC2 (Figure 5d; *R^2^~adj~* = 0.002, *F*~1,~ ~380~ = 1.60, *p* = .207). 
 
-We observed similar patterns when we performed simple linear regressions on the raw LFTs and logit transformed herbivory and pathogen damage data (Fig. S7 and S8, respectively). We observed a significant positive relationship between herbivory and LT (Figure S7a; *R^2^~adj~* = 0.081, *F*~1,~ ~208~ = 19.45, *p* \< .0001) when considering the complete data set . We did not observe a significant relationship between herbivory (%) and LPS, ACI, LMA, and Shannon diversity index for FEF (Figure S7b - S7e) for the complete data set. However, we did observe a general decline in herbivory as FEF diversity increased which aligns with our first prediction. Furthermore, we saw a significant negative relationship between herbivory and Shannon diversity for the *E-low* treatment group (Figure S7e; *R^2^~adj~* = 0.138, *F*~1,~ ~103~ = 17.7, *p* \< .0001). We also saw an increase in herbivory for the *E-high* treatment group as Shannon diversity index for FEF increased, but this was not statistically significant (Figure S7e; *R^2^~adj~* = 0.024, *F*~1,~ ~103~ = 3.55, *p* = 0.062), a result contrary to our expectations.
+We observed similar patterns when we performed simple linear regressions on the raw LFTs and logit transformed herbivory and pathogen damage data (@tbl-linearreg; Figure S7 - S8, respectively). We observed a significant positive relationship between herbivory and LT (@tbl-linearreg and Figure S7a; *p* \< .0001) when considering the complete data set. We did not observe a significant relationship between herbivory and LPS, ACI, LMA, and Shannon diversity index for FEF (@tbl-linearreg and Figure S7b - S7e) for the complete data set. However, we did observe a general decline in herbivory as FEF diversity increased which aligns with our first prediction. Furthermore, we saw a significant negative relationship between herbivory and Shannon diversity for the *E-low* treatment group (@tbl-linearreg and Figure S7e; *p* \< .0001). We also saw an increase in herbivory for the *E-high* treatment group as Shannon diversity index for FEF increased, but this was not statistically significant (@tbl-linearreg and Figure S7e; *p* = 0.062), a result contrary to our expectations.
 
-We noted significant negative relationships between pathogen damage and LPS (Figure S8b; *R^2^~adj~* = 0.078, *F*~1,~ ~380~ = 33.32, *p* \< .0001), ACI (Figure S8c; *R^2^~adj~* = 0.033, *F*~1,~ ~380~ = 14.34, *p* = .0002) and LMA (Figure S8d; *R^2^~adj~* = 0.030, *F*~1,~ ~380~ = 12.6, *p* \< .001) when considering the complete data set. Pathogen damage did not have a significant correlation with LT (Figure S8a; *R^2^~adj~* = -0.001, *F*~1,~ ~380~ = 0.50, *p* = .482). The *E-low* and *E-high* treatment groups follow the same general trend as the complete data set. Contrary to our predictions, we found a statistically significant positive relationship between pathogen damage and Shannon diversity index in the complete data set (Figure S8e; *R^2^~adj~* = 0.015, *F*~1,~ ~380~ = 6.90, *p* \< .01). Upon further scrutiny, only the *E-high* treatment group had a significant positive correlation between pathogen damage and Shannon diversity index (Figure S8e;*R^2^~adj~* = 0.031, *F*~1,~ ~188~ = 7.11, *p* \< .01). 
+We noted significant negative relationships between pathogen damage and LPS (@tbl-linearreg and Figure S8b; *p* \< .0001), ACI (@tbl-linearreg and Figure S8c; *p* = .0002) and LMA (@tbl-linearreg and Figure S8d; *p* \< .001) when considering the complete data set. Pathogen damage did not have a significant correlation with LT (@tbl-linearreg and Figure S8a; *p* = .482). The *E-low* and *E-high* treatment groups follow the same general trend as the complete data set (@tbl-linearreg and Figure S8). Contrary to our predictions, we found a statistically significant positive relationship between pathogen damage and Shannon diversity index in the complete data set (@tbl-linearreg and Figure S8e; *p* \< .01). Upon further scrutiny, only the *E-high* treatment group had a significant positive correlation between pathogen damage and Shannon diversity index (@tbl-linearreg and Figure S8e; *p* \< .01), while the *E-low* treatment did not have a significant correlation (@tbl-linearreg and Figure S8e; *p* = 0.81) . 
 
-Leaf thickness and LMA have opposite outcomes in plants' response to herbivory. The best-fit for our GLMMs showed that fixed effects LT, LMA, and *E-high* treatment group were statistically significant predictors of herbivory damage (@tbl-tableGLMM). No measure of FEF abundance or diversity was present in the final model. Leaf mass per area was a significant positive predictor of herbivory with the greatest effect size (estimate = 1741, *t*(200) = 3.53 *p* \< .001). While LT is a significant negative predictor of herbivory damage (estimate = -0.01, *t*(200) = -2.52, *p* = .01) and *E-high* as well (estimate = -0.78, *t*(200) = -4.62, *p* \< .001). The best fit model for pathogen damage did not reveal any of the LFTs as significant predictors (@tbl-tableGLMM). Like our previous model, no measure of FEF abundance or diversity was present in final model. Even though it was not significant, LMA showed the greatest effect size (estimate = 171.7, *t*(352) = 0.96, *p* = .34).
+Leaf thickness and LMA have opposite outcomes in plants' response to herbivory. The best-fit for our GLMMs showed that fixed effects LT, LMA, and *E-high* treatment group were statistically significant predictors of herbivory damage (@tbl-tableGLMM). No measure of FEF abundance or diversity was present in the final model. Leaf mass per area was a significant positive predictor of herbivory with the greatest effect size (estimate = 823.6, *t*(200) = 2.65 *p* \< .01). While LT is a significant negative predictor of herbivory damage (estimate = -0.01, *t*(200) = -3.16, *p* \< .01) and *E-high* as well (estimate = -0.75, *t*(200) = -6.16, *p* \< .001). The best fit model for pathogen damage did not reveal any of the LFTs as significant predictors (@tbl-tableGLMM). Like our previous model, no measure of FEF abundance or diversity was present in final model. Even though it was not significant, LMA showed the greatest effect size (estimate = 225.62, *t*(352) = 1.61, *p* = .25).
 
 # Discussion
 
@@ -461,6 +458,9 @@ rm(list = ls())
 
 # Working Directory and Path for Linux
 save.path <- ("../Aim3_Sequence_analyses/")
+
+# Format p-values
+source(file.path(save.path,"functions/fmt_stars.R"))
 
 # Loading files
 csamp <-
@@ -865,7 +865,7 @@ ggsave(filename = "./figures/Aponte_Bolivar_figure1.png", plot = fig1, dpi = 300
 #| fig.cap: "Distribution of values of herbivory (%) damage caused by *Atta colombica* in treatment groups (*E-low* and *E-high*) and pathogen damage cause by *Calonectria* sp. to tree species. a) Comparison of herbivory (%) means between treatment groups across individuals of all species. b) Comparison of the absolute pathogen damage (%) means between treatment groups across individuals of all species (values from 'control' treated leaves were substracted from pathogen treated leaves). Pink represents low FEF group (*E-low*) and yellow outlined box plots represent high FEF group (*E-high*). Statistical significance was calculated using a two-sided Student's t-Test. Significance levels are represented by *ns* (not significant) and asterisks [*p* < .05 (\\*), *p* < .01 (\\*\\*), *p* < .001 (\\*\\*\\*), and *p* < .0001 (\\*\\*\\*\\*)].."
 
 
-# Fig. 2a
+# Figure 2a
 
 # Summarize statistics
 fig2a_summ_stats <- master |>
@@ -969,7 +969,7 @@ herb_boxplot <-
 
 # herb_boxplot
 
-# Fig. 2b
+# Figure 2b
 
 # Summarize statistics
 fig2b_summ_stats <- master |>
@@ -1096,7 +1096,7 @@ figure2 <- ggarrange(herb_boxplot, patho_boxplot,
 )
 
 figure2
-ggsave(filename = "./figures/Aponte_Bolivar_figure2.png", plot = figure2, dpi = 300, units = c("mm"), width = 250, height = 200, bg = "white")
+# ggsave(filename = "./figures/Aponte_Bolivar_figure2.png", plot = figure2, dpi = 300, units = c("mm"), width = 250, height = 200, bg = "white")
 
 ```
 
@@ -1108,6 +1108,9 @@ ggsave(filename = "./figures/Aponte_Bolivar_figure2.png", plot = figure2, dpi = 
 #| tidy: true
 #| warning: false
 otu_e.dist <- vegdist(t(rabun), method = "bray", binary = FALSE)
+lfts <- ndata2 |>
+  select(Thickness, Toughness, Anthocyanins, LMA, E_load) |>
+  na.omit()
 # Using "rabun". No singletons
 # Bray-Curtis dissimilarity matrix
 ```
@@ -1141,6 +1144,10 @@ m3dbrda_summary <- summary(m3dbRDA)
 # Correlation of constrained and unconstrained axes
 # cor(m3dbrda_summary$constraints) |>
 #   round(2)
+
+# Environmental vectors or factors onto an ordination
+# Tell us the vector correlations and Rsquared
+env_fit_test <- envfit(m3dbRDA, lfts, na.rm = TRUE, perm = 999)
 
 # Plotting dbRDA  with color by continous leaf lifespan
 # plot using ggplot2
@@ -1319,7 +1326,7 @@ figure3 <- p_m3dbrda
 figure3
 
 ggsave(
-  filename = "./figures/Aponte_Bolivar_figure3.png",
+  filename = "./figures/Aponte_Bolivar_figure3.svg",
   plot = figure3,
   dpi = 300,
   units = c("mm"),
@@ -1907,6 +1914,7 @@ ggsave(filename = "./figures/Aponte_Bolivar_figure5.png", plot = figure5, dpi = 
 
 # Tables
 
+
 ## Table 1
 
 ```{r}
@@ -1915,6 +1923,85 @@ ggsave(filename = "./figures/Aponte_Bolivar_figure5.png", plot = figure5, dpi = 
 #| tidy: true
 #| warning: false
 #| label: tbl-table1
+#| tbl-cap: "Summary statistics for the relative abundance of endophytes across host tree species and inoculation treatment**"
+# Using `gtsummary` and 'flextable' packages
+summa_t <-   master %>%
+  group_by(Species, E_load) %>%
+  select(c(2, 5, 18)) %>%
+  rename(Treatment = E_load) %>%
+  mutate(
+    Species = case_match(
+      Species,
+      "APEIME" ~ "A. membranacea",
+      "CHRYCA" ~ "C. cainito",
+      "CORDAL" ~ "C. alliodora",
+      "DYPTE" ~ "Dipteryx sp.",
+      "HEISCO" ~ "H. concinna",
+      "LACPA" ~ "L. panamensis",
+      "THEOCA" ~ "T. cacao"
+    ),
+    Treatment = case_match(Treatment, "E-" ~ "E-low", "E+" ~ "E-high")
+  ) %>%
+  dplyr::group_by(Species, Treatment) %>%
+  summarize(
+    "Mean (±)" = paste0(round(mean(
+      na.exclude(Relative_Abundance)
+    ), 3), " (±", round(sd(
+      na.exclude(Relative_Abundance)
+    ), 3), ")"),
+    "Median (±)" = paste0(round(median(
+      na.exclude(Relative_Abundance)
+    ), 3), " (±", round(sd(
+      na.exclude(Relative_Abundance)
+    ), 3), ")")
+  ) %>%
+  gt(rowname_col = "Treatment") %>%
+  tab_options(
+    table.align = "center",
+    data_row.padding = 6,
+    data_row.padding.horizontal = 10,
+    table.width = pct(30)
+  ) %>%
+  tab_style(
+    style = cell_text(align = "center"),
+    locations = list(
+      cells_body(columns = c("Mean (±)", "Median (±)")),
+      cells_column_labels(columns = everything())
+    )
+  ) %>%
+  tab_style(style = cell_text(weight = "bold"),
+            locations = cells_column_labels(columns = everything())) %>%
+  tab_style(
+    style = list(cell_text(weight = "bold"), cell_text(style = "italic")),
+    locations = cells_row_groups(groups = everything())
+  ) %>%
+    tab_style(
+    style = list(cell_text(align = "right")),
+    locations = cells_stub()
+  ) %>%
+  tab_style(style = cell_text(style = "italic"),
+            locations = cells_body(columns = "Species")) %>%
+  tab_header(
+    title = md(
+      "**Table 1: Summary statistics for the relative abundance of endophytes across host tree species**"
+    )
+  )
+  
+table1 <- summa_t
+table1
+
+
+# gtsave(table1, "tables/Aponte_Bolivar_table1.html")
+```
+
+## Table 2
+
+```{r}
+#| echo: false
+#| eval: false
+#| tidy: true
+#| warning: false
+#| label: tbl-table2
 #| tbl-cap: "Summary statistics for the leaf functional traits (LFTs)"
 
 # Using `gtsummary` and 'flextable' packages
@@ -2010,7 +2097,7 @@ remove_outliers <- function(x, na.rm = TRUE, ...) {
   y
 }
 
-table1_ggplot <- data %>%
+table2_ggplot <- data %>%
   # Tidying data frame
   select(Species,
          Sample_name,
@@ -2105,18 +2192,20 @@ table1_ggplot <- data %>%
   ) %>%
   tab_header(
     title = md(
-      "**Table 1: Summary statistics for leaf functional traits (LFTs) across host tree species**"
+      "**Table 2: Summary statistics for leaf functional traits (LFTs) across host tree species**"
     )
   )
 
-table1_ggplot
+table2_ggplot
 
-gtsave(table1_ggplot, "tables/Aponte_Bolivar_table1.html")
+# gtsave(table2_ggplot, "tables/Aponte_Bolivar_table2.html")
 
 ```
 
 
-## Table 2
+
+
+## Table 3
 ```{r}
 #| echo: false
 #| eval: true
@@ -2150,7 +2239,7 @@ anova_table1 <- tidy(anova_m3dbRDA) |>
       "Residual" ~ "Residuals"
     )
   ) 
-table2 <- gt(anova_table1) |>
+table3 <- gt(anova_table1) |>
   fmt_stars(columns = c("p-value")) |>
   fmt_number(columns = c("Sum. of Sqs.", "F-statistic"),
              decimals = 2) |>
@@ -2179,16 +2268,16 @@ table2 <- gt(anova_table1) |>
   sub_missing(columns = 4, missing_text = "-") |>
   tab_header(
     title = md(
-      "**Table 2: Permutational ANOVA for the best-fit dbRDA model with all host species**"
+      "**Table 3: Permutational ANOVA for the best-fit dbRDA model with all host species**"
     )
   )
 
-table2
+table3
 
-gtsave(table2, "tables/Aponte_Bolivar_table2.html")
+# gtsave(table3, "tables/Aponte_Bolivar_table3.html")
 ```
 
-## Table 3
+## Table 4
 
 ```{r}
 #| echo: false
@@ -2668,7 +2757,7 @@ regrex_all <- rbind(
 
 
 # Table with all models
-table3 <- regrex_all |>
+table4 <- regrex_all |>
   gt(
     groupname_col = c("type_damage", "data_set"),
     row_group_as_column = TRUE
@@ -2740,11 +2829,11 @@ table3 <- regrex_all |>
     location = cells_title()
   )
 
-gtsave(table3, "tables/Aponte_Bolivar_table3.html")
+# gtsave(table4, "tables/Aponte_Bolivar_table4.html")
 ```
 
 
-## Table 4
+## Table 5
 
 ```{r}
 #| echo: false
@@ -2881,7 +2970,7 @@ table4 <- huxreg(
   bold_signif = 0.05,
   borders = 0.4,
   outer_borders = 0.8,
-  note = "Significance levels are represented by asterisks [p < 0.05 (*), p < 0.01 (**), p < 0.001 (***), and p < 0.0001 (****)]. T-statistics in brackets.",
+  note = "Significance levels are represented by asterisks [p < .05 (*), p < .01 (**), p < .001 (***), and p < .0001 (****)]. T-statistics in brackets.",
   statistics = c("N" = "nobs", "logLik", "AIC")
 ) |>
   insert_row("Predictors",
@@ -2967,15 +3056,15 @@ table4 <- huxreg(
     eastasia.family = fontname
   )
 
-table4
+table5
 
 # Final editing of the table will be completed in text editor.
 # In text editor Random effects coefficients will be added for both models using
-summary(phylo_herbivory_REML)
-phylo_herbivory_REML[["coefficients"]][["random"]][["Species"]]
-
-summary(phylo_pathogen_REML)
-phylo_pathogen_REML[["coefficients"]][["random"]][["Species"]]
+# summary(phylo_herbivory_REML)
+# phylo_herbivory_REML[["coefficients"]][["random"]][["Species"]]
+# 
+# summary(phylo_pathogen_REML)
+# phylo_pathogen_REML[["coefficients"]][["random"]][["Species"]]
 
 # save_as_html(table3, path = "tables/Aponte_Bolivar_table4.html")
 # save_as_docx(table2, path = "tables/Aponte_Bolivar_table4.docx")
@@ -4269,7 +4358,7 @@ suppfig_1 <- ggarrange(Abun7a, Abun7b, nrow = 1, ncol = 2, common.legend = TRUE,
 suppfig_1
 
 
-ggsave(filename = "./figures/Aponte_Bolivar_suppfig1.png", plot = suppfig_1, dpi = 300, units = c("mm"), width = 250, height = 200, bg = "white")
+# ggsave(filename = "./figures/Aponte_Bolivar_suppfig1.png", plot = suppfig_1, dpi = 300, units = c("mm"), width = 250, height = 200, bg = "white")
 ```
 
 ## Figure S2
@@ -4429,7 +4518,7 @@ suppfig_2 <- ggarrange(ACIa, ACIb,
   labels = c("(a)", "(b)")
 )
 suppfig_2
-ggsave(filename = "./figures/Aponte_Bolivar_suppfig2.png", plot = suppfig_2, dpi = 300, units = c("mm"), width = 250, height = 200, bg = "white")
+# ggsave(filename = "./figures/Aponte_Bolivar_suppfig2.png", plot = suppfig_2, dpi = 300, units = c("mm"), width = 250, height = 200, bg = "white")
 ```
 
 ## Figure S3
@@ -4573,7 +4662,7 @@ suppfig_3 <- ggarrange(LTa, LTb,
 )
 suppfig_3
 
-ggsave(filename = "./figures/Aponte_Bolivar_suppfig3.png", plot = suppfig_3, dpi = 300, units = c("mm"), width = 250, height = 200, bg = "white")
+# ggsave(filename = "./figures/Aponte_Bolivar_suppfig3.png", plot = suppfig_3, dpi = 300, units = c("mm"), width = 250, height = 200, bg = "white")
 # Previously saved under name: Aim3_LT_Species_07062022.png
 ```
 
@@ -4714,7 +4803,7 @@ suppfig_4 <- ggarrange(LPSa, LPSb,
   labels = c("(a)", "(b)")
 )
 suppfig_4
-ggsave(filename = "./figures/Aponte_Bolivar_suppfig4.png", plot = suppfig_4, dpi = 300, units = c("mm"), width = 250, height = 200, bg = "white")
+# ggsave(filename = "./figures/Aponte_Bolivar_suppfig4.png", plot = suppfig_4, dpi = 300, units = c("mm"), width = 250, height = 200, bg = "white")
 # Previously named Aim3_LPS_Species_07062022.png
 ```
 
@@ -4859,7 +4948,7 @@ suppfig_5 <- ggarrange(
   labels = c("(a)", "(b)")
 )
 suppfig_5
-ggsave(filename = "./figures/Aponte_Bolivar_suppfig5.png", plot = suppfig_5, dpi = 300, units = c("mm"), width = 250, height = 200, bg = "white")
+# ggsave(filename = "./figures/Aponte_Bolivar_suppfig5.png", plot = suppfig_5, dpi = 300, units = c("mm"), width = 250, height = 200, bg = "white")
 ```
 
 ## Figure S6
@@ -4873,7 +4962,7 @@ ggsave(filename = "./figures/Aponte_Bolivar_suppfig5.png", plot = suppfig_5, dpi
 #| fig.width: 6
 #| fig.cap: "Distributions of values and means of herbivory (%) and pathogen damage caused by *Atta colombica* and *Calonectria* sp. , respectively, in treatment groups (*E-low* and *E-high*) per tree species. a) Comparison of herbivory (%) means between treatment groups across individuals of all species. b) Comparison of pathogen (%) means between treatment groups across individuals of all species. Pink outlined box plots represent low FEF group (*E-low*) and yellow outlined box plots represent high FEF group (*E-high*). Significance levels are represented by *ns* (not significant) and asterisks [*p* < .05 (\\*), *p* < .01 (\\*\\*), *p* < .001 (\\*\\*\\*), and *p* < .0001 (\\*\\*\\*\\*)]."
 
-# Fig. S6a
+# Figure S6a
 herb_violin_a <-
   ggplot(data = master, aes(x = Species, y = Ant_percent_leafloss, color = E_load)) +
   geom_point(
@@ -4911,7 +5000,7 @@ herb_violin_a <-
   )
 # herb_violin_a
 
-# Fig. S6b
+# Figure S6b
 patho_violin_b <-
   ggplot(
     data = master,
@@ -4966,7 +5055,7 @@ suppfig_6 <- ggarrange(herb_violin_a, patho_violin_b,
 )
 
 suppfig_6
-ggsave(filename = "./figures/Aponte_Bolivar_suppfig6.png", plot = suppfig_6, dpi = 300, units = c("mm"), width = 250, height = 200, bg = "white")
+# ggsave(filename = "./figures/Aponte_Bolivar_suppfig6.png", plot = suppfig_6, dpi = 300, units = c("mm"), width = 250, height = 200, bg = "white")
 ```
 
 ## Figure S7
@@ -5413,7 +5502,7 @@ suppfig_S7 <-
 
 suppfig_S7
 
-ggsave(filename = "./figures/Aponte_Bolivar_suppfig7.png", plot = suppfig_S7, dpi = 300, units = c("mm"), width = 250, height = 200, bg = "white")
+# ggsave(filename = "./figures/Aponte_Bolivar_suppfig7.png", plot = suppfig_S7, dpi = 300, units = c("mm"), width = 250, height = 200, bg = "white")
 ```
 
 ## Figure S8
@@ -5869,7 +5958,7 @@ suppfig_S8 <-
 
 suppfig_S8
 # Saving
-ggsave(filename = "./figures/Aponte_Bolivar_suppfig8.png", plot = suppfig_S8, dpi = 300, units = c("mm"), width = 250, height = 200, bg = "white")
+# ggsave(filename = "./figures/Aponte_Bolivar_suppfig8.png", plot = suppfig_S8, dpi = 300, units = c("mm"), width = 250, height = 200, bg = "white")
 
 # showtext_auto(FALSE)
 ```

@@ -2740,6 +2740,11 @@ Results from dbRDA (`capscale`) have not been compared to PERMANOVA (`adonis2`) 
 
 ```{r, Distance Matrix}
 otu_e.dist <- vegdist(t(rabun), method="bray", binary=FALSE)
+
+# Leaf traits
+lfts <- ndata2 |>
+  select(Thickness, Toughness, Anthocyanins, LMA, E_load) |>
+  na.omit()
 #Using "rabun". No singletons
 #Bray-Curtis dissimilarity matrix
 ```
@@ -2821,9 +2826,14 @@ saveRDS(anova_m3dbRDA, file = "./clean_data/anova_m3dbRDA.rds")
 
 m3dbrda_summary <- summary(m3dbRDA)
 plot(m3dbRDA)
+
 #Correlation of constrained and unconstrained axes
 cor(m3dbrda_summary$constraints) |>
   round(2)
+
+# Environmental vectors or factors onto an ordination
+# Tell us the vector correlations and Rsquared
+env_fit_test <- envfit(m3dbRDA, lfts, na.rm = TRUE, perm = 999)
 
 #Plotting dbRDA  with color by continous leaf lifespan
 #plot using ggplot2
