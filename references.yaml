@@ -1068,6 +1068,33 @@ references:
   type: book
   URL: https://www.taylorfrancis.com/books/9781498706674
 
+- id: edgar2004
+  accessed:
+    - year: 2024
+      month: 8
+      day: 26
+  author:
+    - family: Edgar
+      given: R. C.
+  citation-key: edgar2004
+  container-title: Nucleic Acids Research
+  container-title-short: Nucleic Acids Research
+  DOI: 10.1093/nar/gkh340
+  ISSN: 1362-4962
+  issue: '5'
+  issued:
+    - year: 2004
+      month: 3
+      day: 8
+  language: en
+  page: 1792-1797
+  source: DOI.org (Crossref)
+  title: 'MUSCLE: multiple sequence alignment with high accuracy and high throughput'
+  title-short: MUSCLE
+  type: article-journal
+  URL: https://academic.oup.com/nar/article-lookup/doi/10.1093/nar/gkh340
+  volume: '32'
+
 - id: estrada2013
   abstract: >-
     Fungal symbionts that live asymptomatically inside plant tissues
@@ -1592,6 +1619,20 @@ references:
     https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-016-1186-3
   volume: '17'
 
+- id: gohel2024
+  author:
+    - family: Gohel
+      given: David
+    - family: Skintzos
+      given: Panagiotis
+  citation-key: gohel2024
+  genre: manual
+  issued:
+    - year: 2024
+  title: 'flextable: Functions for tabular reporting'
+  type: report
+  URL: https://ardata-fr.github.io/flextable-book/
+
 - id: gonzalez-teuber2016
   abstract: |-
     Abstract
@@ -2008,6 +2049,40 @@ references:
     in *Mimulus guttatus*
   type: article-journal
   volume: '175'
+
+- id: hugh-jones2023
+  author:
+    - family: Hugh-Jones
+      given: David
+  citation-key: hugh-jones2023
+  genre: manual
+  issued:
+    - year: 2023
+  title: 'huxtable: Easily create and style tables for LaTeX, HTML and other formats'
+  type: report
+  URL: https://CRAN.R-project.org/package=huxtable
+
+- id: iannone2023
+  author:
+    - family: Iannone
+      given: Richard
+    - family: Cheng
+      given: Joe
+    - family: Schloerke
+      given: Barret
+    - family: Hughes
+      given: Ellis
+    - family: Lauer
+      given: Alexandra
+    - family: Seo
+      given: JooYoung
+  citation-key: iannone2023
+  genre: manual
+  issued:
+    - year: 2023
+  title: 'gt: Easily create presentation-ready display tables'
+  type: report
+  URL: https://CRAN.R-project.org/package=gt
 
 - id: ives2018
   author:
@@ -2938,6 +3013,65 @@ references:
   URL: https://journals.brit.org/jbrit/article/view/1290
   volume: '17'
 
+- id: minh2020
+  abstract: |-
+    Abstract
+                IQ-TREE (http://www.iqtree.org, last accessed February 6, 2020) is a user-friendly and widely used software package for phylogenetic inference using maximum likelihood. Since the release of version 1 in 2014, we have continuously expanded IQ-TREE to integrate a plethora of new models of sequence evolution and efficient computational approaches of phylogenetic inference to deal with genomic data. Here, we describe notable features of IQ-TREE version 2 and highlight the key advantages over other software.
+  accessed:
+    - year: 2024
+      month: 9
+      day: 10
+  author:
+    - family: Minh
+      given: Bui Quang
+    - family: Schmidt
+      given: Heiko A
+    - family: Chernomor
+      given: Olga
+    - family: Schrempf
+      given: Dominik
+    - family: Woodhams
+      given: Michael D
+    - family: Von Haeseler
+      given: Arndt
+    - family: Lanfear
+      given: Robert
+  citation-key: minh2020
+  container-title: Molecular Biology and Evolution
+  DOI: 10.1093/molbev/msaa015
+  editor:
+    - family: Teeling
+      given: Emma
+  ISSN: 0737-4038, 1537-1719
+  issue: '5'
+  issued:
+    - year: 2020
+      month: 5
+      day: 1
+  language: en
+  license: http://creativecommons.org/licenses/by/4.0/
+  page: 1530-1534
+  source: DOI.org (Crossref)
+  title: >-
+    IQ-TREE 2: New Models and Efficient Methods for Phylogenetic Inference in
+    the Genomic Era
+  title-short: IQ-TREE 2
+  type: article-journal
+  URL: https://academic.oup.com/mbe/article/37/5/1530/5721363
+  volume: '37'
+
+- id: mock2023
+  author:
+    - family: Mock
+      given: Thomas
+  citation-key: mock2023
+  genre: manual
+  issued:
+    - year: 2023
+  title: 'gtExtras: Extending ''gt'' for beautiful HTML tables'
+  type: report
+  URL: https://CRAN.R-project.org/package=gtExtras
+
 - id: nicotra2011
   abstract: >-
     Angiosperm leaves manifest a remarkable diversity of shapes that range from
@@ -3179,6 +3313,25 @@ references:
   title-short: Anthocyanin Content Meter
   type: webpage
   URL: https://www.optisci.com/acm-200.html
+
+- id: paradis2019
+  author:
+    - family: Paradis
+      given: Emmanuel
+    - family: Schliep
+      given: Klaus
+  citation-key: paradis2019
+  container-title: Bioinformatics (Oxford, England)
+  container-title-short: Bioinformatics
+  DOI: 10.1093/bioinformatics/bty633
+  issued:
+    - year: 2019
+  page: 526-528
+  title: >-
+    ape 5.0: An environment for modern phylogenetics and evolutionary analyses
+    in R
+  type: article-journal
+  volume: '35'
 
 - id: pinheiro2000
   author:
@@ -4311,6 +4464,33 @@ references:
   URL: >-
     https://microbiomejournal.biomedcentral.com/articles/10.1186/s40168-017-0237-y
   volume: '5'
+
+- id: wickham2022
+  author:
+    - family: Wickham
+      given: Hadley
+    - family: Chang
+      given: Winston
+    - family: Henry
+      given: Lionel
+    - family: Pedersen
+      given: Thomas Lin
+    - family: Takahashi
+      given: Kohske
+    - family: Wilke
+      given: Claus
+    - family: Woo
+      given: Kara
+    - family: Yutani
+      given: Hiroaki
+    - family: Dunnington
+      given: Dewey
+  citation-key: wickham2022
+  issued:
+    - year: 2022
+  title: 'ggplot2: Create Elegant Data Visualisations Using the Grammar of Graphics'
+  type: document
+  URL: https://CRAN.R-project.org/package=ggplot2
 
 - id: wright2004
   abstract: >-
