@@ -1400,14 +1400,15 @@ auto <- autoplot((pca),
     "*L. panamensis*",
     "*T. cacao*"
   )) +
-  scale_shape_manual(name = "Treatment", labels = c("E-", "E+"), values = c(16, 17)) +
+  scale_shape_manual(name = "Treatment", labels = list("*E-low*", "*E-high*"), values = c(16, 17)) +
 
   # labs(title = "(a)") +
   theme(
     plot.title = element_text(color = "black", size = 12, face = "bold"),
     legend.title = element_text(face = "bold"),
     legend.text = element_markdown(color = "black", size = 12)
-  )
+  ) +
+  guides(guide_legend())
 
 # caption = expression("ACI = anthocyanins, LPS = leaf punch strength, LMA = leaf mass per area, LT = leaf thickness. All leaf replicates per species ("~ italic("n") ~ "= 467).") #This goes in the labs() arguments
 

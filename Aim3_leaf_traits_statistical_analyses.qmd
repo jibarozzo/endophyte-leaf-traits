@@ -151,207 +151,207 @@ save.path <- ("/home/baponte/Boxx/Dissertation/Leaf_Traits_Panama/Data/Aim3_Sequ
 ###Cleaning and reshaping Blanks and PCR_CONTROLS###
 ####################################################
 
-# pcrdata <- read.csv("clean_data/post_biopipeline/All_PCR_R1_otuFINAL_95.csv") #PCR2NEGPLATE1 is missing. This is due to mislabeling in the original sequence files.
-# #There is a q.fastq.gz file that might be this sample.INSPECT THIS FILE. G:\My Drive\VBL_users\Grad_Students\Bolivar\Dissertation\Leaf_Traits_Panama\Data\Sample_Sequencing\Post_Sequencing\Original_Sample_gzip_files
-# #The issue stated in the above line has been resolved as of March 10, 2022. -BAR
-# 
-# pcrdata <- pcrdata |>
-#   rename(OTU_ID = X.OTU.ID)
-# 
-# ###Cleaning and reshaping Samples###
-# ####################################
-# 
-# realsamp <- read.csv("clean_data/post_biopipeline/All_Samples_R1_otuFINAL95.csv")
-# 
-# realsamp <- realsamp |>
-#   na.omit() |>
-#   rename(OTU_ID = X.OTU.ID)
-# 
-# ###############################################################################
-# ###Full_join of the data frames to retain all values and row and transposing###
-# ###############################################################################
-# 
-# #joined <- full_join(realsamp,pcrdata, by = "OTU_ID" ) |>
-#  # mutate(across(everything(), replace_na, replace = 0))
-# 
-# joined <- full_join(realsamp,pcrdata, by = "OTU_ID" ) |>
-#   dplyr::mutate(across(c(2:168),~replace_na(.x, 0)))
-# str(joined)
-# 
-# joined.t <- as.data.frame(t(joined))
-# str(joined.t)
-# 
-# names(joined.t) <- joined.t |> slice(1) |> unlist()
-# 
-# joined.t <-  joined.t |> 
-#   rownames_to_column("Sample_names") |>
-#   slice(-1)
-#  
-# str(joined.t)
-# 
-# #####################################################
-# ###Make subset tables from each sequence plate run###
-# #####################################################
-# 
-# ################### Plate1 #####################
-# 
-# filter_table1<- read.csv("filters/Filter_Table_Plate1.csv")
-# 
-# names(filter_table1)
-# filter_table1 <- filter_table1 |>
-#   rename(A = ?..A)
-# str(filter_table1)
-# 
-# filter_table1 <-filter_table1 |> 
-#   pivot_longer(cols = 1:12, names_to = "samples", values_to = "values") |>
-#   select(-samples) |>
-#   slice(-5, -6)
-# 
-# plate1 <- semi_join(joined.t, filter_table1, by= c("Sample_names" = "values"))
-# 
-# plate1 <- plate1 |>
-#   mutate(across(!Sample_names, as.numeric))
-# plate1 <- as_tibble(plate1)
-# 
-# filter_filter <- anti_join( filter_table1, plate1, by = c("values"="Sample_names"))#Corroborating if indeed all match. Supposed to be ZERO.
-# str(plate1)
-# 
-# #From factor dataframe to numeric
-# 
-# indx <- sapply(plate1, is.tibble)
-# plate1[indx] <- lapply(plate1[indx], function(x) as.numeric(as.character(x)))
-# 
-# ################ Plate2 ####################
-# 
-# filter_table2<- read.csv("filters/Filter_Table_Plate2.csv")
-# 
-# names(filter_table2)
-# 
-# filter_table2 <- filter_table2 |>
-#   rename(A = ?..A)
-# 
-# filter_table2 <- filter_table2 |> 
-#   pivot_longer(cols = 1:10, names_to = "samples", values_to = "values") |>
-#   select(-samples) |>
-#   slice(-69, -70, -71, -77, -78, -79, -80)
-# 
-# plate2 <- semi_join(joined.t, filter_table2, by= c("Sample_names" = "values"))
-# 
-# plate2 <- plate2 |>
-#   mutate(across(!Sample_names, as.numeric))
-# plate2 <- as_tibble(plate2)
-# filter_filter <- anti_join( filter_table2, plate2, by = c("values"="Sample_names")) #Corroborating if indeed all match. 
-# str(plate2)
-# 
-# #From factor dataframe to numeric
-# 
-# indx <- sapply(plate2, is.tibble)
-# plate2[indx] <- lapply(plate2[indx], function(x) as.numeric(as.character(x)))
-# 
-# ###################################
-# ###CC_fungi Contaminant removal.### 
-# ###Adapted from MARIE and Shuzo Oita#####
-# ###This code works by substracting the SUM of contaminants from each OTU cell. 
-# ###If the value is negative it replaces it with 0. 
-# 
-# ########MARELI MAGIC#########
-# ##### Substracts the sum of the average of the ExtractionBlank avg and PCR negative control of Batch 001 from OTU sample reads, then removed control rows #####
-# ######################################
-# 
-# ################### Plate1 #####################
-# 
-# as.data.frame(plate1)
-# plate1 <- column_to_rownames(plate1, var = "Sample_names")
-# 
-# #add column with sums for each OTU
-# 
-# cont <- row.names(plate1)
-# cont <- cont[92:94] #change accordingly to your data - these are the negative controls
-# contamination <- c()
-# for(c in 1:ncol(plate1)){
-#   contamination[c]<- mean(plate1[rownames(plate1) %in% cont, c], na.rm = TRUE)
-# }
-# plate1 <-rbind(plate1, contamination)
-# row.names(plate1)[95] <- "contamination" #change the name of row 104
-# 
-# ###subtract total contaminants from each OTU, if it is a negative number make it 0
-# cont2 <- c(cont, "contamination")
-# row <- which(!rownames(plate1) %in% cont2)
-# for(r in row){
-#   for(c in 1:ncol(plate1)){
-#     if(plate1[r,c] > plate1["contamination",c]) {
-#       new_reads <- plate1[r,c] - plate1["contamination",c]
-#       plate1[r,c] <- new_reads
-#     } else {plate1[r,c] <- 0}
-#   }
-# }
-# 
-# 
-# ##remove controls from dataframe and makes a text file to paste into existing excel sheet
-# 
-# new_data_decontaminated001 <- plate1[!rownames(plate1) %in% cont2, ]
-# write.table(new_data_decontaminated001,"clean_data/otu_data/MinusNegsBlanks_001.txt", sep="\t") ### This became tab "Filtered-BlankNegbyCode" in "ExtractionBatch0001_PCR102NC.xlsx". 
-# 
-# 
-# ################### Plate2 #####################
-# 
-# as.data.frame(plate2)
-# plate2 <- column_to_rownames(plate2, var = "Sample_names")
-# 
-# #add column with sums for each OTU
-# 
-# cont <- row.names(plate2)
-# cont <- cont[66:73] #change accordingly to your data - these are the negative controls
-# contamination <- c()
-# for(c in 1:ncol(plate2)){
-#   contamination[c]<- mean(plate2[rownames(plate2) %in% cont, c], na.rm = TRUE)
-# }
-# plate2 <-rbind(plate2, contamination)
-# row.names(plate2)[74] <- "contamination" #change the name of row 104
-# 
-# ###subtract total contaminants from each OTU, if it is a negative number make it 0
-# 
-# cont2 <- c(cont, "contamination")
-# row <- which(!rownames(plate2) %in% cont2)
-# for(r in row){
-#   for(c in 1:ncol(plate2)){
-#     if(plate2[r,c] > plate2["contamination",c]) {
-#       new_reads <- plate2[r,c] - plate2["contamination",c]
-#       plate2[r,c] <- new_reads
-#     } else {plate2[r,c] <- 0}
-#   }
-# }
-# 
-# 
-# 
-# ##remove controls from dataframe and makes a text file to paste into exisitng excel sheet
-# 
-# new_data_decontaminated002 <- plate2[!rownames(plate2) %in% cont2, ]
-# write.table(new_data_decontaminated002,"clean_data/otu_data/MinusNegsBlanks_002.txt", sep="\t")
-# 
-# 
-# ###################################
-# ####Saving decontaminated file ####
-# ###################################
-# all_complete_decontaminated <- bind_rows(new_data_decontaminated001, new_data_decontaminated002)
-# 
-# write.csv(all_complete_decontaminated,"clean_data/otu_data/all_Decontaminated_byBlankandNegs_complete.csv")
-# trans <- t(all_complete_decontaminated)
-# trans <- as.data.frame(trans)
-# write.csv(trans, "clean_data/otu_data/all_toFilt_10_percent.csv") ## in the format to remove <10% OTUs -- see below
-# 
-# 
-# 
-# ##########################################################################
-# #### Script to remove < 0.10% abundance per sample #### From Shuzo Oita###
-# ##########################################################################
-# ## csv file should have row = OTU, col = sample
-# 
-# otu.data <- read.csv('clean_data/otu_data/all_toFilt_10_percent.csv', row.names = 1,as.is = T)
-# otu.data <- apply(otu.data, 2, function(x) ifelse({100*x/sum(x)} < 0.10, 0, x))
-# OTU_table.cleaned <- subset((otu.data2), rowSums(otu.data2)>1)
-# OTU_table.cleaned <- as.data.frame(OTU_table.cleaned)
-# write.csv(OTU_table.cleaned, "all_cleaned_at_10_percent.csv")
+pcrdata <- read.csv("clean_data/post_biopipeline/All_PCR_R1_otuFINAL_95.csv") #PCR2NEGPLATE1 is missing. This is due to mislabeling in the original sequence files.
+#There is a q.fastq.gz file that might be this sample.INSPECT THIS FILE. G:\My Drive\VBL_users\Grad_Students\Bolivar\Dissertation\Leaf_Traits_Panama\Data\Sample_Sequencing\Post_Sequencing\Original_Sample_gzip_files
+#The issue stated in the above line has been resolved as of March 10, 2022. -BAR
+
+pcrdata <- pcrdata |>
+  rename(OTU_ID = X.OTU.ID)
+
+###Cleaning and reshaping Samples###
+####################################
+
+realsamp <- read.csv("clean_data/post_biopipeline/All_Samples_R1_otuFINAL95.csv")
+
+realsamp <- realsamp |>
+  na.omit() |>
+  rename(OTU_ID = X.OTU.ID)
+
+###############################################################################
+###Full_join of the data frames to retain all values and row and transposing###
+###############################################################################
+
+#joined <- full_join(realsamp,pcrdata, by = "OTU_ID" ) |>
+ # mutate(across(everything(), replace_na, replace = 0))
+
+joined <- full_join(realsamp,pcrdata, by = "OTU_ID" ) |>
+  dplyr::mutate(across(c(2:168),~replace_na(.x, 0)))
+str(joined)
+
+joined.t <- as.data.frame(t(joined))
+str(joined.t)
+
+names(joined.t) <- joined.t |> slice(1) |> unlist()
+
+joined.t <-  joined.t |>
+  rownames_to_column("Sample_names") |>
+  slice(-1)
+
+str(joined.t)
+
+#####################################################
+###Make subset tables from each sequence plate run###
+#####################################################
+
+################### Plate1 #####################
+
+filter_table1<- read.csv("filters/Filter_Table_Plate1.csv")
+
+names(filter_table1)
+filter_table1 <- filter_table1 |>
+  rename(A = ?..A)
+str(filter_table1)
+
+filter_table1 <-filter_table1 |>
+  pivot_longer(cols = 1:12, names_to = "samples", values_to = "values") |>
+  select(-samples) |>
+  slice(-5, -6)
+
+plate1 <- semi_join(joined.t, filter_table1, by= c("Sample_names" = "values"))
+
+plate1 <- plate1 |>
+  mutate(across(!Sample_names, as.numeric))
+plate1 <- as_tibble(plate1)
+
+filter_filter <- anti_join( filter_table1, plate1, by = c("values"="Sample_names"))#Corroborating if indeed all match. Supposed to be ZERO.
+str(plate1)
+
+#From factor dataframe to numeric
+
+indx <- sapply(plate1, is.tibble)
+plate1[indx] <- lapply(plate1[indx], function(x) as.numeric(as.character(x)))
+
+################ Plate2 ####################
+
+filter_table2<- read.csv("filters/Filter_Table_Plate2.csv")
+
+names(filter_table2)
+
+filter_table2 <- filter_table2 |>
+  rename(A = ?..A)
+
+filter_table2 <- filter_table2 |>
+  pivot_longer(cols = 1:10, names_to = "samples", values_to = "values") |>
+  select(-samples) |>
+  slice(-69, -70, -71, -77, -78, -79, -80)
+
+plate2 <- semi_join(joined.t, filter_table2, by= c("Sample_names" = "values"))
+
+plate2 <- plate2 |>
+  mutate(across(!Sample_names, as.numeric))
+plate2 <- as_tibble(plate2)
+filter_filter <- anti_join( filter_table2, plate2, by = c("values"="Sample_names")) #Corroborating if indeed all match.
+str(plate2)
+
+#From factor dataframe to numeric
+
+indx <- sapply(plate2, is.tibble)
+plate2[indx] <- lapply(plate2[indx], function(x) as.numeric(as.character(x)))
+
+###################################
+###CC_fungi Contaminant removal.###
+###Adapted from MARIE and Shuzo Oita#####
+###This code works by substracting the SUM of contaminants from each OTU cell.
+###If the value is negative it replaces it with 0.
+
+########MARELI MAGIC#########
+##### Substracts the sum of the average of the ExtractionBlank avg and PCR negative control of Batch 001 from OTU sample reads, then removed control rows #####
+######################################
+
+################### Plate1 #####################
+
+as.data.frame(plate1)
+plate1 <- column_to_rownames(plate1, var = "Sample_names")
+
+#add column with sums for each OTU
+
+cont <- row.names(plate1)
+cont <- cont[92:94] #change accordingly to your data - these are the negative controls
+contamination <- c()
+for(c in 1:ncol(plate1)){
+  contamination[c]<- mean(plate1[rownames(plate1) %in% cont, c], na.rm = TRUE)
+}
+plate1 <-rbind(plate1, contamination)
+row.names(plate1)[95] <- "contamination" #change the name of row 104
+
+###subtract total contaminants from each OTU, if it is a negative number make it 0
+cont2 <- c(cont, "contamination")
+row <- which(!rownames(plate1) %in% cont2)
+for(r in row){
+  for(c in 1:ncol(plate1)){
+    if(plate1[r,c] > plate1["contamination",c]) {
+      new_reads <- plate1[r,c] - plate1["contamination",c]
+      plate1[r,c] <- new_reads
+    } else {plate1[r,c] <- 0}
+  }
+}
+
+
+##remove controls from dataframe and makes a text file to paste into existing excel sheet
+
+new_data_decontaminated001 <- plate1[!rownames(plate1) %in% cont2, ]
+write.table(new_data_decontaminated001,"clean_data/otu_data/MinusNegsBlanks_001.txt", sep="\t") ### This became tab "Filtered-BlankNegbyCode" in "ExtractionBatch0001_PCR102NC.xlsx".
+
+
+################### Plate2 #####################
+
+as.data.frame(plate2)
+plate2 <- column_to_rownames(plate2, var = "Sample_names")
+
+#add column with sums for each OTU
+
+cont <- row.names(plate2)
+cont <- cont[66:73] #change accordingly to your data - these are the negative controls
+contamination <- c()
+for(c in 1:ncol(plate2)){
+  contamination[c]<- mean(plate2[rownames(plate2) %in% cont, c], na.rm = TRUE)
+}
+plate2 <-rbind(plate2, contamination)
+row.names(plate2)[74] <- "contamination" #change the name of row 104
+
+###subtract total contaminants from each OTU, if it is a negative number make it 0
+
+cont2 <- c(cont, "contamination")
+row <- which(!rownames(plate2) %in% cont2)
+for(r in row){
+  for(c in 1:ncol(plate2)){
+    if(plate2[r,c] > plate2["contamination",c]) {
+      new_reads <- plate2[r,c] - plate2["contamination",c]
+      plate2[r,c] <- new_reads
+    } else {plate2[r,c] <- 0}
+  }
+}
+
+
+
+##remove controls from dataframe and makes a text file to paste into exisitng excel sheet
+
+new_data_decontaminated002 <- plate2[!rownames(plate2) %in% cont2, ]
+write.table(new_data_decontaminated002,"clean_data/otu_data/MinusNegsBlanks_002.txt", sep="\t")
+
+
+###################################
+####Saving decontaminated file ####
+###################################
+all_complete_decontaminated <- bind_rows(new_data_decontaminated001, new_data_decontaminated002)
+
+write.csv(all_complete_decontaminated,"clean_data/otu_data/all_Decontaminated_byBlankandNegs_complete.csv")
+trans <- t(all_complete_decontaminated)
+trans <- as.data.frame(trans)
+write.csv(trans, "clean_data/otu_data/all_toFilt_10_percent.csv") ## in the format to remove <10% OTUs -- see below
+
+
+
+##########################################################################
+#### Script to remove < 0.10% abundance per sample #### From Shuzo Oita###
+##########################################################################
+## csv file should have row = OTU, col = sample
+
+otu.data <- read.csv('clean_data/otu_data/all_toFilt_10_percent.csv', row.names = 1,as.is = T)
+otu.data <- apply(otu.data, 2, function(x) ifelse({100*x/sum(x)} < 0.10, 0, x))
+OTU_table.cleaned <- subset((otu.data2), rowSums(otu.data2)>1)
+OTU_table.cleaned <- as.data.frame(OTU_table.cleaned)
+write.csv(OTU_table.cleaned, "all_cleaned_at_10_percent.csv")
 ```
 
 # Data frames
@@ -363,15 +363,15 @@ Data frames needed for diversity, abundance, and richness analyses using clean s
 ```{r, Clean sequences}
 set.seed(123)
 # Cleaned (decontaminated) sample sequences ####
-#csamp
-# csamp <- read.csv("clean_data/otu_data/all_cleaned_at_10_percent.csv")
-# csamp[,2:157] <- lapply(csamp[,2:157], as.integer)
-# csamp <- csamp |>
-#   rename(OTU_ID = X) |>
-#   column_to_rownames(var = "OTU_ID") |>
-#   na.omit() |>
-#   na.fail() |>
-#   as.matrix()
+csamp
+csamp <- read.csv("clean_data/otu_data/all_cleaned_at_10_percent.csv")
+csamp[,2:157] <- lapply(csamp[,2:157], as.integer)
+csamp <- csamp |>
+  rename(OTU_ID = X) |>
+  column_to_rownames(var = "OTU_ID") |>
+  na.omit() |>
+  na.fail() |>
+  as.matrix()
 
 # Saving
 # saveRDS(csamp, file.path(save.path, "clean_data/clean_sequences.rds"))
@@ -385,16 +385,16 @@ csamp <- readRDS(file.path(save.path, "clean_data/clean_sequences.rds"))
 ```{r, TBAS}
 # T-BAS taxonomic assignment ####
 #tbas
-# tbas <- read.csv("unite_report2BSDHQZP.csv")
-# tbas <- tbas |>
-#   dplyr::filter(phylum == "Ascomycota") |>
-#   select(-match,-e.value, -percent, -coverage, -bitscore) |> #eliminating some columns that I am not really using
-#   na.omit()|>
-#   rename( OTU_ID = query) |>
-#   column_to_rownames(var = "OTU_ID") |>
-#   na.omit() |>
-#   na.fail() |>
-#   as.matrix()
+tbas <- read.csv("unite_report2BSDHQZP.csv")
+tbas <- tbas |>
+  dplyr::filter(phylum == "Ascomycota") |>
+  select(-match,-e.value, -percent, -coverage, -bitscore) |> #eliminating some columns that I am not really using
+  na.omit()|>
+  rename( OTU_ID = query) |>
+  column_to_rownames(var = "OTU_ID") |>
+  na.omit() |>
+  na.fail() |>
+  as.matrix()
 
 # Saving
 #saveRDS(tbas, file.path(save.path, "clean_data/tbas_filtered.rds"))
@@ -433,18 +433,18 @@ data <- readRDS(file.path(save.path, "clean_data/leaf_data_raw_analyses.rds"))
 # ndata (new_data)
 # This data set can also be used to conduct analyses summarized by leaf.
 
-# ndata <- data |>
-#   group_by(Sample_name, Species, Trial_Code, Trial_type, E_load, Leaf_ID) |>
-#   summarise(Anthocyanins = mean(Anthocyanins, na.rm = TRUE),
-#             Thickness = mean(Thickness, na.rm = TRUE),
-#             Toughness = mean(Toughness, na.rm = TRUE),
-#             LMA = mean(LMA, na.rm = TRUE),
-#             Abun_3 = mean(Abun_3, na.rm = TRUE),
-#             Abun_7 = mean(Abun_7, na.rm = TRUE)) |>
-#   ungroup() |>
-#    mutate_if(is.character, as.factor) |>
-#   na.omit() |>
-#   na.fail()
+ndata <- data |>
+  group_by(Sample_name, Species, Trial_Code, Trial_type, E_load, Leaf_ID) |>
+  summarise(Anthocyanins = mean(Anthocyanins, na.rm = TRUE),
+            Thickness = mean(Thickness, na.rm = TRUE),
+            Toughness = mean(Toughness, na.rm = TRUE),
+            LMA = mean(LMA, na.rm = TRUE),
+            Abun_3 = mean(Abun_3, na.rm = TRUE),
+            Abun_7 = mean(Abun_7, na.rm = TRUE)) |>
+  ungroup() |>
+   mutate_if(is.character, as.factor) |>
+  na.omit() |>
+  na.fail()
 
 # Saving
 # saveRDS(ndata, file.path(save.path, "clean_data/new_leaf_data.rds"))
@@ -458,14 +458,14 @@ ndata <- readRDS(file.path(save.path, "clean_data/new_leaf_data.rds"))
 # ndata2 (new_data2)
 # Data frame is summarized by plant (n = 156)
 
-# ndata2 <- ndata |> 
-#   select(!c(Abun_3, Abun_7)) |>
-#   mutate_if(is.character, as.factor) |>
-#   group_by(Sample_name, Species, Trial_type, Trial_Code, E_load) |>
-#   summarise(Anthocyanins = mean(Anthocyanins, na.rm = TRUE),
-#             Thickness = mean(Thickness, na.rm = TRUE),
-#             Toughness = mean(Toughness, na.rm =TRUE),
-#             LMA = mean(LMA, na.rm = TRUE)) 
+ndata2 <- ndata |>
+  select(!c(Abun_3, Abun_7)) |>
+  mutate_if(is.character, as.factor) |>
+  group_by(Sample_name, Species, Trial_type, Trial_Code, E_load) |>
+  summarise(Anthocyanins = mean(Anthocyanins, na.rm = TRUE),
+            Thickness = mean(Thickness, na.rm = TRUE),
+            Toughness = mean(Toughness, na.rm =TRUE),
+            LMA = mean(LMA, na.rm = TRUE))
 
 # Saving
 # saveRDS(ndata2, file.path(save.path, "clean_data/new_leaf_data2.rds"))
@@ -490,31 +490,31 @@ The code below cleans the `ants` data set by removing all the variables with inc
 
 ```{r, Ant assay data}
 
-#ants <- read.csv("field_data/Aim3_Bolivar_Summer_2019_Ant_Assay_datasheet.csv")
-# 
-# ants <- ants |>
-#   separate(Unique.ID, c("Trial_Code", "ELoad", "Species2", "Replicate")) |>
-#   unite("Sample_name", Species2:Replicate, sep = "") |>
-#   relocate(Species, Trial_Code,.after = Sample_name)|>
-#   slice(-c(11,12)) |>
-#   dplyr::filter(Trial_success!="0") |>
-#   select(!c(Leaf_ID, 
-#             Colony_ID, 
-#             Picture_ID, 
-#             Colony_location_Pipeline.Gamboa, 
-#             Attempt, 
-#             Date_analyzed, 
-#             X_coordinates, 
-#             Y_coordinates, 
-#             Elevation_meters, 
-#             ELoad, 
-#             Analyzer, 
-#             Time_start_trial, 
-#             Time_first_contact, 
-#             Time_first_cut, 
-#             Time_end_elapsed_trial )) |>
-#   mutate(Ant_percent_leafloss = -100*{(Leaf_area_final-Leaf_area_initial)/Leaf_area_initial}) |>
-#   mutate_if(is.character, as.factor)
+ants <- read.csv("field_data/Aim3_Bolivar_Summer_2019_Ant_Assay_datasheet.csv")
+
+ants <- ants |>
+  separate(Unique.ID, c("Trial_Code", "ELoad", "Species2", "Replicate")) |>
+  unite("Sample_name", Species2:Replicate, sep = "") |>
+  relocate(Species, Trial_Code,.after = Sample_name)|>
+  slice(-c(11,12)) |>
+  dplyr::filter(Trial_success!="0") |>
+  select(!c(Leaf_ID,
+            Colony_ID,
+            Picture_ID,
+            Colony_location_Pipeline.Gamboa,
+            Attempt,
+            Date_analyzed,
+            X_coordinates,
+            Y_coordinates,
+            Elevation_meters,
+            ELoad,
+            Analyzer,
+            Time_start_trial,
+            Time_first_contact,
+            Time_first_cut,
+            Time_end_elapsed_trial )) |>
+  mutate(Ant_percent_leafloss = -100*{(Leaf_area_final-Leaf_area_initial)/Leaf_area_initial}) |>
+  mutate_if(is.character, as.factor)
 
 # Saving
 # saveRDS(ants, file.path(save.path, "clean_data/ants_data.rds"))
@@ -675,9 +675,9 @@ newpq <- merge_phyloseq(pq2ET, tax_table(pq2), sample_data(pq2), rtree(ntaxa(pq2
 
 # Relative Abundance of 959 OTUs. No removal of singletons yet.
 
-# rawra <- transform_sample_counts(newpq, function(x)x/sum(x))
-# rawRA <- subset(otu_table(rawra), rownames(otu_table(rawra)) %in% notShared)
-# write.csv(rawRA, "clean_data/otu_data/Aim3_OTU_Relative_Abundance_singletons_untrimmed.csv")
+rawra <- transform_sample_counts(newpq, function(x)x/sum(x))
+rawRA <- subset(otu_table(rawra), rownames(otu_table(rawra)) %in% notShared)
+write.csv(rawRA, "clean_data/otu_data/Aim3_OTU_Relative_Abundance_singletons_untrimmed.csv")
 
 # Outputs of this script -- OTU table without E minus only OTUs and phyloseq object with E- OTUs removed. No removal of singletons yet.
 
@@ -695,10 +695,13 @@ newpq1 <- filter_taxa(newpq, function (x) {sum(x > 0) > 1}, prune=TRUE)
 # Relative abundance calculation ####
 # Code below is for making the .csv file. After that refer to df rawra from .csv file.
 
-# newpqRA <- transform_sample_counts(newpq1, function(x)x/sum(x))
-# rabun <- subset(otu_table(newpqRA), rownames(otu_table(newpqRA)) %in% notShared)
-# write.csv(rabun, "clean_data/otu_data/Aim3_OTU_Relative_Abundance_singletons_trimmed.csv")
-#GPfr = filter_taxa(GPr, function(x) mean(x) > 1e-5, TRUE)
+newpqRA <- transform_sample_counts(newpq1, function(x)
+  x / sum(x))
+rabun <- subset(otu_table(newpqRA), rownames(otu_table(newpqRA)) %in% notShared)
+write.csv(rabun,
+          "clean_data/otu_data/Aim3_OTU_Relative_Abundance_singletons_trimmed.csv")
+GPfr = filter_taxa(GPr, function(x)
+  mean(x) > 1e-5, TRUE)
 
 
 # Richness data frame ####
@@ -730,14 +733,14 @@ newpqDF <- newpqDF |>  # Code from the Taxonomical assginment section dopes the 
 
 # eOTU <- read.csv("clean_data/Aim3_OTU_phyloseq_trimmed.csv") 
 # Can upload as data frame. Use for distance matrices.
-# 
-# eOTU2 <- eOTU |>
-#   rename(OTU_ID = X) |>
-#   column_to_rownames(var = "OTU_ID") |>
-#   t() |>
-#   as.data.frame() |>
-#   rownames_to_column() |>
-#   rename(Sample_name = rowname)
+
+eOTU2 <- eOTU |>
+  rename(OTU_ID = X) |>
+  column_to_rownames(var = "OTU_ID") |>
+  t() |>
+  as.data.frame() |>
+  rownames_to_column() |>
+  rename(Sample_name = rowname)
 
 # Saving
 #saveRDS(eOTU2, file.path(save.path, "clean_data/eOTU2.rds"))
@@ -747,14 +750,14 @@ eOTU2 <- readRDS(file.path(save.path, "clean_data/eOTU2.rds"))
 
 
 # Just 569 OTUs and 156 samples (total abundances)
-# cOTU <- newpqDF |>
-#   select(-kingdom, -phylum, -class, -order, -family, -genus, -species) |>
-#   column_to_rownames(var = "OTU") |>
-#   as.matrix() |>
-#   t() |>
-#   as.data.frame() |>
-#   rownames_to_column() |>
-#   rename(Sample_name = rowname)
+cOTU <- newpqDF |>
+  select(-kingdom, -phylum, -class, -order, -family, -genus, -species) |>
+  column_to_rownames(var = "OTU") |>
+  as.matrix() |>
+  t() |>
+  as.data.frame() |>
+  rownames_to_column() |>
+  rename(Sample_name = rowname)
 
 # Saving
 # saveRDS(cOTU, file.path(save.path, "clean_data/clean_OTU.rds"))
@@ -934,24 +937,27 @@ Proceeding with exploring normality assumptions with `data` and `masterant`. It 
 # Histograms ####
 # Explanatory variables
 hist(data$Anthocyanins)
-hist(data$Thickness..micro.m.,
-     xlim = c(0,500))
+hist(data$Thickness..micro.m., xlim = c(0, 500))
 hist(data$Toughness)
 hist(data$LMA)
 
 
 #How it would ideally look like
 # QQnorms ####
-qqnorm(rnorm(n = length(data$Anthocyanins..aci.), 
-             mean =mean(data$Anthocyanins..aci., na.rm = TRUE), 
-             sd = sd(data$Anthocyanins..aci., na.rm = TRUE)))
+qqnorm(rnorm(
+  n = length(data$Anthocyanins..aci.),
+  mean = mean(data$Anthocyanins..aci., na.rm = TRUE),
+  sd = sd(data$Anthocyanins..aci., na.rm = TRUE)
+))
 
 # QQPlots ####
-qqPlot(rnorm(n = length(data$Anthocyanins..aci.), 
-             mean =mean(data$Anthocyanins..aci., na.rm = TRUE), 
-             sd = sd(data$Anthocyanins..aci., na.rm = TRUE)))
+qqPlot(rnorm(
+  n = length(data$Anthocyanins..aci.),
+  mean = mean(data$Anthocyanins..aci., na.rm = TRUE),
+  sd = sd(data$Anthocyanins..aci., na.rm = TRUE)
+))
 
-#How it actually look like             
+#How it actually look like
 #Using "data" set
 qqPlot(data$Anthocyanins..aci.)
 qqPlot(data$Thickness..micro.m.)
@@ -959,7 +965,7 @@ qqPlot(data$Toughness..lbf.)
 qqPlot(data$LMA_dw)
 
 
-masterant$Prop_area_loss <- masterant$Ant_percent_leafloss/100
+masterant$Prop_area_loss <- masterant$Ant_percent_leafloss / 100
 
 qqPlot(masterant$Prop_area_loss)
 
@@ -972,10 +978,10 @@ qqPlot(masterant2$Toughness)
 qqPlot(masterant2$LMA)
 qqPlot(masterant2$Shannon)
 
-#Nothing has a normal distribution. It looks like it will be necessary to use a negative binomial distribution. 
+#Nothing has a normal distribution. It looks like it will be necessary to use a negative binomial distribution.
 
 # Shapiro-Wilks tests ####
-hist(masterant$Ant_percent_leafloss) #Binomial 
+hist(masterant$Ant_percent_leafloss) #Binomial
 shapiro.test(masterant$Ant_percent_leafloss) #Data deviates from the normal distribution. p-values is 0.0002607
 shapiro.test(masterant$Anthocyanins) #Borderline non-normal p-value = 0.05605
 shapiro.test(masterant$Thickness) #Non-normal p-value = 0.07201
@@ -1229,58 +1235,111 @@ References
 # Leaf traits and relative abundance and total reads of OTUs
 
 ```{r, Total reads boxplot}
-mycomparisons <- list(c("APEIME", "CHRYCA"), c("APEIME", "CORDAL"), c("APEIME", "DYPTE"), c("APEIME", "HEISCO"),c("APEIME", "LACPA"), c("APEIME","THEOCA"),
-                      c("CHRYCA","CORDAL"), c("CHRYCA","DYPTE"),c("CHRYCA","HEISCO"), c("CHRYCA","LACPA"), c("CHRYCA", "THEOCA"),
-                      c("CORDAL","DYPTE"), c("CORDAL","HEISCO"), c("CORDAL","LACPA"), c("CORDAL","THEOCA"), 
-                      c("DYPTE","HEISCO"), c("DYPTE","LACPA"), c("DYPTE","THEOCA"), 
-                      c("HEISCO","LACPA"), c("HEISCO","THEOCA"), c("LACPA","THEOCA"))
+mycomparisons <- list(
+  c("APEIME", "CHRYCA"),
+  c("APEIME", "CORDAL"),
+  c("APEIME", "DYPTE"),
+  c("APEIME", "HEISCO"),
+  c("APEIME", "LACPA"),
+  c("APEIME", "THEOCA"),
+  c("CHRYCA", "CORDAL"),
+  c("CHRYCA", "DYPTE"),
+  c("CHRYCA", "HEISCO"),
+  c("CHRYCA", "LACPA"),
+  c("CHRYCA", "THEOCA"),
+  c("CORDAL", "DYPTE"),
+  c("CORDAL", "HEISCO"),
+  c("CORDAL", "LACPA"),
+  c("CORDAL", "THEOCA"),
+  c("DYPTE", "HEISCO"),
+  c("DYPTE", "LACPA"),
+  c("DYPTE", "THEOCA"),
+  c("HEISCO", "LACPA"),
+  c("HEISCO", "THEOCA"),
+  c("LACPA", "THEOCA")
+)
 
-newname <- c("A. membranacea", "C. cainito", "C. alliodora", "Dypterix .sp", "H. concinna", "L. panamensis", "T. cacao")
+newname <- c(
+  "A. membranacea",
+  "C. cainito",
+  "C. alliodora",
+  "Dypterix .sp",
+  "H. concinna",
+  "L. panamensis",
+  "T. cacao"
+)
 
-names(newname) <- c("APEIME", "CHRYCA", "CORDAL", "DYPTE", "HEISCO", "LACPA", "THEOCA")
+names(newname) <- c("APEIME",
+                    "CHRYCA",
+                    "CORDAL",
+                    "DYPTE",
+                    "HEISCO",
+                    "LACPA",
+                    "THEOCA")
 ecomparisons <- list(c(master$E_load))
 
 #Total reads
 ggplot(data = master, aes(x = E_load, y = Total_reads), group_by(Species)) +
-  geom_boxplot(aes(fill = E_load), outlier.shape = NA)+
-  theme_bw(base_size = 16) + 
-  labs(x="", y="Total_reads")+
-  theme(legend.position="right", legend.title = element_blank(),
-        legend.text = element_text(size = 24),
-        axis.text.x=element_blank()) +
-  annotate("text", x = 2.5, y = .65, label = "")+
-  ylim(0,75000) +
-  facet_wrap(~Species)
+  geom_boxplot(aes(fill = E_load), outlier.shape = NA) +
+  theme_bw(base_size = 16) +
+  labs(x = "", y = "Total_reads") +
+  theme(
+    legend.position = "right",
+    legend.title = element_blank(),
+    legend.text = element_text(size = 24),
+    axis.text.x = element_blank()
+  ) +
+  annotate("text",
+           x = 2.5,
+           y = .65,
+           label = "") +
+  ylim(0, 75000) +
+  facet_wrap( ~ Species)
 
 ```
 
 ```{r, Relative abundance boxplot}
 # By tree species
-RA <- ggplot(data= master, aes(x = Species, y = Relative_Abundance)) +
+RA <- ggplot(data = master, aes(x = Species, y = Relative_Abundance)) +
   geom_boxplot(aes(fill = E_load), outlier.shape = NA) +
-  geom_crossbar(stat="summary", fun = mean, fun.max = mean, fun.min = mean,  fatten = 2, width = 0.5) +
-  geom_point(color="black", alpha = 0.2,size =2, position = position_jitter(w=0.05)) +
-  scale_fill_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
-  scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
-  theme_bw(base_size = 16) + 
+  geom_crossbar(
+    stat = "summary",
+    fun = mean,
+    fun.max = mean,
+    fun.min = mean,
+    fatten = 2,
+    width = 0.5
+  ) +
+  geom_point(
+    color = "black",
+    alpha = 0.2,
+    size = 2,
+    position = position_jitter(w = 0.05)
+  ) +
+  scale_fill_manual(values = met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_color_manual(values = met.brewer("Cross", n = 2, type = "discrete")) +
+  theme_bw(base_size = 16) +
   theme(panel.grid.major = element_line(colour = "grey")) +
   theme(panel.grid.minor = element_line(colour = "grey")) +
   theme(strip.background = element_rect(fill = "white")) +
   theme(strip.text.x = element_text(colour = "black", face = "bold")) +
   theme(legend.title = element_text(face = "bold")) +
   theme(panel.border = element_rect(linetype = "blank", fill = NA)) +
-  labs(y="Relative Abundance of OTUs (Ascomycota)")+
-  theme(legend.position="right", legend.title = element_blank(),
-        legend.text = element_text(size = 24),
-        axis.text.x=element_text(angle = 30)) +
+  labs(y = "Relative Abundance of OTUs (Ascomycota)") +
+  theme(
+    legend.position = "right",
+    legend.title = element_blank(),
+    legend.text = element_text(size = 24),
+    axis.text.x = element_text(angle = 30)
+  ) +
   labs(caption = "*Outliers and singletons removed.") +
-  scale_x_discrete(labels= mycomparisons) +
+  scale_x_discrete(labels = mycomparisons) +
   #annotate("text", x = 2.5, y = .65, label = "") +
   stat_compare_means(comparisons = mycomparisons) +
   stat_compare_means(comparisons = ecomparisons) +
-  stat_compare_means(method = "kruskal.test", label = "p.signif") 
-  #ylim(0, 0.13) +
-  #facet_wrap(~E_load)
+  stat_compare_means(method = "kruskal.test", label = "p.signif")
+#ylim(0, 0.13) +
+#facet_wrap(~E_load)
 RA
 #ggsave(filename="Aim3_RA_Species_0706202.png", plot = RA, dpi=600, units=c("mm"), width = 300, height = 300)
 
@@ -1294,81 +1353,129 @@ RA
 #rstatix package used for pairwise t-test
 master |>
   group_by(Species) |>
-  pairwise_t_test(Relative_Abundance ~ E_load,
-         p.adjust.method = "BH",
-  paired = TRUE,
-  #var.equal = F,
-  alternative = "two.sided",
-  mu = 0,
-  conf.level = 0.95, 
-  detailed = TRUE)
+  pairwise_t_test(
+    Relative_Abundance ~ E_load,
+    p.adjust.method = "BH",
+    paired = TRUE,
+    #var.equal = F,
+    alternative = "two.sided",
+    mu = 0,
+    conf.level = 0.95,
+    detailed = TRUE
+  )
 
 #ggpubr package used for t.tests and plotting t-test comparisons
-compare_means(Relative_Abundance ~ E_load,
-         data = master,
-         method = "t.test",
-         p.adjust.method = "BH",
+compare_means(
+  Relative_Abundance ~ E_load,
+  data = master,
+  method = "t.test",
+  p.adjust.method = "BH",
   paired = TRUE,
-  group.by = "Species")
-  #var.equal = F,
+  group.by = "Species"
+)
+#var.equal = F,
 #Roughly the same outcome as pairwise_t_test.
 #Report with `compare_means` because it is easier to plot with `ggpubr` package.
 
 
 # RA per E_load
-RAE <- ggplot(data= master, aes(x = E_load, y = Relative_Abundance)) +
+RAE <- ggplot(data = master, aes(x = E_load, y = Relative_Abundance)) +
   geom_violin(aes(fill = E_load)) +
   #geom_boxplot(width=0.1, color="grey30", alpha=0.2) +
-  geom_crossbar(stat="summary", fun = mean, fun.max = mean, fun.min = mean,  fatten = 2, width = 0.5) +
-  geom_point(color="grey15", alpha = 0.4,size = 2, position = position_jitter(w=0.05)) +
-  scale_fill_manual(name = "Treatment ", values= met.brewer("Cross", n = 2, type = "discrete")) +
-  scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
-  theme_classic(base_size = 12)+
-  theme(panel.grid.major = element_line(colour = "grey"),
-        panel.grid.minor = element_line(colour = "grey"),
-        strip.background = element_rect(fill = "white"),
-        axis.line.x.bottom = element_blank(), 
-        strip.text.x = element_text(colour = "grey15", face = "italic"),
-        panel.border = element_rect(linetype = "blank", fill = NA),
-        legend.position="right", 
-        legend.title = element_text(face = "bold"),
-        legend.text = element_text(size = 14),
-        plot.title = element_text(color="black", size = 14, face="bold"),
-        axis.text.x=element_blank()) +
-  labs(x="", y="Relative Abundance of Ascomycota", face = "bold")+
+  geom_crossbar(
+    stat = "summary",
+    fun = mean,
+    fun.max = mean,
+    fun.min = mean,
+    fatten = 2,
+    width = 0.5
+  ) +
+  geom_point(
+    color = "grey15",
+    alpha = 0.4,
+    size = 2,
+    position = position_jitter(w = 0.05)
+  ) +
+  scale_fill_manual(name = "Treatment ",
+                    values = met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_color_manual(values = met.brewer("Cross", n = 2, type = "discrete")) +
+  theme_classic(base_size = 12) +
+  theme(
+    panel.grid.major = element_line(colour = "grey"),
+    panel.grid.minor = element_line(colour = "grey"),
+    strip.background = element_rect(fill = "white"),
+    axis.line.x.bottom = element_blank(),
+    strip.text.x = element_text(colour = "grey15", face = "italic"),
+    panel.border = element_rect(linetype = "blank", fill = NA),
+    legend.position = "right",
+    legend.title = element_text(face = "bold"),
+    legend.text = element_text(size = 14),
+    plot.title = element_text(
+      color = "black",
+      size = 14,
+      face = "bold"
+    ),
+    axis.text.x = element_blank()
+  ) +
+  labs(x = "", y = "Relative Abundance of Ascomycota", face = "bold") +
   theme() +
   #labs(caption = "*Outliers and singletons removed.") +
-  stat_compare_means(comparisons = list(c("E-", "E+")),
-                     method = "t.test",
-                     label = "p.signif",
-                     paired = T,
-                     label.y = 25, 
-                     bracket.size = 0.65) +
-  facet_wrap(~Species, labeller = as_labeller(newname))
-  
+  stat_compare_means(
+    comparisons = list(c("E-", "E+")),
+    method = "t.test",
+    label = "p.signif",
+    paired = T,
+    label.y = 25,
+    bracket.size = 0.65
+  ) +
+  facet_wrap( ~ Species, labeller = as_labeller(newname))
+
 #RAE
 
 
-RAE_bar <- ggplot(data= master, aes(x = Species, y = Relative_Abundance)) +
-  geom_bar(stat="identity", aes(fill = E_load), position = "stack") +
-  scale_fill_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
-  scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
-  scale_x_discrete(labels=c(newname)) +
-  theme_classic(base_size = 14)+
-  theme(strip.text.x = element_text(colour = "grey15", face = "italic"),
-        panel.border = element_rect(linetype = "blank", fill = NA)) +
-  labs(x="", y="Relative Abundance of Ascomycota", face = "bold")+
-  theme(legend.position="right",
-        legend.title = element_blank(),
-        legend.text = element_text(size = 14),
-        plot.title = element_text(color="black", size = 14, face="bold"),
-        axis.text.x=element_text(face = "italic", hjust = 1, angle = 30))
+RAE_bar <- ggplot(data = master, aes(x = Species, y = Relative_Abundance)) +
+  geom_bar(stat = "identity", aes(fill = E_load), position = "stack") +
+  scale_fill_manual(values = met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_color_manual(values = met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_x_discrete(labels = c(newname)) +
+  theme_classic(base_size = 14) +
+  theme(
+    strip.text.x = element_text(colour = "grey15", face = "italic"),
+    panel.border = element_rect(linetype = "blank", fill = NA)
+  ) +
+  labs(x = "", y = "Relative Abundance of Ascomycota", face = "bold") +
+  theme(
+    legend.position = "right",
+    legend.title = element_blank(),
+    legend.text = element_text(size = 14),
+    plot.title = element_text(
+      color = "black",
+      size = 14,
+      face = "bold"
+    ),
+    axis.text.x = element_text(
+      face = "italic",
+      hjust = 1,
+      angle = 30
+    )
+  )
 
 
 #RAE_bar
 
 # Arranged as a grid
-fig1<- ggarrange(RAE, RAE_bar, nrow = 1, ncol=2, widths = c(1.5, 1), common.legend = TRUE, legend="bottom",label.x = 0, vjust = 1, labels=c("(a)", "(b)"))
+fig1 <- ggarrange(
+  RAE,
+  RAE_bar,
+  nrow = 1,
+  ncol = 2,
+  widths = c(1.5, 1),
+  common.legend = TRUE,
+  legend = "bottom",
+  label.x = 0,
+  vjust = 1,
+  labels = c("(a)", "(b)")
+)
 
 fig1
 
@@ -1382,91 +1489,132 @@ fig1
 ## Figure S1
 
 ```{r, suppfig_1}
-Abun7a <- ggplot(data= data |>
-                      group_by(Species, Sample_name, E_load, Leaf_ID) |>
-                      summarise(Abun_7 = mean(Abun_7)),
-                     aes(x = E_load, y = Abun_7)) +
+Abun7a <- ggplot(
+  data = data |>
+    group_by(Species, Sample_name, E_load, Leaf_ID) |>
+    summarise(Abun_7 = mean(Abun_7)),
+  aes(x = E_load, y = Abun_7)
+) +
   geom_violin(aes(fill = E_load)) +
   #geom_boxplot(width=0.1, color="grey30", alpha=0.2) +
-  geom_crossbar(stat="summary", 
-                fun = mean, 
-                fun.max = mean,
-                fun.min = mean,  
-                fatten = 2, 
-                width = 0.5) +
-  geom_point(color="grey15", 
-             alpha = 0.4,
-             size = 2, 
-             position = position_jitter(w=0.05)) +
-  scale_fill_manual(name = "Treatment ", values= met.brewer("Cross", n = 2, type = "discrete")) +
-  scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
+  geom_crossbar(
+    stat = "summary",
+    fun = mean,
+    fun.max = mean,
+    fun.min = mean,
+    fatten = 2,
+    width = 0.5
+  ) +
+  geom_point(
+    color = "grey15",
+    alpha = 0.4,
+    size = 2,
+    position = position_jitter(w = 0.05)
+  ) +
+  scale_fill_manual(name = "Treatment ",
+                    values = met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_color_manual(values = met.brewer("Cross", n = 2, type = "discrete")) +
   scale_y_continuous(labels = scales::percent) +
-theme_classic(base_size = 14)+
+  theme_classic(base_size = 14) +
   theme(
-        #panel.grid.major = element_line(colour = "grey"),
-        #panel.grid.minor = element_line(colour = "grey"),
-        #strip.background = element_rect(fill = "white"),
-        #axis.line.x.bottom = element_blank(), 
-        strip.text.x = element_text(colour = "grey15", face = "italic"),
-        panel.border = element_rect(linetype = "blank", fill = NA)) +
-  labs(x="", y="Endophyte colonization (%)", face = "bold")+
-  theme(legend.position="right", 
-        legend.title = element_text(face = "bold"),
-        legend.text = element_text(size = 14),
-        plot.title = element_text(color="black", size = 14, face="bold"),
-        axis.text.x=element_blank()) +
-  stat_compare_means(comparisons = list(c("E-", "E+")),
-                     method = "t.test",
-                     label = "p.signif", bracket.size = 0.65) 
-  #facet_wrap(~Species, labeller = as_labeller(newname))
- Abun7a  
- 
-Abun7b <- ggplot(data= data |>
-                      group_by(Species, Sample_name, E_load, Leaf_ID) |>
-                      summarise(Abun_7 = mean(Abun_7)),
-                     aes(x = E_load, y = Abun_7)) +
+    strip.text.x = element_text(colour = "grey15", face = "italic"),
+    panel.border = element_rect(linetype = "blank", fill = NA)
+  ) +
+  labs(x = "", y = "Endophyte colonization (%)", face = "bold") +
+  theme(
+    legend.position = "right",
+    legend.title = element_text(face = "bold"),
+    legend.text = element_text(size = 14),
+    plot.title = element_text(
+      color = "black",
+      size = 14,
+      face = "bold"
+    ),
+    axis.text.x = element_blank()
+  ) +
+  stat_compare_means(
+    comparisons = list(c("E-", "E+")),
+    method = "t.test",
+    label = "p.signif",
+    bracket.size = 0.65
+  )
+#facet_wrap(~Species, labeller = as_labeller(newname))
+Abun7a
+
+Abun7b <- ggplot(
+  data = data |>
+    group_by(Species, Sample_name, E_load, Leaf_ID) |>
+    summarise(Abun_7 = mean(Abun_7)),
+  aes(x = E_load, y = Abun_7)
+) +
   geom_violin(aes(fill = E_load)) +
   #geom_boxplot(width=0.1, color="grey30", alpha=0.2) +
-  geom_crossbar(stat="summary", 
-                fun = mean, 
-                fun.max = mean,
-                fun.min = mean,  
-                fatten = 2, 
-                width = 0.5) +
-  geom_point(color="grey15", 
-             alpha = 0.4,
-             size = 2, 
-             position = position_jitter(w=0.05)) +
-  scale_fill_manual(name = "Treatment ", values= met.brewer("Cross", n = 2, type = "discrete")) +
-  scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
-  scale_y_continuous(expand = expansion(mult = 0.1), 
-                     breaks = c(0, 0.25, 0.50, 0.75, 1),
-                     labels = scales::percent) +
+  geom_crossbar(
+    stat = "summary",
+    fun = mean,
+    fun.max = mean,
+    fun.min = mean,
+    fatten = 2,
+    width = 0.5
+  ) +
+  geom_point(
+    color = "grey15",
+    alpha = 0.4,
+    size = 2,
+    position = position_jitter(w = 0.05)
+  ) +
+  scale_fill_manual(name = "Treatment ",
+                    values = met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_color_manual(values = met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_y_continuous(
+    expand = expansion(mult = 0.1),
+    breaks = c(0, 0.25, 0.50, 0.75, 1),
+    labels = scales::percent
+  ) +
   #scale_y_continuous(labels = scales::percent) +
-theme_classic(base_size = 14)+
+  theme_classic(base_size = 14) +
   theme(
-        panel.grid.major = element_line(colour = "grey"),
-        panel.grid.minor = element_line(colour = "grey"),
-        strip.background = element_rect(fill = "white"),
-        axis.line.x.bottom = element_blank(),
-        strip.text.x = element_text(colour = "grey15", face = "italic"),
-        panel.border = element_rect(linetype = "blank", fill = NA)) +
-  labs(x="", y="Endophyte colonization (%)", face = "bold")+
-  theme(legend.position="right", 
-        legend.title = element_text(face = "bold"),
-        legend.text = element_text(size = 14),
-        plot.title = element_text(color="black", size = 14, face="bold"),
-        axis.text.x=element_blank()) +
-  stat_compare_means(comparisons = list(c("E-", "E+")),
-                     method = "t.test",
-                     label = "p.signif", label.y = 1.03, bracket.size = 0.65) +
-  facet_wrap(~Species, labeller = as_labeller(newname))
+    panel.grid.major = element_line(colour = "grey"),
+    panel.grid.minor = element_line(colour = "grey"),
+    strip.background = element_rect(fill = "white"),
+    axis.line.x.bottom = element_blank(),
+    strip.text.x = element_text(colour = "grey15", face = "italic"),
+    panel.border = element_rect(linetype = "blank", fill = NA)
+  ) +
+  labs(x = "", y = "Endophyte colonization (%)", face = "bold") +
+  theme(
+    legend.position = "right",
+    legend.title = element_text(face = "bold"),
+    legend.text = element_text(size = 14),
+    plot.title = element_text(
+      color = "black",
+      size = 14,
+      face = "bold"
+    ),
+    axis.text.x = element_blank()
+  ) +
+  stat_compare_means(
+    comparisons = list(c("E-", "E+")),
+    method = "t.test",
+    label = "p.signif",
+    label.y = 1.03,
+    bracket.size = 0.65
+  ) +
+  facet_wrap( ~ Species, labeller = as_labeller(newname))
 
 
-Abun7b  
+Abun7b
 
 # Figure S1a-S1b
-suppfig_1 <- ggarrange(Abun7a, Abun7b, nrow = 1, ncol=2, common.legend = TRUE, legend="bottom", labels = c("(a)", "(b)"))
+suppfig_1 <- ggarrange(
+  Abun7a,
+  Abun7b,
+  nrow = 1,
+  ncol = 2,
+  common.legend = TRUE,
+  legend = "bottom",
+  labels = c("(a)", "(b)")
+)
 suppfig_1
 
 
@@ -1476,98 +1624,159 @@ suppfig_1
 ## Figure S2-S6
 
 ```{r, Functional traits violins}
-mycomparisons <- list(c("APEIME", "CHRYCA"), c("APEIME", "CORDAL"), c("APEIME", "DYPTE"), c("APEIME", "HEISCO"),c("APEIME", "LACPA"), c("APEIME","THEOCA"),
-                      c("CHRYCA","CORDAL"), c("CHRYCA","DYPTE"),c("CHRYCA","HEISCO"), c("CHRYCA","LACPA"), c("CHRYCA", "THEOCA"),
-                      c("CORDAL","DYPTE"), c("CORDAL","HEISCO"), c("CORDAL","LACPA"), c("CORDAL","THEOCA"), 
-                      c("DYPTE","HEISCO"), c("DYPTE","LACPA"), c("DYPTE","THEOCA"), 
-                      c("HEISCO","LACPA"), c("HEISCO","THEOCA"), c("LACPA","THEOCA"))
+mycomparisons <- list(
+  c("APEIME", "CHRYCA"),
+  c("APEIME", "CORDAL"),
+  c("APEIME", "DYPTE"),
+  c("APEIME", "HEISCO"),
+  c("APEIME", "LACPA"),
+  c("APEIME", "THEOCA"),
+  c("CHRYCA", "CORDAL"),
+  c("CHRYCA", "DYPTE"),
+  c("CHRYCA", "HEISCO"),
+  c("CHRYCA", "LACPA"),
+  c("CHRYCA", "THEOCA"),
+  c("CORDAL", "DYPTE"),
+  c("CORDAL", "HEISCO"),
+  c("CORDAL", "LACPA"),
+  c("CORDAL", "THEOCA"),
+  c("DYPTE", "HEISCO"),
+  c("DYPTE", "LACPA"),
+  c("DYPTE", "THEOCA"),
+  c("HEISCO", "LACPA"),
+  c("HEISCO", "THEOCA"),
+  c("LACPA", "THEOCA")
+)
 
-newname <- c("A. membranacea", "C. cainito", "C. alliodora", "Dypterix .sp", "H. concinna", "L. panamensis", "T. cacao")
+newname <- c(
+  "A. membranacea",
+  "C. cainito",
+  "C. alliodora",
+  "Dypterix .sp",
+  "H. concinna",
+  "L. panamensis",
+  "T. cacao"
+)
 
-names(newname) <- c("APEIME", "CHRYCA", "CORDAL", "DYPTE", "HEISCO", "LACPA", "THEOCA")
+names(newname) <- c("APEIME",
+                    "CHRYCA",
+                    "CORDAL",
+                    "DYPTE",
+                    "HEISCO",
+                    "LACPA",
+                    "THEOCA")
 
 # Anthocyanins by endophyte load an species
 ACIa <- ggplot(data = master, aes(x = E_load, y = Anthocyanins, fill = E_load)) +
   geom_violin() +
-  geom_point(position = position_jitterdodge(dodge.width = 0.9, jitter.width = 0.2),
-             alpha = 0.3, color = "grey30", size = 2) +
-  geom_crossbar(stat="summary", 
-               fun = mean, 
-               fun.max = mean, 
-               fun.min = mean,
-               alpha = 0.3, 
-               size = 0.3, 
-               width = 0.7,
-               position = position_dodge(width = 0.9)) +
-  scale_fill_manual(name = "Treatment", values= met.brewer("Cross", n = 2, type = "discrete")) +
-  scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
-  scale_x_discrete(labels=c(newname)) +
+  geom_point(
+    position = position_jitterdodge(dodge.width = 0.9, jitter.width = 0.2),
+    alpha = 0.3,
+    color = "grey30",
+    size = 2
+  ) +
+  geom_crossbar(
+    stat = "summary",
+    fun = mean,
+    fun.max = mean,
+    fun.min = mean,
+    alpha = 0.3,
+    size = 0.3,
+    width = 0.7,
+    position = position_dodge(width = 0.9)
+  ) +
+  scale_fill_manual(name = "Treatment",
+                    values = met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_color_manual(values = met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_x_discrete(labels = c(newname)) +
   theme_classic(base_size = 16) +
   theme(
-        #panel.grid.major = element_line(colour = "grey"),
-        #panel.grid.minor = element_line(colour = "grey"),
-        #strip.background = element_rect(fill = "white"),
-        #strip.text.x = element_text(colour = "black", face = "bold"),
-        legend.title = element_text(face = "bold"),
-        panel.border = element_rect(linetype = "blank", fill = NA),
-        axis.text.x=element_blank(),
-        legend.position="right", 
-        legend.text = element_text(size = 14)) +
-  labs(x="", y=expression(paste("ACI (% ", italic("A") [lambda]," at 931 nm / % ", italic("A") [lambda]," at 530 nm)"))) +
-  theme(legend.position="right", 
-        legend.text = element_text(size = 14)) +
+    #panel.grid.major = element_line(colour = "grey"),
+    #panel.grid.minor = element_line(colour = "grey"),
+    #strip.background = element_rect(fill = "white"),
+    #strip.text.x = element_text(colour = "black", face = "bold"),
+    legend.title = element_text(face = "bold"),
+    panel.border = element_rect(linetype = "blank", fill = NA),
+    axis.text.x = element_blank(),
+    legend.position = "right",
+    legend.text = element_text(size = 14)
+  ) +
+  labs(x = "", y = expression(paste(
+    "ACI (% ", italic("A") [lambda], " at 931 nm / % ", italic("A") [lambda], " at 530 nm)"
+  ))) +
+  theme(legend.position = "right", legend.text = element_text(size = 14)) +
   #labs(caption = "*Outliers and singletons removed.") +
   
   #annotate("text", x = 2.5, y = .65, label = "") +
-  stat_compare_means(label = "p.signif", 
-                     method = "t.test",
-                     paired = T,
-                     comparisons =list(c("E-", "E+")),
-                     bracket.size = 0.8)
+  stat_compare_means(
+    label = "p.signif",
+    method = "t.test",
+    paired = T,
+    comparisons = list(c("E-", "E+")),
+    bracket.size = 0.8
+  )
 
 ACIa
 
 
 ACIb <- ggplot(data = master, aes(x = Species, y = Anthocyanins, fill = E_load)) +
   geom_violin() +
-  geom_point(position = position_jitterdodge(dodge.width = 0.9, jitter.width = 0.2),
-             alpha = 0.3, color = "grey30", size = 2) +
-  geom_crossbar(stat="summary", 
-               fun = mean, 
-               fun.max = mean, 
-               fun.min = mean,
-               alpha = 0.3, 
-               size = 0.3, 
-               width = 0.7,
-               position = position_dodge(width = 0.9)) +
-  scale_fill_manual(name = "Treatment", values= met.brewer("Cross", n = 2, type = "discrete")) +
-  scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
-  scale_x_discrete(labels=c(newname)) +
+  geom_point(
+    position = position_jitterdodge(dodge.width = 0.9, jitter.width = 0.2),
+    alpha = 0.3,
+    color = "grey30",
+    size = 2
+  ) +
+  geom_crossbar(
+    stat = "summary",
+    fun = mean,
+    fun.max = mean,
+    fun.min = mean,
+    alpha = 0.3,
+    size = 0.3,
+    width = 0.7,
+    position = position_dodge(width = 0.9)
+  ) +
+  scale_fill_manual(name = "Treatment",
+                    values = met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_color_manual(values = met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_x_discrete(labels = c(newname)) +
   scale_y_continuous(limits = c(100, 300)) +
   theme_classic(base_size = 16) +
   theme(
-        #panel.grid.major = element_line(colour = "grey"),
-        #panel.grid.minor = element_line(colour = "grey"),
-        #strip.background = element_rect(fill = "white"),
-        #strip.text.x = element_text(colour = "black", face = "bold"),
-        legend.title = element_text(face = "bold"),
-        panel.border = element_rect(linetype = "blank", fill = NA),
-        axis.text.x=element_text(face = "italic", hjust = 1, angle = 30),
-        legend.position="right", 
-        legend.text = element_text(size = 14)) +
-  labs(x="", y=expression(paste("ACI (% ", italic("A") [lambda]," at 931 nm / % ", italic("A") [lambda]," at 530 nm)"))) +
-  #theme(legend.position="right", 
-        #legend.text = element_text(size = 14)) +
+    legend.title = element_text(face = "bold"),
+    panel.border = element_rect(linetype = "blank", fill = NA),
+    axis.text.x = element_text(
+      face = "italic",
+      hjust = 1,
+      angle = 30
+    ),
+    legend.position = "right",
+    legend.text = element_text(size = 14)
+  ) +
+  labs(x = "", y = expression(paste(
+    "ACI (% ", italic("A") [lambda], " at 931 nm / % ", italic("A") [lambda], " at 530 nm)"
+  ))) +
+  #theme(legend.position="right",
+  #legend.text = element_text(size = 14)) +
   #labs(caption = "*Outliers and singletons removed.") +
   #annotate("text", x = 2.5, y = .65, label = "") +
-  stat_compare_means(label = "p.signif", 
-                     method = "anova", 
+  stat_compare_means(label = "p.signif",
+                     method = "anova",
                      paired = T)
 
 ACIb
 
 # Figure S1a S1b
-suppfig_1 <- ggarrange(ACIa, ACIb, nrow = 1, ncol=2, common.legend = TRUE, legend="bottom", labels = c("(a)", "(b)"))
+suppfig_1 <- ggarrange(
+  ACIa,
+  ACIb,
+  nrow = 1,
+  ncol = 2,
+  common.legend = TRUE,
+  legend = "bottom",
+  labels = c("(a)", "(b)")
+)
 suppfig_1
 
 
@@ -1575,85 +1784,106 @@ suppfig_1
 
 LTa <- ggplot(data = master, aes(x = E_load, y = Thickness, fill = E_load)) +
   geom_violin() +
-  geom_point(position = position_jitterdodge(dodge.width = 0.9, jitter.width = 0.2),
-             alpha = 0.3, color = "grey30", size = 2) +
-  geom_crossbar(stat="summary", 
-               fun = mean, 
-               fun.max = mean, 
-               fun.min = mean,
-               alpha = 0.3, 
-               size = 0.3, 
-               width = 0.7,
-               position = position_dodge(width = 0.9)) +
-  scale_fill_manual(name = "Treatment", values= met.brewer("Cross", n = 2, type = "discrete")) +
-  scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
-  scale_x_discrete(labels=c(newname)) +
+  geom_point(
+    position = position_jitterdodge(dodge.width = 0.9, jitter.width = 0.2),
+    alpha = 0.3,
+    color = "grey30",
+    size = 2
+  ) +
+  geom_crossbar(
+    stat = "summary",
+    fun = mean,
+    fun.max = mean,
+    fun.min = mean,
+    alpha = 0.3,
+    size = 0.3,
+    width = 0.7,
+    position = position_dodge(width = 0.9)
+  ) +
+  scale_fill_manual(name = "Treatment",
+                    values = met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_color_manual(values = met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_x_discrete(labels = c(newname)) +
   scale_y_continuous(limits = c(100, 300)) +
   theme_classic(base_size = 16) +
   theme(
-        #panel.grid.major = element_line(colour = "grey"),
-        #panel.grid.minor = element_line(colour = "grey"),
-        #strip.background = element_rect(fill = "white"),
-        #strip.text.x = element_text(colour = "black", face = "bold"),
-        legend.title = element_text(face = "bold"),
-        panel.border = element_rect(linetype = "blank", fill = NA),
-        axis.text.x=element_blank(),
-        legend.position="right", 
-        legend.text = element_text(size = 14)) +
-  labs(x="", y= expression(paste("Leaf thickness (",mu,"m)"))) +
-  theme(legend.position="right", 
-        legend.text = element_text(size = 14)) +
+    legend.title = element_text(face = "bold"),
+    panel.border = element_rect(linetype = "blank", fill = NA),
+    axis.text.x = element_blank(),
+    legend.position = "right",
+    legend.text = element_text(size = 14)
+  ) +
+  labs(x = "", y = expression(paste("Leaf thickness (", mu, "m)"))) +
+  theme(legend.position = "right", legend.text = element_text(size = 14)) +
   #labs(caption = "*Outliers and singletons removed.") +
   
   #annotate("text", x = 2.5, y = .65, label = "") +
-  stat_compare_means(label = "p.signif", 
-                     method = "t.test",
-                     paired = T,
-                     comparisons =list(c("E-", "E+")),
-                     bracket.size = 0.8)
+  stat_compare_means(
+    label = "p.signif",
+    method = "t.test",
+    paired = T,
+    comparisons = list(c("E-", "E+")),
+    bracket.size = 0.8
+  )
 
 LTa
 
 
 LTb <- ggplot(data = master, aes(x = Species, y = Thickness, fill = E_load)) +
   geom_violin() +
-  geom_point(position = position_jitterdodge(dodge.width = 0.9, jitter.width = 0.2),
-             alpha = 0.3, color = "grey30", size = 2) +
-  geom_crossbar(stat="summary", 
-               fun = mean, 
-               fun.max = mean, 
-               fun.min = mean,
-               alpha = 0.3, 
-               size = 0.3, 
-               width = 0.7,
-               position = position_dodge(width = 0.9)) +
-  scale_fill_manual(name = "Treatment", values= met.brewer("Cross", n = 2, type = "discrete")) +
-  scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
-  scale_x_discrete(labels=c(newname)) +
+  geom_point(
+    position = position_jitterdodge(dodge.width = 0.9, jitter.width = 0.2),
+    alpha = 0.3,
+    color = "grey30",
+    size = 2
+  ) +
+  geom_crossbar(
+    stat = "summary",
+    fun = mean,
+    fun.max = mean,
+    fun.min = mean,
+    alpha = 0.3,
+    size = 0.3,
+    width = 0.7,
+    position = position_dodge(width = 0.9)
+  ) +
+  scale_fill_manual(name = "Treatment",
+                    values = met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_color_manual(values = met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_x_discrete(labels = c(newname)) +
   scale_y_continuous(limits = c(100, 300)) +
   theme_classic(base_size = 16) +
   theme(
-        #panel.grid.major = element_line(colour = "grey"),
-        #panel.grid.minor = element_line(colour = "grey"),
-        #strip.background = element_rect(fill = "white"),
-        #strip.text.x = element_text(colour = "black", face = "bold"),
-        legend.title = element_text(face = "bold"),
-        panel.border = element_rect(linetype = "blank", fill = NA),
-        axis.text.x=element_text(face = "italic", hjust = 1, angle = 30),
-        legend.position="right", 
-        legend.text = element_text(size = 14)) +
-  labs(x="", y= expression(paste("Leaf thickness (",mu,"m)"))) +
-  #theme(legend.position="right", 
-        #legend.text = element_text(size = 14)) +
+    legend.title = element_text(face = "bold"),
+    panel.border = element_rect(linetype = "blank", fill = NA),
+    axis.text.x = element_text(
+      face = "italic",
+      hjust = 1,
+      angle = 30
+    ),
+    legend.position = "right",
+    legend.text = element_text(size = 14)
+  ) +
+  labs(x = "", y = expression(paste("Leaf thickness (", mu, "m)"))) +
+  #theme(legend.position="right",
+  #legend.text = element_text(size = 14)) +
   #labs(caption = "*Outliers and singletons removed.") +
   #annotate("text", x = 2.5, y = .65, label = "") +
-  stat_compare_means(label = "p.signif", 
+  stat_compare_means(label = "p.signif",
                      method = "anova",
                      paired = T)
 LTb
 
 # Figure S2a S2b
-suppfig_2 <- ggarrange(LTa, LTb, nrow = 1, ncol=, common.legend = TRUE, legend="bottom", labels = c("(a)", "(b)"))
+suppfig_2 <- ggarrange(
+  LTa,
+  LTb,
+  nrow = 1,
+  ncol = ,
+  common.legend = TRUE,
+  legend = "bottom",
+  labels = c("(a)", "(b)")
+)
 suppfig_2
 
 
@@ -1669,79 +1899,101 @@ thickness_cp_table
 
 # Figure S3
 # Leaf toughness (lbf) by  endophyte load and species with data (data) ####
-LPSa <- ggplot(data = master, aes( x = E_load, y = Toughness, fill = E_load)) +
-geom_violin() +
-  geom_point(position = position_jitterdodge(dodge.width = 0.9, jitter.width = 0.2),
-             alpha = 0.3, color = "grey30", size = 2) +
-  geom_crossbar(stat="summary", 
-               fun = mean, 
-               fun.max = mean, 
-               fun.min = mean,
-               alpha = 0.3, 
-               size = 0.3, 
-               width = 0.7,
-               position = position_dodge(width = 0.9)) +
-  scale_fill_manual(name = "Treatment ", values= met.brewer("Cross", n = 2, type = "discrete")) +
-  scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
-  scale_x_discrete(labels=c(newname)) +
+LPSa <- ggplot(data = master, aes(x = E_load, y = Toughness, fill = E_load)) +
+  geom_violin() +
+  geom_point(
+    position = position_jitterdodge(dodge.width = 0.9, jitter.width = 0.2),
+    alpha = 0.3,
+    color = "grey30",
+    size = 2
+  ) +
+  geom_crossbar(
+    stat = "summary",
+    fun = mean,
+    fun.max = mean,
+    fun.min = mean,
+    alpha = 0.3,
+    size = 0.3,
+    width = 0.7,
+    position = position_dodge(width = 0.9)
+  ) +
+  scale_fill_manual(name = "Treatment ",
+                    values = met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_color_manual(values = met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_x_discrete(labels = c(newname)) +
   theme_classic(base_size = 16) +
   theme(
-        #panel.grid.major = element_line(colour = "grey"),
-        #panel.grid.minor = element_line(colour = "grey"),
-        #strip.background = element_rect(fill = "white"),
-        #strip.text.x = element_text(colour = "black", face = "bold"),
-        legend.title = element_text(face = "bold"),
-        panel.border = element_rect(linetype = "blank", fill = NA),
-        axis.text.x=element_blank(),
-        legend.position="right", 
-        legend.text = element_text(size = 14)) +
-  labs(x="", y= expression(paste("Leaf punch strength(N mm","^-1)"))) +
+    legend.title = element_text(face = "bold"),
+    panel.border = element_rect(linetype = "blank", fill = NA),
+    axis.text.x = element_blank(),
+    legend.position = "right",
+    legend.text = element_text(size = 14)
+  ) +
+  labs(x = "", y = expression(paste("Leaf punch strength(N mm", "^-1)"))) +
   #labs(caption = "*Outliers and singletons removed.") +
-  stat_compare_means(label = "p.signif", 
-                     method = "t.test",
-                     paired = T,
-                     comparisons =list(c("E-", "E+")),
-                     bracket.size = 0.8) 
+  stat_compare_means(
+    label = "p.signif",
+    method = "t.test",
+    paired = T,
+    comparisons = list(c("E-", "E+")),
+    bracket.size = 0.8
+  )
 #LPSa
 
 
-LPSb <- ggplot(data = master, aes( x = Species, y = Toughness, fill = E_load)) +
-geom_violin() +
-  geom_point(position = position_jitterdodge(dodge.width = 0.9, jitter.width = 0.2),
-             alpha = 0.3, color = "grey30", size = 2) +
-  geom_crossbar(stat="summary", 
-               fun = mean, 
-               fun.max = mean, 
-               fun.min = mean,
-               alpha = 0.3, 
-               size = 0.3, 
-               width = 0.7,
-               position = position_dodge(width = 0.9)) +
-  scale_fill_manual(name = "Treatment ", values= met.brewer("Cross", n = 2, type = "discrete")) +
-  scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
-  scale_x_discrete(labels=c(newname)) +
+LPSb <- ggplot(data = master, aes(x = Species, y = Toughness, fill = E_load)) +
+  geom_violin() +
+  geom_point(
+    position = position_jitterdodge(dodge.width = 0.9, jitter.width = 0.2),
+    alpha = 0.3,
+    color = "grey30",
+    size = 2
+  ) +
+  geom_crossbar(
+    stat = "summary",
+    fun = mean,
+    fun.max = mean,
+    fun.min = mean,
+    alpha = 0.3,
+    size = 0.3,
+    width = 0.7,
+    position = position_dodge(width = 0.9)
+  ) +
+  scale_fill_manual(name = "Treatment ",
+                    values = met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_color_manual(values = met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_x_discrete(labels = c(newname)) +
   theme_classic(base_size = 16) +
   theme(
-        #panel.grid.major = element_line(colour = "grey"),
-        #panel.grid.minor = element_line(colour = "grey"),
-        #strip.background = element_rect(fill = "white"),
-        #strip.text.x = element_text(colour = "black", face = "bold"),
-        legend.title = element_text(face = "bold"),
-        panel.border = element_rect(linetype = "blank", fill = NA),
-        axis.text.x=element_text(face = "italic", hjust = 1, angle = 30),
-        legend.position="right", 
-        legend.text = element_text(size = 14)) +
-  labs(x="", y= expression(paste("Leaf punch strength(N mm","^-1)"))) +
+    legend.title = element_text(face = "bold"),
+    panel.border = element_rect(linetype = "blank", fill = NA),
+    axis.text.x = element_text(
+      face = "italic",
+      hjust = 1,
+      angle = 30
+    ),
+    legend.position = "right",
+    legend.text = element_text(size = 14)
+  ) +
+  labs(x = "", y = expression(paste("Leaf punch strength(N mm", "^-1)"))) +
   #labs(caption = "*Outliers and singletons removed.") +
   stat_compare_means(label = "p.signif",
                      method = "anova",
                      paired = T) +
-  ylim(0.10, 1) 
+  ylim(0.10, 1)
 #LPSb
 
 # Figure S3a S3b
-# 
-suppfig_3 <- ggarrange(LPSa, LPSb, nrow = 1, ncol=2, common.legend = TRUE, legend="bottom", labels = c("(a)", "(b)"))
+#
+suppfig_3 <- ggarrange(
+  LPSa,
+  LPSb,
+  nrow = 1,
+  ncol = 2,
+  common.legend = TRUE,
+  legend = "bottom",
+  labels = c("(a)", "(b)")
+)
 suppfig_3
 #ggsave(filename="./figures/Aim3_FigS3_03JAN2024.png", plot = suppfig_3, dpi=600, units=c("mm"), width = 250, height = 200, bg ="white")
 #Previously named Aim3_LPS_Species_07062022.png
@@ -1751,101 +2003,153 @@ suppfig_3
 # Leaf mass per area (LMA) by  endophyte load and species
 LMAa <- ggplot(data = master, aes(x = E_load, y = LMA, fill = E_load)) +
   geom_violin() +
-  geom_point(position = position_jitterdodge(dodge.width = 0.9, jitter.width = 0.2),
-             alpha = 0.3, color = "grey30", size = 2) +
-  geom_crossbar(stat="summary", 
-               fun = mean, 
-               fun.max = mean, 
-               fun.min = mean,
-               alpha = 0.3, 
-               size = 0.3, 
-               width = 0.7,
-               position = position_dodge(width = 0.9)) +
-  scale_fill_manual(name = "Treatment ", values= met.brewer("Cross", n = 2, type = "discrete")) +
-  scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
-  scale_x_discrete(labels=c(newname)) +
+  geom_point(
+    position = position_jitterdodge(dodge.width = 0.9, jitter.width = 0.2),
+    alpha = 0.3,
+    color = "grey30",
+    size = 2
+  ) +
+  geom_crossbar(
+    stat = "summary",
+    fun = mean,
+    fun.max = mean,
+    fun.min = mean,
+    alpha = 0.3,
+    size = 0.3,
+    width = 0.7,
+    position = position_dodge(width = 0.9)
+  ) +
+  scale_fill_manual(name = "Treatment ",
+                    values = met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_color_manual(values = met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_x_discrete(labels = c(newname)) +
   theme_classic(base_size = 16) +
   theme(
-        #panel.grid.major = element_line(colour = "grey"),
-        #panel.grid.minor = element_line(colour = "grey"),
-        #strip.background = element_rect(fill = "white"),
-        #strip.text.x = element_text(colour = "black", face = "bold"),
-        legend.title = element_text(face = "bold"),
-        panel.border = element_rect(linetype = "blank", fill = NA),
-        axis.text.x=element_blank(),
-        legend.position="right", 
-        legend.text = element_text(size = 14)) +
-  labs(x="", y= expression(paste("LMA (mg ",mm^-2, ")"))) +
-  stat_compare_means(label = "p.signif", 
-                     method = "t.test",
-                     paired = T,
-                     comparisons =list(c("E-", "E+")),
-                     bracket.size = 0.8)
+    #panel.grid.major = element_line(colour = "grey"),
+    #panel.grid.minor = element_line(colour = "grey"),
+    #strip.background = element_rect(fill = "white"),
+    #strip.text.x = element_text(colour = "black", face = "bold"),
+    legend.title = element_text(face = "bold"),
+    panel.border = element_rect(linetype = "blank", fill = NA),
+    axis.text.x = element_blank(),
+    legend.position = "right",
+    legend.text = element_text(size = 14)
+  ) +
+  labs(x = "", y = expression(paste("LMA (mg ", mm ^ -2, ")"))) +
+  stat_compare_means(
+    label = "p.signif",
+    method = "t.test",
+    paired = T,
+    comparisons = list(c("E-", "E+")),
+    bracket.size = 0.8
+  )
 LMAa
 
-LMAb <- ggplot(data = master, aes( x = Species, y = LMA, fill = E_load)) +
-geom_violin() +
-  geom_point(position = position_jitterdodge(dodge.width = 0.9, jitter.width = 0.2),
-             alpha = 0.3, color = "grey30", size = 2) +
-  geom_crossbar(stat="summary", 
-               fun = mean, 
-               fun.max = mean, 
-               fun.min = mean,
-               alpha = 0.3, 
-               size = 0.3, 
-               width = 0.7,
-               position = position_dodge(width = 0.9)) +
-  scale_fill_manual(name = "Treatment ", values= met.brewer("Cross", n = 2, type = "discrete")) +
-  scale_color_manual(values= met.brewer("Cross", n = 5, type = "discrete")) +
-  scale_x_discrete(labels=c(newname)) +
+LMAb <- ggplot(data = master, aes(x = Species, y = LMA, fill = E_load)) +
+  geom_violin() +
+  geom_point(
+    position = position_jitterdodge(dodge.width = 0.9, jitter.width = 0.2),
+    alpha = 0.3,
+    color = "grey30",
+    size = 2
+  ) +
+  geom_crossbar(
+    stat = "summary",
+    fun = mean,
+    fun.max = mean,
+    fun.min = mean,
+    alpha = 0.3,
+    size = 0.3,
+    width = 0.7,
+    position = position_dodge(width = 0.9)
+  ) +
+  scale_fill_manual(name = "Treatment ",
+                    values = met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_color_manual(values = met.brewer("Cross", n = 5, type = "discrete")) +
+  scale_x_discrete(labels = c(newname)) +
   theme_classic(base_size = 16) +
   theme(
-        #panel.grid.major = element_line(colour = "grey"),
-        #panel.grid.minor = element_line(colour = "grey"),
-        #strip.background = element_rect(fill = "white"),
-        #strip.text.x = element_text(colour = "black", face = "bold"),
-        legend.title = element_text(face = "bold"),
-        panel.border = element_rect(linetype = "blank", fill = NA),
-        axis.text.x=element_text(face = "italic", hjust = 1, angle = 30),
-        legend.position="right", 
-        legend.text = element_text(size = 14)) +
-  labs(x="", y= expression(paste("LMA (mg ",mm^-2, ")"))) +
+    legend.title = element_text(face = "bold"),
+    panel.border = element_rect(linetype = "blank", fill = NA),
+    axis.text.x = element_text(
+      face = "italic",
+      hjust = 1,
+      angle = 30
+    ),
+    legend.position = "right",
+    legend.text = element_text(size = 14)
+  ) +
+  labs(x = "", y = expression(paste("LMA (mg ", mm ^ -2, ")"))) +
   #labs(caption = "*Outliers and singletons removed.") +
-  stat_compare_means(label = "p.signif", 
+  stat_compare_means(label = "p.signif",
                      method = "anova",
                      paired = T)
 
 LMAb
 
-suppfig_4 <- ggarrange(LMAa, LMAb, nrow = 1, ncol=2, common.legend = TRUE, legend="bottom", labels = c("(a)", "(b)"))
+suppfig_4 <- ggarrange(
+  LMAa,
+  LMAb,
+  nrow = 1,
+  ncol = 2,
+  common.legend = TRUE,
+  legend = "bottom",
+  labels = c("(a)", "(b)")
+)
 suppfig_4
 
-ggsave(filename="./figures/Aim3_FigS4_04JAN2024.png", plot = suppfig_4, dpi=600, units=c("mm"), width = 250, height = 200, bg ="white")
+ggsave(
+  filename = "./figures/Aim3_FigS4_04JAN2024.png",
+  plot = suppfig_4,
+  dpi = 600,
+  units = c("mm"),
+  width = 250,
+  height = 200,
+  bg = "white"
+)
 
 
 # Diversity
-DVI <- ggplot(data= master, aes(x = E_load, y = Shannon)) +
+DVI <- ggplot(data = master, aes(x = E_load, y = Shannon)) +
   geom_violin(aes(fill = E_load), outlier.shape = NA) +
-  geom_crossbar(stat="summary", fun = mean, fun.max = mean, fun.min = mean,  fatten = 2, width = 0.5) +
-  geom_point(color="black", alpha = 0.2,size =2, position = position_jitter(w=0.05)) +
-  scale_fill_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
-  scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
-  theme_bw(base_size = 16) + 
+  geom_crossbar(
+    stat = "summary",
+    fun = mean,
+    fun.max = mean,
+    fun.min = mean,
+    fatten = 2,
+    width = 0.5
+  ) +
+  geom_point(
+    color = "black",
+    alpha = 0.2,
+    size = 2,
+    position = position_jitter(w = 0.05)
+  ) +
+  scale_fill_manual(values = met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_color_manual(values = met.brewer("Cross", n = 2, type = "discrete")) +
+  theme_bw(base_size = 16) +
   theme(panel.grid.major = element_line(colour = "grey")) +
   theme(panel.grid.minor = element_line(colour = "grey")) +
   theme(strip.background = element_rect(fill = "white")) +
   theme(strip.text.x = element_text(colour = "black", face = "bold")) +
   theme(legend.title = element_text(face = "bold")) +
   theme(panel.border = element_rect(linetype = "blank", fill = NA)) +
-  labs(x="", y="Shannon Diversity Index of OTUs (Ascomycota)")+
-  theme(legend.position="right", legend.title = element_blank(),
-        legend.text = element_text(size = 24),
-        axis.text.x=element_blank()) +
+  labs(x = "", y = "Shannon Diversity Index of OTUs (Ascomycota)") +
+  theme(
+    legend.position = "right",
+    legend.title = element_blank(),
+    legend.text = element_text(size = 24),
+    axis.text.x = element_blank()
+  ) +
   labs(caption = "*Outliers and singletons removed.") +
-  annotate("text", x = 2.5, y = .65, label = "") +
-  stat_compare_means(comparisons = mycomparisons ) +
+  annotate("text",
+           x = 2.5,
+           y = .65,
+           label = "") +
+  stat_compare_means(comparisons = mycomparisons) +
   stat_compare_means(method = "kruskal.test", label = "p.signif") +
-  facet_wrap(~Species)
+  facet_wrap( ~ Species)
 DVI
 #ggsave(filename="Aim3_DV_Eload_07122022.png", plot = DVI, dpi=600, units=c("mm"), width = 300, height = 300)
 ```
@@ -1867,14 +2171,16 @@ This problem was due to having values out of the ylab.
 #rstatix package used for pairwise t-test
 suppfig6_pairwise_t_test <- master |>
   group_by(Species) |>
-  pairwise_t_test(Ant_percent_leafloss ~ E_load,
-         p.adjust.method = "BH",
-  paired = TRUE,
-  #var.equal = F,
-  alternative = "two.sided",
-  mu = 0,
-  conf.level = 0.95, 
-  detailed = TRUE)
+  pairwise_t_test(
+    Ant_percent_leafloss ~ E_load,
+    p.adjust.method = "BH",
+    paired = TRUE,
+    #var.equal = F,
+    alternative = "two.sided",
+    mu = 0,
+    conf.level = 0.95,
+    detailed = TRUE
+  )
 
 #ggpubr package used for t.tests and plotting t-test comparisons
 #E+ vs E- for all specie. To compare means of pathogen damage (%) between E+ and E- samples per species un-comment `group.by = "Species"` and change method to  "anova" in compare_means.
@@ -1908,9 +2214,10 @@ suppfig6b_compare_means <- compare_means(
 #Since `compare_means` does not provide a test statistic, I will use `t.test` to report the test statistic.
 x <- subset(master, E_load == "E-", na.rm = TRUE)
 y <- subset(master, E_load == "E+", na.rm = TRUE)
-  
+
 t.test(
-  x$Ant_percent_leafloss, y$Ant_percent_leafloss,
+  x$Ant_percent_leafloss,
+  y$Ant_percent_leafloss,
   method = "t.test",
   p.adjust.method = "BH",
   paired = TRUE,
@@ -1922,81 +2229,97 @@ t.test(
 
 suppfig6_summ_stats <- master |>
   group_by(E_load) |>
-  summarise(count = n(),
+  summarise(
+    count = n(),
     mean = mean(Ant_percent_leafloss, na.rm = TRUE),
-            sd = sd(Ant_percent_leafloss, na.rm = TRUE),
-            se = sd(Ant_percent_leafloss, na.rm = TRUE)/sqrt(n()),
-            ci = 1.96 * se) |>
+    sd = sd(Ant_percent_leafloss, na.rm = TRUE),
+    se = sd(Ant_percent_leafloss, na.rm = TRUE) / sqrt(n()),
+    ci = 1.96 * se
+  ) |>
   as.data.frame()
 mean(master$Ant_percent_leafloss, na.rm = TRUE)
 
 # Fig. S6a
 herb_violin_a <- ggplot(data = master, aes(x = E_load, y = Ant_percent_leafloss, fill = E_load)) +
   geom_violin() +
-  geom_point(position = position_jitterdodge(dodge.width = 0.9, jitter.width = 0.2),
-             alpha = 0.3, color = "grey30", size = 2) +
-  geom_crossbar(stat="summary",
-               fun = mean,
-               fun.max = mean,
-               fun.min = mean,
-               alpha = 0.3,
-               size = 0.3,
-               width = 0.7,
-               position = position_dodge(width = 0.9)) +
-  scale_fill_manual(name = "Treatment ", values= met.brewer("Cross", n = 2, type = "discrete")) +
-  scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
-  scale_x_discrete(labels=c(newname)) +
-#  scale_y_continuous(limits = c(100, 300)) +
+  geom_point(
+    position = position_jitterdodge(dodge.width = 0.9, jitter.width = 0.2),
+    alpha = 0.3,
+    color = "grey30",
+    size = 2
+  ) +
+  geom_crossbar(
+    stat = "summary",
+    fun = mean,
+    fun.max = mean,
+    fun.min = mean,
+    alpha = 0.3,
+    size = 0.3,
+    width = 0.7,
+    position = position_dodge(width = 0.9)
+  ) +
+  scale_fill_manual(name = "Treatment ",
+                    values = met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_color_manual(values = met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_x_discrete(labels = c(newname)) +
+  #  scale_y_continuous(limits = c(100, 300)) +
   theme_classic(base_size = 12) +
   theme(
-        #panel.grid.major = element_line(colour = "grey"),
-        #panel.grid.minor = element_line(colour = "grey"),
-        #strip.background = element_rect(fill = "white"),
-        #strip.text.x = element_text(colour = "black", face = "bold"),
-        legend.title = element_text(face = "bold"),
-        panel.border = element_rect(linetype = "blank", fill = NA),
-        axis.text.x=element_blank(),
-        legend.position="right", 
-        legend.text = element_text(size = 12)) +
-  labs(x="", y= expression(paste("Herbivory (%)"))) +
-  stat_compare_means(label = "p.signif", 
-                     method = "t.test",
-                     paired = T,
-                     comparisons =list(c("E-", "E+")),
-                     bracket.size = 0.8)
+    legend.title = element_text(face = "bold"),
+    panel.border = element_rect(linetype = "blank", fill = NA),
+    axis.text.x = element_blank(),
+    legend.position = "right",
+    legend.text = element_text(size = 12)
+  ) +
+  labs(x = "", y = expression(paste("Herbivory (%)"))) +
+  stat_compare_means(
+    label = "p.signif",
+    method = "t.test",
+    paired = T,
+    comparisons = list(c("E-", "E+")),
+    bracket.size = 0.8
+  )
 
 #herb_violin_a
 
 #Fig. S6b
-herb_violin_b <-  ggplot(data = master, aes( x = Species, y = Ant_percent_leafloss, fill = E_load)) +
-geom_violin() +
-  geom_point(position = position_jitterdodge(dodge.width = 0.9, jitter.width = 0.2),
-             alpha = 0.3, color = "grey30", size = 2) +
-  geom_crossbar(stat="summary", 
-               fun = mean, 
-               fun.max = mean, 
-               fun.min = mean,
-               alpha = 0.3, 
-               size = 0.3, 
-               width = 0.7,
-               position = position_dodge(width = 0.9)) +
-  scale_fill_manual(name = "Treatment ", values= met.brewer("Cross", n = 2, type = "discrete")) +
-  scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
-  scale_x_discrete(labels=c(newname)) +
+herb_violin_b <-  ggplot(data = master, aes(x = Species, y = Ant_percent_leafloss, fill = E_load)) +
+  geom_violin() +
+  geom_point(
+    position = position_jitterdodge(dodge.width = 0.9, jitter.width = 0.2),
+    alpha = 0.3,
+    color = "grey30",
+    size = 2
+  ) +
+  geom_crossbar(
+    stat = "summary",
+    fun = mean,
+    fun.max = mean,
+    fun.min = mean,
+    alpha = 0.3,
+    size = 0.3,
+    width = 0.7,
+    position = position_dodge(width = 0.9)
+  ) +
+  scale_fill_manual(name = "Treatment ",
+                    values = met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_color_manual(values = met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_x_discrete(labels = c(newname)) +
   theme_classic(base_size = 12) +
   theme(
-        #panel.grid.major = element_line(colour = "grey"),
-        #panel.grid.minor = element_line(colour = "grey"),
-        #strip.background = element_rect(fill = "white"),
-        #strip.text.x = element_text(colour = "black", face = "bold"),
-        legend.title = element_text(face = "bold"),
-        panel.border = element_rect(linetype = "blank", fill = NA),
-        axis.text.x=element_text(face = "italic", hjust = 1, angle = 30),
-        legend.position="right", 
-        legend.text = element_text(size = 12)) +
-  labs(x="", y= expression(paste("Herbivory (%)"))) +
-
-  stat_compare_means(label = "p.signif", 
+    legend.title = element_text(face = "bold"),
+    panel.border = element_rect(linetype = "blank", fill = NA),
+    axis.text.x = element_text(
+      face = "italic",
+      hjust = 1,
+      angle = 30
+    ),
+    legend.position = "right",
+    legend.text = element_text(size = 12)
+  ) +
+  labs(x = "", y = expression(paste("Herbivory (%)"))) +
+  
+  stat_compare_means(label = "p.signif",
                      method = "anova",
                      paired = T)
 #herb_violin_b
@@ -2004,12 +2327,17 @@ geom_violin() +
 aov(Ant_percent_leafloss ~ Species, data = master)
 
 # Figure S6a-S6b
-suppfig_6 <- ggarrange(herb_violin_a, herb_violin_b, nrow = 1, 
-                       ncol=2, 
-                       label.x = -0.015, vjust = 1, 
-                       common.legend = TRUE,
-                       legend="bottom", 
-                       labels = c("(a)", "(b)"))
+suppfig_6 <- ggarrange(
+  herb_violin_a,
+  herb_violin_b,
+  nrow = 1,
+  ncol = 2,
+  label.x = -0.015,
+  vjust = 1,
+  common.legend = TRUE,
+  legend = "bottom",
+  labels = c("(a)", "(b)")
+)
 
 suppfig_6
 #ggsave(filename="./figures/Aim3_FigS6_15JAN2024.png", plot = suppfig_6, dpi=600, units=c("mm"), width = 250, height = 200, bg ="white")
@@ -2029,121 +2357,147 @@ suppfig_6
 #rstatix package used for pairwise t-test
 suppfig7_pairwise_t_test <- master |>
   group_by(E_load) |>
-  pairwise_t_test(Pathogen_percent_damage ~ Treatment,
-         p.adjust.method = "BH",
-  paired = TRUE,
-  #var.equal = F,
-  alternative = "two.sided",
-  mu = 0,
-  conf.level = 0.95, 
-  detailed = TRUE) 
+  pairwise_t_test(
+    Pathogen_percent_damage ~ Treatment,
+    p.adjust.method = "BH",
+    paired = TRUE,
+    #var.equal = F,
+    alternative = "two.sided",
+    mu = 0,
+    conf.level = 0.95,
+    detailed = TRUE
+  )
 
 #ggpubr package used for t.tests and plotting t-test comparisons
 #E+ vs E- for all specie. To compare means of pathogen damage (%) between E+ and E- samples per species un-comment `group.by = "Species"` and change method to  "anova" in compare_means.
-suppfig7a_compare_means <- compare_means(Pathogen_percent_damage ~ E_load,
-         data = master,
-         #group.by = "Species",
-         method = "t.test",
-         p.adjust.method = "BH",
+suppfig7a_compare_means <- compare_means(
+  Pathogen_percent_damage ~ E_load,
+  data = master,
+  #group.by = "Species",
+  method = "t.test",
+  p.adjust.method = "BH",
   paired = TRUE,
-  alternative = "two.sided", 
-  mu = 0, 
+  alternative = "two.sided",
+  mu = 0,
   var.equal = FALSE,
-  conf.level = 0.95)
+  conf.level = 0.95
+)
 #Roughly the same outcome as pairwise_t_test.
-suppfig7b_compare_means <- compare_means(Pathogen_percent_damage ~ E_load,
-         data = master,
-         group.by = "Species",
-         method = "anova",
-         p.adjust.method = "BH",
+suppfig7b_compare_means <- compare_means(
+  Pathogen_percent_damage ~ E_load,
+  data = master,
+  group.by = "Species",
+  method = "anova",
+  p.adjust.method = "BH",
   paired = TRUE,
-  alternative = "two.sided", 
-  mu = 0, 
+  alternative = "two.sided",
+  mu = 0,
   var.equal = FALSE,
-  conf.level = 0.95)
+  conf.level = 0.95
+)
 
 suppfig7_summ_stats <- master |>
   group_by(E_load, Treatment) |>
-  summarise(count = n(),
+  summarise(
+    count = n(),
     mean = mean(Pathogen_percent_damage),
-            sd = sd(Pathogen_percent_damage),
-            se = sd(Pathogen_percent_damage)/sqrt(n()),
-            ci = 1.96 * se) |>
+    sd = sd(Pathogen_percent_damage),
+    se = sd(Pathogen_percent_damage) / sqrt(n()),
+    ci = 1.96 * se
+  ) |>
   as.data.frame()
 #Report with `compare_means` because it is easier to plot with `ggpubr` package.
 #Since `compare_means` does not provide a test statistic, I will use `pairwise_t_test` to report the test statistic.
 
 # Fig. S7a
-patho_violin_a <- ggplot(data = master, aes(x = E_load, y = Pathogen_percent_damage, fill = Treatment)) +
+patho_violin_a <- ggplot(data = master,
+                         aes(x = E_load, y = Pathogen_percent_damage, fill = Treatment)) +
   geom_violin() +
-  geom_point(aes(color = E_load),position = position_jitterdodge(dodge.width = 0, jitter.width = 0.2),
-             alpha = 0.5, size = 2) +
-  geom_crossbar(stat="summary",
-               fun = mean,
-               fun.max = mean,
-               fun.min = mean,
-               alpha = 0.3,
-               linewidth = 0.3,
-               width = 0.7,
-               position = position_dodge(width = 0.9)) +
-  scale_fill_manual(name = "Pathogen treatment ", values= met.brewer("Egypt", n = 2, type = "discrete")) +
-  scale_color_manual(name = "Treatment ", values= met.brewer("Cross", n = 2, type = "discrete")) +
+  geom_point(
+    aes(color = E_load),
+    position = position_jitterdodge(dodge.width = 0, jitter.width = 0.2),
+    alpha = 0.5,
+    size = 2
+  ) +
+  geom_crossbar(
+    stat = "summary",
+    fun = mean,
+    fun.max = mean,
+    fun.min = mean,
+    alpha = 0.3,
+    linewidth = 0.3,
+    width = 0.7,
+    position = position_dodge(width = 0.9)
+  ) +
+  scale_fill_manual(name = "Pathogen treatment ",
+                    values = met.brewer("Egypt", n = 2, type = "discrete")) +
+  scale_color_manual(name = "Treatment ",
+                     values = met.brewer("Cross", n = 2, type = "discrete")) +
   #scale_shape_manual(name = "Treatment", labels = c("E-", "E+"), values = c(16, 17)) +
-  scale_x_discrete(labels=c(newname)) +
+  scale_x_discrete(labels = c(newname)) +
   theme_classic(base_size = 12) +
   theme(
-        #panel.grid.major = element_line(colour = "grey"),
-        #panel.grid.minor = element_line(colour = "grey"),
-        #strip.background = element_rect(fill = "white"),
-        #strip.text.x = element_text(colour = "black", face = "bold"),
-        legend.title = element_text(face = "bold"),
-        panel.border = element_rect(linetype = "blank", fill = NA),
-        #axis.text.x=element_blank(),
-        legend.position="right", 
-        legend.text = element_text(size = 12)) +
-  labs(x="", y= expression(paste("Pathogen damage (%)"))) +
-  stat_compare_means(label = "p.signif", 
-                     method = "t.test",
-                     paired = T,
-                     label.y = 80) +
-  stat_compare_means(label = "p.signif",
-                     method = "t.test",
-                     paired = T,
-                     comparisons =list(c("E-", "E+")),
-                     bracket.size = 0.8)
+    legend.title = element_text(face = "bold"),
+    panel.border = element_rect(linetype = "blank", fill = NA),
+    #axis.text.x=element_blank(),
+    legend.position = "right",
+    legend.text = element_text(size = 12)
+  ) +
+  labs(x = "", y = expression(paste("Pathogen damage (%)"))) +
+  stat_compare_means(
+    label = "p.signif",
+    method = "t.test",
+    paired = T,
+    label.y = 80
+  ) +
+  stat_compare_means(
+    label = "p.signif",
+    method = "t.test",
+    paired = T,
+    comparisons = list(c("E-", "E+")),
+    bracket.size = 0.8
+  )
 
 patho_violin_a
 
 #Fig. S7b
-patho_violin_b <-  ggplot(data = master, aes( x = Species, y = Pathogen_percent_damage, fill = E_load)) +
-geom_violin() +
-  geom_point(position = position_jitterdodge(dodge.width = 0.9, jitter.width = 0.2),
-             alpha = 0.3, color = "grey30", size = 2) +
-  geom_crossbar(stat="summary", 
-               fun = mean, 
-               fun.max = mean, 
-               fun.min = mean,
-               alpha = 0.3, 
-               size = 0.3, 
-               width = 0.7,
-               position = position_dodge(width = 0.9)) +
-  scale_fill_manual(name = "Treatment ", values= met.brewer("Cross", n = 2, type = "discrete")) +
-  scale_color_manual(values= met.brewer("Cross", n = 2, type = "discrete")) +
-  scale_x_discrete(labels=c(newname)) +
+patho_violin_b <-  ggplot(data = master, aes(x = Species, y = Pathogen_percent_damage, fill = E_load)) +
+  geom_violin() +
+  geom_point(
+    position = position_jitterdodge(dodge.width = 0.9, jitter.width = 0.2),
+    alpha = 0.3,
+    color = "grey30",
+    size = 2
+  ) +
+  geom_crossbar(
+    stat = "summary",
+    fun = mean,
+    fun.max = mean,
+    fun.min = mean,
+    alpha = 0.3,
+    size = 0.3,
+    width = 0.7,
+    position = position_dodge(width = 0.9)
+  ) +
+  scale_fill_manual(name = "Treatment ",
+                    values = met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_color_manual(values = met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_x_discrete(labels = c(newname)) +
   theme_classic(base_size = 12) +
   theme(
-        #panel.grid.major = element_line(colour = "grey"),
-        #panel.grid.minor = element_line(colour = "grey"),
-        #strip.background = element_rect(fill = "white"),
-        #strip.text.x = element_text(colour = "black", face = "bold"),
-        legend.title = element_text(face = "bold"),
-        panel.border = element_rect(linetype = "blank", fill = NA),
-        axis.text.x=element_text(face = "italic", hjust = 1, angle = 30),
-        legend.position="right", 
-        legend.text = element_text(size = 12)) +
-  labs(x="", y= expression(paste("Pathogen damage (%)"))) +
-
-  stat_compare_means(label = "p.signif", 
+    legend.title = element_text(face = "bold"),
+    panel.border = element_rect(linetype = "blank", fill = NA),
+    axis.text.x = element_text(
+      face = "italic",
+      hjust = 1,
+      angle = 30
+    ),
+    legend.position = "right",
+    legend.text = element_text(size = 12)
+  ) +
+  labs(x = "", y = expression(paste("Pathogen damage (%)"))) +
+  
+  stat_compare_means(label = "p.signif",
                      method = "anova",
                      paired = T)
 #patho_violin_b
@@ -2152,13 +2506,18 @@ geom_violin() +
 
 
 # Figure S7a-S7b
-suppfig_7 <- ggarrange(patho_violin_a, patho_violin_b, nrow = 1, 
-                       ncol=2, 
-                       label.x = -0.015, vjust = 1,
-                       widths = c(1.2, 1),
-                       common.legend = FALSE,
-                       legend="bottom", 
-                       labels = c("(a)", "(b)"))
+suppfig_7 <- ggarrange(
+  patho_violin_a,
+  patho_violin_b,
+  nrow = 1,
+  ncol = 2,
+  label.x = -0.015,
+  vjust = 1,
+  widths = c(1.2, 1),
+  common.legend = FALSE,
+  legend = "bottom",
+  labels = c("(a)", "(b)")
+)
 
 suppfig_7
 #ggsave(filename="./figures/Aim3_FigS7_15JAN2024.png", plot = suppfig_7, dpi=600, units=c("mm"), width = 250, height = 200, bg ="white")
@@ -2174,38 +2533,99 @@ The idea here is to see which leaf functional trait and community diversity trai
 
 ```{r, Full PCA, tidy = FALSE}
 # PCA using covariates to explain species richness/abundance ####
-data.pca <- ndata[c(7,8,9,10)]
+data.pca <- ndata[c(7, 8, 9, 10)]
 data.pca <- data.pca |>
   rename(ACI = Anthocyanins, LT = Thickness, LPS = Toughness) #Renaming columns for plotting purposes.
 
 ###Run this to create pca with prcomp function
-pca<-prcomp(data.pca, scale=TRUE)
-pca$rotation=-pca$rotation
-pca$x=-pca$x
+pca <- prcomp(data.pca, scale = TRUE)
+pca$rotation = -pca$rotation
+pca$x = -pca$x
 
 #Checking the PCA
-plot(pca,type = "lines")
+plot(pca, type = "lines")
 biplot(pca) # Base type PCA
 
 # PCA using autoplot() and prcomp()and modifying with ggplot syntax ####
-auto <- autoplot((pca), data = data.frame(ndata), # For some reason this functions require data to be data= data.frame()
-         alpha=0, #Setting alpha to zero render the automatic circle point null.Manipulate shapes with geom_point(). 
-         loadings = TRUE,loadings.colour = "black",
-         loadings.label=TRUE, loadings.label.colour="black",
-         loadings.label.size= 4, size = 7, loadings.label.vjust = 1, 
-         loadings.label.hjust = 1) + 
-  geom_point(aes(fill = Species, color = Species, shape = E_load), alpha = 0.6, size = 3) +
+auto <- autoplot((pca),
+                 data = data.frame(ndata),
+                 # For some reason this functions require data to be data= data.frame()
+                 alpha = 0,
+                 #Setting alpha to zero render the automatic circle point null.Manipulate shapes with geom_point().
+                 loadings = TRUE,
+                 loadings.colour = "black",
+                 loadings.label = TRUE,
+                 loadings.label.colour = "black",
+                 loadings.label.size = 4,
+                 size = 7,
+                 loadings.label.vjust = 1,
+                 loadings.label.hjust = 1
+) +
+  geom_point(aes(
+    fill = Species,
+    color = Species,
+    shape = E_load
+  ),
+  alpha = 0.6,
+  size = 3) +
   geom_hline(yintercept = 0, colour = "gray45") +
   geom_vline(xintercept = 0, colour = "gray45") +
-  scale_color_manual(labels=c("A. membranacea", "C. cainito", "C. alliodora", "Dypterix .sp", "H. concinna", "L. panamensis", "T. cacao"),values = met.brewer(name = "Cross", n = 8, type="discrete")) +
-  stat_ellipse(aes(color=Species), geom = "path", size = 1, position = "identity", type = "t", linetype = 1, level = 0.95, segments = 51, na.rm = FALSE, show.legend = NA, inherit.aes = TRUE) +
-  scale_fill_discrete(labels = c("A. membranacea", "C. cainito", "C. alliodora", "Dypterix .sp", "H. concinna", "L. panamensis", "T. cacao")) +
-  scale_shape_manual(name = "Treatment", labels = c("E-", "E+"), values = c(16, 17)) +
+  scale_color_manual(
+    labels = c(
+      "A. membranacea",
+      "C. cainito",
+      "C. alliodora",
+      "Dypterix .sp",
+      "H. concinna",
+      "L. panamensis",
+      "T. cacao"
+    ),
+    values = met.brewer(name = "Cross", n = 8, type = "discrete")
+  ) +
+  stat_ellipse(
+    aes(color = Species),
+    geom = "path",
+    size = 1,
+    position = "identity",
+    type = "t",
+    linetype = 1,
+    level = 0.95,
+    segments = 51,
+    na.rm = FALSE,
+    show.legend = NA,
+    inherit.aes = TRUE
+  ) +
+  scale_fill_discrete(
+    labels = c(
+      "A. membranacea",
+      "C. cainito",
+      "C. alliodora",
+      "Dypterix .sp",
+      "H. concinna",
+      "L. panamensis",
+      "T. cacao"
+    )
+  ) +
+  scale_shape_manual(
+    name = "Treatment",
+    labels = c("E-", "E+"),
+    values = c(16, 17)
+  ) +
   theme_classic(base_size = 16) +
-  #labs(title = "(a)") + 
-  theme(plot.title = element_text(color="black", size = 14, face="bold"),
-        legend.title = element_text(face = "bold"),
-        legend.text = element_text(color="black", size = 14, face="italic"))
+  #labs(title = "(a)") +
+  theme(
+    plot.title = element_text(
+      color = "black",
+      size = 14,
+      face = "bold"
+    ),
+    legend.title = element_text(face = "bold"),
+    legend.text = element_text(
+      color = "black",
+      size = 14,
+      face = "italic"
+    )
+  )
 
 #caption = expression("ACI = anthocyanins, LPS = leaf punch strength, LMA = leaf mass per area, LT = leaf thickness. All leaf replicates per species ("~ italic("n") ~ "= 467).") #This goes in the labs() arguments
 
@@ -2213,8 +2633,12 @@ auto$layers <- c(auto$layers, auto$layers[[2]], auto$layers[[3]]) # This adds/co
 
 #Checking if all is good.
 auto <- auto +
-  theme(plot.caption = element_text(size = 6, hjust = 1, vjust = 1))
-auto 
+  theme(plot.caption = element_text(
+    size = 6,
+    hjust = 1,
+    vjust = 1
+  ))
+auto
 
 #ggsave(filename="./figures/Aim3_PCA_SEPT252023.png", plot = auto, dpi=600, units=c("mm"), width = 180, height = 180, bg = "white")
 ```
@@ -2357,9 +2781,11 @@ format.p <- function(p, precision = 0.001) {
   digits <- -log(precision, base = 10)
   p <- formatC(p, format = 'f', digits = digits)
   if (p < 0.001) {
-    p = paste0('< ', precision)}
+    p = paste0('< ', precision)
+  }
   if (p >= 0.001) {
-    p = paste0('= ', p)    }
+    p = paste0('= ', p)
+  }
   sub("0", "0", p)
 }
 
@@ -2369,35 +2795,53 @@ summary(lmpc1)
 # Formatted p-value
 ant_p1 <- cor.test(ant_pcalm$Ant_percent_leafloss, ant_pcalm$PC1)$p.value
 
-ant_p1 = format.p(ant_p1) # This is just to make the p-value nicer. 
+ant_p1 = format.p(ant_p1) # This is just to make the p-value nicer.
 
 ## Plot PC1
-       
+
 ant_pc1 <- ggplot(ant_pcalm, aes(PC1, Ant_percent_leafloss)) +
-  geom_jitter(aes(color = Species, shape = E_load), size = 3, alpha = 0.6) +
-  geom_smooth(method = lm, se = T , level = 0.95, na.rm = F, color = "black", size = 0.75) +
-  stat_regline_equation(label.y.npc = "top", 
-                        label.x.npc = "left",
-                        size = 7,
-                        aes(label = paste(..eq.label.., sprintf("italic('p')~'%s'", ant_p1), 
-                                          sep = "~~~~"))) +
-  scale_color_manual(labels=c("A. membranacea", 
-                              "C. cainito", 
-                              "C. alliodora", 
-                              "Dypterix .sp", 
-                              "H. concinna", 
-                              "L. panamensis", 
-                              "T. cacao"),
-                     values = met.brewer(name = "Cross", n = 8, type="discrete")) +
-   scale_shape_manual(name = "Treatment",
-                     labels=c("E-", "E+"),
-                     values = c(16, 17)) +
+  geom_jitter(aes(color = Species, shape = E_load),
+              size = 3,
+              alpha = 0.6) +
+  geom_smooth(
+    method = lm,
+    se = T ,
+    level = 0.95,
+    na.rm = F,
+    color = "black",
+    size = 0.75
+  ) +
+  stat_regline_equation(
+    label.y.npc = "top",
+    label.x.npc = "left",
+    size = 7,
+    aes(label = paste(
+      ..eq.label.., sprintf("italic('p')~'%s'", ant_p1), sep = "~~~~"
+    ))
+  ) +
+  scale_color_manual(
+    labels = c(
+      "A. membranacea",
+      "C. cainito",
+      "C. alliodora",
+      "Dypterix .sp",
+      "H. concinna",
+      "L. panamensis",
+      "T. cacao"
+    ),
+    values = met.brewer(name = "Cross", n = 8, type = "discrete")
+  ) +
+  scale_shape_manual(
+    name = "Treatment",
+    labels = c("E-", "E+"),
+    values = c(16, 17)
+  ) +
   theme_minimal(base_size = 16) +
   labs(y = "Herbivory (%)", caption = "") +
-  theme(legend.text = element_text(color="black", face="italic"))
-  #guides(color = "none")  +      #To turn off color legend
-  #guides(fill = "none") + #To turn off fill legend
-  #guides(shape = "none")
+  theme(legend.text = element_text(color = "black", face = "italic"))
+#guides(color = "none")  +      #To turn off color legend
+#guides(fill = "none") + #To turn off fill legend
+#guides(shape = "none")
 
 #ant_pc1
 
@@ -2464,7 +2908,6 @@ The functions `prcomp` and `princomp` are both possible to use for this analysis
 
 ```{r, Ant PC1-2}
 # Formatting formula for p value
-# Formatting formula for p value
 format.p <- function(p, precision = 0.001) {
   digits <- -log(precision, base = 10)
   p <- formatC(p, format = 'f', digits = digits)
@@ -2475,32 +2918,49 @@ format.p <- function(p, precision = 0.001) {
   sub("0", "0", p)
 }
 
+
 plmpc1 <- lm(Pathogen_percent_damage ~ PC1, data = pat_pcalm)
 
 # PC1
 # Formatted p-value
 pathogen_p1 <- cor.test(pat_pcalm$Pathogen_percent_damage, pat_pcalm$PC1)$p.value
 
-pathogen_p1 = format.p(pathogen_p1) # This is just to make the p-value nicer. 
+pathogen_p1 = format.p(pathogen_p1) # This is just to make the p-value nicer.
 
 ## Plot PC1
-       
+
 pat_pc1 <- ggplot(pat_pcalm, aes(PC1, Pathogen_percent_damage)) +
-  geom_jitter(aes(color = Species, shape = E_load), size = 3, alpha = 0.6) +
-  geom_smooth(method = lm, se = T , level = 0.95, na.rm = F, color = "black", size = 0.75) +
-  stat_regline_equation(label.y.npc = "top", 
-                        label.x.npc = "left",
-                        size = 7,
-                        aes(label = paste(..eq.label.., sprintf("italic('p')~'%s'", pathogen_p1), 
-                                          sep = "~~~~"))) +
-  scale_color_manual(labels=c("A. membranacea", 
-                              "C. cainito",
-                              "C. alliodora", 
-                              "Dypterix .sp", 
-                              "H. concinna", 
-                              "L. panamensis", 
-                              "T. cacao"),
-                     values = met.brewer(name = "Cross", n = 8, type="discrete")) +
+  geom_jitter(aes(color = Species, shape = E_load),
+              size = 3,
+              alpha = 0.6) +
+  geom_smooth(
+    method = lm,
+    se = T ,
+    level = 0.95,
+    na.rm = F,
+    color = "black",
+    size = 0.75
+  ) +
+  stat_regline_equation(
+    label.y.npc = "top",
+    label.x.npc = "left",
+    size = 7,
+    aes(label = paste(
+      ..eq.label.., sprintf("italic('p')~'%s'", pathogen_p1), sep = "~~~~"
+    ))
+  ) +
+  scale_color_manual(
+    labels = c(
+      "A. membranacea",
+      "C. cainito",
+      "C. alliodora",
+      "Dypterix .sp",
+      "H. concinna",
+      "L. panamensis",
+      "T. cacao"
+    ),
+    values = met.brewer(name = "Cross", n = 8, type = "discrete")
+  ) +
   theme_minimal(base_size = 16) +
   labs(y = "Pathogen damage (%)", caption = "") +
   guides(color = "none")  +      #To turn off color legend
@@ -2516,34 +2976,50 @@ pat_pc1
 # Formatted p-values
 pathogen_p2 <- cor.test(pat_pcalm$Pathogen_percent_damage, pat_pcalm$PC2)$p.value
 
-pathogen_p2 =format.p(pathogen_p2) # This is just to make the p-value nicer. 
+pathogen_p2 = format.p(pathogen_p2) # This is just to make the p-value nicer.
 
 ## Plot PC2
 plmpc2 <- lm(Pathogen_percent_damage ~ PC2, data = pat_pcalm)
 
 pat_pc2 <- ggplot(pat_pcalm, aes(PC2, Pathogen_percent_damage)) +
-  geom_jitter(aes(color = Species, shape = E_load), size = 3, alpha = 0.6) +
-  geom_smooth(method = lm, se = T , level = 0.95, na.rm = F, color = "black", size = 0.75) +
-  stat_regline_equation(label.y.npc = "top", 
-                        label.x.npc = "left",
-                        size = 7,
-                        aes(label = paste(..eq.label.., sprintf("italic('p')~'%s'", pathogen_p2), 
-                                          sep = "~~~~"))) +
-  scale_color_manual(labels=c("A. membranacea", 
-                              "C. cainito", 
-                              "C. alliodora",
-                              "Dypterix .sp",
-                              "H. concinna", 
-                              "L. panamensis", 
-                              "T. cacao"),
-                     values = met.brewer(name = "Cross", n = 8, type="discrete")) +
+  geom_jitter(aes(color = Species, shape = E_load),
+              size = 3,
+              alpha = 0.6) +
+  geom_smooth(
+    method = lm,
+    se = T ,
+    level = 0.95,
+    na.rm = F,
+    color = "black",
+    size = 0.75
+  ) +
+  stat_regline_equation(
+    label.y.npc = "top",
+    label.x.npc = "left",
+    size = 7,
+    aes(label = paste(
+      ..eq.label.., sprintf("italic('p')~'%s'", pathogen_p2), sep = "~~~~"
+    ))
+  ) +
+  scale_color_manual(
+    labels = c(
+      "A. membranacea",
+      "C. cainito",
+      "C. alliodora",
+      "Dypterix .sp",
+      "H. concinna",
+      "L. panamensis",
+      "T. cacao"
+    ),
+    values = met.brewer(name = "Cross", n = 8, type = "discrete")
+  ) +
   theme_minimal(base_size = 16) +
   labs(y = "Pathogen damage (%)", caption = "") +
   guides(color = "none")  +      #To turn off color legend
   guides(fill = "none") + #To turn off fill legend
   guides(shape = "none")
-  
-  
+
+
 #pat_pc2
 
 #ggsave(filename="./figures/Aim3_PatPC2_AUG282023.png", plot = pat_pc2, dpi=600, units=c("mm"), width = 180, height = 180, bg = "white")
