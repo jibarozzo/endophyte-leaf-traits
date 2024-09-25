@@ -1411,7 +1411,7 @@ auto <- autoplot((pca),
     "*L. panamensis*",
     "*T. cacao*"
   )) +
-  scale_shape_manual(name = "Treatment", labels = list("*E-low*", "*E-high*"), values = c(16, 17)) +
+  scale_shape_manual(name = "Treatment", labels = list("E-low", "E-high"), values = c(16, 17)) +
 
   # labs(title = "(a)") +
   theme(
@@ -2307,7 +2307,11 @@ gtsave(table3, "tables/Aponte_Bolivar_table3.html")
 
 # Linear regression models
 # Herbivory
-
+map(
+  c("Thickness", "Toughness", "Anthocyanins", "LMA", "Shannon"),
+  ~ lm(logit_herbivory ~ ., data = master)
+)
+            
 herb_lm_lt <- summary(lm(logit_herbivory ~ Thickness, data = masterant2))
 herb_lm_lps <- summary(lm(logit_herbivory ~ Toughness, data = masterant2))
 herb_lm_aci <- summary(lm(logit_herbivory ~ Anthocyanins, data = masterant2))
@@ -2847,7 +2851,8 @@ table4 <- regrex_all |>
     location = cells_title()
   )
 
-gtsave(table4, "tables/Aponte_Bolivar_table4.html")
+table4
+#gtsave(table4, "tables/Aponte_Bolivar_table4.html")
 ```
 
 
