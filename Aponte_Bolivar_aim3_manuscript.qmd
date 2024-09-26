@@ -2306,17 +2306,22 @@ gtsave(table3, "tables/Aponte_Bolivar_table3.html")
 #| tbl-cap: "Summary of simple linear regression models for predicting leaf herbivory and pathogen damage. Positive correlation denoted by upward light green arrow, negative correlation by downward light orange arrow. Models are separated by treatment and data set evaluated. Significance levels are represented by *ns* (not significant) and asterisks [*p* < .05 (\\*), *p* < .01 (\\*\\*), *p* < .001 (\\*\\*\\*), and *p* < .0001 (\\*\\*\\*\\*)]."
 
 # Linear regression models
+# Summary function
+model_summary <- function(data, response, predictor){
+  lm_model <- lm(data[[response]] ~ data[[predictor]], data = data)
+  summary(lm_model)
+}
+
 # Herbivory
-map(
-  c("Thickness", "Toughness", "Anthocyanins", "LMA", "Shannon"),
-  ~ lm(logit_herbivory ~ ., data = master)
+
+
+herb_models <- map(
+  c("Anthocyanins", "Thickness", "Toughness", "LMA", "Shannon"),
+  model_summary,
+  data = masterant2,
+  response = "logit_herbivory"
 )
-            
-herb_lm_lt <- summary(lm(logit_herbivory ~ Thickness, data = masterant2))
-herb_lm_lps <- summary(lm(logit_herbivory ~ Toughness, data = masterant2))
-herb_lm_aci <- summary(lm(logit_herbivory ~ Anthocyanins, data = masterant2))
-herb_lm_lma <- summary(lm(logit_herbivory ~ LMA, data = masterant2))
-herb_lm_sdi <- summary(lm(logit_herbivory ~ Shannon, data = masterant2))
+
 
 # Pathogen damage
 patho_lm_lt <- summary(lm(logit_pathogenicity ~ Thickness, data = masterpat2))
@@ -2367,11 +2372,16 @@ regrex_herb <- data.table(
   data_set = "Total",
   type_damage = c("Herbivory"),
   "Estimate" = c(
-    herb_lm_aci$coefficients[2],
-    herb_lm_lt$coefficients[2],
-    herb_lm_lps$coefficients[2],
-    herb_lm_lma$coefficients[2],
-    herb_lm_sdi$coefficients[2]
+    herb_models[[1]]$coefficients[2],
+    herb_models[[2]]$coefficients[2],
+    herb_models[[3]]$coefficients[2],
+    herb_models[[4]]$coefficients[2],
+    herb_models[[5]]$coefficients[2]
+    # herb_lm_aci$coefficients[2],
+    # herb_lm_lt$coefficients[2],
+    # herb_lm_lps$coefficients[2],
+    # herb_lm_lma$coefficients[2],
+    # herb_lm_sdi$coefficients[2]
   ),
   "R^2^~adj~" = c(
     herb_lm_aci$adj.r.squared,
@@ -2852,7 +2862,7 @@ table4 <- regrex_all |>
   )
 
 table4
-#gtsave(table4, "tables/Aponte_Bolivar_table4.html")
+gtsave(table4, "tables/Aponte_Bolivar_table4_new.html")
 ```
 
 
