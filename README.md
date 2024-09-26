@@ -8,9 +8,9 @@ This repository contains the R scripts, notebooks and sequences used for bioinfo
 
 ## Table of Contents
 
-1.  [Project Structure](@project-structure)
-2.  [Contributing](@contributing)
-3.  [Reproducing analyses](@reproducing-analyses)
+1.  [Project Structure](#project-structure)
+2.  [Contributing](#contributing)
+3.  [Reproducing analyses](#reproducing-analyses)
 
 # Project Structure
 
