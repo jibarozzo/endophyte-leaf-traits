@@ -2306,35 +2306,29 @@ gtsave(table3, "tables/Aponte_Bolivar_table3.html")
 #| tbl-cap: "Summary of simple linear regression models for predicting leaf herbivory and pathogen damage. Positive correlation denoted by upward light green arrow, negative correlation by downward light orange arrow. Models are separated by treatment and data set evaluated. Significance levels are represented by *ns* (not significant) and asterisks [*p* < .05 (\\*), *p* < .01 (\\*\\*), *p* < .001 (\\*\\*\\*), and *p* < .0001 (\\*\\*\\*\\*)]."
 
 # Linear regression models
-# Summary function
+# Summary model function
 model_summary <- function(data, response, predictor){
   lm_model <- lm(data[[response]] ~ data[[predictor]], data = data)
   summary(lm_model)
 }
 
 
-# Table function
+# Summary table function
 regrex_tables <- function(model,
+                          variables,
                           data_set,
-                          type_damage5
+                          model_type
                           ) {
   data.table(
-    LFTs = c(
-      "Anthocyanins (ACI)",
-      "Leaf Thickness (LT) (\U00B5m)",
-      "Leaf Punch Strength (LPS)(N mm^-1)",
-      "Leaf Mass per Area (LMA)(mg/mm)",
-      "Shannon Diversity Index"
-    ),
+    variables = variables,
     data_set = data_set,
-    type_damage = type_damage5,
+    model_type = model_type,
     estimate = c(
       model[[1]]$coefficients[2],
       model[[2]]$coefficients[2],
       model[[3]]$coefficients[2],
       model[[4]]$coefficients[2],
       model[[5]]$coefficients[2]
-      
     ),
     rsqrd = c(
       model[[1]]$adj.r.squared,
@@ -2342,7 +2336,6 @@ regrex_tables <- function(model,
       model[[3]]$adj.r.squared,
       model[[4]]$adj.r.squared,
       model[[5]]$adj.r.squared
-      
     ),
     
     fstat = c(
@@ -2351,51 +2344,43 @@ regrex_tables <- function(model,
       model[[3]]$fstatistic[1],
       model[[4]]$fstatistic[1],
       model[[5]]$fstatistic[1]
-      
     ),
-    
     pval = c(
       pf(
         model[[1]]$fstatistic[1],
         model[[1]]$fstatistic[2],
         model[[1]]$fstatistic[3],
         lower.tail = FALSE
-        
       ),
       pf(
         model[[2]]$fstatistic[1],
         model[[2]]$fstatistic[2],
         model[[2]]$fstatistic[3],
         lower.tail = FALSE
-        
       ),
       pf(
         model[[3]]$fstatistic[1],
         model[[3]]$fstatistic[2],
         model[[3]]$fstatistic[3],
         lower.tail = FALSE
-        
       ),
       pf(
         model[[4]]$fstatistic[1],
         model[[4]]$fstatistic[2],
         model[[4]]$fstatistic[3],
         lower.tail = FALSE
-        
       ),
       pf(
         model[[5]]$fstatistic[1],
         model[[5]]$fstatistic[2],
         model[[5]]$fstatistic[3],
         lower.tail = FALSE
-        
       )
     )
   )
 }
 
 # Herbivory
-
 
 herb_models <- map(
   c("Anthocyanins", "Thickness", "Toughness", "LMA", "Shannon"),
@@ -2412,7 +2397,7 @@ patho_models <- map(
   response = "logit_pathogenicity"
 )
 
-# E-high
+# E-high herbivory
 herb_ehigh_models <- map(
   c("Anthocyanins", "Thickness", "Toughness", "LMA", "Shannon"),
   model_summary,
@@ -2420,24 +2405,13 @@ herb_ehigh_models <- map(
   response = "logit_herbivory"
 )
 
-# herb_ehigh_lmlt <- summary(lm(logit_herbivory ~ Thickness, data = masterant2[masterant2$E_load == "E+", ]))
-# herb_ehigh_lmlps <- summary(lm(logit_herbivory ~ Toughness, data = masterant2[masterant2$E_load == "E+", ]))
-# herb_ehigh_lmaci <- summary(lm(logit_herbivory ~ Anthocyanins, data = masterant2[masterant2$E_load == "E+", ]))
-# herb_ehigh_lmlma <- summary(lm(logit_herbivory ~ LMA, data = masterant2[masterant2$E_load == "E+", ]))
-# herb_ehigh_lmsdi <- summary(lm(logit_herbivory ~ Shannon, data = masterant2[masterant2$E_load == "E+", ]))
-
-# E-low
+# E-low herbivory
 herb_elow_models <- map(
   c("Anthocyanins", "Thickness", "Toughness", "LMA", "Shannon"),
   model_summary,
   data = masterant2[masterant2$E_load == "E-", ],
   response = "logit_herbivory"
 )
-# herb_elow_lmlt <- summary(lm(logit_herbivory ~ Thickness, data = masterant2[masterant2$E_load == "E-", ]))
-# herb_elow_lmlps <- summary(lm(logit_herbivory ~ Toughness, data = masterant2[masterant2$E_load == "E-", ]))
-# herb_elow_lmaci <- summary(lm(logit_herbivory ~ Anthocyanins, data = masterant2[masterant2$E_load == "E-", ]))
-# herb_elow_lmlma <- summary(lm(logit_herbivory ~ LMA, data = masterant2[masterant2$E_load == "E-", ]))
-# herb_elow_lmsdi <- summary(lm(logit_herbivory ~ Shannon, data = masterant2[masterant2$E_load == "E-", ]))
 
 # Pathogen E-high
 patho_ehigh_models <- map(
@@ -2446,11 +2420,7 @@ patho_ehigh_models <- map(
   data = masterpat2[masterpat2$E_load == "E+", ],
   response = "logit_pathogenicity"
 )
-# patho_ehigh_lmlt <- summary(lm(logit_pathogenicity ~ Thickness, data = masterpat2[masterpat2$E_load == "E+", ]))
-# patho_ehigh_lmlps <- summary(lm(logit_pathogenicity ~ Toughness, data = masterpat2[masterpat2$E_load == "E+", ]))
-# patho_ehigh_lmaci <- summary(lm(logit_pathogenicity ~ Anthocyanins, data = masterpat2[masterpat2$E_load == "E+", ]))
-# patho_ehigh_lmlma <- summary(lm(logit_pathogenicity ~ LMA, data = masterpat2[masterpat2$E_load == "E+", ]))
-# patho_ehigh_lmsdi <- summary(lm(logit_pathogenicity ~ Shannon, data = masterpat2[masterpat2$E_load == "E+", ]))
+
 
 # Pathogen E-low
 patho_elow_models <- map(
@@ -2460,521 +2430,68 @@ patho_elow_models <- map(
   response = "logit_pathogenicity"
 )
 
-# patho_elow_lmlt <- summary(lm(logit_pathogenicity ~ Thickness, data = masterpat2[masterpat2$E_load == "E-", ]))
-# patho_elow_lmlps <- summary(lm(logit_pathogenicity ~ Toughness, data = masterpat2[masterpat2$E_load == "E-", ]))
-# patho_elow_lmaci <- summary(lm(logit_pathogenicity ~ Anthocyanins, data = masterpat2[masterpat2$E_load == "E-", ]))
-# patho_elow_lmlma <- summary(lm(logit_pathogenicity ~ LMA, data = masterpat2[masterpat2$E_load == "E-", ]))
-# patho_elow_lmsdi <- summary(lm(logit_pathogenicity ~ Shannon, data = masterpat2[masterpat2$E_load == "E-", ]))
 
-
-# Herbivory treatment
-regrex_herb2 <- regrex_tables(
-  herb_models,
-  data_set = "Total",
-  "Herbivory"
-)
-regrex_patho2 <- regrex_tables(
-  patho_models,
-  data_set = "Total",
-  "Pathogen"
+# Regression model summary tables
+trait_variables <- c(
+  "Anthocyanins (ACI)",
+  "Leaf Thickness (LT) (\U00B5m)",
+  "Leaf Punch Strength (LPS)(N mm^-1)",
+  "Leaf Mass per Area (LMA)(mg/mm)",
+  "Shannon Diversity Index"
 )
 
-regrex_herb_ehigh2 <- regrex_tables(
-  herb_ehigh_models,
-  data_set = "E-high",
-  "Herbivory"
-)
+regrex_herb <- regrex_tables(herb_models,
+                             trait_variables,
+                             data_set = "Total",
+                             model_type = "Herbivory")
+
+regrex_patho <- regrex_tables(patho_models,
+                              trait_variables ,
+                              data_set = "Total",
+                              model_type = "Pathogen")
+
+regrex_herb_ehigh <- regrex_tables(herb_ehigh_models,
+                                   trait_variables,
+                                   data_set = "E-high",
+                                   model_type = "Herbivory")
+
+regrex_herb_elow <- regrex_tables(herb_elow_models,
+                                  trait_variables,
+                                  data_set = "E-low",
+                                  model_type = "Herbivory")
+
+regrex_patho_ehigh <- regrex_tables(patho_ehigh_models,
+                                    trait_variables,
+                                    data_set = "E-high",
+                                    model_type = "Pathogen")
+
+regrex_patho_elow <- regrex_tables(patho_elow_models,
+                                   trait_variables,
+                                   data_set = "E-low",
+                                   model_type = "Pathogen")
 
 
-regrex_herb_elow2 <- regrex_tables(
-  herb_elow_models,
-  data_set = "E-low",
-  "Herbivory"
-
-)
-
-regrex_patho_ehigh2 <- regrex_tables(
-  patho_ehigh_models,
-  data_set = "E-high",
-  "Pathogen"
-)
-
-regrex_patho_elow2 <- regrex_tables(
-  patho_elow_models,
-  data_set = "E-low",
-  "Pathogen"
-)
-# regrex_herb <- data.table(
-#   LFTs = c(
-#     "Anthocyanins (ACI)",
-#     "Leaf Thickness (LT) (\U00B5m)",
-#     "Leaf Punch Strength (LPS)(N mm^-1)",
-#     "Leaf Mass per Area (LMA)(mg/mm)",
-#     "Shannon Diversity Index"
-#   ),
-#   data_set = "Total",
-#   type_damage = "Herbivory",
-#   "Estimate" = c(
-#     herb_models[[1]]$coefficients[2],
-#     herb_models[[2]]$coefficients[2],
-#     herb_models[[3]]$coefficients[2],
-#     herb_models[[4]]$coefficients[2],
-#     herb_models[[5]]$coefficients[2]
-#     # herb_lm_aci$coefficients[2],
-#     # herb_lm_lt$coefficients[2],
-#     # herb_lm_lps$coefficients[2],
-#     # herb_lm_lma$coefficients[2],
-#     # herb_lm_sdi$coefficients[2]
-#   ),
-#   "R^2^~adj~" = c(
-#     herb_models[[1]]$adj.r.squared,
-#     herb_models[[2]]$adj.r.squared,
-#     herb_models[[3]]$adj.r.squared,
-#     herb_models[[4]]$adj.r.squared,
-#     herb_models[[5]]$adj.r.squared
-#     
-#     # herb_lm_aci$adj.r.squared,
-#     # herb_lm_lt$adj.r.squared,
-#     # herb_lm_lps$adj.r.squared,
-#     # herb_lm_lma$adj.r.squared,
-#     # herb_lm_sdi$adj.r.squared
-#   ),
-#   
-#   "F-statistic" = c(
-#     herb_models[[1]]$fstatistic[1],
-#     herb_models[[2]]$fstatistic[1],
-#     herb_models[[3]]$fstatistic[1],
-#     herb_models[[4]]$fstatistic[1],
-#     herb_models[[5]]$fstatistic[1]
-#     
-#     # herb_lm_aci$fstatistic[1],
-#     # herb_lm_lt$fstatistic[1],
-#     # herb_lm_lps$fstatistic[1],
-#     # herb_lm_lma$fstatistic[1],
-#     # herb_lm_sdi$fstatistic[1]
-#   ),
-#   
-#   "p-value" = c(
-#     pf(
-#       herb_models[[1]]$fstatistic[1],
-#       herb_models[[1]]$fstatistic[2],
-#       herb_models[[1]]$fstatistic[3],
-#       lower.tail = FALSE
-#       # herb_lm_aci$fstatistic[1],
-#       # herb_lm_aci$fstatistic[2],
-#       # herb_lm_aci$fstatistic[3],
-#       # lower.tail = FALSE
-#     ),
-#     pf(
-#       herb_models[[2]]$fstatistic[1],
-#       herb_models[[2]]$fstatistic[2],
-#       herb_models[[2]]$fstatistic[3],
-#       lower.tail = FALSE
-#       # herb_lm_lt$fstatistic[1],
-#       # herb_lm_lt$fstatistic[2],
-#       # herb_lm_lt$fstatistic[3],
-#       # lower.tail = FALSE
-#     ), 
-#     pf(
-#       herb_models[[3]]$fstatistic[1],
-#       herb_models[[3]]$fstatistic[2],
-#       herb_models[[3]]$fstatistic[3],
-#       lower.tail = FALSE
-#       # herb_lm_lps$fstatistic[1],
-#       # herb_lm_lps$fstatistic[2],
-#       # herb_lm_lps$fstatistic[3],
-#       # lower.tail = FALSE
-#     ),
-#     pf(
-#       herb_models[[4]]$fstatistic[1],
-#       herb_models[[4]]$fstatistic[2],
-#       herb_models[[4]]$fstatistic[3],
-#       lower.tail = FALSE
-#       # herb_lm_lma$fstatistic[1],
-#       # herb_lm_lma$fstatistic[2],
-#       # herb_lm_lma$fstatistic[3],
-#       # lower.tail = FALSE
-#     ),
-#     pf(
-#       herb_models[[5]]$fstatistic[1],
-#       herb_models[[5]]$fstatistic[2],
-#       herb_models[[5]]$fstatistic[3],
-#       lower.tail = FALSE
-#       # herb_lm_sdi$fstatistic[1],
-#       # herb_lm_sdi$fstatistic[2],
-#       # herb_lm_sdi$fstatistic[3],
-#       # lower.tail = FALSE
-#     )
-#   )
-# )
-# 
-# 
-# # Pathogen treatment
-# regrex_patho <- data.table(
-#   LFTs = c(
-#     "Anthocyanins (ACI)",
-#     "Leaf Thickness (LT) (\U00B5m)",
-#     "Leaf Punch Strength (LPS)(N mm^-1)",
-#     "Leaf Mass per Area (LMA)(mg/mm)",
-#     "Shannon Diversity Index"
-#   ),
-#   data_set = "Total",
-#   type_damage = c("Pathogen"),
-#   "Estimate" = c(
-#     patho_lm_aci$coefficients[2],
-#     patho_lm_lt$coefficients[2],
-#     patho_lm_lps$coefficients[2],
-#     patho_lm_lma$coefficients[2],
-#     patho_lm_sdi$coefficients[2]
-#   ),
-#   "R^2^~adj~" = c(
-#     patho_lm_aci$adj.r.squared,
-#     patho_lm_lt$adj.r.squared,
-#     patho_lm_lps$adj.r.squared,
-#     patho_lm_lma$adj.r.squared,
-#     patho_lm_sdi$adj.r.squared
-#   ),
-#   
-#   "F-statistic" = c(
-#     patho_lm_aci$fstatistic[1],
-#     patho_lm_lt$fstatistic[1],
-#     patho_lm_lps$fstatistic[1],
-#     patho_lm_lma$fstatistic[1],
-#     patho_lm_sdi$fstatistic[1]
-#   ),
-#   
-#   "p-value" = c(
-#     pf(
-#       patho_lm_aci$fstatistic[1],
-#       patho_lm_aci$fstatistic[2],
-#       patho_lm_aci$fstatistic[3],
-#       lower.tail = FALSE
-#     ),
-#     pf(
-#       patho_lm_lt$fstatistic[1],
-#       patho_lm_lt$fstatistic[2],
-#       patho_lm_lt$fstatistic[3],
-#       lower.tail = FALSE
-#     ),
-#     pf(
-#       patho_lm_lps$fstatistic[1],
-#       patho_lm_lps$fstatistic[2],
-#       patho_lm_lps$fstatistic[3],
-#       lower.tail = FALSE
-#     ),
-#     pf(
-#       patho_lm_lma$fstatistic[1],
-#       patho_lm_lma$fstatistic[2],
-#       patho_lm_lma$fstatistic[3],
-#       lower.tail = FALSE
-#     ),
-#     pf(
-#       patho_lm_sdi$fstatistic[1],
-#       patho_lm_sdi$fstatistic[2],
-#       patho_lm_sdi$fstatistic[3],
-#       lower.tail = FALSE
-#     )
-#   )
-# )
-# 
-# 
-# # E-high
-# regrex_herb_ehigh <- data.table(
-#   LFTs = c(
-#     "Anthocyanins (ACI)",
-#     "Leaf Thickness (LT) (\U00B5m)",
-#     "Leaf Punch Strength (LPS)(N mm^-1)",
-#     "Leaf Mass per Area (LMA)(mg/mm)",
-#     "Shannon Diversity Index"
-#   ),
-#   data_set = "E-high",
-#   type_damage = c("Herbivory"),
-#   "Estimate" = c(
-#     herb_ehigh_lmaci$coefficients[2],
-#     herb_ehigh_lmlt$coefficients[2],
-#     herb_ehigh_lmlps$coefficients[2],
-#     herb_ehigh_lmlma$coefficients[2],
-#     herb_ehigh_lmsdi$coefficients[2]
-#   ),
-#   "R^2^~adj~" = c(
-#     herb_ehigh_lmaci$adj.r.squared,
-#     herb_ehigh_lmlt$adj.r.squared,
-#     herb_ehigh_lmlps$adj.r.squared,
-#     herb_ehigh_lmlma$adj.r.squared,
-#     herb_ehigh_lmsdi$adj.r.squared
-#   ),
-#   
-#   "F-statistic" = c(
-#     herb_ehigh_lmaci$fstatistic[1],
-#     herb_ehigh_lmlt$fstatistic[1],
-#     herb_ehigh_lmlps$fstatistic[1],
-#     herb_ehigh_lmlma$fstatistic[1],
-#     herb_ehigh_lmsdi$fstatistic[1]
-#   ),
-#   
-#   "p-value" = c(
-#     pf(
-#       herb_ehigh_lmaci$fstatistic[1],
-#       herb_ehigh_lmaci$fstatistic[2],
-#       herb_ehigh_lmaci$fstatistic[3],
-#       lower.tail = FALSE
-#     ),
-#     pf(
-#       herb_ehigh_lmlt$fstatistic[1],
-#       herb_ehigh_lmlt$fstatistic[2],
-#       herb_ehigh_lmlt$fstatistic[3],
-#       lower.tail = FALSE
-#     ),
-#     pf(
-#       herb_ehigh_lmlps$fstatistic[1],
-#       herb_ehigh_lmlps$fstatistic[2],
-#       herb_ehigh_lmlps$fstatistic[3],
-#       lower.tail = FALSE
-#     ),
-#     pf(
-#       herb_ehigh_lmlma$fstatistic[1],
-#       herb_ehigh_lmlma$fstatistic[2],
-#       herb_ehigh_lmlma$fstatistic[3],
-#       lower.tail = FALSE
-#     ),
-#     pf(
-#       herb_ehigh_lmsdi$fstatistic[1],
-#       herb_ehigh_lmsdi$fstatistic[2],
-#       herb_ehigh_lmsdi$fstatistic[3],
-#       lower.tail = FALSE
-#     )
-#   )
-# )  
-# 
-# # Herbivory E-low
-# regrex_herb_elow <- data.table(
-#   LFTs = c(
-#     "Anthocyanins (ACI)",
-#     "Leaf Thickness (LT) (\U00B5m)",
-#     "Leaf Punch Strength (LPS)(N mm^-1)",
-#     "Leaf Mass per Area (LMA)(mg/mm)",
-#     "Shannon Diversity Index"
-#   ),
-#   data_set = "E-low",
-#   type_damage = c("Herbivory"),
-#   "Estimate" = c(
-#     herb_elow_lmaci$coefficients[2],
-#     herb_elow_lmlt$coefficients[2],
-#     herb_elow_lmlps$coefficients[2],
-#     herb_elow_lmlma$coefficients[2],
-#     herb_elow_lmsdi$coefficients[2]
-#   ),
-#   "R^2^~adj~" = c(
-#     herb_elow_lmaci$adj.r.squared,
-#     herb_elow_lmlt$adj.r.squared,
-#     herb_elow_lmlps$adj.r.squared,
-#     herb_elow_lmlma$adj.r.squared,
-#     herb_elow_lmsdi$adj.r.squared
-#   ),
-#   "F-statistic" = c(
-#     herb_elow_lmaci$fstatistic[1],
-#     herb_elow_lmlt$fstatistic[1],
-#     herb_elow_lmlps$fstatistic[1],
-#     herb_elow_lmlma$fstatistic[1],
-#     herb_elow_lmsdi$fstatistic[1]
-#   ),
-#   
-#   "p-value" = c(
-#     pf(
-#       herb_elow_lmaci$fstatistic[1],
-#       herb_elow_lmaci$fstatistic[2],
-#       herb_elow_lmaci$fstatistic[3],
-#       lower.tail = FALSE
-#     ),
-#     pf(
-#       herb_elow_lmlt$fstatistic[1],
-#       herb_elow_lmlt$fstatistic[2],
-#       herb_elow_lmlt$fstatistic[3],
-#       lower.tail = FALSE
-#     ),
-#     pf(
-#       herb_elow_lmlps$fstatistic[1],
-#       herb_elow_lmlps$fstatistic[2],
-#       herb_elow_lmlps$fstatistic[3],
-#       lower.tail = FALSE
-#     ),
-#     pf(
-#       herb_elow_lmlma$fstatistic[1],
-#       herb_elow_lmlma$fstatistic[2],
-#       herb_elow_lmlma$fstatistic[3],
-#       lower.tail = FALSE
-#     ),
-#     pf(
-#       herb_elow_lmsdi$fstatistic[1],
-#       herb_elow_lmsdi$fstatistic[2],
-#       herb_elow_lmsdi$fstatistic[3],
-#       lower.tail = FALSE
-#     )
-#   )
-#   
-# )
-# 
-# # Pathogen E-high
-# 
-# regrex_patho_ehigh <- data.table(
-#   LFTs = c(
-#     "Anthocyanins (ACI)",
-#     "Leaf Thickness (LT) (\U00B5m)",
-#     "Leaf Punch Strength (LPS)(N mm^-1)",
-#     "Leaf Mass per Area (LMA)(mg/mm)",
-#     "Shannon Diversity Index"
-#   ),
-#   data_set = "E-high",
-#   type_damage = c("Pathogen"),
-#   "Estimate" = c(
-#     patho_ehigh_lmaci$coefficients[2],
-#     patho_ehigh_lmlt$coefficients[2],
-#     patho_ehigh_lmlps$coefficients[2],
-#     patho_ehigh_lmlma$coefficients[2],
-#     patho_ehigh_lmsdi$coefficients[2]
-#   ),
-#   "R^2^~adj~" = c(
-#     patho_ehigh_lmaci$adj.r.squared,
-#     patho_ehigh_lmlt$adj.r.squared,
-#     patho_ehigh_lmlps$adj.r.squared,
-#     patho_ehigh_lmlma$adj.r.squared,
-#     patho_ehigh_lmsdi$adj.r.squared
-#   ),
-#   
-#   "F-statistic" = c(
-#     patho_ehigh_lmaci$fstatistic[1],
-#     patho_ehigh_lmlt$fstatistic[1],
-#     patho_ehigh_lmlps$fstatistic[1],
-#     patho_ehigh_lmlma$fstatistic[1],
-#     patho_ehigh_lmsdi$fstatistic[1]
-#   ),
-#   
-#   "p-value" = c(
-#     pf(
-#       patho_ehigh_lmaci$fstatistic[1],
-#       patho_ehigh_lmaci$fstatistic[2],
-#       patho_ehigh_lmaci$fstatistic[3],
-#       lower.tail = FALSE
-#     ),
-#     pf(
-#       patho_ehigh_lmlt$fstatistic[1],
-#       patho_ehigh_lmlt$fstatistic[2],
-#       patho_ehigh_lmlt$fstatistic[3],
-#       lower.tail = FALSE
-#     ),
-#     pf(
-#       patho_ehigh_lmlps$fstatistic[1],
-#       patho_ehigh_lmlps$fstatistic[2],
-#       patho_ehigh_lmlps$fstatistic[3],
-#       lower.tail = FALSE
-#     ),
-#     pf(
-#       patho_ehigh_lmlma$fstatistic[1],
-#       patho_ehigh_lmlma$fstatistic[2],
-#       patho_ehigh_lmlma$fstatistic[3],
-#       lower.tail = FALSE
-#     ),
-#     pf(
-#       patho_ehigh_lmsdi$fstatistic[1],
-#       patho_ehigh_lmsdi$fstatistic[3],
-#       patho_ehigh_lmsdi$fstatistic[3],
-#       lower.tail = FALSE
-#     )
-#   )
-# )  
-# 
-# # Pathogen E-low
-# 
-# regrex_patho_elow <- data.table(
-#   LFTs = c(
-#     "Anthocyanins (ACI)",
-#     "Leaf Thickness (LT) (\U00B5m)",
-#     "Leaf Punch Strength (LPS)(N mm^-1)",
-#     "Leaf Mass per Area (LMA)(mg/mm)",
-#     "Shannon Diversity Index"
-#   ),
-#   data_set = "E-low",
-#   type_damage = c("Pathogen"),
-#   "Estimate" = c(
-#     patho_elow_lmaci$coefficients[2],
-#     patho_elow_lmlt$coefficients[2],
-#     patho_elow_lmlps$coefficients[2],
-#     patho_elow_lmlma$coefficients[2],
-#     patho_elow_lmsdi$coefficients[2]
-#   ),
-#   "R^2^~adj~" = c(
-#     patho_elow_lmaci$adj.r.squared,
-#     patho_elow_lmlt$adj.r.squared,
-#     patho_elow_lmlps$adj.r.squared,
-#     patho_elow_lmlma$adj.r.squared,
-#     patho_elow_lmsdi$adj.r.squared
-#   ),
-#   "F-statistic" = c(
-#     patho_elow_lmaci$fstatistic[1],
-#     patho_elow_lmlt$fstatistic[1],
-#     patho_elow_lmlps$fstatistic[1],
-#     patho_elow_lmlma$fstatistic[1],
-#     patho_elow_lmsdi$fstatistic[1]
-#   ),
-#   "p-value" = c(
-#     pf(
-#       patho_elow_lmaci$fstatistic[1],
-#       patho_elow_lmaci$fstatistic[2],
-#       patho_elow_lmaci$fstatistic[3],
-#       lower.tail = FALSE
-#     ),
-#     pf(
-#       patho_elow_lmlt$fstatistic[1],
-#       patho_elow_lmlt$fstatistic[2],
-#       patho_elow_lmlt$fstatistic[3],
-#       lower.tail = FALSE
-#     ),
-#     pf(
-#       patho_elow_lmlps$fstatistic[1],
-#       patho_elow_lmlps$fstatistic[2],
-#       patho_elow_lmlps$fstatistic[3],
-#       lower.tail = FALSE
-#     ),
-#     pf(
-#       patho_elow_lmlma$fstatistic[1],
-#       patho_elow_lmlma$fstatistic[2],
-#       patho_elow_lmlma$fstatistic[3],
-#       lower.tail = FALSE
-#     ),
-#     pf(
-#       patho_elow_lmsdi$fstatistic[1],
-#       patho_elow_lmsdi$fstatistic[2],
-#       patho_elow_lmsdi$fstatistic[3],
-#       lower.tail = FALSE
-#     )
-#   )
-# )
-
-
-
-
-# All observations
+# All model summary tables 
 regrex_all <- rbind(
-  regrex_herb2,
-  regrex_patho2,
-  regrex_herb_ehigh2,
-  regrex_herb_elow2,
-  regrex_patho_ehigh2,
-  regrex_patho_elow2
+  regrex_herb,
+  regrex_patho,
+  regrex_herb_ehigh,
+  regrex_herb_elow,
+  regrex_patho_ehigh,
+  regrex_patho_elow
 )
-
 
 # Table with all models
 table4 <- regrex_all |>
   gt(
-    groupname_col = c("type_damage", "data_set"),
+    groupname_col = c("model_type", "data_set"),
     row_group_as_column = TRUE
   ) |>
   fmt_number(columns = everything(),
              decimals = 3,
              use_seps = FALSE) |>
   cols_label(
-    LFTs = "Leaf Functional Traits",
+    variables = "Leaf Functional Traits",
     estimate = "Estimate",
     rsqrd = md("R^2^~adj~"),
     fstat = md("*F*-statistic"),
@@ -3038,7 +2555,7 @@ table4 <- regrex_all |>
   )
 
 table4
-gtsave(table4, "tables/Aponte_Bolivar_table4_new.html")
+# gtsave(table4, "tables/Aponte_Bolivar_table4.html")
 ```
 
 
