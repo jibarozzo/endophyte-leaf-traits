@@ -282,7 +282,7 @@ We processed and sequenced a mock community following the methods described abov
 
 ##### Fungal identification based on internal transcribed spacer (ITS)
 
-We used VSEARCH (v2.14.1) for *de novo* chimera detection, dereplication, and assignment of sequences to operational taxonomic units (OTU). VSEARCH is an open-source alternative to USEARCH that uses an optimal global aligner (full dynamic programming Needleman-Wunsch), resulting in more accurate alignments and sensitivity [@rognes2016]. For mock communities and experimental samples, we used forward reads (ITS1) for downstream bioinformatics analyses due to their high quality, rather than reverse reads (ITS4). Following Sarmiento et al. [-@sarmiento2017], we concatenated all reads in a single file and used FastQC reports to assess Phred scores above 30 and determine the adequate length of truncation. We processed 892,713 sequence reads from mock communities and 3,778,081 from experimental samples. We truncated mock community and experimental sample reads to a length of 250 bp with command `fast_trunclen` and filtered them at a maximum expected error of 1.0 with command `fast_maxee`. We then clustered unique sequence zero radius OTUs (that is, zOTUs; analogous to amplicon sequence variants [@callahan2016]), by using commands `derep_fulllength` and `minseqlength` set at 2. Sequentially we denoised and removed chimeras from read sequences with commands `cluster_unoise`, and `uchime3_denovo`, respectively. Finally, we clustered zOTUs at a 95% sequence similarity with command `usearch_global` and option `id` set at 0.95. At that point, 3,035,960 sequence reads from experimental samples remained. Taxonomy was assigned with the Tree-Based Alignment Selector Toolkit [v2.2; @carbone2019] by placing unknowns within the Pezizomycotina v2 reference tree [@carbone2017], and blasting against the UNITE database via the ribosomal database project (RDP) classifier. A total of 2147 OTUs were obtained, with the combined taxonomic data sets revealing 68.6% Ascomycota, 26.8% Basidiomycota, and other fungal lineages either rare (e.g., <0.05% Chytridiomycota, Mortierellomycota) or unidentified (4.2 %). Only OTUs representing Ascomycota were used for downstream statistical analyses since foliar endophyte communities in tropical trees are dominated by Ascomycota [@arnold2007]. For each OTU identified, we removed laboratory contaminants from experimental samples by subtracting the average read count found in control samples from the DNA extraction and PCR steps. Our analysis of mock communities allowed use to identify and remove false OTUs from experimental samples, those with fewer than 10 reads, leading us to 0.1% of the read relative abundance across all samples [@oita2021]. Three experimental samples from *Theobroma cacao* (*n*=2) and *Apeiba membranacea* (*n*=1) were removed from all analyses due to incomplete entries. After pruning OTU with zero reads from experimental samples, we identified 260 OTUs found exclusively in control (*E-low*) plants (*n*=78) and deemed them as artifacts resulting from greenhouse conditions. They were eliminated from treatment (*E-high*) plants across all species. We converted reads for each fungal OTU to proportions of total sequence abundance per sample to reduce differences in sampling effort, following previous studies (@weiss2017). We then removed singletons and obtained an average of 2,464,558 sequence reads in 529 Ascomycota OTUs across 156 experimental samples of 7 tree species. All analyses after taxonomic assignment were performed in R [v. 4.4.1; @rcoreteam2024] using the `phyloseq` package [v.1.48.0, @mcmurdie2013] and custom scripts (see Supplementary Material).
+We used VSEARCH (v2.14.1) for *de novo* chimera detection, dereplication, and assignment of sequences to operational taxonomic units (OTU). VSEARCH is an open-source alternative to USEARCH that uses an optimal global aligner (full dynamic programming Needleman-Wunsch), resulting in more accurate alignments and sensitivity [@rognes2016]. For mock communities and experimental samples, we used forward reads (ITS1) for downstream bioinformatics analyses due to their high quality, rather than reverse reads (ITS4). Following Sarmiento et al. [-@sarmiento2017], we concatenated all reads in a single file and used FastQC reports to assess Phred scores above 30 and determine the adequate length of truncation. We processed 892,713 sequence reads from mock communities and 3,778,081 from experimental samples. We truncated mock community and experimental sample reads to a length of 250 bp with command `fast_trunclen` and filtered them at a maximum expected error of 1.0 with command `fast_maxee`. We then clustered unique sequence zero radius OTUs (that is, zOTUs; analogous to amplicon sequence variants [@callahan2016]), by using commands `derep_fulllength` and `minseqlength` set at 2. Sequentially we denoised and removed chimeras from read sequences with commands `cluster_unoise`, and `uchime3_denovo`, respectively. Finally, we clustered zOTUs at a 95% sequence similarity with command `usearch_global` and option `id` set at 0.95. At that point, 3,035,960 sequence reads from experimental samples remained. Taxonomy was assigned with the Tree-Based Alignment Selector Toolkit [v2.2; @carbone2019] by placing unknowns within the Pezizomycotina v2 reference tree [@carbone2017], and blasting against the UNITE database via the ribosomal database project (RDP) classifier. A total of 2147 OTUs were obtained, with the combined taxonomic data sets revealing 68.6% Ascomycota, 26.8% Basidiomycota, and other fungal lineages either rare (e.g., <0.05% Chytridiomycota, Mortierellomycota) or unidentified (4.2 %). Only OTUs representing Ascomycota were used for downstream statistical analyses since foliar endophyte communities in tropical trees are dominated by Ascomycota [@arnold2007]. For each OTU identified, we removed laboratory contaminants from experimental samples by subtracting the average read count found in control samples from the DNA extraction and PCR steps. Our analysis of mock communities allowed use to identify and remove false OTUs from experimental samples, those with fewer than 10 reads, leading us to 0.1% of the read relative abundance across all samples [@oita2021]. Three experimental samples from *Theobroma cacao* (*n*=2) and *Apeiba membranacea* (*n*=1) were removed from all analyses due to incomplete entries. After pruning OTU with zero reads from experimental samples, we identified 260 OTUs found exclusively in control (*E-low*) plants (*n*=78) and deemed them as artifacts resulting from greenhouse conditions. They were eliminated from treatment (*E-high*) plants across all species. We converted reads for each fungal OTU to proportions of total sequence abundance per sample to reduce differences in sampling effort, following previous studies (@weiss2017). We then removed singletons and obtained an average of 2,464,558 sequence reads in 529 Ascomycota OTUs across 156 experimental samples of 7 tree species. All statistical analyses after taxonomic assignment were performed in R [>= v. 4.4.1; @rcoreteam2024] using the `phyloseq` package [v.1.48.0; @mcmurdie2013] and custom scripts (see Supplementary Material).
 
 ##### Host Species Phylogeny
 
@@ -860,7 +860,7 @@ fig1
 
 
 # Saving
-ggsave(filename = "./figures/Aponte_Bolivar_figure1.png", plot = fig1, dpi = 300, units = c("mm"), width = 210, height = 180, bg = "white")
+# ggsave(filename = "./figures/Aponte_Bolivar_figure1.png", plot = fig1, dpi = 300, units = c("mm"), width = 210, height = 180, bg = "white")
 #
 ```
 
@@ -1336,14 +1336,14 @@ p_m3dbrda$layers <- c(
 figure3 <- p_m3dbrda
 figure3
 
-ggsave(
-  filename = "./figures/Aponte_Bolivar_figure3.svg",
-  plot = figure3,
-  dpi = 300,
-  units = c("mm"),
-  width = 275,
-  height = 250
-)
+# ggsave(
+#   filename = "./figures/Aponte_Bolivar_figure3.png",
+#   plot = figure3,
+#   dpi = 300,
+#   units = c("mm"),
+#   width = 275,
+#   height = 250
+# )
 
 # ggsave(
 #   filename = "./figures/Aponte_Bolivar_figure3_points.png",
@@ -1920,7 +1920,7 @@ figure5 <- ggarrange(ant_pc1, ant_pc2, pat_pc1, pat_pc2,
 
 figure5
 
-ggsave(filename = "./figures/Aponte_Bolivar_figure5.png", plot = figure5, dpi = 300, units = c("mm"), width = 300, height = 225, bg = "white")
+# ggsave(filename = "./figures/Aponte_Bolivar_figure5.png", plot = figure5, dpi = 300, units = c("mm"), width = 300, height = 225, bg = "white")
 # Previously named Aim3_AntPCS_SEPT252023.png
 ```
 
@@ -2240,12 +2240,9 @@ anova_table1 <- tidy(anova_m3dbRDA) |>
   # mutate("p-value" = str_replace_all(p.value, "0.0001", "****"), across(term, ~ gsub("_m", " (m)", .))) |>
   rename(
     Term = term,
-    "Sum. of Sqs." = SumOfSqs,
-    "F-statistic" = statistic,
-    "Df" = df,
-    "p-value" = p.value
+    "Df" = df
   ) |>
-  select(Term, Df, "Sum. of Sqs.", "F-statistic", "p-value") |>
+  select(Term, Df, "SumOfSqs", "statistic", "p.value") |>
   mutate(
     Term = case_match(
       Term,
@@ -2258,25 +2255,26 @@ anova_table1 <- tidy(anova_m3dbRDA) |>
     )
   ) 
 table3 <- gt(anova_table1) |>
-  fmt_stars(columns = c("p-value")) |>
-  fmt_number(columns = c("Sum. of Sqs.", "F-statistic"),
+  fmt_stars(columns = c("p.value")) |>
+  fmt_number(columns = c("SumOfSqs", "statistic"),
              decimals = 2) |>
   fmt_number(columns = c("Df"), decimals = 0) |>
-  cols_label(`F-statistic` = md("*F*-statistic"),
-             pval = md("*p*-value")) |>
+  cols_label("SumOfSqs" = "Sum. of Sqs.",
+             statistic = md("*F*-statistic"),
+             p.value= md("*p*-value")) |>
   tab_footnote(
     footnote = md(
       "Significance levels are represented by *ns* (not significant) and asterisks [*p* < .05 (\\*), *p* < .01 (\\*\\*), *p* < .001 (\\*\\*\\*), and *p* < .0001 (\\*\\*\\*\\*)]."
     ),
-    locations = cells_column_labels(columns = "p-value")
+    locations = cells_column_labels(columns = "p.value")
   ) |>
   tab_style(style = cell_text(weight = "bold"),
             locations = cells_column_labels(columns = everything())) |>
   tab_style(
     style = cell_text(weight = "bold"),
     locations = cells_body(
-      columns = c(`Df`, `Sum. of Sqs.`, `F-statistic`, `p-value`),
-      rows = `p-value` < 0.05
+      columns = c(Df, SumOfSqs, statistic, p.value),
+      rows = `p.value` < 0.05
     )
   ) |>
   tab_style(
@@ -2292,7 +2290,7 @@ table3 <- gt(anova_table1) |>
 
 table3
 
-gtsave(table3, "tables/Aponte_Bolivar_table3.html")
+# gtsave(table3, "tables/Aponte_Bolivar_table3.html")
 ```
 
 ## Table 4

@@ -551,6 +551,42 @@ references:
   URL: https://www.nature.com/articles/s41396-021-01006-9
   volume: '15'
 
+- id: callahan2016
+  accessed:
+    - year: 2024
+      month: 8
+      day: 12
+  author:
+    - family: Callahan
+      given: Benjamin J
+    - family: McMurdie
+      given: Paul J
+    - family: Rosen
+      given: Michael J
+    - family: Han
+      given: Andrew W
+    - family: Johnson
+      given: Amy Jo A
+    - family: Holmes
+      given: Susan P
+  citation-key: callahan2016
+  container-title: Nature Methods
+  container-title-short: Nat Methods
+  DOI: 10.1038/nmeth.3869
+  ISSN: 1548-7091, 1548-7105
+  issue: '7'
+  issued:
+    - year: 2016
+      month: 7
+  language: en
+  page: 581-583
+  source: DOI.org (Crossref)
+  title: 'DADA2: High-resolution sample inference from Illumina amplicon data'
+  title-short: DADA2
+  type: article-journal
+  URL: https://www.nature.com/articles/nmeth.3869
+  volume: '13'
+
 - id: carbone2017
   abstract: >-
     Motivation: High-quality phylogenetic placement of sequence data has the
