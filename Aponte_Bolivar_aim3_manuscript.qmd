@@ -798,7 +798,7 @@ RAE <- ggplot(data = master, aes(x = E_load, y = Relative_Abundance)) +
     ),
     axis.text.x = element_blank()
   ) +
-  labs(x = "", y = "Mean Relative Abundance of Ascomycota", face = "bold") +
+  labs(x = "", y = "Relative Abundance of Ascomycota", face = "bold") +
   theme() +
   # labs(caption = "*Outliers and singletons removed.") +
   stat_compare_means(
