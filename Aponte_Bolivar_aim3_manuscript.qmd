@@ -2,8 +2,8 @@
 title: "Evaluating Endophyte-Rich Leaves and Leaf Functional Traits’ Role in Protecting Tropical Trees Against a Generalist Herbivore and a Pathogen"
 date: today
 bibliography: references.yaml
-#csl: functional-ecology.csl
-csl: apa.csl
+csl: functional-ecology.csl
+#csl: apa.csl
 author:
   - name: Bolívar Aponte Rolón
     orcid: 0000-0002-2544-4551
@@ -442,14 +442,14 @@ A.E.A., S.A.V. designed research study. M.S.J. and B.A.R. performed experiments 
 
 # Acknowledgements
 
-This research was funded by NSF DEB-1556583 to S.A.V. and NSF DEB-1556287 to A.E.A., and by the School of Plant Sciences and the College of Agriculture, Life and Environmental Sciences at The University of Arizona (AEA). We thank Ming-Min Lee for laboratory support and Nicole Colón-Carrion for support with mock community analyses and laboratory support. We are grateful to the Republic of Panama for the opportunity to conduct research there, and the Smithsonian Tropical Research Institute for logistics support. We thank Allie Martin for all the support during data collection and sample preparation. 
+This research was funded by NSF DEB-1556583 to S.A.V. and NSF DEB-1556287 to A.E.A., and by the School of Plant Sciences and the College of Agriculture, Life and Environmental Sciences at The University of Arizona (AEA). Data collection and analyses performed by the IIDS Genomics and Bioinformatics Resources Core at the University of Idaho were supported in part by NIH COBRE grant P30GM103324. We thank Ming-Min Lee for laboratory support and Nicole Colón-Carrion for support with mock community analyses and laboratory support. We are grateful to the Republic of Panama for the opportunity to conduct research there, and the Smithsonian Tropical Research Institute for logistics support. We thank Allie Martin for all the support during data collection and sample preparation. 
 
 # Conflict of Interest Statement
 
 The authors declare no competing interests.
 
 # Data Availability Statement
-Illumina metagenome sequences are available in NCBI-SRA (BioProject ID: PRJNA1162076). Leaf trait data and source code for figures, analysis and reproducible manuscript are available from Zenodo:
+Illumina amplicon sequences are available in NCBI-SRA (BioProject ID: PRJNA1162076). Leaf trait data and source code for figures, analysis and reproducible manuscript are available from Zenodo:
 
 # References
 
@@ -958,7 +958,7 @@ herb_boxplot <-
   ) +
   scale_fill_manual(values = met.brewer("Cross", n = 2, type = "discrete")) +
   scale_color_manual(
-    name = "Inoculation treatment  ",
+    name = "Treatment  ",
     labels = c("E-low", "E-high"),
     values = met.brewer("Cross", n = 2, type = "discrete")
   ) +
@@ -1107,7 +1107,7 @@ figure2 <- ggarrange(herb_boxplot, patho_boxplot,
 )
 
 figure2
-# ggsave(filename = "./figures/Aponte_Bolivar_figure2.png", plot = figure2, dpi = 300, units = c("mm"), width = 250, height = 200, bg = "white")
+ ggsave(filename = "./figures/Aponte_Bolivar_figure2.png", plot = figure2, dpi = 300, units = c("mm"), width = 250, height = 200, bg = "white")
 
 ```
 
@@ -2798,7 +2798,7 @@ table5
 
 # Appendix S1
 
-<!-- ## Table S1 -->
+## Table S1
 
 ```{r, supptable_S1}
 #| echo: false
@@ -2901,7 +2901,7 @@ supptable_S1
 # gtsave(supptable_S1, file = "Aim3_supptable_S1_05JAN2024.docx", path = "./tables")
 ```
 
-<!-- ## Table S2 -->
+## Table S2
 
 ```{r, supptable_S2}
 #| echo: false
@@ -3001,7 +3001,7 @@ supptable_S2
 # gtsave(supptable_S2, file = "Aim3_supptable_S2_05JAN2024.docx", path = "./tables")
 ```
 
-<!-- ## Table S3 -->
+## Table S3
 
 ```{r, supptable_S3}
 #| echo: false
@@ -3102,7 +3102,7 @@ supptable_S3
 # gtsave(supptable_S3, file = "Aim3_supptable_S3_05JAN2024.docx", path = "./tables")
 ```
 
-<!-- ## Table S4 -->
+## Table S4
 
 ```{r, supptable_S4}
 #| echo: false
@@ -3203,7 +3203,7 @@ supptable_S4
 # gtsave(supptable_S4, file = "Aim3_supptable_S4_05JAN2024.docx", path = "./tables")
 ```
 
-<!-- ## Table S5 -->
+## Table S5
 
 ```{r, Indicator_species}
 #| echo: false
@@ -3378,7 +3378,7 @@ supptable_S5
 # gtsave(supptable_S5, file = "Aim3_supptable_S5_12JAN2024.docx", path = "./tables")
 ```
 
-<!-- ## Table S6 -->
+## Table S6
 
 ```{r, Recoding_upper_lower}
 #| echo: false
@@ -3591,7 +3591,7 @@ supptable_S6
 # gtsave(supptable_S6, file = "Aim3_supptable_S6_12JAN2024.docx", path = "./tables")
 ```
 
-<!-- ## Table S7 -->
+## Table S7
 
 ```{r, supptable_S7}
 #| echo: false
@@ -3722,7 +3722,7 @@ supptable_S7
 # gtsave(supptable_S7, file = "Aim3_supptable_S7_12JAN2024.docx", path = "./tables")
 ```
 
-<!-- ## Table S8 -->
+## Table S8
 
 ```{r, Eload_multipatt_analysis}
 #| echo: false
@@ -3866,7 +3866,7 @@ supptable_S8
 # gtsave(supptable_S8, file = "Aim3_supptable_S8_14JAN2024.docx", path = "./tables")
 ```
 
-<!-- ## Table S9 -->
+## Table S9
 
 ```{r, supptable_S9}
 #| echo: false

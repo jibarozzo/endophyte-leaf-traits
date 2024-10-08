@@ -380,9 +380,9 @@ references:
   language: english
   page: 289–300
   title: >-
-    Controlling the False Discovery Rate: A Practical and Powerful Approach to
-    Multiple Testing
-  title-short: Controlling the False Discovery Rate
+    Controlling the false discovery rate: A practical and powerful approach to
+    multiple testing
+  title-short: Controlling the false discovery rate
   type: article-journal
   URL: https://rss.onlinelibrary.wiley.com/doi/10.1111/j.2517-6161.1995.tb02031.x
   volume: '57'
@@ -495,7 +495,7 @@ references:
   language: en
   page: 2623-2632
   source: DOI.org (Crossref)
-  title: Forward Selection of Explanatory Variables
+  title: Forward selection of explanatory variables
   type: article-journal
   URL: https://esajournals.onlinelibrary.wiley.com/doi/10.1890/07-0986.1
   volume: '89'
@@ -1901,9 +1901,9 @@ references:
   page: '309'
   source: DOI.org (Crossref)
   title: >-
-    Production of Plant Secondary Metabolites: Examples, Tips and Suggestions
-    for Biotechnologists
-  title-short: Production of Plant Secondary Metabolites
+    Production of plant secondary metabolites: examples, tips and suggestions
+    for biotechnologists
+  title-short: Production of plant secondary metabolites
   type: article-journal
   URL: http://www.mdpi.com/2073-4425/9/6/309
   volume: '9'
@@ -2874,8 +2874,8 @@ references:
   language: english
   page: e61217
   title: >-
-    Phyloseq: An R Package for Reproducible Interactive Analysis and Graphics of
-    Microbiome Census Data
+    phyloseq: An R package for reproducible interactive analysis and graphics of
+    microbiome census data
   title-short: Phyloseq
   type: article-journal
   URL: https://dx.plos.org/10.1371/journal.pone.0061217
@@ -3089,9 +3089,9 @@ references:
   page: 1530-1534
   source: DOI.org (Crossref)
   title: >-
-    IQ-TREE 2: New Models and Efficient Methods for Phylogenetic Inference in
-    the Genomic Era
-  title-short: IQ-TREE 2
+    Iq-tree 2: new models and efficient methods for phylogenetic inference in
+    the genomic era
+  title-short: Iq-tree 2
   type: article-journal
   URL: https://academic.oup.com/mbe/article/37/5/1530/5721363
   volume: '37'
@@ -3437,8 +3437,8 @@ references:
     - year: 2006
   page: 1733-1743
   title: >-
-    Leaf Traits Are Good Predictors of Plant Performance Across 53 Rain Forest
-    Species
+    Leaf traits are good predictors of plant performance across 53 rain forest
+    species
   type: article-journal
   URL: >-
     https://esajournals.onlinelibrary.wiley.com/doi/abs/10.1890/0012-9658%282006%2987%5B1733%3ALTAGPO%5D2.0.CO%3B2
@@ -3481,8 +3481,8 @@ references:
   language: en
   page: 291-315
   source: DOI.org (Crossref)
-  title: 'Hidden Fungi, Emergent Properties: Endophytes and Microbiomes'
-  title-short: Hidden Fungi, Emergent Properties
+  title: 'Hidden fungi, emergent properties: endophytes and microbiomes'
+  title-short: Hidden fungi, emergent properties
   type: article-journal
   URL: https://www.annualreviews.org/doi/10.1146/annurev-phyto-080508-081831
   volume: '49'
@@ -4524,7 +4524,7 @@ references:
   citation-key: wickham2022
   issued:
     - year: 2022
-  title: 'ggplot2: Create Elegant Data Visualisations Using the Grammar of Graphics'
+  title: 'ggplot2: Create elegant data visualisations using the grammar of graphics'
   type: document
   URL: https://CRAN.R-project.org/package=ggplot2
 
