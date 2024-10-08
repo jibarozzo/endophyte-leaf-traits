@@ -1,5 +1,5 @@
 ---
-title: "Evaluating Endophyte-Rich Leaves and Leaf Functional Traits’ Role in Protecting Tropical Trees Against a Generalist Herbivore and a Pathogen"
+title: "Evaluating Endophyte-Rich Leaves and Leaf Functional Traits’ Role in Protecting Tropical Trees Against Natural Enemies"
 date: today
 bibliography: references.yaml
 csl: functional-ecology.csl
@@ -449,7 +449,7 @@ This research was funded by NSF DEB-1556583 to S.A.V. and NSF DEB-1556287 to A.E
 The authors declare no competing interests.
 
 # Data Availability Statement
-Illumina amplicon sequences are available in NCBI-SRA (BioProject ID: PRJNA1162076). Leaf trait data and source code for figures, analysis and reproducible manuscript are available from Zenodo:
+Illumina amplicon sequences are available in NCBI-SRA (BioProject ID: PRJNA1162076). Leaf trait data and source code for figures, analysis and reproducible manuscript are available from Zenodo: [https://doi.org/10.5281/zenodo.13905340](https://doi.org/10.5281/zenodo.13905340)
 
 # References
 
