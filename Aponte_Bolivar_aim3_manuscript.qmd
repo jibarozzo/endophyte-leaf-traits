@@ -2506,7 +2506,7 @@ table4 <- regrex_all |>
   ) |>
   cols_label(dir = "") |>
   text_case_match(
-    "white" ~ fontawesome::fa("arrow-down"),
+    "white" ~ "",
     "#dd5129" ~ fontawesome::fa("arrow-down", height = "1.5em", width = "1em"),
     "#43b284" ~ fontawesome::fa("arrow-up", height = "1.5em", width = "1em")
   ) |>
