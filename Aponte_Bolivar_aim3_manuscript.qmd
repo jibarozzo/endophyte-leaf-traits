@@ -126,78 +126,78 @@ knitr::opts_chunk$set(ft.tabcolsep = 0)
 
 
 ## Development Tools
-library(devtools)
+library(devtools) # Tools to Make Developing R Packages Easier
 
 ## Data Manipulation and Visualizations
 ### Data Wrangling & Manipulation:
-library(tidyverse)
-library(data.table)
-library(janitor)
+library(tidyverse) # Easily Install and Load the 'Tidyverse'
+library(data.table) # Extension of `data.frame`
+library(janitor) # Simple Tools for Examining and Cleaning Dirty Data
 
 ## Visualization:
-library(ggfortify)
-library(ggiraph)
-library(ggiraphExtra)
-library(ggpubr)
-library(gridExtra)
-library(ggthemes)
+library(ggfortify) # Data Visualization Tools for Statistical Analysis Results
+library(ggiraph) # Make 'ggplot2' Graphics Interactive
+library(ggiraphExtra) # Make Interactive 'ggplot2'. Extension to 'ggplot2' and 'ggiraph'
+library(ggpubr) # 'ggplot2' Based Publication Ready Plots
+library(gridExtra) # Miscellaneous Functions for "Grid" Graphics
+library(ggthemes) # Extra Themes, Scales and Geoms for 'ggplot2'
 library(showtext) # For special characters in ggplot2
-library(ggtext)
-library(ggpmisc)
-library(plotrix)
-library(MetBrewer)
-library(lattice)
+library(ggtext) # Improved Text Rendering Support for 'ggplot2'
+library(ggpmisc) # Miscellaneous Extensions to 'ggplot2'
+library(plotrix) # Various Plotting Functions
+library(MetBrewer) # Color Palettes Inspired by Works at the Metropolitan Museum of
+Art
+library(lattice) # Trellis Graphics for R
 
 ## Tables
 ### Table Creation & Formatting:
-library(flextable)
-library(huxtable)
-library(gt)
-library(gtExtras)
-library(gtsummary)
-library(kableExtra)
+library(flextable) # Functions for Tabular Reporting
+library(huxtable) # Easily Create and Style Tables for LaTeX, HTML and Other Formats
+library(gt) # Easily Create Presentation-Ready Display Tables
+library(gtExtras) # Extending 'gt' for Beautiful HTML Tables
+library(gtsummary) # Presentation-Ready Data Summary and Analytic Result Tables
+library(kableExtra) # Construct Complex Table with 'kable' and Pipe Syntax
 
 ## Document and Script Formatting:
-library(officer)
-library(broom)
-library(broom.mixed)
-library(broom.helpers)
-library(formatR)
+library(officer) # Manipulation of Microsoft Word and PowerPoint Documents
+library(broom) # Convert Statistical Objects into Tidy Tibbles
+library(broom.mixed) # Tidying Methods for Mixed Models
+library(broom.helpers) # Helpers for Model Coefficients Tibbles
+library(formatR) # Format R Code Automatically
 
 ## Statistical Analysis
 ### General Statistics:**
-library(vegan)
-library(nlme)
-library(MASS)
-library(MuMIn)
+library(vegan) # Community Ecology Package
+library(nlme) # Linear and Nonlinear Mixed Effects Models
+library(MASS) # Support Functions and Datasets for Venables and Ripley's MASS
+library(MuMIn) # Multi-Model Inference
 library(car) # For type 3 ANOVA with )Anova()) function
-library(PerformanceAnalytics)
-library(corrr)
-library(permute)
+library(PerformanceAnalytics) # Econometric Tools for Performance and Risk Analysis
+library(corrr) # Correlations in R
+library(permute) # Functions for Generating Restricted Permutations of Data
 
 ## Modeling:**
-library(pls)
-library(buildmer)
-library(lme4)
-library(sjPlot)
+library(buildmer) # Stepwise Elimination and Term Reordering for Mixed-Effects Regression
+library(lme4) # Linear Mixed-Effects Models using 'Eigen' and S4
+library(sjPlot) # Data Visualization for Statistics in Social Science
 
 ### Specialized Statistical Packages:
-library(indicspecies)
-library(rstatix)
+library(indicspecies) # Relationship Between Species and Groups of Sites
+library(rstatix) # Pipe-Friendly Framework for Basic Statistical Tests
 
 ## Phylogenetic Analyses
 ### Phylogenetic & Ecological Analysis:
-library(mgcv)
-library(phyloseq)
-library(ape)
-library(metagMisc)
+library(mgcv) # Mixed GAM Computation Vehicle with Automatic Smoothness Estimation
+library(phyloseq) # Handling and analysis of high-throughput microbiome census data
+library(ape) # Analyses of Phylogenetics and Evolution
+library(metagMisc) # Miscellaneous functions for metagenomic analysis
 # remotes::install_github("vmikk/metagMisc")
 # library(speedyseq)
 # source("http://bioconductor.org/biocLite.R")
 
 ## Preference of Conflicted Functions Among Packages
 ### Conflict Management:
-library(conflicted)
+library(conflicted) # An Alternative Conflict Resolution Strategy
 
 ### Conflict Resolution Preferences:
 conflict_prefer("select", "dplyr")
@@ -209,7 +209,7 @@ conflict_prefer("filter", "dplyr")
 save.path <- ("../Aim3_Sequence_analyses/")
 
 # Format p-values
-source(file.path(save.path,"functions/fmt_stars.R"))
+source(file.path(save.path,"functions/pvalue_stars.R"))
 
 # Loading files
 csamp <-
@@ -2638,15 +2638,6 @@ phylo_pathogen_REML <- lme(
 # AIC(PHY_PREM) # 903.0283
 
 
-
-# # Significance stars
-# makeStars <- function(x){
-#   stars <- c("****", "***", "**", "*", "ns")
-#   vec <- c(0, 0.0001, 0.001, 0.01, 0.05, 1)
-#   i <- findInterval(x, vec)
-#   stars[i]
-# }
-
 # Using `huxtable` package to create the same table
 
 # Thick borders for table
@@ -3261,13 +3252,6 @@ multipatt_taxonomy <- multipatt_taxonomy |>
 # multipatt_taxonomy <- read.csv("./post_stat_analyses_data/Significant_OTUs.csv")
 
 # Let's clean up the table a bit
-# Some Stackoverflow magic
-makeStars <- function(x) {
-  stars <- c("****", "***", "**", "*", "ns")
-  vec <- c(0, 0.0001, 0.001, 0.01, 0.05, 1)
-  i <- findInterval(x, vec)
-  stars[i]
-}
 
 supptable_S5 <- gt(
   multipatt_taxonomy |>
@@ -3472,13 +3456,6 @@ herb_multipatt_taxonomy <- herb_multipatt_taxonomy |>
 # gt table
 
 # Let's clean up the table a bit
-# Some Stackoverflow magic
-makeStars <- function(x) {
-  stars <- c("****", "***", "**", "*", "ns")
-  vec <- c(0, 0.0001, 0.001, 0.01, 0.05, 1)
-  i <- findInterval(x, vec)
-  stars[i]
-}
 
 supptable_S6 <- gt(
   herb_multipatt_taxonomy |>
@@ -3604,13 +3581,6 @@ patho_multipatt_taxonomy <- patho_multipatt_taxonomy |>
 # write.csv(patho_multipatt_taxonomy, "./post_stat_analyses_data/high_low_pathogen_OTUs.csv")
 # gt table
 # Let's clean up the table a bit
-# Some Stackoverflow magic
-makeStars <- function(x) {
-  stars <- c("****", "***", "**", "*", "ns")
-  vec <- c(0, 0.0001, 0.001, 0.01, 0.05, 1)
-  i <- findInterval(x, vec)
-  stars[i]
-}
 
 supptable_S7 <- gt(
   patho_multipatt_taxonomy |>
@@ -3752,12 +3722,6 @@ eload_multipatt_taxonomy <- eload_multipatt_taxonomy |>
 # gt table
 # Let's clean up the table a bit
 # Some Stackoverflow magic
-makeStars <- function(x) {
-  stars <- c("****", "***", "**", "*", "ns")
-  vec <- c(0, 0.0001, 0.001, 0.01, 0.05, 1)
-  i <- findInterval(x, vec)
-  stars[i]
-}
 
 supptable_S8 <- gt(
   eload_multipatt_taxonomy |>
@@ -5688,3 +5652,4 @@ The sterile soil is added to an sterilized plastic germination tray, combined wi
 #### Seedling transfer into pots
 
 Once seeds germinated, seedlings were transferred to pots by wetting the soil and extracting intact root system. Seedling were immediately placed in pot with sterile soil using a small shovel after uprooting from germination tray. Hands were sprayed with 70% ethanol when switching from handling one species to handling another. Plants were watered as needed at the soil level and 25mL of MiracleGro all-purpose plant food was added to every seedling once a month throughout entirety of experiment.
+

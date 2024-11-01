@@ -1,4 +1,4 @@
-### Function to format p-values as stars ###
+### Functions to format p-values as stars ###
 # Modified by Bolívar Aponte Rolón (@jibarozzo) from @rich-iannone's fmt_star function posted
 # on GitHub: https://github.com/rstudio/gt/issues/187#issuecomment-465769854
 
@@ -30,4 +30,13 @@ fmt_stars <- function(data,
       }
     )
   )
+}
+
+
+# Some Stackoverflow magic
+makeStars <- function(x) {
+  stars <- c("****", "***", "**", "*", "ns")
+  vec <- c(0, 0.0001, 0.001, 0.01, 0.05, 1)
+  i <- findInterval(x, vec)
+  stars[i]
 }

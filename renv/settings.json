@@ -1,5 +1,5 @@
 {
-  "bioconductor.version": "TRUE",
+  "bioconductor.version": "3.19",
   "external.libraries": [
     "/home/baponte/R/x86_64-pc-linux-gnu-library/4.3"
   ],
