@@ -145,8 +145,7 @@ library(showtext) # For special characters in ggplot2
 library(ggtext) # Improved Text Rendering Support for 'ggplot2'
 library(ggpmisc) # Miscellaneous Extensions to 'ggplot2'
 library(plotrix) # Various Plotting Functions
-library(MetBrewer) # Color Palettes Inspired by Works at the Metropolitan Museum of
-Art
+library(MetBrewer) # Color Palettes Inspired by Works at the Metropolitan Museum of Art
 library(lattice) # Trellis Graphics for R
 
 ## Tables
@@ -3928,8 +3927,9 @@ Abun7a <- ggplot(
   scale_fill_manual(values = met.brewer("Cross", n = 2, type = "discrete")) +
   scale_color_manual(
     name = "Treatment ",
+    labels = c("E-low", "E-high"),
     values = met.brewer("Cross", n = 2, type = "discrete")
-  ) +
+  )  +
   scale_y_continuous(labels = scales::percent) +
   theme_classic(base_size = 12) +
   theme(
@@ -4109,11 +4109,13 @@ ACIa <- ggplot(data = master, aes(x = E_load, y = Anthocyanins)) +
     linewidth = 1.2
   ) +
   scale_color_manual(values = met.brewer("Cross", n = 2, type = "discrete")) +
-  scale_fill_manual(
+  scale_color_manual(
     name = "Treatment ",
+    labels = c("E-low", "E-high"),
     values = met.brewer("Cross", n = 2, type = "discrete")
-  ) +
+  )  +
   scale_x_discrete(labels = c(newname)) +
+  theme_classic(base_size = 12) +
   theme(
     legend.title = element_text(face = "bold"),
     panel.border = element_rect(linetype = "blank", fill = NA),
@@ -4149,9 +4151,11 @@ ACIb <-
   ) +
   scale_color_manual(
     name = "Treatment ",
+    labels = c("E-low", "E-high"),
     values = met.brewer("Cross", n = 2, type = "discrete")
-  ) +
+  )  +
   scale_x_discrete(labels = c(newname)) +
+  theme_classic(base_size = 12) +
   theme(
     legend.title = element_text(face = "bold"),
     panel.border = element_rect(linetype = "blank", fill = NA),
@@ -4257,10 +4261,12 @@ LTa <-
   ) +
   scale_color_manual(
     name = "Treatment ",
+    labels = c("E-low", "E-high"),
     values = met.brewer("Cross", n = 2, type = "discrete")
-  ) +
+  )  +
   scale_x_discrete(labels = c(newname)) +
   scale_y_continuous(limits = c(100, 300)) +
+  theme_classic(base_size = 12) +
   theme(
     legend.title = element_text(face = "bold"),
     panel.border = element_rect(linetype = "blank", fill = NA),
@@ -4294,10 +4300,12 @@ LTb <-
   ) +
   scale_color_manual(
     name = "Treatment ",
+    labels = c("E-low", "E-high"),
     values = met.brewer("Cross", n = 2, type = "discrete")
-  ) +
+  )  +
   scale_x_discrete(labels = c(newname)) +
   scale_y_continuous(limits = c(100, 300)) +
+  theme_classic(base_size = 12) +
   theme(
     legend.title = element_text(face = "bold"),
     panel.border = element_rect(linetype = "blank", fill = NA),
@@ -4400,13 +4408,14 @@ LPSa <- ggplot(data = master, aes(x = E_load, y = Toughness, color = E_load)) +
     outlier.alpha = 0.5,
     linewidth = 1.2
   ) +
-  scale_color_manual(name = "Treatment ", values = met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_color_manual(
+    name = "Treatment ",
+    labels = c("E-low", "E-high"),
+    values = met.brewer("Cross", n = 2, type = "discrete")
+  ) +
   scale_x_discrete(labels = c(newname)) +
+  theme_classic(base_size = 12) +
   theme(
-    # panel.grid.major = element_line(colour = "grey"),
-    # panel.grid.minor = element_line(colour = "grey"),
-    # strip.background = element_rect(fill = "white"),
-    # strip.text.x = element_text(colour = "black", face = "bold"),
     legend.title = element_text(face = "bold"),
     panel.border = element_rect(linetype = "blank", fill = NA),
     axis.text.x = element_blank(),
@@ -4437,13 +4446,14 @@ LPSb <- ggplot(data = master, aes(x = Species, y = Toughness, color = E_load)) +
     alpha = 0.0,
     outlier.alpha = 0.5
   ) +
-  scale_color_manual(name = "Treatment ", values = met.brewer("Cross", n = 2, type = "discrete")) +
+  scale_color_manual(
+    name = "Treatment ",
+    labels = c("E-low", "E-high"),
+    values = met.brewer("Cross", n = 2, type = "discrete")
+  ) +
   scale_x_discrete(labels = c(newname)) +
+  theme_classic(base_size = 12) +
   theme(
-    # panel.grid.major = element_line(colour = "grey"),
-    # panel.grid.minor = element_line(colour = "grey"),
-    # strip.background = element_rect(fill = "white"),
-    # strip.text.x = element_text(colour = "black", face = "bold"),
     legend.title = element_text(face = "bold"),
     panel.border = element_rect(linetype = "blank", fill = NA),
     axis.text.x = element_text(face = "italic", hjust = 1, angle = 30),
@@ -4543,9 +4553,11 @@ LMAa <-
   ) +
   scale_color_manual(
     name = "Treatment ",
+    labels = c("E-low", "E-high"),
     values = met.brewer("Cross", n = 2, type = "discrete")
-  ) +
+  )  +
   scale_x_discrete(labels = c(newname)) +
+  theme_classic(base_size = 12) +
   theme(
     legend.title = element_text(face = "bold"),
     panel.border = element_rect(linetype = "blank", fill = NA),
@@ -4577,9 +4589,11 @@ LMAb <-
   ) +
   scale_color_manual(
     name = "Treatment ",
+    labels = c("E-low", "E-high"),
     values = met.brewer("Cross", n = 2, type = "discrete")
-  ) +
+  )  +
   scale_x_discrete(labels = c(newname)) +
+  theme_classic(base_size = 12) +
   theme(
     legend.title = element_text(face = "bold"),
     panel.border = element_rect(linetype = "blank", fill = NA),
@@ -4644,9 +4658,11 @@ herb_violin_a <-
   ) +
   scale_color_manual(
     name = "Treatment ",
+    labels = c("E-low", "E-high"),
     values = met.brewer("Cross", n = 2, type = "discrete")
-  ) +
+  )  +
   scale_x_discrete(labels = c(newname)) +
+  theme_classic(base_size = 12) +
   theme(
     legend.title = element_text(face = "bold"),
     panel.border = element_rect(linetype = "blank", fill = NA),
@@ -4685,9 +4701,11 @@ patho_violin_b <-
   ) +
   scale_color_manual(
     name = "Treatment ",
+    labels = c("E-low", "E-high"),
     values = met.brewer("Cross", n = 2, type = "discrete")
-  ) +
+  )  +
   scale_x_discrete(labels = c(newname)) +
+  theme_classic(base_size = 12) +
   theme(
     legend.title = element_text(face = "bold"),
     panel.border = element_rect(linetype = "blank", fill = NA),
@@ -4759,22 +4777,14 @@ herb_lps <-
     linetype = "dashed",
     size = 0.75
   ) +
-  scale_shape_manual( # labels = c(
-    #   "*A. membranacea*",
-    #   "*C. cainito*",
-    #   "*C. alliodora*",
-    #   "*Dipteryx* sp.",
-    #   "*H. concinna*",
-    #   "*L. panamensis*",
-    #   "*T. cacao*"
-    # ),
+  scale_shape_manual(
     values = c(15:22)
   ) +
   scale_color_manual(
-    name = "Treatment",
-    labels = c("E-", "E+"),
-    values = met.brewer(name = "Cross", n = 2, type = "discrete")
-  ) +
+    name = "Treatment ",
+    labels = c("E-low", "E-high"),
+    values = met.brewer("Cross", n = 2, type = "discrete")
+  )  +
   ggplot2::annotate(
     "rect",
     ymin = -4.5,
@@ -4802,7 +4812,7 @@ herb_lps <-
     vstep = 0.08
   ) +
   labs(x = expression(paste("Leaf punch strength (N mm", "^-1)")), y = "logit[Herbivory (%)]") +
-  ## theme_classic(base_size = 10) +
+  theme_classic(base_size = 12) +
   theme(
     legend.position = "right",
     legend.title = element_text(face = "bold"),
@@ -4840,22 +4850,14 @@ herb_aci <-
     linetype = "dashed",
     size = 0.75
   ) +
-  scale_shape_manual( # labels = c(
-    #   "A. membranacea",
-    #   "C. cainito",
-    #   "C. alliodora",
-    #   "Dipteryx sp.",
-    #   "H. concinna",
-    #   "L. panamensis",
-    #   "T. cacao"
-    # ),
+  scale_shape_manual(
     values = c(15:22)
   ) +
   scale_color_manual(
-    name = "Treatment",
-    labels = c("E-", "E+"),
-    values = met.brewer(name = "Cross", n = 2, type = "discrete")
-  ) +
+    name = "Treatment ",
+    labels = c("E-low", "E-high"),
+    values = met.brewer("Cross", n = 2, type = "discrete")
+  )  +
   ggplot2::annotate(
     "rect",
     ymin = -4.5,
@@ -4885,7 +4887,7 @@ herb_aci <-
   labs(x = expression(paste(
     "ACI (% ", italic("A")[lambda], " at 931 nm / % ", italic("A")[lambda], " at 530 nm)"
   )), y = "logit[Herbivory (%)]") +
-  # theme_classic(base_size = 10) +
+  theme_classic(base_size = 12) +
   theme(
     legend.position = "right",
     legend.title = element_text(face = "bold"),
@@ -4933,10 +4935,10 @@ herb_lt <-
     values = c(15:22)
   ) +
   scale_color_manual(
-    name = "Treatment",
-    labels = c("E-", "E+"),
-    values = met.brewer(name = "Cross", n = 2, type = "discrete")
-  ) +
+    name = "Treatment ",
+    labels = c("E-low", "E-high"),
+    values = met.brewer("Cross", n = 2, type = "discrete")
+  )  +
   ggplot2::annotate(
     "rect",
     ymin = -4.5,
@@ -4964,7 +4966,7 @@ herb_lt <-
     vstep = 0.08
   ) +
   labs(x = expression(paste("Leaf thickness (", mu, "m)")), y = "logit[Herbivory (%)]") +
-  # theme_classic(base_size = 10) +
+  theme_classic(base_size = 12) +
   theme(
     legend.position = "right",
     legend.title = element_text(face = "bold"),
@@ -5005,22 +5007,14 @@ herb_lma <-
     linetype = "dashed",
     size = 0.75
   ) +
-  scale_shape_manual( # labels = c(
-    #   "A. membranacea",
-    #   "C. cainito",
-    #   "C. alliodora",
-    #   "Dipteryx sp.",
-    #   "H. concinna",
-    #   "L. panamensis",
-    #   "T. cacao"
-    # ),
+  scale_shape_manual(
     values = c(15:22)
   ) +
   scale_color_manual(
-    name = "Treatment",
-    labels = c("E-", "E+"),
-    values = met.brewer(name = "Cross", n = 2, type = "discrete")
-  ) +
+    name = "Treatment ",
+    labels = c("E-low", "E-high"),
+    values = met.brewer("Cross", n = 2, type = "discrete")
+  )  +
   ggplot2::annotate(
     "rect",
     ymin = -4.5,
@@ -5048,7 +5042,7 @@ herb_lma <-
     vstep = 0.08
   ) +
   labs(x = expression(paste("LMA (mg ", mm^-2, ")")), y = "logit[Herbivory (%)]") +
-  # theme_classic(base_size = 10) +
+  theme_classic(base_size = 10) +
   theme(
     legend.position = "right",
     legend.title = element_text(face = "bold"),
@@ -5107,10 +5101,10 @@ herb_shannon <-
     values = c(15:22)
   ) +
   scale_color_manual(
-    name = "Treatment",
-    labels = c("E-", "E+"),
-    values = met.brewer(name = "Cross", n = 2, type = "discrete")
-  ) +
+    name = "Treatment ",
+    labels = c("E-low", "E-high"),
+    values = met.brewer("Cross", n = 2, type = "discrete")
+  )  +
   ggplot2::annotate(
     "rect",
     ymin = -4.5,
@@ -5138,7 +5132,7 @@ herb_shannon <-
     vstep = 0.08
   ) +
   labs(x = "Shannon's Diversity Index", y = "logit[Herbivory (%)]") +
-  # theme_classic(base_size = 10) +
+  theme_classic(base_size = 12) +
   theme(
     legend.position = "right",
     legend.title = element_text(face = "bold"),
@@ -5203,22 +5197,13 @@ patho_lps <-
     size = 0.75
   ) +
   scale_shape_manual(
-    # labels = c(
-    #   "A. membranacea",
-    #   "C. cainito",
-    #   "C. alliodora",
-    #   "Dipteryx sp.",
-    #   "H. concinna",
-    #   "L. panamensis",
-    #   "T. cacao"
-    # ),
     values = c(15:22)
   ) +
   scale_color_manual(
-    name = "Treatment",
-    labels = c("E-", "E+"),
-    values = met.brewer(name = "Cross", n = 2, type = "discrete")
-  ) +
+    name = "Treatment ",
+    labels = c("E-low", "E-high"),
+    values = met.brewer("Cross", n = 2, type = "discrete")
+  )  +
   stat_poly_eq(
     formula = y ~ x,
     inherit.aes = TRUE,
@@ -5237,7 +5222,7 @@ patho_lps <-
     vstep = 0.08
   ) +
   labs(x = expression(paste("Leaf punch strength (N mm", "^-1)")), y = "logit[Pathogen damage (%)]") +
-  # theme_classic(base_size = 10) +
+  theme_classic(base_size = 12) +
   theme(
     legend.position = "right",
     legend.title = element_text(face = "bold"),
@@ -5295,21 +5280,12 @@ patho_aci <-
     size = 0.75
   ) +
   scale_shape_manual(
-    # labels = c(
-    #   "A. membranacea",
-    #   "C. cainito",
-    #   "C. alliodora",
-    #   "Dipteryx sp.",
-    #   "H. concinna",
-    #   "L. panamensis",
-    #   "T. cacao"
-    # ),
     values = c(15:22)
   ) +
   scale_color_manual(
-    name = "Treatment",
-    labels = c("E-", "E+"),
-    values = met.brewer(name = "Cross", n = 2, type = "discrete")
+    name = "Treatment ",
+    labels = c("E-low", "E-high"),
+    values = met.brewer("Cross", n = 2, type = "discrete")
   ) +
   stat_poly_eq(
     formula = y ~ x,
@@ -5331,7 +5307,7 @@ patho_aci <-
   labs(x = expression(paste(
     "ACI (% ", italic("A")[lambda], " at 931 nm / % ", italic("A")[lambda], " at 530 nm)"
   )), y = "logit[Pathogen damage (%)]") +
-  # theme_classic(base_size = 10) +
+  theme_classic(base_size = 10) +
   theme(
     legend.position = "right",
     legend.title = element_text(face = "bold"),
@@ -5387,22 +5363,13 @@ patho_lt <-
     size = 0.75
   ) +
   scale_shape_manual(
-    # labels = c(
-    #   "A. membranacea",
-    #   "C. cainito",
-    #   "C. alliodora",
-    #   "Dipteryx sp.",
-    #   "H. concinna",
-    #   "L. panamensis",
-    #   "T. cacao"
-    # ),
     values = c(15:22)
   ) +
   scale_color_manual(
-    name = "Treatment",
-    labels = c("E-", "E+"),
-    values = met.brewer(name = "Cross", n = 2, type = "discrete")
-  ) +
+    name = "Treatment ",
+    labels = c("E-low", "E-high"),
+    values = met.brewer("Cross", n = 2, type = "discrete")
+  )  +
   stat_poly_eq(
     formula = y ~ x,
     inherit.aes = TRUE,
@@ -5421,7 +5388,7 @@ patho_lt <-
     vstep = 0.08
   ) +
   labs(x = expression(paste("Leaf thickness (", mu, "m)")), y = "logit[Pathogen damage (%)]") +
-  # theme_classic(base_size = 10) +
+  theme_classic(base_size = 12) +
   theme(
     legend.position = "right",
     legend.title = element_text(face = "bold"),
@@ -5464,21 +5431,12 @@ patho_lma <-
     size = 0.75
   ) +
   scale_shape_manual(
-    # labels = c(
-    #   "A. membranacea",
-    #   "C. cainito",
-    #   "C. alliodora",
-    #   "Dipteryx sp.",
-    #   "H. concinna",
-    #   "L. panamensis",
-    #   "T. cacao"
-    # ),
     values = c(15:22)
   ) +
   scale_color_manual(
-    name = "Treatment",
-    labels = c("E-", "E+"),
-    values = met.brewer(name = "Cross", n = 2, type = "discrete")
+    name = "Treatment ",
+    labels = c("E-low", "E-high"),
+    values = met.brewer("Cross", n = 2, type = "discrete")
   ) +
   stat_poly_eq(
     formula = y ~ x,
@@ -5498,7 +5456,7 @@ patho_lma <-
     vstep = 0.08
   ) +
   labs(x = expression(paste("LMA (mg ", mm^-2, ")")), y = "logit[Pathogen damage (%)]") +
-  # theme_classic(base_size = 10) +
+  theme_classic(base_size = 12) +
   theme(
     legend.position = "right",
     legend.title = element_text(face = "bold"),
@@ -5571,10 +5529,10 @@ patho_shannon <-
     values = c(15:22)
   ) +
   scale_color_manual(
-    name = "Treatment",
-    labels = c("E-", "E+"),
-    values = met.brewer(name = "Cross", n = 2, type = "discrete")
-  ) +
+    name = "Treatment ",
+    labels = c("E-low", "E-high"),
+    values = met.brewer("Cross", n = 2, type = "discrete")
+  )  +
   stat_poly_eq(
     formula = y ~ x,
     inherit.aes = TRUE,
@@ -5593,7 +5551,7 @@ patho_shannon <-
     vstep = 0.08
   ) +
   labs(x = "Shannon's Diversity Index", y = "logit[Pathogen damage (%)]") +
-  # theme_classic(base_size = 10) +
+  theme_classic(base_size = 12) +
   theme(
     legend.position = "right",
     legend.title = element_text(face = "bold"),
