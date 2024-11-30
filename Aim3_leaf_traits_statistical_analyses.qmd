@@ -410,7 +410,7 @@ tbas <- readRDS(file.path(save.path, "clean_data/tbas_filtered.rds"))
 ```{r, Leaf trait variables data}
 # data
 
-data <- read.csv("field_data/Aim3_Bolivar_Summer_2019_Leaf_Traits_datasheet.csv")
+data <- read.csv("field_data/Aim3_2019_leaf_traits_datasheet.csv")
 
 # data
 # Data set created on May 23, 2023 for analysis with raw data.
@@ -492,7 +492,7 @@ The code below cleans the `ants` data set by removing all the variables with inc
 
 ```{r, Ant assay data}
 
-ants <- read.csv("field_data/Aim3_Bolivar_Summer_2019_Ant_Assay_datasheet.csv")
+ants <- read.csv("field_data/Aim3_2019_ant_assay_datasheet.csv")
 
 ants <- ants |>
   separate(Unique.ID, c("Trial_Code", "ELoad", "Species2", "Replicate")) |>
@@ -542,7 +542,7 @@ I removed rows for trials T1-T2 of THEO samples and T5 of APEIME samples (rows 4
 
 ```{r, Pathogen Assay Data}
 
-# patho <- read.csv("field_data/Aim3_Bolivar_Summer_2019_Patho_Assay_datasheet.csv")
+# patho <- read.csv("field_data/Aim3_2019_patho_assay_datasheet.csv")
 # 
 # patho <- patho |>
 #   separate(Unique.ID, c("Trial_Code", "ELoad", "Species2", "Replicate")) |>

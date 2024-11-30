@@ -1978,7 +1978,7 @@ summa_t <-   master %>%
             locations = cells_body(columns = "Species")) %>%
   tab_header(
     title = md(
-      "**Summary statistics for the relative abundance of endophytes across host tree species**"
+      "**Table 1: Summary statistics for the relative abundance of endophytes across host tree species**"
     )
   )
   
@@ -1986,7 +1986,8 @@ table1 <- summa_t
 table1
 
 
-gtsave(table1, "tables/Aponte_Bolivar_table1.html")
+# gtsave(table1, "tables/Aponte_Bolivar_table1.html")
+# gtsave(table1, "tables/Aponte_Bolivar_table1.docx")
 ```
 
 ## Table 2
@@ -2081,7 +2082,8 @@ gtsave(table1, "tables/Aponte_Bolivar_table1.html")
 # summa_t1
 
 
-# trying to visualize table differently
+# Trying to visualize table differently
+
 # Function for removing outliers for purposes of this table (https://stackoverflow.com/questions/4787332/how-to-remove-outliers-from-a-dataset)
 remove_outliers <- function(x, na.rm = TRUE, ...) {
   qnt <- quantile(x, probs=c(.25, .75), na.rm = na.rm, ...)
@@ -2187,13 +2189,14 @@ table2_ggplot <- data %>%
   ) %>%
   tab_header(
     title = md(
-      "**Summary statistics for leaf functional traits (LFTs) across host tree species**"
+      "**Table 2: Summary statistics for leaf functional traits (LFTs) across host tree species**"
     )
   )
 
 table2_ggplot
 
-gtsave(table2_ggplot, "tables/Aponte_Bolivar_table2.html")
+# gtsave(table2_ggplot, "tables/Aponte_Bolivar_table2.html")
+gtsave(table2_ggplot, "tables/Aponte_Bolivar_table2.docx")
 
 ```
 
@@ -2261,13 +2264,14 @@ table3 <- gt(anova_table1) |>
   sub_missing(columns = 4, missing_text = "-") |>
   tab_header(
     title = md(
-      "**Permutational ANOVA for the best-fit dbRDA model with all host species**"
+      "**Table 3: Permutational ANOVA for the best-fit dbRDA model with all host species**"
     )
   )
 
 table3
 
 # gtsave(table3, "tables/Aponte_Bolivar_table3.html")
+gtsave(table3, "tables/Aponte_Bolivar_table3.docx")
 ```
 
 ## Table 4
@@ -2522,7 +2526,7 @@ table4 <- regrex_all |>
     placement = "auto"
   ) |>
   tab_header(
-    title = md("**Summary of simple linear regression models for predicting leaf herbivory and pathogen damage**")
+    title = md("**Table 4: Summary of simple linear regression models for predicting leaf herbivory and pathogen damage**")
   ) |>
   tab_footnote(
     footnote = "Models are separated by treatment and data set evaluated.",
@@ -2531,6 +2535,7 @@ table4 <- regrex_all |>
 
 table4
 # gtsave(table4, "tables/Aponte_Bolivar_table4.html")
+gtsave(table4, "tables/Aponte_Bolivar_table4.docx")
 ```
 
 
